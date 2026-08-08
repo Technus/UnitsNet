@@ -23,6 +23,8 @@ namespace UnitsNet.Tests.CustomCode
 {
     public class ThermalConductanceTests : ThermalConductanceTestsBase
     {
-        // Override properties in base class here
+        protected override double WattsPerDegreeCelsiusInOneWattPerKelvin => 1;
+
+        protected override double WattsPerKelvinInOneWattPerKelvin => 1;
     }
 }

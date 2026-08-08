@@ -23,6 +23,10 @@ namespace UnitsNet.Tests.CustomCode
 {
     public class ThermalResistivityTests : ThermalResistivityTestsBase
     {
-        // Override properties in base class here
+        protected override double HourFeetFahrenheitPerBtuInOneKelvinMeterPerWatt => 1 / 5.77789317e-1;
+
+        protected override double KelvinMetersPerWattInOneKelvinMeterPerWatt => 1;
+
+        protected override double SecondInchesFahrenheitPerBtuInOneKelvinMeterPerWatt => 1 / 1.33747527e-5;
     }
 }

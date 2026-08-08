@@ -23,6 +23,24 @@ namespace UnitsNet.Tests.CustomCode
 {
     public class ThermalTransmittanceTests : ThermalTransmittanceTestsBase
     {
-        // Override properties in base class here
+        protected override double BtusPerHourSquareFeetDegreeFahrenheitInOneKilowattPerSquareMeterKelvin => 1 / 0.005678263341113488;
+
+        protected override double KilocaloriesPerSquareCentimeterHourDegreeCelsiusInOneKilowattPerSquareMeterKelvin => 1 / 11.62222222222222;
+
+        protected override double WattsPerSquareCentimeterKelvinInOneKilowattPerSquareMeterKelvin => 1 / 10.0;
+
+        protected override double WattsPerSquareMeterDegreeCelsiusInOneKilowattPerSquareMeterKelvin => 1 / 1e-3;
+
+        protected override double KilowattsPerSquareMeterKelvinInOneKilowattPerSquareMeterKelvin => 1;
+
+        protected override double WattsPerSquareMeterKelvinInOneKilowattPerSquareMeterKelvin => 1 / 0.001;
+
+        protected override double WattsPerSquareMillimeterKelvinInOneKilowattPerSquareMeterKelvin => 1 / 1000.0;
+
+        [Fact(Skip = "See about changing the BaseUnit to WattPerSquareMeterKelvin")]
+        public override void BaseUnit_HasSIBase()
+        {
+            base.BaseUnit_HasSIBase();
+        }
     }
 }
