@@ -33,7 +33,7 @@ namespace UnitsNet
     ///     Thermal conductivity is the property of a material to conduct heat.
     /// </summary>
     /// <remarks>
-    ///     https://en.wikipedia.org/wiki/Thermal_Conductivity
+    ///     https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity
     /// </remarks>
     [DataContract]
     [DebuggerDisplay(QuantityDebugProxy.DisplayFormat)]
@@ -488,6 +488,17 @@ namespace UnitsNet
         public static QuantityValue operator /(ThermalConductivity left, ThermalConductivity right)
         {
             return left.WattsPerMeterKelvin / right.WattsPerMeterKelvin;
+        }
+
+        #endregion
+
+        #region Relational Operators
+
+        /// <summary>Calculates the inverse of this quantity.</summary>
+        /// <returns>The corresponding inverse quantity, <see cref="ThermalResistivity"/>.</returns>
+        public ThermalResistivity Inverse()
+        {
+            return UnitConverter.Default.ConvertTo(Value, Unit, ThermalResistivity.Info);
         }
 
         #endregion

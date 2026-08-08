@@ -1,0 +1,56 @@
+{
+  "Name": "ThermalResistivity",
+  "BaseUnit": "KelvinMeterPerWatt",
+  "XmlDocSummary": "Thermal resistivity is the property of a material to resist heat.",
+  "XmlDocRemarks": "https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
+  "BaseDimensions": {
+    "L": -1,
+    "M": -1,
+    "T": 3,
+    "Θ": 1
+  },
+  "Units": [
+    {
+      "SingularName": "KelvinMeterPerWatt",
+      "PluralName": "KelvinMetersPerWatt",
+      "BaseUnits": {
+        "L": "Meter",
+        "M": "Kilogram",
+        "T": "Second",
+        "Θ": "Kelvin"
+      },
+      "FromUnitToBaseFunc": "{x}",
+      "FromBaseToUnitFunc": "{x}",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "(m·K)/W" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "HourFootFahrenheitPerBtu",
+      "PluralName": "HourFeetFahrenheitPerBtu",
+      "FromUnitToBaseFunc": "{x} / ((1055.05585262 / (0.3048 * 3600)) * 1.8)",
+      "FromBaseToUnitFunc": "{x} * ((1055.05585262 / (0.3048 * 3600)) * 1.8)",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "(h·ft·°F)/BTU" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "SecondInchFahrenheitPerBtu",
+      "PluralName": "SecondInchesFahrenheitPerBtu",
+      "FromUnitToBaseFunc": "{x} / ((1055.05585262 / 2.54e-2) * 1.8)",
+      "FromBaseToUnitFunc": "{x} * ((1055.05585262 / 2.54e-2) * 1.8)",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "(s·in·°F)/BTU" ]
+        }
+      ]
+    }
+  ]
+}

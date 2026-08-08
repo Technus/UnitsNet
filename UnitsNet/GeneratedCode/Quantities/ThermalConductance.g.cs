@@ -30,7 +30,7 @@ namespace UnitsNet
 {
     /// <inheritdoc />
     /// <summary>
-    ///     Thermal resistance (R) measures the opposition to the heat current in a material or system. It is measured in units of kelvins per watt (K/W) and indicates how much temperature difference (in kelvins) is required to transfer a unit of heat current (in watts) through the material or object. It is essential to optimize the building insulation, evaluate the efficiency of electronic devices, and enhance the performance of heat sinks in various applications.
+    ///     Thermal conductance (U) measures the inverse of opposition to the heat current in a material or system. 
     /// </summary>
     /// <remarks>
     ///     https://en.wikipedia.org/wiki/Thermal_conductance_and_resistance
@@ -38,17 +38,16 @@ namespace UnitsNet
     [DataContract]
     [DebuggerDisplay(QuantityDebugProxy.DisplayFormat)]
     [DebuggerTypeProxy(typeof(QuantityDebugProxy))]
-    public readonly partial struct ThermalResistance :
-        ILinearQuantity<ThermalResistance, ThermalResistanceUnit>,
+    public readonly partial struct ThermalConductance :
+        ILinearQuantity<ThermalConductance, ThermalConductanceUnit>,
 #if NET7_0_OR_GREATER
-        IDivisionOperators<ThermalResistance, ThermalResistance, QuantityValue>,
-        IMultiplyOperators<ThermalResistance, Power, TemperatureDelta>,
-        IComparisonOperators<ThermalResistance, ThermalResistance, bool>,
-        IParsable<ThermalResistance>,
+        IDivisionOperators<ThermalConductance, ThermalConductance, QuantityValue>,
+        IComparisonOperators<ThermalConductance, ThermalConductance, bool>,
+        IParsable<ThermalConductance>,
 #endif
         IComparable,
-        IComparable<ThermalResistance>,
-        IEquatable<ThermalResistance>,
+        IComparable<ThermalConductance>,
+        IEquatable<ThermalConductance>,
         IFormattable
     {
         /// <summary>
@@ -61,75 +60,75 @@ namespace UnitsNet
         ///     The unit this quantity was constructed with.
         /// </summary>
         [DataMember(Name = "Unit", Order = 2)]
-        private readonly ThermalResistanceUnit? _unit;
+        private readonly ThermalConductanceUnit? _unit;
 
         /// <summary>
-        ///     Provides detailed information about the <see cref="ThermalResistance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
+        ///     Provides detailed information about the <see cref="ThermalConductance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ThermalResistanceInfo: QuantityInfo<ThermalResistance, ThermalResistanceUnit>
+        public sealed class ThermalConductanceInfo: QuantityInfo<ThermalConductance, ThermalConductanceUnit>
         {
             /// <inheritdoc />
-            public ThermalResistanceInfo(string name, ThermalResistanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalResistanceUnit>> unitMappings, ThermalResistance zero, BaseDimensions baseDimensions,
-                QuantityFromDelegate<ThermalResistance, ThermalResistanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
+            public ThermalConductanceInfo(string name, ThermalConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalConductanceUnit>> unitMappings, ThermalConductance zero, BaseDimensions baseDimensions,
+                QuantityFromDelegate<ThermalConductance, ThermalConductanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
                 : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ThermalResistanceInfo(string name, ThermalResistanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalResistanceUnit>> unitMappings, ThermalResistance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ThermalResistance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalResistance", typeof(ThermalResistance).Assembly))
+            public ThermalConductanceInfo(string name, ThermalConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalConductanceUnit>> unitMappings, ThermalConductance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, unitMappings, zero, baseDimensions, ThermalConductance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalConductance", typeof(ThermalConductance).Assembly))
             {
             }
 
             /// <summary>
-            ///     Creates a new instance of the <see cref="ThermalResistanceInfo"/> class with the default settings for the ThermalResistance quantity.
+            ///     Creates a new instance of the <see cref="ThermalConductanceInfo"/> class with the default settings for the ThermalConductance quantity.
             /// </summary>
-            /// <returns>A new instance of the <see cref="ThermalResistanceInfo"/> class with the default settings.</returns>
-            public static ThermalResistanceInfo CreateDefault()
+            /// <returns>A new instance of the <see cref="ThermalConductanceInfo"/> class with the default settings.</returns>
+            public static ThermalConductanceInfo CreateDefault()
             {
-                return new ThermalResistanceInfo(nameof(ThermalResistance), DefaultBaseUnit, GetDefaultMappings(), new ThermalResistance(0, DefaultBaseUnit), DefaultBaseDimensions);
+                return new ThermalConductanceInfo(nameof(ThermalConductance), DefaultBaseUnit, GetDefaultMappings(), new ThermalConductance(0, DefaultBaseUnit), DefaultBaseDimensions);
             }
 
             /// <summary>
-            ///     Creates a new instance of the <see cref="ThermalResistanceInfo"/> class with the default settings for the ThermalResistance quantity and a callback for customizing the default unit mappings.
+            ///     Creates a new instance of the <see cref="ThermalConductanceInfo"/> class with the default settings for the ThermalConductance quantity and a callback for customizing the default unit mappings.
             /// </summary>
             /// <param name="customizeUnits">
             ///     A callback function for customizing the default unit mappings.
             /// </param>
             /// <returns>
-            ///     A new instance of the <see cref="ThermalResistanceInfo"/> class with the default settings.
+            ///     A new instance of the <see cref="ThermalConductanceInfo"/> class with the default settings.
             /// </returns>
-            public static ThermalResistanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ThermalResistanceUnit>>, IEnumerable<IUnitDefinition<ThermalResistanceUnit>>> customizeUnits)
+            public static ThermalConductanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ThermalConductanceUnit>>, IEnumerable<IUnitDefinition<ThermalConductanceUnit>>> customizeUnits)
             {
-                return new ThermalResistanceInfo(nameof(ThermalResistance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ThermalResistance(0, DefaultBaseUnit), DefaultBaseDimensions);
+                return new ThermalConductanceInfo(nameof(ThermalConductance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ThermalConductance(0, DefaultBaseUnit), DefaultBaseDimensions);
             }
 
             /// <summary>
-            ///     The <see cref="BaseDimensions" /> for <see cref="ThermalResistance"/> is T^3L^-2M^-1Θ.
+            ///     The <see cref="BaseDimensions" /> for <see cref="ThermalConductance"/> is T^-3L^2MΘ^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-2, -1, 3, 0, 1, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -3, 0, -1, 0, 0);
 
             /// <summary>
-            ///     The default base unit of ThermalResistance is KelvinPerWatt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
+            ///     The default base unit of ThermalConductance is WattPerKelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ThermalResistanceUnit DefaultBaseUnit { get; } = ThermalResistanceUnit.KelvinPerWatt;
+            public static ThermalConductanceUnit DefaultBaseUnit { get; } = ThermalConductanceUnit.WattPerKelvin;
 
             /// <summary>
-            ///     Retrieves the default mappings for <see cref="ThermalResistanceUnit"/>.
+            ///     Retrieves the default mappings for <see cref="ThermalConductanceUnit"/>.
             /// </summary>
-            /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="UnitDefinition{ThermalResistanceUnit}"/> representing the default unit mappings for ThermalResistance.</returns>
-            public static IEnumerable<UnitDefinition<ThermalResistanceUnit>> GetDefaultMappings()
+            /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="UnitDefinition{ThermalConductanceUnit}"/> representing the default unit mappings for ThermalConductance.</returns>
+            public static IEnumerable<UnitDefinition<ThermalConductanceUnit>> GetDefaultMappings()
             {
-                yield return new (ThermalResistanceUnit.DegreeCelsiusPerWatt, "DegreeCelsiusPerWatt", "DegreesCelsiusPerWatt", new BaseUnits(length: LengthUnit.Meter, mass: MassUnit.Kilogram, time: DurationUnit.Second, temperature: TemperatureUnit.DegreeCelsius),
+                yield return new (ThermalConductanceUnit.WattPerDegreeCelsius, "WattPerDegreeCelsius", "WattsPerDegreeCelsius", new BaseUnits(length: LengthUnit.Meter, mass: MassUnit.Kilogram, time: DurationUnit.Second, temperature: TemperatureUnit.DegreeCelsius),
                      1
                 );
-                yield return new (ThermalResistanceUnit.KelvinPerWatt, "KelvinPerWatt", "KelvinsPerWatt", new BaseUnits(length: LengthUnit.Meter, mass: MassUnit.Kilogram, time: DurationUnit.Second, temperature: TemperatureUnit.Kelvin));
+                yield return new (ThermalConductanceUnit.WattPerKelvin, "WattPerKelvin", "WattsPerKelvin", new BaseUnits(length: LengthUnit.Meter, mass: MassUnit.Kilogram, time: DurationUnit.Second, temperature: TemperatureUnit.Kelvin));
             }
         }
 
-        static ThermalResistance()
+        static ThermalConductance()
         {
-            Info = UnitsNetSetup.CreateQuantityInfo(ThermalResistanceInfo.CreateDefault);
+            Info = UnitsNetSetup.CreateQuantityInfo(ThermalConductanceInfo.CreateDefault);
         }
 
         /// <summary>
@@ -137,7 +136,7 @@ namespace UnitsNet
         /// </summary>
         /// <param name="value">The numeric value to construct this quantity with.</param>
         /// <param name="unit">The unit representation to construct this quantity with.</param>
-        public ThermalResistance(QuantityValue value, ThermalResistanceUnit unit)
+        public ThermalConductance(QuantityValue value, ThermalConductanceUnit unit)
         {
             _value = value;
             _unit = unit;
@@ -151,7 +150,7 @@ namespace UnitsNet
         /// <param name="unitSystem">The unit system to create the quantity with.</param>
         /// <exception cref="ArgumentNullException">The given <see cref="UnitSystem"/> is null.</exception>
         /// <exception cref="ArgumentException">No unit was found for the given <see cref="UnitSystem"/>.</exception>
-        public ThermalResistance(QuantityValue value, UnitSystem unitSystem)
+        public ThermalConductance(QuantityValue value, UnitSystem unitSystem)
         {
             _value = value;
             _unit = Info.GetDefaultUnit(unitSystem);
@@ -160,13 +159,13 @@ namespace UnitsNet
         #region Static Properties
 
         /// <summary>
-        ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ThermalResistance" /> instances.
+        ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ThermalConductance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
         public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
-        public static QuantityInfo<ThermalResistance, ThermalResistanceUnit> Info { get; }
+        public static QuantityInfo<ThermalConductance, ThermalConductanceUnit> Info { get; }
 
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
@@ -174,19 +173,19 @@ namespace UnitsNet
         public static BaseDimensions BaseDimensions => Info.BaseDimensions;
 
         /// <summary>
-        ///     The base unit of ThermalResistance, which is KelvinPerWatt. All conversions go via this value.
+        ///     The base unit of ThermalConductance, which is WattPerKelvin. All conversions go via this value.
         /// </summary>
-        public static ThermalResistanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ThermalConductanceUnit BaseUnit => Info.BaseUnitInfo.Value;
 
         /// <summary>
-        ///     All units of measurement for the ThermalResistance quantity.
+        ///     All units of measurement for the ThermalConductance quantity.
         /// </summary>
-        public static IReadOnlyCollection<ThermalResistanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ThermalConductanceUnit> Units => Info.Units;
 
         /// <summary>
-        ///     Gets an instance of this quantity with a value of 0 in the base unit KelvinPerWatt.
+        ///     Gets an instance of this quantity with a value of 0 in the base unit WattPerKelvin.
         /// </summary>
-        public static ThermalResistance Zero => Info.Zero;
+        public static ThermalConductance Zero => Info.Zero;
 
         #endregion
 
@@ -196,10 +195,10 @@ namespace UnitsNet
         public QuantityValue Value => _value;
 
         /// <inheritdoc />
-        public ThermalResistanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ThermalConductanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
 
         /// <inheritdoc />
-        public QuantityInfo<ThermalResistance, ThermalResistanceUnit> QuantityInfo => Info;
+        public QuantityInfo<ThermalConductance, ThermalConductanceUnit> QuantityInfo => Info;
 
         #region Explicit implementations
 
@@ -208,10 +207,10 @@ namespace UnitsNet
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ThermalResistance> IQuantityOfType<ThermalResistance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ThermalConductance> IQuantityOfType<ThermalConductance>.QuantityInfo => Info;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ThermalResistanceUnit> IQuantity<ThermalResistanceUnit>.QuantityInfo => Info;
+        QuantityInfo<ThermalConductanceUnit> IQuantity<ThermalConductanceUnit>.QuantityInfo => Info;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         QuantityInfo IQuantity.QuantityInfo => Info;
@@ -227,14 +226,14 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <summary>
-        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalResistanceUnit.DegreeCelsiusPerWatt"/>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalConductanceUnit.WattPerDegreeCelsius"/>
         /// </summary>
-        public QuantityValue DegreesCelsiusPerWatt => this.As(ThermalResistanceUnit.DegreeCelsiusPerWatt);
+        public QuantityValue WattsPerDegreeCelsius => this.As(ThermalConductanceUnit.WattPerDegreeCelsius);
 
         /// <summary>
-        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalResistanceUnit.KelvinPerWatt"/>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalConductanceUnit.WattPerKelvin"/>
         /// </summary>
-        public QuantityValue KelvinsPerWatt => this.As(ThermalResistanceUnit.KelvinPerWatt);
+        public QuantityValue WattsPerKelvin => this.As(ThermalConductanceUnit.WattPerKelvin);
 
         #endregion
 
@@ -245,7 +244,7 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
-        public static string GetAbbreviation(ThermalResistanceUnit unit)
+        public static string GetAbbreviation(ThermalConductanceUnit unit)
         {
             return GetAbbreviation(unit, null);
         }
@@ -256,7 +255,7 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
-        public static string GetAbbreviation(ThermalResistanceUnit unit, IFormatProvider? provider)
+        public static string GetAbbreviation(ThermalConductanceUnit unit, IFormatProvider? provider)
         {
             return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
         }
@@ -266,30 +265,30 @@ namespace UnitsNet
         #region Static Factory Methods
 
         /// <summary>
-        ///     Creates a <see cref="ThermalResistance"/> from <see cref="ThermalResistanceUnit.DegreeCelsiusPerWatt"/>.
+        ///     Creates a <see cref="ThermalConductance"/> from <see cref="ThermalConductanceUnit.WattPerDegreeCelsius"/>.
         /// </summary>
-        public static ThermalResistance FromDegreesCelsiusPerWatt(QuantityValue value)
+        public static ThermalConductance FromWattsPerDegreeCelsius(QuantityValue value)
         {
-            return new ThermalResistance(value, ThermalResistanceUnit.DegreeCelsiusPerWatt);
+            return new ThermalConductance(value, ThermalConductanceUnit.WattPerDegreeCelsius);
         }
 
         /// <summary>
-        ///     Creates a <see cref="ThermalResistance"/> from <see cref="ThermalResistanceUnit.KelvinPerWatt"/>.
+        ///     Creates a <see cref="ThermalConductance"/> from <see cref="ThermalConductanceUnit.WattPerKelvin"/>.
         /// </summary>
-        public static ThermalResistance FromKelvinsPerWatt(QuantityValue value)
+        public static ThermalConductance FromWattsPerKelvin(QuantityValue value)
         {
-            return new ThermalResistance(value, ThermalResistanceUnit.KelvinPerWatt);
+            return new ThermalConductance(value, ThermalConductanceUnit.WattPerKelvin);
         }
 
         /// <summary>
-        ///     Dynamically convert from value and unit enum <see cref="ThermalResistanceUnit" /> to <see cref="ThermalResistance" />.
+        ///     Dynamically convert from value and unit enum <see cref="ThermalConductanceUnit" /> to <see cref="ThermalConductance" />.
         /// </summary>
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
-        /// <returns>ThermalResistance unit value.</returns>
-        public static ThermalResistance From(QuantityValue value, ThermalResistanceUnit fromUnit)
+        /// <returns>ThermalConductance unit value.</returns>
+        public static ThermalConductance From(QuantityValue value, ThermalConductanceUnit fromUnit)
         {
-            return new ThermalResistance(value, fromUnit);
+            return new ThermalConductance(value, fromUnit);
         }
 
         #endregion
@@ -318,7 +317,7 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
-        public static ThermalResistance Parse(string str)
+        public static ThermalConductance Parse(string str)
         {
             return Parse(str, null);
         }
@@ -346,9 +345,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
-        public static ThermalResistance Parse(string str, IFormatProvider? provider)
+        public static ThermalConductance Parse(string str, IFormatProvider? provider)
         {
-            return QuantityParser.Default.Parse<ThermalResistance, ThermalResistanceUnit>(str, provider, From);
+            return QuantityParser.Default.Parse<ThermalConductance, ThermalConductanceUnit>(str, provider, From);
         }
 
         /// <summary>
@@ -359,7 +358,7 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
-        public static bool TryParse([NotNullWhen(true)]string? str, out ThermalResistance result)
+        public static bool TryParse([NotNullWhen(true)]string? str, out ThermalConductance result)
         {
             return TryParse(str, null, out result);
         }
@@ -374,9 +373,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
-        public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ThermalResistance result)
+        public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ThermalConductance result)
         {
-            return QuantityParser.Default.TryParse<ThermalResistance, ThermalResistanceUnit>(str, provider, From, out result);
+            return QuantityParser.Default.TryParse<ThermalConductance, ThermalConductanceUnit>(str, provider, From, out result);
         }
 
         /// <summary>
@@ -388,7 +387,7 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
-        public static ThermalResistanceUnit ParseUnit(string str)
+        public static ThermalConductanceUnit ParseUnit(string str)
         {
             return ParseUnit(str, null);
         }
@@ -403,13 +402,13 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
-        public static ThermalResistanceUnit ParseUnit(string str, IFormatProvider? provider)
+        public static ThermalConductanceUnit ParseUnit(string str, IFormatProvider? provider)
         {
             return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
         }
 
-        /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ThermalResistanceUnit)"/>
-        public static bool TryParseUnit([NotNullWhen(true)]string? str, out ThermalResistanceUnit unit)
+        /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ThermalConductanceUnit)"/>
+        public static bool TryParseUnit([NotNullWhen(true)]string? str, out ThermalConductanceUnit unit)
         {
             return TryParseUnit(str, null, out unit);
         }
@@ -424,7 +423,7 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
-        public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ThermalResistanceUnit unit)
+        public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ThermalConductanceUnit unit)
         {
             return UnitParser.Default.TryParse(str, Info, provider, out unit);
         }
@@ -434,45 +433,45 @@ namespace UnitsNet
         #region Arithmetic Operators
 
         /// <summary>Negate the value.</summary>
-        public static ThermalResistance operator -(ThermalResistance right)
+        public static ThermalConductance operator -(ThermalConductance right)
         {
-            return new ThermalResistance(-right.Value, right.Unit);
+            return new ThermalConductance(-right.Value, right.Unit);
         }
 
-        /// <summary>Get <see cref="ThermalResistance"/> from adding two <see cref="ThermalResistance"/>.</summary>
-        public static ThermalResistance operator +(ThermalResistance left, ThermalResistance right)
+        /// <summary>Get <see cref="ThermalConductance"/> from adding two <see cref="ThermalConductance"/>.</summary>
+        public static ThermalConductance operator +(ThermalConductance left, ThermalConductance right)
         {
-            return new ThermalResistance(left.Value + right.As(left.Unit), left.Unit);
+            return new ThermalConductance(left.Value + right.As(left.Unit), left.Unit);
         }
 
-        /// <summary>Get <see cref="ThermalResistance"/> from subtracting two <see cref="ThermalResistance"/>.</summary>
-        public static ThermalResistance operator -(ThermalResistance left, ThermalResistance right)
+        /// <summary>Get <see cref="ThermalConductance"/> from subtracting two <see cref="ThermalConductance"/>.</summary>
+        public static ThermalConductance operator -(ThermalConductance left, ThermalConductance right)
         {
-            return new ThermalResistance(left.Value - right.As(left.Unit), left.Unit);
+            return new ThermalConductance(left.Value - right.As(left.Unit), left.Unit);
         }
 
-        /// <summary>Get <see cref="ThermalResistance"/> from multiplying value and <see cref="ThermalResistance"/>.</summary>
-        public static ThermalResistance operator *(QuantityValue left, ThermalResistance right)
+        /// <summary>Get <see cref="ThermalConductance"/> from multiplying value and <see cref="ThermalConductance"/>.</summary>
+        public static ThermalConductance operator *(QuantityValue left, ThermalConductance right)
         {
-            return new ThermalResistance(left * right.Value, right.Unit);
+            return new ThermalConductance(left * right.Value, right.Unit);
         }
 
-        /// <summary>Get <see cref="ThermalResistance"/> from multiplying value and <see cref="ThermalResistance"/>.</summary>
-        public static ThermalResistance operator *(ThermalResistance left, QuantityValue right)
+        /// <summary>Get <see cref="ThermalConductance"/> from multiplying value and <see cref="ThermalConductance"/>.</summary>
+        public static ThermalConductance operator *(ThermalConductance left, QuantityValue right)
         {
-            return new ThermalResistance(left.Value * right, left.Unit);
+            return new ThermalConductance(left.Value * right, left.Unit);
         }
 
-        /// <summary>Get <see cref="ThermalResistance"/> from dividing <see cref="ThermalResistance"/> by value.</summary>
-        public static ThermalResistance operator /(ThermalResistance left, QuantityValue right)
+        /// <summary>Get <see cref="ThermalConductance"/> from dividing <see cref="ThermalConductance"/> by value.</summary>
+        public static ThermalConductance operator /(ThermalConductance left, QuantityValue right)
         {
-            return new ThermalResistance(left.Value / right, left.Unit);
+            return new ThermalConductance(left.Value / right, left.Unit);
         }
 
-        /// <summary>Get ratio value from dividing <see cref="ThermalResistance"/> by <see cref="ThermalResistance"/>.</summary>
-        public static QuantityValue operator /(ThermalResistance left, ThermalResistance right)
+        /// <summary>Get ratio value from dividing <see cref="ThermalConductance"/> by <see cref="ThermalConductance"/>.</summary>
+        public static QuantityValue operator /(ThermalConductance left, ThermalConductance right)
         {
-            return left.KelvinsPerWatt / right.KelvinsPerWatt;
+            return left.WattsPerKelvin / right.WattsPerKelvin;
         }
 
         #endregion
@@ -480,16 +479,10 @@ namespace UnitsNet
         #region Relational Operators
 
         /// <summary>Calculates the inverse of this quantity.</summary>
-        /// <returns>The corresponding inverse quantity, <see cref="ThermalConductance"/>.</returns>
-        public ThermalConductance Inverse()
+        /// <returns>The corresponding inverse quantity, <see cref="ThermalResistance"/>.</returns>
+        public ThermalResistance Inverse()
         {
-            return UnitConverter.Default.ConvertTo(Value, Unit, ThermalConductance.Info);
-        }
-
-        /// <summary>Get <see cref="TemperatureDelta"/> from <see cref="ThermalResistance"/> * <see cref="Power"/>.</summary>
-        public static TemperatureDelta operator *(ThermalResistance thermalResistance, Power power)
-        {
-            return TemperatureDelta.FromKelvins(thermalResistance.KelvinsPerWatt * power.Watts);
+            return UnitConverter.Default.ConvertTo(Value, Unit, ThermalResistance.Info);
         }
 
         #endregion
@@ -497,69 +490,69 @@ namespace UnitsNet
         #region Equality / IComparable
 
         /// <summary>Returns true if less or equal to.</summary>
-        public static bool operator <=(ThermalResistance left, ThermalResistance right)
+        public static bool operator <=(ThermalConductance left, ThermalConductance right)
         {
             return left.Value <= right.As(left.Unit);
         }
 
         /// <summary>Returns true if greater than or equal to.</summary>
-        public static bool operator >=(ThermalResistance left, ThermalResistance right)
+        public static bool operator >=(ThermalConductance left, ThermalConductance right)
         {
             return left.Value >= right.As(left.Unit);
         }
 
         /// <summary>Returns true if less than.</summary>
-        public static bool operator <(ThermalResistance left, ThermalResistance right)
+        public static bool operator <(ThermalConductance left, ThermalConductance right)
         {
             return left.Value < right.As(left.Unit);
         }
 
         /// <summary>Returns true if greater than.</summary>
-        public static bool operator >(ThermalResistance left, ThermalResistance right)
+        public static bool operator >(ThermalConductance left, ThermalConductance right)
         {
             return left.Value > right.As(left.Unit);
         }
 
         /// <summary>
-        ///     Determines whether two <see cref="ThermalResistance"/> instances are equal.
+        ///     Determines whether two <see cref="ThermalConductance"/> instances are equal.
         /// </summary>
         /// <remarks>
         ///     Equality is evaluated in a unit-aware manner. The right-hand operand is converted to the unit of the left-hand
         ///     operand and then the underlying numeric values are compared.
         ///     This means two quantities with numerically equal values but different units will be considered equal.
-        ///     The operator delegates to <see cref="Equals(ThermalResistance)"/>, which implements this conversion-and-compare logic.
+        ///     The operator delegates to <see cref="Equals(ThermalConductance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
-        public static bool operator ==(ThermalResistance left, ThermalResistance right)
+        public static bool operator ==(ThermalConductance left, ThermalConductance right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        ///     Determines whether two <see cref="ThermalResistance"/> instances are not equal.
+        ///     Determines whether two <see cref="ThermalConductance"/> instances are not equal.
         /// </summary>
         /// <remarks>
-        ///     This operator is the logical negation of <see cref="operator ==(ThermalResistance,ThermalResistance)"/>.
-        ///     See that operator (and <see cref="Equals(ThermalResistance)"/>) for details on how equality is evaluated
+        ///     This operator is the logical negation of <see cref="operator ==(ThermalConductance,ThermalConductance)"/>.
+        ///     See that operator (and <see cref="Equals(ThermalConductance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
-        public static bool operator !=(ThermalResistance left, ThermalResistance right)
+        public static bool operator !=(ThermalConductance left, ThermalConductance right)
         {
             return !(left == right);
         }
 
         /// <inheritdoc />
         /// <summary>
-        ///     Determines whether the specified object is equal to the current <see cref="ThermalResistance"/> instance.
+        ///     Determines whether the specified object is equal to the current <see cref="ThermalConductance"/> instance.
         /// </summary>
         /// <remarks>
-        ///     Returns <c>false</c> if <paramref name="obj"/> is <c>null</c> or not a <see cref="ThermalResistance"/>.
-        ///     When <paramref name="obj"/> is a <see cref="ThermalResistance"/>, this method delegates to
-        ///     <see cref="Equals(ThermalResistance)"/>, which performs a unit-aware comparison by converting the other
+        ///     Returns <c>false</c> if <paramref name="obj"/> is <c>null</c> or not a <see cref="ThermalConductance"/>.
+        ///     When <paramref name="obj"/> is a <see cref="ThermalConductance"/>, this method delegates to
+        ///     <see cref="Equals(ThermalConductance)"/>, which performs a unit-aware comparison by converting the other
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
         {
-            if (obj is not ThermalResistance otherQuantity)
+            if (obj is not ThermalConductance otherQuantity)
                 return false;
 
             return Equals(otherQuantity);
@@ -567,13 +560,13 @@ namespace UnitsNet
 
         /// <inheritdoc />
         /// <summary>
-        ///     Determines whether the current instance is equal to another <see cref="ThermalResistance"/> instance.
+        ///     Determines whether the current instance is equal to another <see cref="ThermalConductance"/> instance.
         /// </summary>
         /// <remarks>
         ///     Comparison is performed by converting <paramref name="other"/> to this instance's unit and then comparing the underlying numeric values.
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
-        public bool Equals(ThermalResistance other)
+        public bool Equals(ThermalConductance other)
         {
             return _value.Equals(other.As(this.Unit));
         }
@@ -581,27 +574,27 @@ namespace UnitsNet
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
-        /// <returns>A hash code for the current ThermalResistance.</returns>
+        /// <returns>A hash code for the current ThermalConductance.</returns>
         public override int GetHashCode()
         {
-            return Comparison.GetHashCode(typeof(ThermalResistance), this.As(BaseUnit));
+            return Comparison.GetHashCode(typeof(ThermalConductance), this.As(BaseUnit));
         }
 
-        /// <inheritdoc  cref="CompareTo(ThermalResistance)" />
+        /// <inheritdoc  cref="CompareTo(ThermalConductance)" />
         /// <param name="obj">An object to compare with this instance.</param>
         /// <exception cref="T:System.ArgumentException">
         ///    <paramref name="obj" /> is not the same type as this instance.
         /// </exception>
         public int CompareTo(object? obj)
         {
-            if (obj is not ThermalResistance otherQuantity)
-                throw obj is null ? new ArgumentNullException(nameof(obj)) : ExceptionHelper.CreateArgumentException<ThermalResistance>(obj, nameof(obj));
+            if (obj is not ThermalConductance otherQuantity)
+                throw obj is null ? new ArgumentNullException(nameof(obj)) : ExceptionHelper.CreateArgumentException<ThermalConductance>(obj, nameof(obj));
 
             return CompareTo(otherQuantity);
         }
 
         /// <summary>
-        ///     Compares the current <see cref="ThermalResistance"/> with another <see cref="ThermalResistance"/> and returns an integer that indicates
+        ///     Compares the current <see cref="ThermalConductance"/> with another <see cref="ThermalConductance"/> and returns an integer that indicates
         ///     whether the current instance precedes, follows, or occurs in the same position in the sort order as the other quantity, when converted to the same unit.
         /// </summary>
         /// <param name="other">A quantity to compare with this instance.</param>
@@ -613,7 +606,7 @@ namespace UnitsNet
         ///         <item><term> Greater than zero</term><description> This instance follows <paramref name="other" /> in the sort order.</description></item>
         ///     </list>
         /// </returns>
-        public int CompareTo(ThermalResistance other)
+        public int CompareTo(ThermalConductance other)
         {
             return _value.CompareTo(other.As(this.Unit));
         }

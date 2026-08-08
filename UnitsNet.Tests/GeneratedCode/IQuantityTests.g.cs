@@ -150,9 +150,12 @@ namespace UnitsNet.Tests
             Assertion(3, TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond, Quantity.From(3, TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond));
             Assertion(3, TemperatureDeltaUnit.MillidegreeCelsius, Quantity.From(3, TemperatureDeltaUnit.MillidegreeCelsius));
             Assertion(3, TemperatureGradientUnit.KelvinPerMeter, Quantity.From(3, TemperatureGradientUnit.KelvinPerMeter));
+            Assertion(3, ThermalConductanceUnit.WattPerKelvin, Quantity.From(3, ThermalConductanceUnit.WattPerKelvin));
             Assertion(3, ThermalConductivityUnit.WattPerMeterKelvin, Quantity.From(3, ThermalConductivityUnit.WattPerMeterKelvin));
             Assertion(3, ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt, Quantity.From(3, ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt));
             Assertion(3, ThermalResistanceUnit.KelvinPerWatt, Quantity.From(3, ThermalResistanceUnit.KelvinPerWatt));
+            Assertion(3, ThermalResistivityUnit.SecondInchFahrenheitPerBtu, Quantity.From(3, ThermalResistivityUnit.SecondInchFahrenheitPerBtu));
+            Assertion(3, ThermalTransmittanceUnit.WattPerSquareMillimeterKelvin, Quantity.From(3, ThermalTransmittanceUnit.WattPerSquareMillimeterKelvin));
             Assertion(3, TorqueUnit.TonneForceMillimeter, Quantity.From(3, TorqueUnit.TonneForceMillimeter));
             Assertion(3, TurbidityUnit.NTU, Quantity.From(3, TurbidityUnit.NTU));
             Assertion(3, VitaminAUnit.InternationalUnit, Quantity.From(3, VitaminAUnit.InternationalUnit));
@@ -286,9 +289,12 @@ namespace UnitsNet.Tests
             Assertion(TemperatureChangeRate.Info, TemperatureChangeRate.Zero);
             Assertion(TemperatureDelta.Info, TemperatureDelta.Zero);
             Assertion(TemperatureGradient.Info, TemperatureGradient.Zero);
+            Assertion(ThermalConductance.Info, ThermalConductance.Zero);
             Assertion(ThermalConductivity.Info, ThermalConductivity.Zero);
             Assertion(ThermalInsulance.Info, ThermalInsulance.Zero);
             Assertion(ThermalResistance.Info, ThermalResistance.Zero);
+            Assertion(ThermalResistivity.Info, ThermalResistivity.Zero);
+            Assertion(ThermalTransmittance.Info, ThermalTransmittance.Zero);
             Assertion(Torque.Info, Torque.Zero);
             Assertion(Turbidity.Info, Turbidity.Zero);
             Assertion(VitaminA.Info, VitaminA.Zero);

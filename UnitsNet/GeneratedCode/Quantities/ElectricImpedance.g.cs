@@ -573,6 +573,17 @@ namespace UnitsNet
 
         #endregion
 
+        #region Relational Operators
+
+        /// <summary>Calculates the inverse of this quantity.</summary>
+        /// <returns>The corresponding inverse quantity, <see cref="ElectricAdmittance"/>.</returns>
+        public ElectricAdmittance Inverse()
+        {
+            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricAdmittance.Info);
+        }
+
+        #endregion
+
         #region Equality / IComparable
 
         /// <summary>Returns true if less or equal to.</summary>

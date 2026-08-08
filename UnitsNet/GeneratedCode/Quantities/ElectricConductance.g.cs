@@ -703,6 +703,13 @@ namespace UnitsNet
 
         #region Relational Operators
 
+        /// <summary>Calculates the inverse of this quantity.</summary>
+        /// <returns>The corresponding inverse quantity, <see cref="ElectricResistance"/>.</returns>
+        public ElectricResistance Inverse()
+        {
+            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricResistance.Info);
+        }
+
         /// <summary>Get <see cref="ElectricCurrent"/> from <see cref="ElectricConductance"/> * <see cref="ElectricPotential"/>.</summary>
         public static ElectricCurrent operator *(ElectricConductance electricConductance, ElectricPotential electricPotential)
         {

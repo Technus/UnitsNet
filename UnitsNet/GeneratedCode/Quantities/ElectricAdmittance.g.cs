@@ -701,6 +701,17 @@ namespace UnitsNet
 
         #endregion
 
+        #region Relational Operators
+
+        /// <summary>Calculates the inverse of this quantity.</summary>
+        /// <returns>The corresponding inverse quantity, <see cref="ElectricImpedance"/>.</returns>
+        public ElectricImpedance Inverse()
+        {
+            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricImpedance.Info);
+        }
+
+        #endregion
+
         #region Equality / IComparable
 
         /// <summary>Returns true if less or equal to.</summary>

@@ -152,9 +152,12 @@ public partial class Quantity
             TemperatureChangeRate.Info,
             TemperatureDelta.Info,
             TemperatureGradient.Info,
+            ThermalConductance.Info,
             ThermalConductivity.Info,
             ThermalInsulance.Info,
             ThermalResistance.Info,
+            ThermalResistivity.Info,
+            ThermalTransmittance.Info,
             Torque.Info,
             Turbidity.Info,
             VitaminA.Info,
@@ -175,8 +178,14 @@ public partial class Quantity
             new (typeof(Area), typeof(ReciprocalArea)),
             new (typeof(Density), typeof(SpecificVolume)),
             new (typeof(Duration), typeof(Frequency)),
+            new (typeof(ElectricAdmittance), typeof(ElectricImpedance)),
+            new (typeof(ElectricConductance), typeof(ElectricResistance)),
             new (typeof(ElectricConductivity), typeof(ElectricResistivity)),
+            new (typeof(ElectricReactance), typeof(ElectricSusceptance)),
             new (typeof(Length), typeof(ReciprocalLength)),
+            new (typeof(ThermalConductance), typeof(ThermalResistance)),
+            new (typeof(ThermalConductivity), typeof(ThermalResistivity)),
+            new (typeof(ThermalInsulance), typeof(ThermalTransmittance)),
         };
     }
 }

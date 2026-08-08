@@ -1,0 +1,108 @@
+{
+  "Name": "ThermalTransmittance",
+  "BaseUnit": "KilowattPerSquareMeterKelvin",
+  "XmlDocSummary": "Thermal transmitance (U-value) is a measure of a material's conductance to the heat current.",
+  "XmlDocRemarks": "https://en.wikipedia.org/wiki/Thermal_transmittance",
+  "BaseDimensions": {
+    "M": 1,
+    "T": -3,
+    "Θ": -1
+  },
+  "Units": [
+    {
+      "SingularName": "KilowattPerSquareMeterKelvin",
+      "PluralName": "KilowattsPerSquareMeterKelvin",
+      "FromUnitToBaseFunc": "{x}",
+      "FromBaseToUnitFunc": "{x}",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "kW/m²K" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "WattPerSquareMeterKelvin",
+      "PluralName": "WattsPerSquareMeterKelvin",
+      "BaseUnits": {
+        "M": "Kilogram",
+        "T": "Second",
+        "Θ": "Kelvin"
+      },
+      "FromUnitToBaseFunc": "{x} / 1000",
+      "FromBaseToUnitFunc": "{x} * 1000",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "W/m²K" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "WattPerSquareMeterDegreeCelsius",
+      "PluralName": "WattsPerSquareMeterDegreeCelsius",
+      "BaseUnits": {
+        "M": "Kilogram",
+        "T": "Second",
+        "Θ": "DegreeCelsius"
+      },
+      "FromUnitToBaseFunc": "{x} / 1000.0",
+      "FromBaseToUnitFunc": "{x} * 1000.0",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "W/m²°C" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "WattPerSquareCentimeterKelvin",
+      "PluralName": "WattsPerSquareCentimeterKelvin",
+      "FromUnitToBaseFunc": "{x} / 0.1",
+      "FromBaseToUnitFunc": "{x} * 0.1",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "W/cm²K" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "WattPerSquareMillimeterKelvin",
+      "PluralName": "WattsPerSquareMillimeterKelvin",
+      "FromUnitToBaseFunc": "{x} / 0.001",
+      "FromBaseToUnitFunc": "{x} * 0.001",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "W/mm²K" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "KilocaloriePerSquareCentimeterHourDegreeCelsius",
+      "PluralName": "KilocaloriesPerSquareCentimeterHourDegreeCelsius",
+      "FromUnitToBaseFunc": "{x} * 4.184 / (0.0001 * 3600)",
+      "FromBaseToUnitFunc": "{x} * (0.0001 * 3600) / 4.184",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "kcal/cm²Hr°C" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "BtuPerHourSquareFeetDegreeFahrenheit",
+      "PluralName": "BtusPerHourSquareFeetDegreeFahrenheit",
+      "FromUnitToBaseFunc": "{x} * (1055.05585262 * 1.8) / (1000 * 0.3048 * 0.3048 * 3600)",
+      "FromBaseToUnitFunc": "{x} * (1000 * 0.3048 * 0.3048 * 3600) / (1055.05585262 * 1.8)",
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "Btu/Hrft²°F" ]
+        }
+      ]
+    }
+
+  ]
+}

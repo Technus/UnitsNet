@@ -2,7 +2,7 @@
   "Name": "ThermalConductivity",
   "BaseUnit": "WattPerMeterKelvin",
   "XmlDocSummary": "Thermal conductivity is the property of a material to conduct heat.",
-  "XmlDocRemarks": "https://en.wikipedia.org/wiki/Thermal_Conductivity",
+  "XmlDocRemarks": "https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
   "BaseDimensions": {
     "L": 1,
     "M": 1,

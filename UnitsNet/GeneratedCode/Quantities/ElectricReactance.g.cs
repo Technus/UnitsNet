@@ -572,6 +572,17 @@ namespace UnitsNet
 
         #endregion
 
+        #region Relational Operators
+
+        /// <summary>Calculates the inverse of this quantity.</summary>
+        /// <returns>The corresponding inverse quantity, <see cref="ElectricSusceptance"/>.</returns>
+        public ElectricSusceptance Inverse()
+        {
+            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricSusceptance.Info);
+        }
+
+        #endregion
+
         #region Equality / IComparable
 
         /// <summary>Returns true if less or equal to.</summary>
