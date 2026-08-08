@@ -45,13 +45,44 @@ namespace UnitsNet
         /// <returns>True if the dimensions represent a base quantity, otherwise false.</returns>
         public bool IsBaseQuantity()
         {
-            return (Length == 1 && Mass == 0 && Time == 0 && Current == 0 && Temperature == 0 && Amount == 0 && LuminousIntensity == 0) ||
-                   (Length == 0 && Mass == 1 && Time == 0 && Current == 0 && Temperature == 0 && Amount == 0 && LuminousIntensity == 0) ||
-                   (Length == 0 && Mass == 0 && Time == 1 && Current == 0 && Temperature == 0 && Amount == 0 && LuminousIntensity == 0) ||
-                   (Length == 0 && Mass == 0 && Time == 0 && Current == 1 && Temperature == 0 && Amount == 0 && LuminousIntensity == 0) ||
-                   (Length == 0 && Mass == 0 && Time == 0 && Current == 0 && Temperature == 1 && Amount == 0 && LuminousIntensity == 0) ||
-                   (Length == 0 && Mass == 0 && Time == 0 && Current == 0 && Temperature == 0 && Amount == 1 && LuminousIntensity == 0) ||
-                   (Length == 0 && Mass == 0 && Time == 0 && Current == 0 && Temperature == 0 && Amount == 0 && LuminousIntensity == 1);
+            var ones = 0;
+
+            if (Length is 1)
+                ones++;
+            else if (Length is not 0)
+                return false;
+
+            if (Mass is 1)
+                ones++;
+            else if (Mass is not 0)
+                return false;
+
+            if (Time is 1)
+                ones++;
+            else if (Time is not 0)
+                return false;
+
+            if (Current is 1)
+                ones++;
+            else if (Current is not 0)
+                return false;
+
+            if (Temperature is 1)
+                ones++;
+            else if (Temperature is not 0)
+                return false;
+
+            if (Amount is 1)
+                ones++;
+            else if (Amount is not 0)
+                return false;
+
+            if (LuminousIntensity is 1)
+                ones++;
+            else if (LuminousIntensity is not 0)
+                return false;
+
+            return ones is 1;
         }
 
         /// <summary>
@@ -60,7 +91,44 @@ namespace UnitsNet
         /// <returns>True if the dimensions represent a derived quantity, otherwise false.</returns>
         public bool IsDerivedQuantity()
         {
-            return !IsBaseQuantity() && !IsDimensionless();
+            var ones = 0;
+
+            if (Length is 1)
+                ones++;
+            else if (Length is not 0)
+                return true;
+
+            if (Mass is 1)
+                ones++;
+            else if (Mass is not 0)
+                return true;
+
+            if (Time is 1)
+                ones++;
+            else if (Time is not 0)
+                return true;
+
+            if (Current is 1)
+                ones++;
+            else if (Current is not 0)
+                return true;
+
+            if (Temperature is 1)
+                ones++;
+            else if (Temperature is not 0)
+                return true;
+
+            if (Amount is 1)
+                ones++;
+            else if (Amount is not 0)
+                return true;
+
+            if (LuminousIntensity is 1)
+                ones++;
+            else if (LuminousIntensity is not 0)
+                return true;
+
+            return ones is > 1;
         }
 
         /// <summary>
