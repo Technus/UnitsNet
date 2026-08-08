@@ -40,10 +40,7 @@ public readonly record struct UnitKey
     ///     This property holds the <see cref="Type" /> of the unit enumeration associated with this key.
     ///     It is particularly useful for identifying the unit type in scenarios where multiple unit types are used.
     /// </remarks>
-    public Type UnitEnumType
-    {
-        get => _unitEnumType;
-    }
+    public Type UnitEnumType => _unitEnumType;
 
     /// <summary>
     ///     Gets the integer value associated with the unit type.
@@ -52,10 +49,7 @@ public readonly record struct UnitKey
     ///     This property represents the unique value of the unit within its type, typically corresponding to the underlying
     ///     integer value of an enumeration.
     /// </remarks>
-    public int UnitEnumValue
-    {
-        get => _unitEnumValue;
-    }
+    public int UnitEnumValue => _unitEnumValue;
 
     /// <summary>
     ///     Creates a new instance of the <see cref="UnitKey" /> struct for the specified unit.
@@ -99,14 +93,10 @@ public readonly record struct UnitKey
     public static UnitKey Create(Type unitType, int unitValue)
     {
         if (unitType is null)
-        {
             throw new ArgumentNullException(nameof(unitType));
-        }
 
         if (!unitType.IsEnum)
-        {
             throw new ArgumentException($"Unit type must be an enumeration, but was {unitType.FullName}.", nameof(unitType));
-        }
 
         return new UnitKey(unitType, unitValue);
     }

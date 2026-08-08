@@ -2,7 +2,7 @@ using Fractions;
 
 namespace CodeGen.Helpers.ExpressionAnalyzer.Functions.Math.Trigonometry;
 
-internal class AsinFunctionEvaluator : MathFunctionEvaluator
+internal sealed class AsinFunctionEvaluator : MathFunctionEvaluator
 {
     public override string FunctionName => nameof(System.Math.Asin);
 

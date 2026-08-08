@@ -1,7 +1,7 @@
 // Licensed under MIT No Attribution, see LICENSE file at the root.
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
-using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace UnitsNet
@@ -9,9 +9,25 @@ namespace UnitsNet
     /// <summary>
     ///     Represents the base dimensions of a quantity.
     /// </summary>
-    public sealed class BaseDimensions
+    public sealed class BaseDimensions : IEquatable<BaseDimensions>
     {
+        /// <summary>
+        /// Represents a dimensionless (unitless) quantity.
+        /// </summary>
+        public static BaseDimensions Dimensionless { get; } = new(0, 0, 0, 0, 0, 0, 0);
+
+#if NET
         /// <summary>Creates an instance of <see cref="BaseDimensions"/>.</summary>
+        public BaseDimensions()
+        {
+            //Ctor for Object initialization block
+        }
+#endif
+
+        /// <summary>Creates an instance of <see cref="BaseDimensions"/>.</summary>
+#if NET
+        [SetsRequiredMembers]
+#endif
         public BaseDimensions(int length, int mass, int time, int current, int temperature, int amount, int luminousIntensity)
         {
             Length = length;
@@ -51,25 +67,31 @@ namespace UnitsNet
         /// Checks if this base dimensions object represents a dimensionless quantity.
         /// </summary>
         /// <returns>True if this object represents a dimensionless quantity, otherwise false.</returns>
-        public bool IsDimensionless()
-        {
-            return this == Dimensionless;
-        }
+        public bool IsDimensionless() => Length == 0 &&
+                                         Mass == 0 &&
+                                         Time == 0 &&
+                                         Current == 0 &&
+                                         Temperature == 0 &&
+                                         Amount == 0 &&
+                                         LuminousIntensity == 0;
+
+        /// <inheritdoc />
+        public bool Equals(BaseDimensions? other)
+            => other is not null && (ReferenceEquals(this, other) || EqualsCore(other));
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
-        {
-            if (obj is not BaseDimensions other)
-                return false;
+            => obj is BaseDimensions other && (ReferenceEquals(this, other) || EqualsCore(other));
 
-            return Length == other.Length &&
-                   Mass == other.Mass &&
-                   Time == other.Time &&
-                   Current == other.Current &&
-                   Temperature == other.Temperature &&
-                   Amount == other.Amount &&
-                   LuminousIntensity == other.LuminousIntensity;
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool EqualsCore(BaseDimensions other) =>
+            Length == other.Length &&
+            Mass == other.Mass &&
+            Time == other.Time &&
+            Current == other.Current &&
+            Temperature == other.Temperature &&
+            Amount == other.Amount &&
+            LuminousIntensity == other.LuminousIntensity;
 
         /// <inheritdoc />
         public override int GetHashCode()
@@ -127,10 +149,9 @@ namespace UnitsNet
         /// <param name="left">Left.</param>
         /// <param name="right">Right.</param>
         /// <returns>True if equal.</returns>
+
         public static bool operator ==(BaseDimensions? left, BaseDimensions? right)
-        {
-            return left?.Equals(right!) ?? right is null;
-        }
+            => left?.Equals(right!) ?? right is null;
 
         /// <summary>
         /// Check if two dimensions are unequal.
@@ -138,10 +159,9 @@ namespace UnitsNet
         /// <param name="left">Left.</param>
         /// <param name="right">Right.</param>
         /// <returns>True if not equal.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(BaseDimensions? left, BaseDimensions? right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <summary>
         /// Multiply two dimensions.
@@ -201,7 +221,42 @@ namespace UnitsNet
                     break;
             }
         }
+#if NET
+        /// <summary>
+        /// Gets the length dimensions (L).
+        /// </summary>
+        public required int Length { get; init; }
 
+        /// <summary>
+        /// Gets the mass dimensions (M).
+        /// </summary>
+        public required int Mass { get; init; }
+
+        /// <summary>
+        /// Gets the time dimensions (T).
+        /// </summary>
+        public required int Time { get; init; }
+
+        /// <summary>
+        /// Gets the electric current dimensions (I).
+        /// </summary>
+        public required int Current { get; init; }
+
+        /// <summary>
+        /// Gets the temperature dimensions (Θ).
+        /// </summary>
+        public required int Temperature { get; init; }
+
+        /// <summary>
+        /// Gets the amount of substance dimensions (N).
+        /// </summary>
+        public required int Amount { get; init; }
+
+        /// <summary>
+        /// Gets the luminous intensity dimensions (J).
+        /// </summary>
+        public required int LuminousIntensity { get; init; }
+#else
         /// <summary>
         /// Gets the length dimensions (L).
         /// </summary>
@@ -236,10 +291,6 @@ namespace UnitsNet
         /// Gets the luminous intensity dimensions (J).
         /// </summary>
         public int LuminousIntensity{ get; }
-
-        /// <summary>
-        /// Represents a dimensionless (unitless) quantity.
-        /// </summary>
-        public static BaseDimensions Dimensionless { get; } = new BaseDimensions(0, 0, 0, 0, 0, 0, 0);
+#endif
     }
 }

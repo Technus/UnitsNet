@@ -18,7 +18,7 @@ namespace CodeGen.Helpers.PrefixBuilder;
 ///     This class is responsible for generating prefixed units by applying defined prefixes to existing units.
 ///     It utilizes the <see cref="BaseUnitPrefixes" /> to handle prefix configurations and conversions.
 /// </remarks>
-internal class UnitPrefixBuilder
+internal sealed class UnitPrefixBuilder
 {
     /// <summary>
     ///     Matches abbreviations whose leading unit token is raised to the second, third, or fourth power using a

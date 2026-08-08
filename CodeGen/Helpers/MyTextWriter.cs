@@ -6,9 +6,9 @@ using System.Text;
 
 namespace CodeGen.Helpers
 {
-    internal class MyTextWriter
+    internal sealed class MyTextWriter
     {
-        private readonly StringBuilder _sb = new StringBuilder();
+        private readonly StringBuilder _sb = new();
         private string _currentIndentationString;
         private int _indentLevel;
 
@@ -32,9 +32,7 @@ namespace CodeGen.Helpers
         }
 
         private string GetIndent(int indentLevel)
-        {
-            return string.Join(string.Empty, Enumerable.Repeat(IndentString, indentLevel));
-        }
+            => string.Join(string.Empty, Enumerable.Repeat(IndentString, indentLevel));
 
         /// <summary>
         ///     Write line with current indent. Trims preceding newline if any, to simplify code formatting when calling this method.
@@ -72,18 +70,14 @@ namespace CodeGen.Helpers
         /// </summary>
         /// <param name="text">The text to write</param>
         public void Append(string text = "")
-        {
-            _sb.Append(text);
-        }
+            => _sb.Append(text);
 
         /// <summary>
         ///     Returns the text written so far.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
-        {
-            return _sb.ToString();
-        }
+            => _sb.ToString();
 
         /// <summary>
         /// Write line with current ident only if <paramref name="text"/> actually contains text and not just whitespace.
@@ -92,7 +86,8 @@ namespace CodeGen.Helpers
         /// <param name="text">The text to write.</param>
         public void WLIfText(int indentLevel, string? text)
         {
-            if (text == null || string.IsNullOrWhiteSpace(text)) return;
+            if (text == null || string.IsNullOrWhiteSpace(text))
+                return;
             WL(indentLevel, text);
         }
 
@@ -103,7 +98,8 @@ namespace CodeGen.Helpers
         /// <param name="text">The text to write.</param>
         public void WLCondition(bool condition, string text)
         {
-            if (condition) WL(text);
+            if (condition)
+                WL(text);
         }
     }
 }

@@ -5,7 +5,7 @@ using Fractions;
 
 namespace CodeGen.Helpers.ExpressionAnalyzer.Functions.Math;
 
-internal class PowFunctionEvaluator : IFunctionEvaluator
+internal sealed class PowFunctionEvaluator : IFunctionEvaluator
 {
     public string Namespace => nameof(System.Math);
     public string FunctionName => nameof(System.Math.Pow);
@@ -16,7 +16,7 @@ internal class PowFunctionEvaluator : IFunctionEvaluator
         Func<ExpressionEvaluationTerm, CompositeExpression> expressionResolver)
     {
         var functionParams = expressionToParse.Expression.Split(',');
-        if (functionParams.Length != 2 || !FractionHelper.TryParseInvariant(functionParams[1], out Fraction exponentParsed))
+        if (functionParams.Length != 2 || !Fraction.TryParseInvariant(functionParams[1], out Fraction exponentParsed))
         {
             throw new FormatException($"The provided string is not in the correct format for the Pow function {expressionToParse}");
         }

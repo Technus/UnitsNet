@@ -16,7 +16,7 @@ public class VolumeTimesDensityWithRandomUnitsBenchmarks
     private static readonly QuantityValue DensityValue = 1.23;
     private static readonly QuantityValue VolumeValue = 9.42;
 
-    private readonly Random _random = new Random(42);
+    private readonly Random _random = new(42);
     private (Volume volume, Density density)[] _operands;
 
     [Params(1000)]

@@ -88,7 +88,7 @@ namespace CodeGen.Generators
                 .Select(g => g.Key)
                 .ToList();
 
-            if (duplicates.Any())
+            if (duplicates.Count != 0)
             {
                 var list = string.Join("\n  ", duplicates);
                 throw new UnitsNetCodeGenException($"Duplicate inferred relations:\n  {list}");
@@ -100,7 +100,7 @@ namespace CodeGen.Generators
                 .Select(g => g.Key)
                 .ToList();
 
-            if (ambiguous.Any())
+            if (ambiguous.Count != 0)
             {
                 var list = string.Join("\n  ", ambiguous);
                 throw new UnitsNetCodeGenException($"Ambiguous inferred relations:\n  {list}\n\nHint: you could use NoInferredDivision in the definition file.");

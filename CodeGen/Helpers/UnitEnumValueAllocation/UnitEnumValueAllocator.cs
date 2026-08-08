@@ -21,7 +21,7 @@ namespace CodeGen.Helpers.UnitEnumValueAllocation
     ///     Updating transitive UnitsNet dependency cause wrong unit · Issue #1068 · angularsen/UnitsNet
     ///     https://github.com/angularsen/UnitsNet/issues/1068
     /// </summary>
-    internal class UnitEnumValueAllocator
+    internal sealed class UnitEnumValueAllocator
     {
         private static readonly JsonSerializerOptions JsonOptions = new()
         {
@@ -72,8 +72,8 @@ namespace CodeGen.Helpers.UnitEnumValueAllocation
 
         private void EnsureUniqueUnitEnumValuesPerQuantity()
         {
-            List<string> duplicateErrorMessages = new();
-            foreach ((var quantityName, UnitEnumNameToValue? unitEnumValues) in _quantityNameToUnitEnumValues)
+            List<string> duplicateErrorMessages = [];
+            foreach (var (quantityName, unitEnumValues) in _quantityNameToUnitEnumValues)
             {
                 // Minor optimization for the common case where there are no duplicates, to skip the more heavy LINQ of grouping and filtering.
                 if (unitEnumValues.Values.Count != unitEnumValues.Values.ToHashSet().Count)
@@ -85,7 +85,7 @@ namespace CodeGen.Helpers.UnitEnumValueAllocation
                 }
             }
 
-            if (duplicateErrorMessages.Any())
+            if (duplicateErrorMessages.Count != 0)
             {
                 throw new UnitsNetCodeGenException(
                     @$"One or more units have the same unit enum value. This typically happens when merging multiple pull requests adding units to the same quantity.
@@ -106,7 +106,7 @@ Conflicts:
         /// <param name="quantity">The quantity info.</param>
         private void AllocateNewUnitEnumValues(Quantity quantity)
         {
-            foreach (Unit unit in quantity.Units)
+            foreach (var unit in quantity.Units)
             {
                 EnsureUnitEnumValueIsAllocated(quantity, unit);
             }
@@ -131,7 +131,7 @@ Conflicts:
                 return;
             }
 
-            int value = enumValues.AssignUniqueValue(unit.SingularName);
+            var value = enumValues.AssignUniqueValue(unit.SingularName);
 
             Log.Information("Allocated new value {Value} for {Quantity}.{Unit}", value, quantity.Name, unit.SingularName);
         }

@@ -5,7 +5,7 @@ using System;
 
 namespace CodeGen.JsonTypes
 {
-    internal record QuantityRelation : IComparable<QuantityRelation>
+    internal sealed record class QuantityRelation : IComparable<QuantityRelation>
     {
         public bool NoInferredDivision = false;
         public string Operator = null!;
@@ -19,17 +19,15 @@ namespace CodeGen.JsonTypes
         public Quantity ResultQuantity = null!;
         public Unit ResultUnit = null!;
 
-        public string SortString => ResultQuantity.Name + PrependDot(ResultUnit.SingularName)
-                                  + " = "
-                                  + LeftQuantity.Name + PrependDot(LeftUnit.SingularName)
-                                  + " " + Operator + " "
-                                  + RightQuantity.Name + PrependDot(RightUnit.SingularName);
+        public string SortString
+            => $"{ResultQuantity.Name}{PrependDot(ResultUnit.SingularName)} " +
+            $"= {LeftQuantity.Name}{PrependDot(LeftUnit.SingularName)} " +
+            $"{Operator} {RightQuantity.Name}{PrependDot(RightUnit.SingularName)}";
 
         public int CompareTo(QuantityRelation? other)
-        {
-            return string.Compare(SortString, other?.SortString, StringComparison.Ordinal);
-        }
+            => string.Compare(SortString, other?.SortString, StringComparison.Ordinal);
 
-        private static string PrependDot(string? s) => s == null ? string.Empty : "." + s;
+        private static string PrependDot(string? s)
+            => s == null ? string.Empty : "." + s;
     }
 }

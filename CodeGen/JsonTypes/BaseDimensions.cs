@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CodeGen.JsonTypes
 {
-    internal class BaseDimensions
+    internal sealed class BaseDimensions
     {
         // 0649 Field is never assigned to
 #pragma warning disable 0649

@@ -88,7 +88,7 @@ namespace CodeGen
 
             for (var dir = executableParentDir; dir != null; dir = dir.Parent)
             {
-                if (dir.GetFiles("UnitsNet.slnx").Any())
+                if (dir.GetFiles("UnitsNet.slnx").Length != 0)
                 {
                     Log.Verbose("Found repo root: {Dir}", dir);
                     return dir;

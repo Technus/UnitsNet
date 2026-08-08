@@ -10,7 +10,7 @@ namespace CodeGen.JsonTypes
     /// <summary>
     ///     Localization of a unit, such as unit abbreviations in different languages.
     /// </summary>
-    internal class Localization
+    internal sealed class Localization
     {
         /// <summary>
         ///     Gets the unit abbreviations for a prefix, if configured.
@@ -32,7 +32,7 @@ namespace CodeGen.JsonTypes
             {
                 case JTokenType.String:
                 {
-                    unitAbbreviations = new[] { value.ToObject<string>()! };
+                    unitAbbreviations = [value.ToObject<string>()!];
                     return true;
                 }
                 case JTokenType.Array:
@@ -50,13 +50,13 @@ namespace CodeGen.JsonTypes
         /// <summary>
         ///     The unit abbreviations. Can be empty for dimensionless units like Ratio.DecimalFraction.
         /// </summary>
-        public string[] Abbreviations = Array.Empty<string>();
+        public string[] Abbreviations = [];
 
         /// <summary>
         ///     Explicit configuration of unit abbreviations for prefixes.
         ///     This is typically used for languages or special unit abbreviations where you cannot simply prepend SI prefixes like
         ///     "k" for kilo
-        ///     to the abbreviations defined in <see cref="Localization.Abbreviations" />.
+        ///     to the abbreviations defined in <see cref="Abbreviations" />.
         /// </summary>
         /// <example>
         ///     Energy.ThermEc unit has "Abbreviations": "th (E.C.)" and "AbbreviationsForPrefixes": { "Deca": "Dth (E.C.)" } since

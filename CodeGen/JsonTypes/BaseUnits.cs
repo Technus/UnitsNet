@@ -1,12 +1,11 @@
 // Licensed under MIT No Attribution, see LICENSE file at the root.
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
-using System;
 using System.Text;
 
 namespace CodeGen.JsonTypes
 {
-    internal class BaseUnits
+    internal sealed class BaseUnits
     {
         // 0649 Field is never assigned to
 #pragma warning disable 0649
@@ -44,10 +43,8 @@ namespace CodeGen.JsonTypes
             return sb.ToString().TrimEnd(' ', ',');
         }
 
-        public BaseUnits Clone()
+        public BaseUnits Clone() => new()
         {
-            return new BaseUnits
-            {
                 N = N,
                 I = I,
                 L = L,
@@ -55,7 +52,6 @@ namespace CodeGen.JsonTypes
                 M = M,
                 Θ = Θ,
                 T = T
-            };
-        }
+        };
     }
 }

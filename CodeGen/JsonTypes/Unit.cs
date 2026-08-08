@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace CodeGen.JsonTypes
 {
     [DebuggerDisplay("{SingularName})")]
-    internal class Unit
+    internal sealed record class Unit
     {
         // 0649 Field is never assigned to
 #pragma warning disable 0649
@@ -15,9 +15,9 @@ namespace CodeGen.JsonTypes
         public BaseUnits? BaseUnits;
         public string FromBaseToUnitFunc = null!;
         public string FromUnitToBaseFunc = null!;
-        public Localization[] Localization = Array.Empty<Localization>();
+        public Localization[] Localization = [];
         public string PluralName = null!;
-        public Prefix[] Prefixes = Array.Empty<Prefix>();
+        public Prefix[] Prefixes = [];
         public string SingularName = null!;
         public string? XmlDocRemarks;
         public string XmlDocSummary = null!;

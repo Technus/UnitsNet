@@ -12,7 +12,7 @@ namespace UnitsNet;
 public static class QuantityExtensions
 {
     /// <summary>
-    ///     Gets the <see cref="UnitsNet.QuantityInfo"/> for the given quantity instance, looked up via
+    ///     Gets the <see cref="QuantityInfo"/> for the given quantity instance, looked up via
     ///     <see cref="UnitsNetSetup.Default"/>.
     /// </summary>
     /// <remarks>
@@ -21,7 +21,7 @@ public static class QuantityExtensions
     ///     type is not known at compile time.
     /// </remarks>
     /// <param name="quantity">The quantity instance.</param>
-    /// <returns>The <see cref="UnitsNet.QuantityInfo"/> registered in <see cref="UnitsNetSetup.Default"/> for the quantity's runtime type.</returns>
+    /// <returns>The <see cref="QuantityInfo"/> registered in <see cref="UnitsNetSetup.Default"/> for the quantity's runtime type.</returns>
     public static QuantityInfo GetQuantityInfo(this IQuantity quantity)
     {
         return UnitsNetSetup.Default.Quantities.GetQuantityInfo(quantity.GetType());

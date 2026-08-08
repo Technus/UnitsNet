@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace CodeGen.JsonTypes
 {
     [DebuggerDisplay("{Name}")]
-    internal record Quantity
+    internal sealed record class Quantity
     {
         // 0649 Field is never assigned to
 #pragma warning disable 0649
@@ -19,8 +19,8 @@ namespace CodeGen.JsonTypes
         public bool Logarithmic = false;
         public int LogarithmicScalingFactor = 1;
         public string Name = null!;
-        public Unit[] Units = Array.Empty<Unit>();
-        public QuantityRelation[] Relations = Array.Empty<QuantityRelation>();
+        public Unit[] Units = [];
+        public QuantityRelation[] Relations = [];
         public string? XmlDocRemarks;
         public string XmlDocSummary = null!;
         public string? ObsoleteText;

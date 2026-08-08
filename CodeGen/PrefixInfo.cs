@@ -8,7 +8,7 @@ namespace CodeGen
     /// <summary>
     ///     Information about a unit prefix and a static dictionary to look up prefixes.
     /// </summary>
-    internal class PrefixInfo
+    internal sealed record class PrefixInfo
     {
         private const string Russian = "ru-RU";
         private const string Chinese = "zh-CN";
@@ -16,8 +16,10 @@ namespace CodeGen
         public static readonly IReadOnlyDictionary<Prefix, PrefixInfo> Entries = new[]
         {
             // SI prefixes
-            new PrefixInfo(Prefix.Yocto, "1e-24d", "y",(Chinese, "夭")),
-            new PrefixInfo(Prefix.Zepto, "1e-21d", "z",(Chinese, "仄")),
+            new PrefixInfo(Prefix.Quecto, "1e-30d", "q", (Chinese, "亏")),
+            new PrefixInfo(Prefix.Ronto, "1e-27d", "r", (Chinese, "柔")),
+            new PrefixInfo(Prefix.Yocto, "1e-24d", "y", (Chinese, "夭")),
+            new PrefixInfo(Prefix.Zepto, "1e-21d", "z", (Chinese, "仄")),
             new PrefixInfo(Prefix.Atto, "1e-18d", "a", (Russian, "а"),(Chinese, "阿")),
             new PrefixInfo(Prefix.Femto, "1e-15d", "f", (Russian, "ф"),(Chinese, "飞")),
             new PrefixInfo(Prefix.Pico, "1e-12d", "p", (Russian, "п"),(Chinese, "皮")),
@@ -34,8 +36,10 @@ namespace CodeGen
             new PrefixInfo(Prefix.Tera, "1e12d", "T", (Russian, "Т"),(Chinese, "太")),
             new PrefixInfo(Prefix.Peta, "1e15d", "P", (Russian, "П"),(Chinese, "拍")),
             new PrefixInfo(Prefix.Exa, "1e18d", "E", (Russian, "Э"),(Chinese, "艾")),
-            new PrefixInfo(Prefix.Zetta, "1e21d", "Z",(Chinese, "泽")),
-            new PrefixInfo(Prefix.Yotta, "1e24d", "Y",(Chinese, "尧")),
+            new PrefixInfo(Prefix.Zetta, "1e21d", "Z", (Chinese, "泽")),
+            new PrefixInfo(Prefix.Yotta, "1e24d", "Y", (Chinese, "尧")),
+            new PrefixInfo(Prefix.Ronna, "1e27d", "R", (Chinese, "容")),
+            new PrefixInfo(Prefix.Quetta, "1e30d", "Q", (Chinese, "昆")),
 
             // Binary prefixes
             new PrefixInfo(Prefix.Kibi, "1024d", "Ki"),
@@ -43,7 +47,11 @@ namespace CodeGen
             new PrefixInfo(Prefix.Gibi, "(1024d * 1024 * 1024)", "Gi"),
             new PrefixInfo(Prefix.Tebi, "(1024d * 1024 * 1024 * 1024)", "Ti"),
             new PrefixInfo(Prefix.Pebi, "(1024d * 1024 * 1024 * 1024 * 1024)", "Pi"),
-            new PrefixInfo(Prefix.Exbi, "(1024d * 1024 * 1024 * 1024 * 1024 * 1024)", "Ei")
+            new PrefixInfo(Prefix.Exbi, "(1024d * 1024 * 1024 * 1024 * 1024 * 1024)", "Ei"),
+            new PrefixInfo(Prefix.Zebi, "(1024d * 1024 * 1024 * 1024 * 1024 * 1024 * 1024)", "Zi"),
+            new PrefixInfo(Prefix.Yobi, "(1024d * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024)", "Yi"),
+            new PrefixInfo(Prefix.Robi, "(1024d * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024)", "Ri"),
+            new PrefixInfo(Prefix.Quebi, "(1024d * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024)", "Qi"),
         }.ToDictionary(prefixInfo => prefixInfo.Prefix);
 
         private PrefixInfo(Prefix prefix, string factor, string siPrefix, params (string cultureName, string prefix)[] cultureToPrefix)

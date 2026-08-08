@@ -9,7 +9,7 @@ namespace CodeGen.Helpers
     /// <summary>
     /// Helper methods for consistently getting the same guid for a given string.
     /// </summary>
-    public class HashGuid
+    public static class HashGuid
     {
         /// <summary>
         /// Returns a guid based on the SHA256 hash of the string,
@@ -19,10 +19,9 @@ namespace CodeGen.Helpers
         /// <returns>A guid based on the hash of the string.</returns>
         public static Guid ToHashGuid(string src)
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(src);
+            var bytes = Encoding.UTF8.GetBytes(src);
 
-            using var sha256 = System.Security.Cryptography.SHA256.Create();
-            byte[] hashedBytes = sha256.ComputeHash(bytes);
+            var hashedBytes = System.Security.Cryptography.SHA256.HashData(bytes);
 
             Array.Resize(ref hashedBytes, 16);
             return new Guid(hashedBytes);

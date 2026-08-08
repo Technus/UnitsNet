@@ -9,7 +9,7 @@ namespace CodeGen.Helpers.ExpressionAnalyzer.Expressions;
 /// <summary>
 ///     A set of terms, ordered by their degree: "P(x)^2 + P(x) + 1"
 /// </summary>
-internal class CompositeExpression : IEnumerable<ExpressionTerm>
+internal sealed class CompositeExpression : IEnumerable<ExpressionTerm>
 {
     private readonly SortedSet<ExpressionTerm> _terms;
 
@@ -69,25 +69,17 @@ internal class CompositeExpression : IEnumerable<ExpressionTerm>
 
 
     public static implicit operator CompositeExpression(ExpressionTerm term)
-    {
-        return new CompositeExpression(term);
-    }
+        => new(term);
 
     public static explicit operator ExpressionTerm(CompositeExpression term)
-    {
-        return term._terms.Max!;
-    }
+        => term._terms.Max!;
 
     public CompositeExpression Negate()
-    {
-        return new CompositeExpression(_terms.Select(term => term.Negate()));
-    }
+        => [.. _terms.Select(term => term.Negate())];
 
     public CompositeExpression Invert()
-    {
-        return new CompositeExpression(_terms.Select(term => term.Invert()));
-    }
-    
+        => [.. _terms.Select(term => term.Invert())];
+
     public CompositeExpression SolveForY()
     {
         if (_terms.Count == 0)

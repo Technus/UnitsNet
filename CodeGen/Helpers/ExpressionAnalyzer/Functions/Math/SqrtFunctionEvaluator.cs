@@ -4,7 +4,7 @@ using Fractions;
 
 namespace CodeGen.Helpers.ExpressionAnalyzer.Functions.Math;
 
-internal class SqrtFunctionEvaluator : IFunctionEvaluator
+internal sealed class SqrtFunctionEvaluator : IFunctionEvaluator
 {
     public string Namespace => nameof(System.Math); // we could switch this to QuantityValue if we decide to add it later
     public string FunctionName => nameof(System.Math.Sqrt);

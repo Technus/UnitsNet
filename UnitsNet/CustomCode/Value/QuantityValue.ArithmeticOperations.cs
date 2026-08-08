@@ -12,34 +12,29 @@ public readonly partial struct QuantityValue
     /// <returns>The sum of the two QuantityValue instances.</returns>
     public static QuantityValue operator +(QuantityValue a, QuantityValue b)
     {
-        var numerator1 = a.Numerator;
-        if (numerator1.IsZero)
+        if (a.Numerator.IsZero)
         {
             // `a` is either NaN (NaN + b == NaN) or Zero (0 + b == b)
             return a.Denominator.IsZero ? a : b;
         }
 
-        var numerator2 = b.Numerator;
-        if (numerator2.IsZero)
+        if (b.Numerator.IsZero)
         {
             // 'b' is either NaN (a + NaN == NaN) or Zero (a + 0 == a)
             return b.Denominator.IsZero ? b : a;
         }
 
         // both fractions are non-zero numbers
-        var denominator1 = a.Denominator;
-        var denominator2 = b.Denominator;
-
-        if (denominator1.IsZero)
+        if (a.Denominator.IsZero)
         {
             // `a` is (+/-) Infinity
-            if (!denominator2.IsZero)
+            if (!b.Denominator.IsZero)
             {
                 return a; // Inf + b = Inf
             }
 
             // adding infinities
-            return (numerator1.Sign + numerator2.Sign) switch
+            return (a.Numerator.Sign + b.Numerator.Sign) switch
             {
                 2 => PositiveInfinity,
                 -2 => NegativeInfinity,
@@ -47,50 +42,44 @@ public readonly partial struct QuantityValue
             };
         }
 
-        if (denominator2.IsZero)
+        if (b.Denominator.IsZero)
         {
             return b; // (+/-) Infinity
         }
 
         // both values are non-zero
-        if (denominator1 == denominator2)
+        if (a.Denominator == b.Denominator)
         {
-            return new QuantityValue(numerator1 + numerator2, denominator1);
+            return new QuantityValue(a.Numerator + b.Numerator, a.Denominator);
         }
 
-        if (denominator1.IsOne)
+        if (a.Denominator.IsOne)
         {
-            return new QuantityValue(numerator1 * denominator2 + numerator2, denominator2);
+            return new QuantityValue(a.Numerator * b.Denominator + b.Numerator, b.Denominator);
         }
 
-        if (denominator2.IsOne)
+        if (b.Denominator.IsOne)
         {
-            return new QuantityValue(numerator1 + numerator2 * denominator1, denominator1);
+            return new QuantityValue(a.Numerator + b.Numerator * a.Denominator, a.Denominator);
         }
 
-        var gcd = BigInteger.GreatestCommonDivisor(denominator1, denominator2);
+        var gcd = BigInteger.GreatestCommonDivisor(a.Denominator, b.Denominator);
         if (gcd.IsOne)
         {
-            return new QuantityValue(numerator1 * denominator2 + numerator2 * denominator1, denominator1 * denominator2);
+            return new QuantityValue(a.Numerator * b.Denominator + b.Numerator * a.Denominator, a.Denominator * b.Denominator);
         }
 
-        if (gcd == denominator1)
+        if (gcd == a.Denominator)
         {
-            return new QuantityValue(denominator2 / gcd * numerator1 + numerator2, denominator2);
+            return new QuantityValue(b.Denominator / gcd * a.Numerator + b.Numerator, b.Denominator);
         }
 
-        if (gcd == denominator2)
+        if (gcd == b.Denominator)
         {
-            return new QuantityValue(numerator1 + denominator1 / gcd * numerator2, denominator1);
+            return new QuantityValue(a.Numerator + a.Denominator / gcd * b.Numerator, a.Denominator);
         }
 
-        var thisMultiplier = denominator1 / gcd;
-        var otherMultiplier = denominator2 / gcd;
-
-        var calculatedNumerator = numerator1 * otherMultiplier + numerator2 * thisMultiplier;
-        var leastCommonMultiple = thisMultiplier * denominator2;
-
-        return new QuantityValue(calculatedNumerator, leastCommonMultiple);
+        return new QuantityValue(a.Numerator * (b.Denominator / gcd) + b.Numerator * (a.Denominator / gcd), a.Denominator / gcd * b.Denominator);
     }
 
     /// <summary>

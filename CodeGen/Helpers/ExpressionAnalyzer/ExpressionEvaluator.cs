@@ -12,7 +12,7 @@ using static System.Globalization.CultureInfo;
 
 namespace CodeGen.Helpers.ExpressionAnalyzer;
 
-internal partial class ExpressionEvaluator // TODO make public (and move out in a separate project)
+internal sealed partial class ExpressionEvaluator // TODO make public (and move out in a separate project)
 {
     public static readonly Fraction Pi = Fraction.FromDoubleRounded(Math.PI, 16);
     private readonly IReadOnlyDictionary<string, Fraction> _constantValues;
@@ -40,9 +40,9 @@ internal partial class ExpressionEvaluator // TODO make public (and move out in 
 
     public string ParameterName { get; }
 
-    protected string Add(CompositeExpression expression)
+    private string Add(CompositeExpression expression)
     {
-        var label = "{" + (char)('a' + _expressionsEvaluated.Count) + "}";
+        var label = $"{{{(char)('a' + _expressionsEvaluated.Count)}}}";
         _expressionsEvaluated[label] = expression;
         return label;
     }
@@ -219,7 +219,8 @@ internal partial class ExpressionEvaluator // TODO make public (and move out in 
             return true;
         }
 
-        if (_constantValues.TryGetValue(expressionToParse, out Fraction constantExpression) || FractionHelper.TryParseInvariant(expressionToParse, out constantExpression))
+        if (_constantValues.TryGetValue(expressionToParse, out Fraction constantExpression)
+            || Fraction.TryParseInvariant(expressionToParse, out constantExpression))
         {
             expressionTerm = ExpressionTerm.Constant(constantExpression.Pow(exponent));
             return true;
@@ -234,7 +235,7 @@ internal partial class ExpressionEvaluator // TODO make public (and move out in 
         return ScientificNotationRegex().Replace(expression, match =>
         {
             var tokens = match.Value.ToLower().Replace("d", "").Split('e');
-            if (tokens.Length != 2 || !FractionHelper.TryParseInvariant(tokens[0], out Fraction mantissa) || !int.TryParse(tokens[1], InvariantCulture, out var exponent))
+            if (tokens.Length != 2 || !Fraction.TryParseInvariant(tokens[0], out Fraction mantissa) || !int.TryParse(tokens[1], InvariantCulture, out var exponent))
             {
                 throw new FormatException($"The expression contains invalid tokens: {expression}");
             }

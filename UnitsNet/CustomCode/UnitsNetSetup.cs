@@ -17,7 +17,11 @@ public sealed class UnitsNetSetup
     /// <summary>
     ///     Synchronizes the default builder swap and creation checks with the value creation already synchronized by <see cref="Lazy{T}" />.
     /// </summary>
+#if NET10_0_OR_GREATER
+    private static readonly System.Threading.Lock DefaultConfigurationLock = new();
+#else
     private static readonly object DefaultConfigurationLock = new();
+#endif
     private static DefaultConfigurationBuilder _defaultConfigurationBuilder = new();
     internal static readonly Lazy<UnitsNetSetup> DefaultConfiguration = new(BuildDefault);
 

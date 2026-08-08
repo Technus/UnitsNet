@@ -17,7 +17,7 @@ namespace CodeGen.Helpers.PrefixBuilder;
 ///     including scale factors and prefixed unit names. It supports operations such as creating mappings from a collection
 ///     of base units and finding matching prefixes for specific units.
 /// </remarks>
-internal class BaseUnitPrefixes
+internal sealed class BaseUnitPrefixes
 {
     /// <summary>
     ///     A dictionary that maps metric prefixes to their corresponding exponent values.

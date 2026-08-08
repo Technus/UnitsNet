@@ -14,13 +14,13 @@ internal static class MathHelper
     /// </summary>
     public static double RootN(double number, int n)
     {
-        bool isNegative = BitConverter.DoubleToInt64Bits(number) < 0;
+        var isNegative = BitConverter.DoubleToInt64Bits(number) < 0;
         if (isNegative && n % 2 == 0)
         {
             return double.NaN;
         }
 
-        double root = Math.Pow(Math.Abs(number), 1.0 / n);
+        var root = Math.Pow(Math.Abs(number), 1.0 / n);
         return isNegative ? -root : root;
     }
 }

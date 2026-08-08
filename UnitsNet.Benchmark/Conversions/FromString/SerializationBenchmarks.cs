@@ -47,8 +47,7 @@ public class MassSerializationBenchmarks
     public const int NbIterations = 1000;
     // public const int NbIterations = 1;
 
-    private static Mass[] TestMasses =
-    [
+    private static readonly Mass[] TestMasses = [
         Mass.Zero, new Mass(0, MassUnit.Gram), new Mass(42, MassUnit.Gram), new Mass(42, MassUnit.Kilogram), new Mass(123.45m, MassUnit.Milligram)
     ];
     // private static Volume[] TestVolumes =
@@ -223,8 +222,7 @@ public class InterfaceQuantitySerializationBenchmarks
     public const int NbIterations = 1000;
     // public const int NbIterations = 1;
 
-    private static IQuantity[] TestMasses =
-    [
+    private static readonly IQuantity[] TestMasses = [
         Mass.Zero, new Mass(0, MassUnit.Gram), new Mass(42, MassUnit.Gram), new Mass(42, MassUnit.Kilogram), new Mass(123.45m, MassUnit.Milligram)
     ];
 

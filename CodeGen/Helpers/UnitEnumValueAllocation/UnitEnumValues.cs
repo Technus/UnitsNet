@@ -14,7 +14,7 @@ namespace CodeGen.Helpers.UnitEnumValueAllocation
     ///     Updating transitive UnitsNet dependency cause wrong unit · Issue #1068 · angularsen/UnitsNet
     ///     https://github.com/angularsen/UnitsNet/issues/1068
     /// </summary>
-    internal class UnitEnumNameToValue : Dictionary<string, int>
+    internal sealed class UnitEnumNameToValue : Dictionary<string, int>
     {
         private readonly Queue<int> _nextRandomAvailableValues = new();
         private static readonly Random Random = new();
@@ -33,16 +33,16 @@ namespace CodeGen.Helpers.UnitEnumValueAllocation
         {
             if (_nextRandomAvailableValues.Count != 0) return;
 
-            List<int> newAvailableValues = new();
+            List<int> newAvailableValues = [];
 
-            int candidateValue = 1;
+            var candidateValue = 1;
 
             // Try to fill holes left by previous updates, since we pick a random value from the next 10 available values to
             // avoid conflicts with multiple merged pull requests.
             var orderedValues = Values.ToImmutableSortedSet();
             for (var existingValueIdx = 0; existingValueIdx < orderedValues.Count && newAvailableValues.Count < 10; existingValueIdx++)
             {
-                int val = orderedValues[existingValueIdx];
+                var val = orderedValues[existingValueIdx];
 
                 while (candidateValue < val && newAvailableValues.Count < 10)
                 {

@@ -180,7 +180,7 @@ namespace CodeGen.Generators
                         {
                             if(localization.Culture == culture)
                             {
-                                if(localization.Abbreviations.Any())
+                                if(localization.Abbreviations.Length != 0)
                                 {
                                     writer.Write($"{unit.PluralName}=");
 

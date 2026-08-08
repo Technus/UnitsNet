@@ -13,21 +13,17 @@ namespace CodeGen.Helpers.ExpressionAnalyzer.Expressions;
 /// <param name="Exponent">The degree of the term (n)</param>
 /// <param name="NestedFunction">f(x) if one is available</param>
 /// <remarks>When there is no nested function f(x) = x</remarks>
-internal record ExpressionTerm(Fraction Coefficient, Fraction Exponent, CustomFunction? NestedFunction = null) : IComparable<ExpressionTerm>, IComparable
+internal sealed record class ExpressionTerm(Fraction Coefficient, Fraction Exponent, CustomFunction? NestedFunction = null) : IComparable<ExpressionTerm>, IComparable
 {
     public bool IsRational => NestedFunction is null && Exponent.Denominator.IsOne;
 
     public bool IsConstant => NestedFunction is null && Exponent.IsZero;
 
     public ExpressionTerm Negate()
-    {
-        return this with { Coefficient = Coefficient.Negate() };
-    }
+        => this with { Coefficient = Coefficient.Negate() };
 
     public ExpressionTerm Invert()
-    {
-        return this with { Exponent = Exponent.Negate(), Coefficient = Coefficient.Reciprocal() };
-    }
+        => this with { Exponent = Exponent.Negate(), Coefficient = Coefficient.Reciprocal() };
 
     public ExpressionTerm Multiply(ExpressionTerm otherTerm)
     {
@@ -42,14 +38,10 @@ internal record ExpressionTerm(Fraction Coefficient, Fraction Exponent, CustomFu
     }
 
     public ExpressionTerm Divide(ExpressionTerm otherTerm)
-    {
-        return Multiply(otherTerm.Invert());
-    }
+        => Multiply(otherTerm.Invert());
 
     public static ExpressionTerm Constant(Fraction coefficient)
-    {
-        return new ExpressionTerm(coefficient, Fraction.Zero);
-    }
+        => new(coefficient, Fraction.Zero);
 
     #region Overrides of Object
 

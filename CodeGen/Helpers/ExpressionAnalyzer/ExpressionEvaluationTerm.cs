@@ -11,4 +11,4 @@ namespace CodeGen.Helpers.ExpressionAnalyzer;
 ///     Since we're tokenizing the expressions from top to bottom, the first step is parsing the exponent of the
 ///     expression: e.g. Math.Pow(P, 2)
 /// </remarks>
-public record ExpressionEvaluationTerm(string Expression, Fraction Exponent);
+public record class ExpressionEvaluationTerm(string Expression, Fraction Exponent);

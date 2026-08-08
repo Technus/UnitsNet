@@ -12,7 +12,7 @@ namespace CodeGen.Helpers.PrefixBuilder;
 ///     The base unit associated with the prefix, such as "Gram".
 /// </param>
 /// <param name="Prefix">
-///     The prefix applied to the base unit, such as <see cref="JsonTypes.Prefix.Kilo" />.
+///     The prefix applied to the base unit, such as <see cref="Prefix.Kilo" />.
 ///     <para>If the prefix exponent value is 0, this parameter will be <c>null</c>.</para>
 /// </param>
 internal readonly record struct BaseUnitPrefix(string BaseUnit, Prefix? Prefix);

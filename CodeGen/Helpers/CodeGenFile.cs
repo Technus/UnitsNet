@@ -23,17 +23,13 @@ namespace CodeGen.Helpers
         ///     Existing byte order marks are still detected when present.
         /// </remarks>
         public static string ReadAllText(string path)
-        {
-            return File.ReadAllText(path, Utf8NoBom);
-        }
+            => File.ReadAllText(path, Utf8NoBom);
 
         /// <summary>
         ///     Writes all text to a generated or codegen-normalized file as UTF-8 without byte order mark.
         /// </summary>
         public static void WriteAllText(string path, string contents)
-        {
-            File.WriteAllText(path, contents, Utf8NoBom);
-        }
+            => File.WriteAllText(path, contents, Utf8NoBom);
 
         /// <summary>
         ///     Opens a CodeGen input file for text reading as UTF-8.
@@ -42,16 +38,12 @@ namespace CodeGen.Helpers
         ///     Existing byte order marks are still detected when present.
         /// </remarks>
         public static StreamReader OpenText(string path)
-        {
-            return new StreamReader(path, Utf8NoBom, detectEncodingFromByteOrderMarks: true);
-        }
+            => new(path, Utf8NoBom, detectEncodingFromByteOrderMarks: true);
 
         /// <summary>
         ///     Creates or overwrites a generated or codegen-normalized text file as UTF-8 without byte order mark.
         /// </summary>
         public static StreamWriter CreateText(string path)
-        {
-            return new StreamWriter(path, append: false, Utf8NoBom);
-        }
+            => new(path, append: false, Utf8NoBom);
     }
 }

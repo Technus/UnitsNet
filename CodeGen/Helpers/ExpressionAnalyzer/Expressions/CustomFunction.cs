@@ -10,16 +10,13 @@ namespace CodeGen.Helpers.ExpressionAnalyzer.Expressions;
 /// <param name="Terms"></param>
 /// <param name="AdditionalParameters"></param>
 /// <remarks>These are functions that we don't directly support, such as Sqrt.</remarks>
-internal record CustomFunction(string Namespace, string Name, CompositeExpression Terms, params string[] AdditionalParameters) : IComparable<CustomFunction>, IComparable
+internal sealed record class CustomFunction(string Namespace, string Name, CompositeExpression Terms, params string[] AdditionalParameters) : IComparable<CustomFunction>, IComparable
 {
     #region Overrides of Object
 
-    public override string ToString()
-    {
-        if(AdditionalParameters.Length == 0)
-            return $"{Name}({Terms})";
-        return $"{Name}({Terms}, {string.Join(", ", AdditionalParameters)})";
-    }
+    public override string ToString() => AdditionalParameters.Length == 0
+        ? $"{Name}({Terms})"
+        : $"{Name}({Terms}, {string.Join(", ", AdditionalParameters)})";
 
     #endregion
 

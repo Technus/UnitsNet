@@ -11,7 +11,7 @@ namespace CodeGen.Helpers;
 
 internal static class ExpressionEvaluationHelpers
 {
-    private record struct Factor(BigInteger Number, int Power, BigInteger Value)
+    private readonly record struct Factor(BigInteger Number, int Power, BigInteger Value)
     {
         public static Factor FromNumber(BigInteger number) => new(number, 1, number);
 

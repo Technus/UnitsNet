@@ -11,7 +11,7 @@ namespace CodeGen.Helpers.UnitEnumValueAllocation
     ///     Updating transitive UnitsNet dependency cause wrong unit · Issue #1068 · angularsen/UnitsNet
     ///     https://github.com/angularsen/UnitsNet/issues/1068
     /// </summary>
-    internal class QuantityNameToUnitEnumValues : Dictionary<string, UnitEnumNameToValue>
+    internal sealed class QuantityNameToUnitEnumValues : Dictionary<string, UnitEnumNameToValue>
     {
     }
 }
