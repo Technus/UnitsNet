@@ -11,7 +11,7 @@ namespace UnitsNet.Benchmark.Operators.Additions;
 
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 public class SumOfVolumesWithSimilarSIUnitsBenchmarks
 {
     private static readonly QuantityValue Value = 1.23;
@@ -64,7 +64,7 @@ public class SumOfVolumesWithSimilarSIUnitsBenchmarks
 
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 public class SumOfVolumesWithSimilarImperialUnitsBenchmarks
 {
     private static readonly QuantityValue Value = 1.23;

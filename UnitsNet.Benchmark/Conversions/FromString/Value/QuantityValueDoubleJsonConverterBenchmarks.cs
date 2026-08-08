@@ -7,7 +7,7 @@ using UnitsNet.Serialization.SystemTextJson.Value;
 namespace UnitsNet.Benchmark.Conversions.FromString.Value;
 
 [MemoryDiagnoser]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 [SimpleJob(RuntimeMoniker.Net48)]
 public class QuantityValueDoubleJsonConverterBenchmarks
 {

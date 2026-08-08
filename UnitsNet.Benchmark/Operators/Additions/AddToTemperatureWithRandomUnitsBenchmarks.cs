@@ -11,7 +11,7 @@ namespace UnitsNet.Benchmark.Operators.Additions;
 
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 public class AddToTemperatureWithRandomUnitsBenchmarks
 {
     private static readonly QuantityValue LeftValue = 1.23;

@@ -62,7 +62,7 @@ function Start-Tests {
     push-location $projectDir
 
     # Build validates every target framework. Run tests only on the latest .NET runtime because
-    # net8.0, net9.0, and net10.0 compile the same code paths. The separate CLR4 workflow tests
+    # net8.0, and net10.0 compile the same code paths. The separate CLR4 workflow tests
     # the meaningfully different netstandard2.0 assets on .NET Framework.
     if ($SkipCoverage) {
       & dotnet test `

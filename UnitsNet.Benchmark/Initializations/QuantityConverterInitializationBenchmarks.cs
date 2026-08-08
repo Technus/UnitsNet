@@ -8,7 +8,6 @@ namespace UnitsNet.Benchmark.Initializations;
 
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net90)]
 [SimpleJob(RuntimeMoniker.Net10_0)]
 public class QuantityConverterInitializationBenchmarks
 {

@@ -4,7 +4,7 @@ using UnitsNet.Units;
 namespace UnitsNet.Benchmark.Conversions.Relations;
 
 // [ShortRunJob(RuntimeMoniker.Net48)]
-// [ShortRunJob(RuntimeMoniker.Net90)]
+// [ShortRunJob(RuntimeMoniker.Net10_0)]
 [MemoryDiagnoser]
 [ShortRunJob]
 public class InverseElectricResistivityBenchmarks

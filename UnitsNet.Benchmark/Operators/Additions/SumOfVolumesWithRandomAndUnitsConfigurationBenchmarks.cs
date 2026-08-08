@@ -10,8 +10,8 @@ using UnitsNet.Units;
 namespace UnitsNet.Benchmark.Operators.Additions;
 
 [MemoryDiagnoser]
-[SimpleJob(RuntimeMoniker.Net90)]
-public class SumOfVolumesWithRandomAndUnitsConfigurationBenchmarksNet9
+[SimpleJob(RuntimeMoniker.Net10_0)]
+public class SumOfVolumesWithRandomAndUnitsConfigurationBenchmarksNet10
 {
     private static readonly QuantityValue Value = 1.23;
 

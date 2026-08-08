@@ -39,7 +39,7 @@ public partial class AbbreviatedQuantityJsonContext : JsonSerializerContext
 }
 
 [MemoryDiagnoser]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 // [DryJob(RuntimeMoniker.Net80)]
 public class MassSerializationBenchmarks
 {
@@ -212,10 +212,10 @@ public partial class AbbreviatedInterfaceQuantityJsonContext : JsonSerializerCon
 }
 
 [MemoryDiagnoser]
-[MediumRunJob(RuntimeMoniker.Net90)]
 [MediumRunJob(RuntimeMoniker.Net48)]
+[MediumRunJob(RuntimeMoniker.Net10_0)]
 // [DryJob(RuntimeMoniker.Net48)]
-// [SimpleJob(RuntimeMoniker.Net90)]
+// [SimpleJob(RuntimeMoniker.Net10_0)]
 // [DryJob(RuntimeMoniker.Net80)]
 public class InterfaceQuantitySerializationBenchmarks
 {

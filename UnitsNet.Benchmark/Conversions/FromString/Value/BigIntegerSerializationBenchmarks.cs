@@ -38,7 +38,7 @@ public class BigIntegerSerializationBenchmarks
 }
 
 [MemoryDiagnoser]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 [SimpleJob(RuntimeMoniker.Net80)]
 [SimpleJob(RuntimeMoniker.Net48)]
 public class StringInterpolationBenchmarks

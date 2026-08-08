@@ -10,7 +10,7 @@ namespace UnitsNet.Benchmark.Operators.Multiplications;
 
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 public class VolumeTimesDensityWithRandomUnitsBenchmarks
 {
     private static readonly QuantityValue DensityValue = 1.23;

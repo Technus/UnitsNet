@@ -11,7 +11,7 @@ namespace UnitsNet.Benchmark.Conversions.ToValue;
 
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 public class QuantityAsBenchmarks
 {
     private static readonly QuantityValue Value = 123.456;

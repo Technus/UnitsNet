@@ -7,7 +7,7 @@ namespace UnitsNet.Benchmark.Comparisons;
 
 [MemoryDiagnoser]
 [SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net90)]
+[SimpleJob(RuntimeMoniker.Net10_0)]
 public class ComparisonBenchmarks
 {
     private static readonly Mass Tolerance = Mass.FromNanograms(1);
