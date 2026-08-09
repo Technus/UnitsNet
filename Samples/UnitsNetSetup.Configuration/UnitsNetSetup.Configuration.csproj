@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="UnitsNet" />
+    <ProjectReference Include="..\..\UnitsNet.NumberExtensions.CS14\UnitsNet.NumberExtensions.CS14.csproj" />
+    <ProjectReference Include="..\..\UnitsNet.NumberExtensions\UnitsNet.NumberExtensions.csproj" />
+    <ProjectReference Include="..\..\UnitsNet\UnitsNet.csproj" />
   </ItemGroup>
 
   <ItemGroup>
