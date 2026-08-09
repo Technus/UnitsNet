@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -88,9 +89,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AmountOfSubstanceInfo"/> class with the default settings.</returns>
             public static AmountOfSubstanceInfo CreateDefault()
-            {
-                return new AmountOfSubstanceInfo(nameof(AmountOfSubstance), DefaultBaseUnit, GetDefaultMappings(), new AmountOfSubstance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(AmountOfSubstance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AmountOfSubstanceInfo"/> class with the default settings for the AmountOfSubstance quantity and a callback for customizing the default unit mappings.
@@ -102,19 +101,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AmountOfSubstanceInfo"/> class with the default settings.
             /// </returns>
             public static AmountOfSubstanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<AmountOfSubstanceUnit>>, IEnumerable<IUnitDefinition<AmountOfSubstanceUnit>>> customizeUnits)
-            {
-                return new AmountOfSubstanceInfo(nameof(AmountOfSubstance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new AmountOfSubstance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(AmountOfSubstance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AmountOfSubstance"/> is N.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, 0, 0, 0, 1, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, 0, 0, 0, 1, 0);
 
             /// <summary>
             ///     The default base unit of AmountOfSubstance is Mole. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static AmountOfSubstanceUnit DefaultBaseUnit { get; } = AmountOfSubstanceUnit.Mole;
+            public static AmountOfSubstanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AmountOfSubstanceUnit.Mole;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="AmountOfSubstanceUnit"/>.
@@ -210,7 +215,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="AmountOfSubstance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<AmountOfSubstance, AmountOfSubstanceUnit> Info { get; }
@@ -218,53 +227,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of AmountOfSubstance, which is Mole. All conversions go via this value.
         /// </summary>
-        public static AmountOfSubstanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static AmountOfSubstanceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the AmountOfSubstance quantity.
         /// </summary>
-        public static IReadOnlyCollection<AmountOfSubstanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<AmountOfSubstanceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Mole.
         /// </summary>
-        public static AmountOfSubstance Zero => Info.Zero;
+        public static AmountOfSubstance Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public AmountOfSubstanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public AmountOfSubstanceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<AmountOfSubstance, AmountOfSubstanceUnit> QuantityInfo => Info;
+        public QuantityInfo<AmountOfSubstance, AmountOfSubstanceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<AmountOfSubstance> IQuantityOfType<AmountOfSubstance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<AmountOfSubstance> IQuantityOfType<AmountOfSubstance>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<AmountOfSubstanceUnit> IQuantity<AmountOfSubstanceUnit>.QuantityInfo => Info;
+        QuantityInfo<AmountOfSubstanceUnit> IQuantity<AmountOfSubstanceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -276,87 +333,155 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Centimole"/>
         /// </summary>
-        public QuantityValue Centimoles => this.As(AmountOfSubstanceUnit.Centimole);
+        public QuantityValue Centimoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Centimole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.CentipoundMole"/>
         /// </summary>
-        public QuantityValue CentipoundMoles => this.As(AmountOfSubstanceUnit.CentipoundMole);
+        public QuantityValue CentipoundMoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.CentipoundMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Decimole"/>
         /// </summary>
-        public QuantityValue Decimoles => this.As(AmountOfSubstanceUnit.Decimole);
+        public QuantityValue Decimoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Decimole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.DecipoundMole"/>
         /// </summary>
-        public QuantityValue DecipoundMoles => this.As(AmountOfSubstanceUnit.DecipoundMole);
+        public QuantityValue DecipoundMoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.DecipoundMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Femtomole"/>
         /// </summary>
-        public QuantityValue Femtomoles => this.As(AmountOfSubstanceUnit.Femtomole);
+        public QuantityValue Femtomoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Femtomole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Kilomole"/>
         /// </summary>
-        public QuantityValue Kilomoles => this.As(AmountOfSubstanceUnit.Kilomole);
+        public QuantityValue Kilomoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Kilomole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.KilopoundMole"/>
         /// </summary>
-        public QuantityValue KilopoundMoles => this.As(AmountOfSubstanceUnit.KilopoundMole);
+        public QuantityValue KilopoundMoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.KilopoundMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Megamole"/>
         /// </summary>
-        public QuantityValue Megamoles => this.As(AmountOfSubstanceUnit.Megamole);
+        public QuantityValue Megamoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Megamole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Micromole"/>
         /// </summary>
-        public QuantityValue Micromoles => this.As(AmountOfSubstanceUnit.Micromole);
+        public QuantityValue Micromoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Micromole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.MicropoundMole"/>
         /// </summary>
-        public QuantityValue MicropoundMoles => this.As(AmountOfSubstanceUnit.MicropoundMole);
+        public QuantityValue MicropoundMoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.MicropoundMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Millimole"/>
         /// </summary>
-        public QuantityValue Millimoles => this.As(AmountOfSubstanceUnit.Millimole);
+        public QuantityValue Millimoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Millimole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.MillipoundMole"/>
         /// </summary>
-        public QuantityValue MillipoundMoles => this.As(AmountOfSubstanceUnit.MillipoundMole);
+        public QuantityValue MillipoundMoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.MillipoundMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Mole"/>
         /// </summary>
-        public QuantityValue Moles => this.As(AmountOfSubstanceUnit.Mole);
+        public QuantityValue Moles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Mole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Nanomole"/>
         /// </summary>
-        public QuantityValue Nanomoles => this.As(AmountOfSubstanceUnit.Nanomole);
+        public QuantityValue Nanomoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Nanomole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.NanopoundMole"/>
         /// </summary>
-        public QuantityValue NanopoundMoles => this.As(AmountOfSubstanceUnit.NanopoundMole);
+        public QuantityValue NanopoundMoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.NanopoundMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Picomole"/>
         /// </summary>
-        public QuantityValue Picomoles => this.As(AmountOfSubstanceUnit.Picomole);
+        public QuantityValue Picomoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.Picomole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.PoundMole"/>
         /// </summary>
-        public QuantityValue PoundMoles => this.As(AmountOfSubstanceUnit.PoundMole);
+        public QuantityValue PoundMoles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AmountOfSubstanceUnit.PoundMole);
+        }
 
         #endregion
 
@@ -367,10 +492,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AmountOfSubstanceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -378,10 +502,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AmountOfSubstanceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -390,138 +513,121 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Centimole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromCentimoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Centimole);
-        }
+            => new(value, AmountOfSubstanceUnit.Centimole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.CentipoundMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromCentipoundMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.CentipoundMole);
-        }
+            => new(value, AmountOfSubstanceUnit.CentipoundMole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Decimole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromDecimoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Decimole);
-        }
+            => new(value, AmountOfSubstanceUnit.Decimole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.DecipoundMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromDecipoundMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.DecipoundMole);
-        }
+            => new(value, AmountOfSubstanceUnit.DecipoundMole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Femtomole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromFemtomoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Femtomole);
-        }
+            => new(value, AmountOfSubstanceUnit.Femtomole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Kilomole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromKilomoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Kilomole);
-        }
+            => new(value, AmountOfSubstanceUnit.Kilomole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.KilopoundMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromKilopoundMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.KilopoundMole);
-        }
+            => new(value, AmountOfSubstanceUnit.KilopoundMole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Megamole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromMegamoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Megamole);
-        }
+            => new(value, AmountOfSubstanceUnit.Megamole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Micromole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromMicromoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Micromole);
-        }
+            => new(value, AmountOfSubstanceUnit.Micromole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.MicropoundMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromMicropoundMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.MicropoundMole);
-        }
+            => new(value, AmountOfSubstanceUnit.MicropoundMole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Millimole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromMillimoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Millimole);
-        }
+            => new(value, AmountOfSubstanceUnit.Millimole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.MillipoundMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromMillipoundMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.MillipoundMole);
-        }
+            => new(value, AmountOfSubstanceUnit.MillipoundMole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Mole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Mole);
-        }
+            => new(value, AmountOfSubstanceUnit.Mole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Nanomole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromNanomoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Nanomole);
-        }
+            => new(value, AmountOfSubstanceUnit.Nanomole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.NanopoundMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromNanopoundMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.NanopoundMole);
-        }
+            => new(value, AmountOfSubstanceUnit.NanopoundMole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Picomole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromPicomoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.Picomole);
-        }
+            => new(value, AmountOfSubstanceUnit.Picomole);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.PoundMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromPoundMoles(QuantityValue value)
-        {
-            return new AmountOfSubstance(value, AmountOfSubstanceUnit.PoundMole);
-        }
+            => new(value, AmountOfSubstanceUnit.PoundMole);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="AmountOfSubstanceUnit" /> to <see cref="AmountOfSubstance" />.
@@ -529,10 +635,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>AmountOfSubstance unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance From(QuantityValue value, AmountOfSubstanceUnit fromUnit)
-        {
-            return new AmountOfSubstance(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -560,10 +665,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -588,10 +692,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<AmountOfSubstance, AmountOfSubstanceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<AmountOfSubstance, AmountOfSubstanceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -601,10 +704,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out AmountOfSubstance result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -616,10 +718,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out AmountOfSubstance result)
-        {
-            return QuantityParser.Default.TryParse<AmountOfSubstance, AmountOfSubstanceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<AmountOfSubstance, AmountOfSubstanceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -630,10 +731,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstanceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -646,15 +746,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static AmountOfSubstanceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.AmountOfSubstanceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out AmountOfSubstanceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -666,10 +763,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out AmountOfSubstanceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -677,45 +773,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static AmountOfSubstance operator -(AmountOfSubstance right)
-        {
-            return new AmountOfSubstance(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from adding two <see cref="AmountOfSubstance"/>.</summary>
         public static AmountOfSubstance operator +(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return new AmountOfSubstance(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from subtracting two <see cref="AmountOfSubstance"/>.</summary>
         public static AmountOfSubstance operator -(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return new AmountOfSubstance(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from multiplying value and <see cref="AmountOfSubstance"/>.</summary>
         public static AmountOfSubstance operator *(QuantityValue left, AmountOfSubstance right)
-        {
-            return new AmountOfSubstance(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from multiplying value and <see cref="AmountOfSubstance"/>.</summary>
         public static AmountOfSubstance operator *(AmountOfSubstance left, QuantityValue right)
-        {
-            return new AmountOfSubstance(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from dividing <see cref="AmountOfSubstance"/> by value.</summary>
         public static AmountOfSubstance operator /(AmountOfSubstance left, QuantityValue right)
-        {
-            return new AmountOfSubstance(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="AmountOfSubstance"/> by <see cref="AmountOfSubstance"/>.</summary>
         public static QuantityValue operator /(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return left.Moles / right.Moles;
-        }
+            => left.Moles / right.Moles;
 
         #endregion
 
@@ -723,39 +805,27 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Duration"/> from <see cref="AmountOfSubstance"/> / <see cref="MolarFlow"/>.</summary>
         public static Duration operator /(AmountOfSubstance amountOfSubstance, MolarFlow molarFlow)
-        {
-            return Duration.FromSeconds(amountOfSubstance.Moles / molarFlow.MolesPerSecond);
-        }
+            => Duration.FromSeconds(amountOfSubstance.Moles / molarFlow.MolesPerSecond);
 
         /// <summary>Get <see cref="Energy"/> from <see cref="AmountOfSubstance"/> * <see cref="MolarEnergy"/>.</summary>
         public static Energy operator *(AmountOfSubstance amountOfSubstance, MolarEnergy molarEnergy)
-        {
-            return Energy.FromJoules(amountOfSubstance.Moles * molarEnergy.JoulesPerMole);
-        }
+            => Energy.FromJoules(amountOfSubstance.Moles * molarEnergy.JoulesPerMole);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="AmountOfSubstance"/> * <see cref="MolarMass"/>.</summary>
         public static Mass operator *(AmountOfSubstance amountOfSubstance, MolarMass molarMass)
-        {
-            return Mass.FromKilograms(amountOfSubstance.Moles * molarMass.KilogramsPerMole);
-        }
+            => Mass.FromKilograms(amountOfSubstance.Moles * molarMass.KilogramsPerMole);
 
         /// <summary>Get <see cref="MolarFlow"/> from <see cref="AmountOfSubstance"/> / <see cref="Duration"/>.</summary>
         public static MolarFlow operator /(AmountOfSubstance amountOfSubstance, Duration duration)
-        {
-            return MolarFlow.FromMolesPerSecond(amountOfSubstance.Moles / duration.Seconds);
-        }
+            => MolarFlow.FromMolesPerSecond(amountOfSubstance.Moles / duration.Seconds);
 
         /// <summary>Get <see cref="Molarity"/> from <see cref="AmountOfSubstance"/> / <see cref="Volume"/>.</summary>
         public static Molarity operator /(AmountOfSubstance amountOfSubstance, Volume volume)
-        {
-            return Molarity.FromMolesPerCubicMeter(amountOfSubstance.Moles / volume.CubicMeters);
-        }
+            => Molarity.FromMolesPerCubicMeter(amountOfSubstance.Moles / volume.CubicMeters);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="AmountOfSubstance"/> / <see cref="Molarity"/>.</summary>
         public static Volume operator /(AmountOfSubstance amountOfSubstance, Molarity molarity)
-        {
-            return Volume.FromCubicMeters(amountOfSubstance.Moles / molarity.MolesPerCubicMeter);
-        }
+            => Volume.FromCubicMeters(amountOfSubstance.Moles / molarity.MolesPerCubicMeter);
 
         #endregion
 
@@ -763,27 +833,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="AmountOfSubstance"/> instances are equal.
@@ -794,10 +856,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(AmountOfSubstance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="AmountOfSubstance"/> instances are not equal.
@@ -807,10 +868,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(AmountOfSubstance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(AmountOfSubstance left, AmountOfSubstance right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -823,12 +883,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not AmountOfSubstance otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is AmountOfSubstance otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -839,18 +894,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(AmountOfSubstance other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current AmountOfSubstance.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(AmountOfSubstance), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(AmountOfSubstance), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(AmountOfSubstance)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -879,9 +930,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(AmountOfSubstance other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -892,20 +941,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PressureChangeRateInfo"/> class with the default settings.</returns>
             public static PressureChangeRateInfo CreateDefault()
-            {
-                return new PressureChangeRateInfo(nameof(PressureChangeRate), DefaultBaseUnit, GetDefaultMappings(), new PressureChangeRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(PressureChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PressureChangeRateInfo"/> class with the default settings for the PressureChangeRate quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PressureChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static PressureChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<PressureChangeRateUnit>>, IEnumerable<IUnitDefinition<PressureChangeRateUnit>>> customizeUnits)
-            {
-                return new PressureChangeRateInfo(nameof(PressureChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new PressureChangeRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(PressureChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="PressureChangeRate"/> is T^-3L^-1M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-1, 1, -3, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-1, 1, -3, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of PressureChangeRate is PascalPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static PressureChangeRateUnit DefaultBaseUnit { get; } = PressureChangeRateUnit.PascalPerSecond;
+            public static PressureChangeRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PressureChangeRateUnit.PascalPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="PressureChangeRateUnit"/>.
@@ -208,7 +213,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="PressureChangeRate" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<PressureChangeRate, PressureChangeRateUnit> Info { get; }
@@ -216,53 +225,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of PressureChangeRate, which is PascalPerSecond. All conversions go via this value.
         /// </summary>
-        public static PressureChangeRateUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static PressureChangeRateUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the PressureChangeRate quantity.
         /// </summary>
-        public static IReadOnlyCollection<PressureChangeRateUnit> Units => Info.Units;
+        public static IReadOnlyCollection<PressureChangeRateUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit PascalPerSecond.
         /// </summary>
-        public static PressureChangeRate Zero => Info.Zero;
+        public static PressureChangeRate Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public PressureChangeRateUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public PressureChangeRateUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<PressureChangeRate, PressureChangeRateUnit> QuantityInfo => Info;
+        public QuantityInfo<PressureChangeRate, PressureChangeRateUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<PressureChangeRate> IQuantityOfType<PressureChangeRate>.QuantityInfo => Info;
+        IQuantityInstanceInfo<PressureChangeRate> IQuantityOfType<PressureChangeRate>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<PressureChangeRateUnit> IQuantity<PressureChangeRateUnit>.QuantityInfo => Info;
+        QuantityInfo<PressureChangeRateUnit> IQuantity<PressureChangeRateUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -274,92 +331,164 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.AtmospherePerSecond"/>
         /// </summary>
-        public QuantityValue AtmospheresPerSecond => this.As(PressureChangeRateUnit.AtmospherePerSecond);
+        public QuantityValue AtmospheresPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.AtmospherePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.BarPerMinute"/>
         /// </summary>
-        public QuantityValue BarsPerMinute => this.As(PressureChangeRateUnit.BarPerMinute);
+        public QuantityValue BarsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.BarPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.BarPerSecond"/>
         /// </summary>
-        public QuantityValue BarsPerSecond => this.As(PressureChangeRateUnit.BarPerSecond);
+        public QuantityValue BarsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.BarPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.KilopascalPerMinute"/>
         /// </summary>
-        public QuantityValue KilopascalsPerMinute => this.As(PressureChangeRateUnit.KilopascalPerMinute);
+        public QuantityValue KilopascalsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.KilopascalPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.KilopascalPerSecond"/>
         /// </summary>
-        public QuantityValue KilopascalsPerSecond => this.As(PressureChangeRateUnit.KilopascalPerSecond);
+        public QuantityValue KilopascalsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.KilopascalPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.KilopoundForcePerSquareInchPerMinute"/>
         /// </summary>
-        public QuantityValue KilopoundsForcePerSquareInchPerMinute => this.As(PressureChangeRateUnit.KilopoundForcePerSquareInchPerMinute);
+        public QuantityValue KilopoundsForcePerSquareInchPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.KilopoundForcePerSquareInchPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.KilopoundForcePerSquareInchPerSecond"/>
         /// </summary>
-        public QuantityValue KilopoundsForcePerSquareInchPerSecond => this.As(PressureChangeRateUnit.KilopoundForcePerSquareInchPerSecond);
+        public QuantityValue KilopoundsForcePerSquareInchPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.KilopoundForcePerSquareInchPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.MegapascalPerMinute"/>
         /// </summary>
-        public QuantityValue MegapascalsPerMinute => this.As(PressureChangeRateUnit.MegapascalPerMinute);
+        public QuantityValue MegapascalsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.MegapascalPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.MegapascalPerSecond"/>
         /// </summary>
-        public QuantityValue MegapascalsPerSecond => this.As(PressureChangeRateUnit.MegapascalPerSecond);
+        public QuantityValue MegapascalsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.MegapascalPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.MegapoundForcePerSquareInchPerMinute"/>
         /// </summary>
-        public QuantityValue MegapoundsForcePerSquareInchPerMinute => this.As(PressureChangeRateUnit.MegapoundForcePerSquareInchPerMinute);
+        public QuantityValue MegapoundsForcePerSquareInchPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.MegapoundForcePerSquareInchPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.MegapoundForcePerSquareInchPerSecond"/>
         /// </summary>
-        public QuantityValue MegapoundsForcePerSquareInchPerSecond => this.As(PressureChangeRateUnit.MegapoundForcePerSquareInchPerSecond);
+        public QuantityValue MegapoundsForcePerSquareInchPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.MegapoundForcePerSquareInchPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.MillibarPerMinute"/>
         /// </summary>
-        public QuantityValue MillibarsPerMinute => this.As(PressureChangeRateUnit.MillibarPerMinute);
+        public QuantityValue MillibarsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.MillibarPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.MillibarPerSecond"/>
         /// </summary>
-        public QuantityValue MillibarsPerSecond => this.As(PressureChangeRateUnit.MillibarPerSecond);
+        public QuantityValue MillibarsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.MillibarPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.MillimeterOfMercuryPerSecond"/>
         /// </summary>
-        public QuantityValue MillimetersOfMercuryPerSecond => this.As(PressureChangeRateUnit.MillimeterOfMercuryPerSecond);
+        public QuantityValue MillimetersOfMercuryPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.MillimeterOfMercuryPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.PascalPerMinute"/>
         /// </summary>
-        public QuantityValue PascalsPerMinute => this.As(PressureChangeRateUnit.PascalPerMinute);
+        public QuantityValue PascalsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.PascalPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.PascalPerSecond"/>
         /// </summary>
-        public QuantityValue PascalsPerSecond => this.As(PressureChangeRateUnit.PascalPerSecond);
+        public QuantityValue PascalsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.PascalPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.PoundForcePerSquareInchPerMinute"/>
         /// </summary>
-        public QuantityValue PoundsForcePerSquareInchPerMinute => this.As(PressureChangeRateUnit.PoundForcePerSquareInchPerMinute);
+        public QuantityValue PoundsForcePerSquareInchPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.PoundForcePerSquareInchPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.PoundForcePerSquareInchPerSecond"/>
         /// </summary>
-        public QuantityValue PoundsForcePerSquareInchPerSecond => this.As(PressureChangeRateUnit.PoundForcePerSquareInchPerSecond);
+        public QuantityValue PoundsForcePerSquareInchPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureChangeRateUnit.PoundForcePerSquareInchPerSecond);
+        }
 
         #endregion
 
@@ -370,10 +499,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PressureChangeRateUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -381,10 +509,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PressureChangeRateUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -393,146 +520,128 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.AtmospherePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromAtmospheresPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.AtmospherePerSecond);
-        }
+            => new(value, PressureChangeRateUnit.AtmospherePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.BarPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromBarsPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.BarPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.BarPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.BarPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromBarsPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.BarPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.BarPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.KilopascalPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromKilopascalsPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.KilopascalPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.KilopascalPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.KilopascalPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromKilopascalsPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.KilopascalPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.KilopascalPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.KilopoundForcePerSquareInchPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromKilopoundsForcePerSquareInchPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.KilopoundForcePerSquareInchPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.KilopoundForcePerSquareInchPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.KilopoundForcePerSquareInchPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromKilopoundsForcePerSquareInchPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.KilopoundForcePerSquareInchPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.KilopoundForcePerSquareInchPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.MegapascalPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromMegapascalsPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.MegapascalPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.MegapascalPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.MegapascalPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromMegapascalsPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.MegapascalPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.MegapascalPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.MegapoundForcePerSquareInchPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromMegapoundsForcePerSquareInchPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.MegapoundForcePerSquareInchPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.MegapoundForcePerSquareInchPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.MegapoundForcePerSquareInchPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromMegapoundsForcePerSquareInchPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.MegapoundForcePerSquareInchPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.MegapoundForcePerSquareInchPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.MillibarPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromMillibarsPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.MillibarPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.MillibarPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.MillibarPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromMillibarsPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.MillibarPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.MillibarPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.MillimeterOfMercuryPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromMillimetersOfMercuryPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.MillimeterOfMercuryPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.MillimeterOfMercuryPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.PascalPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromPascalsPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.PascalPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.PascalPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.PascalPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromPascalsPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.PascalPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.PascalPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.PoundForcePerSquareInchPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromPoundsForcePerSquareInchPerMinute(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.PoundForcePerSquareInchPerMinute);
-        }
+            => new(value, PressureChangeRateUnit.PoundForcePerSquareInchPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.PoundForcePerSquareInchPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate FromPoundsForcePerSquareInchPerSecond(QuantityValue value)
-        {
-            return new PressureChangeRate(value, PressureChangeRateUnit.PoundForcePerSquareInchPerSecond);
-        }
+            => new(value, PressureChangeRateUnit.PoundForcePerSquareInchPerSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="PressureChangeRateUnit" /> to <see cref="PressureChangeRate" />.
@@ -540,10 +649,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>PressureChangeRate unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate From(QuantityValue value, PressureChangeRateUnit fromUnit)
-        {
-            return new PressureChangeRate(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -571,10 +679,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -599,10 +706,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRate Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<PressureChangeRate, PressureChangeRateUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<PressureChangeRate, PressureChangeRateUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -612,10 +718,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out PressureChangeRate result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -627,10 +732,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out PressureChangeRate result)
-        {
-            return QuantityParser.Default.TryParse<PressureChangeRate, PressureChangeRateUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<PressureChangeRate, PressureChangeRateUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -641,10 +745,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureChangeRateUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -657,15 +760,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static PressureChangeRateUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.PressureChangeRateUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out PressureChangeRateUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -677,10 +777,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out PressureChangeRateUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -688,45 +787,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static PressureChangeRate operator -(PressureChangeRate right)
-        {
-            return new PressureChangeRate(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="PressureChangeRate"/> from adding two <see cref="PressureChangeRate"/>.</summary>
         public static PressureChangeRate operator +(PressureChangeRate left, PressureChangeRate right)
-        {
-            return new PressureChangeRate(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="PressureChangeRate"/> from subtracting two <see cref="PressureChangeRate"/>.</summary>
         public static PressureChangeRate operator -(PressureChangeRate left, PressureChangeRate right)
-        {
-            return new PressureChangeRate(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="PressureChangeRate"/> from multiplying value and <see cref="PressureChangeRate"/>.</summary>
         public static PressureChangeRate operator *(QuantityValue left, PressureChangeRate right)
-        {
-            return new PressureChangeRate(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="PressureChangeRate"/> from multiplying value and <see cref="PressureChangeRate"/>.</summary>
         public static PressureChangeRate operator *(PressureChangeRate left, QuantityValue right)
-        {
-            return new PressureChangeRate(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="PressureChangeRate"/> from dividing <see cref="PressureChangeRate"/> by value.</summary>
         public static PressureChangeRate operator /(PressureChangeRate left, QuantityValue right)
-        {
-            return new PressureChangeRate(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="PressureChangeRate"/> by <see cref="PressureChangeRate"/>.</summary>
         public static QuantityValue operator /(PressureChangeRate left, PressureChangeRate right)
-        {
-            return left.PascalsPerSecond / right.PascalsPerSecond;
-        }
+            => left.PascalsPerSecond / right.PascalsPerSecond;
 
         #endregion
 
@@ -734,9 +819,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="PressureChangeRate"/> * <see cref="Duration"/>.</summary>
         public static Pressure operator *(PressureChangeRate pressureChangeRate, Duration duration)
-        {
-            return Pressure.FromPascals(pressureChangeRate.PascalsPerSecond * duration.Seconds);
-        }
+            => Pressure.FromPascals(pressureChangeRate.PascalsPerSecond * duration.Seconds);
 
         #endregion
 
@@ -744,27 +827,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(PressureChangeRate left, PressureChangeRate right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(PressureChangeRate left, PressureChangeRate right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(PressureChangeRate left, PressureChangeRate right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(PressureChangeRate left, PressureChangeRate right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="PressureChangeRate"/> instances are equal.
@@ -775,10 +850,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(PressureChangeRate)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(PressureChangeRate left, PressureChangeRate right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="PressureChangeRate"/> instances are not equal.
@@ -788,10 +862,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(PressureChangeRate)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(PressureChangeRate left, PressureChangeRate right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -804,12 +877,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not PressureChangeRate otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is PressureChangeRate otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -820,18 +888,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(PressureChangeRate other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current PressureChangeRate.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(PressureChangeRate), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(PressureChangeRate), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(PressureChangeRate)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -860,9 +924,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(PressureChangeRate other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -873,20 +935,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

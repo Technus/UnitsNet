@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -88,9 +89,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="BitRateInfo"/> class with the default settings.</returns>
             public static BitRateInfo CreateDefault()
-            {
-                return new BitRateInfo(nameof(BitRate), DefaultBaseUnit, GetDefaultMappings(), new BitRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(BitRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="BitRateInfo"/> class with the default settings for the BitRate quantity and a callback for customizing the default unit mappings.
@@ -102,19 +101,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="BitRateInfo"/> class with the default settings.
             /// </returns>
             public static BitRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<BitRateUnit>>, IEnumerable<IUnitDefinition<BitRateUnit>>> customizeUnits)
-            {
-                return new BitRateInfo(nameof(BitRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new BitRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(BitRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="BitRate"/> is T^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, -1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, -1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of BitRate is BitPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static BitRateUnit DefaultBaseUnit { get; } = BitRateUnit.BitPerSecond;
+            public static BitRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = BitRateUnit.BitPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="BitRateUnit"/>.
@@ -276,7 +281,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="BitRate" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<BitRate, BitRateUnit> Info { get; }
@@ -284,53 +293,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of BitRate, which is BitPerSecond. All conversions go via this value.
         /// </summary>
-        public static BitRateUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static BitRateUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the BitRate quantity.
         /// </summary>
-        public static IReadOnlyCollection<BitRateUnit> Units => Info.Units;
+        public static IReadOnlyCollection<BitRateUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit BitPerSecond.
         /// </summary>
-        public static BitRate Zero => Info.Zero;
+        public static BitRate Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public BitRateUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public BitRateUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<BitRate, BitRateUnit> QuantityInfo => Info;
+        public QuantityInfo<BitRate, BitRateUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<BitRate> IQuantityOfType<BitRate>.QuantityInfo => Info;
+        IQuantityInstanceInfo<BitRate> IQuantityOfType<BitRate>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<BitRateUnit> IQuantity<BitRateUnit>.QuantityInfo => Info;
+        QuantityInfo<BitRateUnit> IQuantity<BitRateUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -342,197 +399,353 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.BitPerSecond"/>
         /// </summary>
-        public QuantityValue BitsPerSecond => this.As(BitRateUnit.BitPerSecond);
+        public QuantityValue BitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.BitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.BytePerSecond"/>
         /// </summary>
-        public QuantityValue BytesPerSecond => this.As(BitRateUnit.BytePerSecond);
+        public QuantityValue BytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.BytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.ExabitPerSecond"/>
         /// </summary>
-        public QuantityValue ExabitsPerSecond => this.As(BitRateUnit.ExabitPerSecond);
+        public QuantityValue ExabitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.ExabitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.ExabytePerSecond"/>
         /// </summary>
-        public QuantityValue ExabytesPerSecond => this.As(BitRateUnit.ExabytePerSecond);
+        public QuantityValue ExabytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.ExabytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.ExaoctetPerSecond"/>
         /// </summary>
-        public QuantityValue ExaoctetsPerSecond => this.As(BitRateUnit.ExaoctetPerSecond);
+        public QuantityValue ExaoctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.ExaoctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.ExbibitPerSecond"/>
         /// </summary>
-        public QuantityValue ExbibitsPerSecond => this.As(BitRateUnit.ExbibitPerSecond);
+        public QuantityValue ExbibitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.ExbibitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.ExbibytePerSecond"/>
         /// </summary>
-        public QuantityValue ExbibytesPerSecond => this.As(BitRateUnit.ExbibytePerSecond);
+        public QuantityValue ExbibytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.ExbibytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.ExbioctetPerSecond"/>
         /// </summary>
-        public QuantityValue ExbioctetsPerSecond => this.As(BitRateUnit.ExbioctetPerSecond);
+        public QuantityValue ExbioctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.ExbioctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.GibibitPerSecond"/>
         /// </summary>
-        public QuantityValue GibibitsPerSecond => this.As(BitRateUnit.GibibitPerSecond);
+        public QuantityValue GibibitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.GibibitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.GibibytePerSecond"/>
         /// </summary>
-        public QuantityValue GibibytesPerSecond => this.As(BitRateUnit.GibibytePerSecond);
+        public QuantityValue GibibytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.GibibytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.GibioctetPerSecond"/>
         /// </summary>
-        public QuantityValue GibioctetsPerSecond => this.As(BitRateUnit.GibioctetPerSecond);
+        public QuantityValue GibioctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.GibioctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.GigabitPerSecond"/>
         /// </summary>
-        public QuantityValue GigabitsPerSecond => this.As(BitRateUnit.GigabitPerSecond);
+        public QuantityValue GigabitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.GigabitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.GigabytePerSecond"/>
         /// </summary>
-        public QuantityValue GigabytesPerSecond => this.As(BitRateUnit.GigabytePerSecond);
+        public QuantityValue GigabytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.GigabytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.GigaoctetPerSecond"/>
         /// </summary>
-        public QuantityValue GigaoctetsPerSecond => this.As(BitRateUnit.GigaoctetPerSecond);
+        public QuantityValue GigaoctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.GigaoctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.KibibitPerSecond"/>
         /// </summary>
-        public QuantityValue KibibitsPerSecond => this.As(BitRateUnit.KibibitPerSecond);
+        public QuantityValue KibibitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.KibibitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.KibibytePerSecond"/>
         /// </summary>
-        public QuantityValue KibibytesPerSecond => this.As(BitRateUnit.KibibytePerSecond);
+        public QuantityValue KibibytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.KibibytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.KibioctetPerSecond"/>
         /// </summary>
-        public QuantityValue KibioctetsPerSecond => this.As(BitRateUnit.KibioctetPerSecond);
+        public QuantityValue KibioctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.KibioctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.KilobitPerSecond"/>
         /// </summary>
-        public QuantityValue KilobitsPerSecond => this.As(BitRateUnit.KilobitPerSecond);
+        public QuantityValue KilobitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.KilobitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.KilobytePerSecond"/>
         /// </summary>
-        public QuantityValue KilobytesPerSecond => this.As(BitRateUnit.KilobytePerSecond);
+        public QuantityValue KilobytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.KilobytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.KilooctetPerSecond"/>
         /// </summary>
-        public QuantityValue KilooctetsPerSecond => this.As(BitRateUnit.KilooctetPerSecond);
+        public QuantityValue KilooctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.KilooctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.MebibitPerSecond"/>
         /// </summary>
-        public QuantityValue MebibitsPerSecond => this.As(BitRateUnit.MebibitPerSecond);
+        public QuantityValue MebibitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.MebibitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.MebibytePerSecond"/>
         /// </summary>
-        public QuantityValue MebibytesPerSecond => this.As(BitRateUnit.MebibytePerSecond);
+        public QuantityValue MebibytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.MebibytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.MebioctetPerSecond"/>
         /// </summary>
-        public QuantityValue MebioctetsPerSecond => this.As(BitRateUnit.MebioctetPerSecond);
+        public QuantityValue MebioctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.MebioctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.MegabitPerSecond"/>
         /// </summary>
-        public QuantityValue MegabitsPerSecond => this.As(BitRateUnit.MegabitPerSecond);
+        public QuantityValue MegabitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.MegabitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.MegabytePerSecond"/>
         /// </summary>
-        public QuantityValue MegabytesPerSecond => this.As(BitRateUnit.MegabytePerSecond);
+        public QuantityValue MegabytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.MegabytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.MegaoctetPerSecond"/>
         /// </summary>
-        public QuantityValue MegaoctetsPerSecond => this.As(BitRateUnit.MegaoctetPerSecond);
+        public QuantityValue MegaoctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.MegaoctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.OctetPerSecond"/>
         /// </summary>
-        public QuantityValue OctetsPerSecond => this.As(BitRateUnit.OctetPerSecond);
+        public QuantityValue OctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.OctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.PebibitPerSecond"/>
         /// </summary>
-        public QuantityValue PebibitsPerSecond => this.As(BitRateUnit.PebibitPerSecond);
+        public QuantityValue PebibitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.PebibitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.PebibytePerSecond"/>
         /// </summary>
-        public QuantityValue PebibytesPerSecond => this.As(BitRateUnit.PebibytePerSecond);
+        public QuantityValue PebibytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.PebibytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.PebioctetPerSecond"/>
         /// </summary>
-        public QuantityValue PebioctetsPerSecond => this.As(BitRateUnit.PebioctetPerSecond);
+        public QuantityValue PebioctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.PebioctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.PetabitPerSecond"/>
         /// </summary>
-        public QuantityValue PetabitsPerSecond => this.As(BitRateUnit.PetabitPerSecond);
+        public QuantityValue PetabitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.PetabitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.PetabytePerSecond"/>
         /// </summary>
-        public QuantityValue PetabytesPerSecond => this.As(BitRateUnit.PetabytePerSecond);
+        public QuantityValue PetabytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.PetabytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.PetaoctetPerSecond"/>
         /// </summary>
-        public QuantityValue PetaoctetsPerSecond => this.As(BitRateUnit.PetaoctetPerSecond);
+        public QuantityValue PetaoctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.PetaoctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.TebibitPerSecond"/>
         /// </summary>
-        public QuantityValue TebibitsPerSecond => this.As(BitRateUnit.TebibitPerSecond);
+        public QuantityValue TebibitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.TebibitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.TebibytePerSecond"/>
         /// </summary>
-        public QuantityValue TebibytesPerSecond => this.As(BitRateUnit.TebibytePerSecond);
+        public QuantityValue TebibytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.TebibytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.TebioctetPerSecond"/>
         /// </summary>
-        public QuantityValue TebioctetsPerSecond => this.As(BitRateUnit.TebioctetPerSecond);
+        public QuantityValue TebioctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.TebioctetPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.TerabitPerSecond"/>
         /// </summary>
-        public QuantityValue TerabitsPerSecond => this.As(BitRateUnit.TerabitPerSecond);
+        public QuantityValue TerabitsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.TerabitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.TerabytePerSecond"/>
         /// </summary>
-        public QuantityValue TerabytesPerSecond => this.As(BitRateUnit.TerabytePerSecond);
+        public QuantityValue TerabytesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.TerabytePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.TeraoctetPerSecond"/>
         /// </summary>
-        public QuantityValue TeraoctetsPerSecond => this.As(BitRateUnit.TeraoctetPerSecond);
+        public QuantityValue TeraoctetsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(BitRateUnit.TeraoctetPerSecond);
+        }
 
         #endregion
 
@@ -543,10 +756,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(BitRateUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -554,10 +766,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(BitRateUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -566,314 +777,275 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.BitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromBitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.BitPerSecond);
-        }
+            => new(value, BitRateUnit.BitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.BytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromBytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.BytePerSecond);
-        }
+            => new(value, BitRateUnit.BytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.ExabitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromExabitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.ExabitPerSecond);
-        }
+            => new(value, BitRateUnit.ExabitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.ExabytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromExabytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.ExabytePerSecond);
-        }
+            => new(value, BitRateUnit.ExabytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.ExaoctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromExaoctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.ExaoctetPerSecond);
-        }
+            => new(value, BitRateUnit.ExaoctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.ExbibitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromExbibitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.ExbibitPerSecond);
-        }
+            => new(value, BitRateUnit.ExbibitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.ExbibytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromExbibytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.ExbibytePerSecond);
-        }
+            => new(value, BitRateUnit.ExbibytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.ExbioctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromExbioctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.ExbioctetPerSecond);
-        }
+            => new(value, BitRateUnit.ExbioctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.GibibitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromGibibitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.GibibitPerSecond);
-        }
+            => new(value, BitRateUnit.GibibitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.GibibytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromGibibytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.GibibytePerSecond);
-        }
+            => new(value, BitRateUnit.GibibytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.GibioctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromGibioctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.GibioctetPerSecond);
-        }
+            => new(value, BitRateUnit.GibioctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.GigabitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromGigabitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.GigabitPerSecond);
-        }
+            => new(value, BitRateUnit.GigabitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.GigabytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromGigabytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.GigabytePerSecond);
-        }
+            => new(value, BitRateUnit.GigabytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.GigaoctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromGigaoctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.GigaoctetPerSecond);
-        }
+            => new(value, BitRateUnit.GigaoctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.KibibitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromKibibitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.KibibitPerSecond);
-        }
+            => new(value, BitRateUnit.KibibitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.KibibytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromKibibytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.KibibytePerSecond);
-        }
+            => new(value, BitRateUnit.KibibytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.KibioctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromKibioctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.KibioctetPerSecond);
-        }
+            => new(value, BitRateUnit.KibioctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.KilobitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromKilobitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.KilobitPerSecond);
-        }
+            => new(value, BitRateUnit.KilobitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.KilobytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromKilobytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.KilobytePerSecond);
-        }
+            => new(value, BitRateUnit.KilobytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.KilooctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromKilooctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.KilooctetPerSecond);
-        }
+            => new(value, BitRateUnit.KilooctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.MebibitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromMebibitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.MebibitPerSecond);
-        }
+            => new(value, BitRateUnit.MebibitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.MebibytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromMebibytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.MebibytePerSecond);
-        }
+            => new(value, BitRateUnit.MebibytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.MebioctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromMebioctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.MebioctetPerSecond);
-        }
+            => new(value, BitRateUnit.MebioctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.MegabitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromMegabitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.MegabitPerSecond);
-        }
+            => new(value, BitRateUnit.MegabitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.MegabytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromMegabytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.MegabytePerSecond);
-        }
+            => new(value, BitRateUnit.MegabytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.MegaoctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromMegaoctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.MegaoctetPerSecond);
-        }
+            => new(value, BitRateUnit.MegaoctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.OctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromOctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.OctetPerSecond);
-        }
+            => new(value, BitRateUnit.OctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.PebibitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromPebibitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.PebibitPerSecond);
-        }
+            => new(value, BitRateUnit.PebibitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.PebibytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromPebibytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.PebibytePerSecond);
-        }
+            => new(value, BitRateUnit.PebibytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.PebioctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromPebioctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.PebioctetPerSecond);
-        }
+            => new(value, BitRateUnit.PebioctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.PetabitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromPetabitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.PetabitPerSecond);
-        }
+            => new(value, BitRateUnit.PetabitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.PetabytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromPetabytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.PetabytePerSecond);
-        }
+            => new(value, BitRateUnit.PetabytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.PetaoctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromPetaoctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.PetaoctetPerSecond);
-        }
+            => new(value, BitRateUnit.PetaoctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.TebibitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromTebibitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.TebibitPerSecond);
-        }
+            => new(value, BitRateUnit.TebibitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.TebibytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromTebibytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.TebibytePerSecond);
-        }
+            => new(value, BitRateUnit.TebibytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.TebioctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromTebioctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.TebioctetPerSecond);
-        }
+            => new(value, BitRateUnit.TebioctetPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.TerabitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromTerabitsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.TerabitPerSecond);
-        }
+            => new(value, BitRateUnit.TerabitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.TerabytePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromTerabytesPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.TerabytePerSecond);
-        }
+            => new(value, BitRateUnit.TerabytePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.TeraoctetPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate FromTeraoctetsPerSecond(QuantityValue value)
-        {
-            return new BitRate(value, BitRateUnit.TeraoctetPerSecond);
-        }
+            => new(value, BitRateUnit.TeraoctetPerSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="BitRateUnit" /> to <see cref="BitRate" />.
@@ -881,10 +1053,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>BitRate unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate From(QuantityValue value, BitRateUnit fromUnit)
-        {
-            return new BitRate(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -912,10 +1083,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -940,10 +1110,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRate Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<BitRate, BitRateUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<BitRate, BitRateUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -953,10 +1122,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out BitRate result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -968,10 +1136,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out BitRate result)
-        {
-            return QuantityParser.Default.TryParse<BitRate, BitRateUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<BitRate, BitRateUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -982,10 +1149,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static BitRateUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -998,15 +1164,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static BitRateUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.BitRateUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out BitRateUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1018,10 +1181,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out BitRateUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -1029,45 +1191,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static BitRate operator -(BitRate right)
-        {
-            return new BitRate(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="BitRate"/> from adding two <see cref="BitRate"/>.</summary>
         public static BitRate operator +(BitRate left, BitRate right)
-        {
-            return new BitRate(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="BitRate"/> from subtracting two <see cref="BitRate"/>.</summary>
         public static BitRate operator -(BitRate left, BitRate right)
-        {
-            return new BitRate(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="BitRate"/> from multiplying value and <see cref="BitRate"/>.</summary>
         public static BitRate operator *(QuantityValue left, BitRate right)
-        {
-            return new BitRate(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="BitRate"/> from multiplying value and <see cref="BitRate"/>.</summary>
         public static BitRate operator *(BitRate left, QuantityValue right)
-        {
-            return new BitRate(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="BitRate"/> from dividing <see cref="BitRate"/> by value.</summary>
         public static BitRate operator /(BitRate left, QuantityValue right)
-        {
-            return new BitRate(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="BitRate"/> by <see cref="BitRate"/>.</summary>
         public static QuantityValue operator /(BitRate left, BitRate right)
-        {
-            return left.BitsPerSecond / right.BitsPerSecond;
-        }
+            => left.BitsPerSecond / right.BitsPerSecond;
 
         #endregion
 
@@ -1075,21 +1223,15 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Frequency"/> from <see cref="BitRate"/> / <see cref="Information"/>.</summary>
         public static Frequency operator /(BitRate bitRate, Information information)
-        {
-            return Frequency.FromPerSecond(bitRate.BitsPerSecond / information.Bits);
-        }
+            => Frequency.FromPerSecond(bitRate.BitsPerSecond / information.Bits);
 
         /// <summary>Get <see cref="Information"/> from <see cref="BitRate"/> * <see cref="Duration"/>.</summary>
         public static Information operator *(BitRate bitRate, Duration duration)
-        {
-            return Information.FromBits(bitRate.BitsPerSecond * duration.Seconds);
-        }
+            => Information.FromBits(bitRate.BitsPerSecond * duration.Seconds);
 
         /// <summary>Get <see cref="Information"/> from <see cref="BitRate"/> / <see cref="Frequency"/>.</summary>
         public static Information operator /(BitRate bitRate, Frequency frequency)
-        {
-            return Information.FromBits(bitRate.BitsPerSecond / frequency.PerSecond);
-        }
+            => Information.FromBits(bitRate.BitsPerSecond / frequency.PerSecond);
 
         #endregion
 
@@ -1097,27 +1239,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(BitRate left, BitRate right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(BitRate left, BitRate right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(BitRate left, BitRate right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(BitRate left, BitRate right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="BitRate"/> instances are equal.
@@ -1128,10 +1262,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(BitRate)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(BitRate left, BitRate right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="BitRate"/> instances are not equal.
@@ -1141,10 +1274,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(BitRate)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(BitRate left, BitRate right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1157,12 +1289,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not BitRate otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is BitRate otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1173,18 +1300,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(BitRate other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current BitRate.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(BitRate), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(BitRate), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(BitRate)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1213,9 +1336,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(BitRate other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1226,20 +1347,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

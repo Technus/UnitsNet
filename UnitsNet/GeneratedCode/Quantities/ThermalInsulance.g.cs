@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ThermalInsulanceInfo"/> class with the default settings.</returns>
             public static ThermalInsulanceInfo CreateDefault()
-            {
-                return new ThermalInsulanceInfo(nameof(ThermalInsulance), DefaultBaseUnit, GetDefaultMappings(), new ThermalInsulance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ThermalInsulance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ThermalInsulanceInfo"/> class with the default settings for the ThermalInsulance quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ThermalInsulanceInfo"/> class with the default settings.
             /// </returns>
             public static ThermalInsulanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ThermalInsulanceUnit>>, IEnumerable<IUnitDefinition<ThermalInsulanceUnit>>> customizeUnits)
-            {
-                return new ThermalInsulanceInfo(nameof(ThermalInsulance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ThermalInsulance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ThermalInsulance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ThermalInsulance"/> is T^3M^-1Θ.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, -1, 3, 0, 1, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, -1, 3, 0, 1, 0, 0);
 
             /// <summary>
             ///     The default base unit of ThermalInsulance is SquareMeterKelvinPerKilowatt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ThermalInsulanceUnit DefaultBaseUnit { get; } = ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt;
+            public static ThermalInsulanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ThermalInsulanceUnit"/>.
@@ -178,7 +183,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ThermalInsulance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ThermalInsulance, ThermalInsulanceUnit> Info { get; }
@@ -186,53 +195,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ThermalInsulance, which is SquareMeterKelvinPerKilowatt. All conversions go via this value.
         /// </summary>
-        public static ThermalInsulanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ThermalInsulanceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ThermalInsulance quantity.
         /// </summary>
-        public static IReadOnlyCollection<ThermalInsulanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ThermalInsulanceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit SquareMeterKelvinPerKilowatt.
         /// </summary>
-        public static ThermalInsulance Zero => Info.Zero;
+        public static ThermalInsulance Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ThermalInsulanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ThermalInsulanceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ThermalInsulance, ThermalInsulanceUnit> QuantityInfo => Info;
+        public QuantityInfo<ThermalInsulance, ThermalInsulanceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ThermalInsulance> IQuantityOfType<ThermalInsulance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ThermalInsulance> IQuantityOfType<ThermalInsulance>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ThermalInsulanceUnit> IQuantity<ThermalInsulanceUnit>.QuantityInfo => Info;
+        QuantityInfo<ThermalInsulanceUnit> IQuantity<ThermalInsulanceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -244,37 +301,65 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu"/>
         /// </summary>
-        public QuantityValue HourSquareFeetDegreesFahrenheitPerBtu => this.As(ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu);
+        public QuantityValue HourSquareFeetDegreesFahrenheitPerBtu
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.SquareCentimeterHourDegreeCelsiusPerKilocalorie"/>
         /// </summary>
-        public QuantityValue SquareCentimeterHourDegreesCelsiusPerKilocalorie => this.As(ThermalInsulanceUnit.SquareCentimeterHourDegreeCelsiusPerKilocalorie);
+        public QuantityValue SquareCentimeterHourDegreesCelsiusPerKilocalorie
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ThermalInsulanceUnit.SquareCentimeterHourDegreeCelsiusPerKilocalorie);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.SquareCentimeterKelvinPerWatt"/>
         /// </summary>
-        public QuantityValue SquareCentimeterKelvinsPerWatt => this.As(ThermalInsulanceUnit.SquareCentimeterKelvinPerWatt);
+        public QuantityValue SquareCentimeterKelvinsPerWatt
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ThermalInsulanceUnit.SquareCentimeterKelvinPerWatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.SquareMeterDegreeCelsiusPerWatt"/>
         /// </summary>
-        public QuantityValue SquareMeterDegreesCelsiusPerWatt => this.As(ThermalInsulanceUnit.SquareMeterDegreeCelsiusPerWatt);
+        public QuantityValue SquareMeterDegreesCelsiusPerWatt
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ThermalInsulanceUnit.SquareMeterDegreeCelsiusPerWatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt"/>
         /// </summary>
-        public QuantityValue SquareMeterKelvinsPerKilowatt => this.As(ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt);
+        public QuantityValue SquareMeterKelvinsPerKilowatt
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.SquareMeterKelvinPerWatt"/>
         /// </summary>
-        public QuantityValue SquareMeterKelvinsPerWatt => this.As(ThermalInsulanceUnit.SquareMeterKelvinPerWatt);
+        public QuantityValue SquareMeterKelvinsPerWatt
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ThermalInsulanceUnit.SquareMeterKelvinPerWatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt"/>
         /// </summary>
-        public QuantityValue SquareMillimeterKelvinsPerWatt => this.As(ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt);
+        public QuantityValue SquareMillimeterKelvinsPerWatt
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt);
+        }
 
         #endregion
 
@@ -285,10 +370,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ThermalInsulanceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -296,10 +380,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ThermalInsulanceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -308,58 +391,51 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance FromHourSquareFeetDegreesFahrenheitPerBtu(QuantityValue value)
-        {
-            return new ThermalInsulance(value, ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu);
-        }
+            => new(value, ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu);
 
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.SquareCentimeterHourDegreeCelsiusPerKilocalorie"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance FromSquareCentimeterHourDegreesCelsiusPerKilocalorie(QuantityValue value)
-        {
-            return new ThermalInsulance(value, ThermalInsulanceUnit.SquareCentimeterHourDegreeCelsiusPerKilocalorie);
-        }
+            => new(value, ThermalInsulanceUnit.SquareCentimeterHourDegreeCelsiusPerKilocalorie);
 
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.SquareCentimeterKelvinPerWatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance FromSquareCentimeterKelvinsPerWatt(QuantityValue value)
-        {
-            return new ThermalInsulance(value, ThermalInsulanceUnit.SquareCentimeterKelvinPerWatt);
-        }
+            => new(value, ThermalInsulanceUnit.SquareCentimeterKelvinPerWatt);
 
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.SquareMeterDegreeCelsiusPerWatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance FromSquareMeterDegreesCelsiusPerWatt(QuantityValue value)
-        {
-            return new ThermalInsulance(value, ThermalInsulanceUnit.SquareMeterDegreeCelsiusPerWatt);
-        }
+            => new(value, ThermalInsulanceUnit.SquareMeterDegreeCelsiusPerWatt);
 
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance FromSquareMeterKelvinsPerKilowatt(QuantityValue value)
-        {
-            return new ThermalInsulance(value, ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt);
-        }
+            => new(value, ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt);
 
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.SquareMeterKelvinPerWatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance FromSquareMeterKelvinsPerWatt(QuantityValue value)
-        {
-            return new ThermalInsulance(value, ThermalInsulanceUnit.SquareMeterKelvinPerWatt);
-        }
+            => new(value, ThermalInsulanceUnit.SquareMeterKelvinPerWatt);
 
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance FromSquareMillimeterKelvinsPerWatt(QuantityValue value)
-        {
-            return new ThermalInsulance(value, ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt);
-        }
+            => new(value, ThermalInsulanceUnit.SquareMillimeterKelvinPerWatt);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ThermalInsulanceUnit" /> to <see cref="ThermalInsulance" />.
@@ -367,10 +443,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ThermalInsulance unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance From(QuantityValue value, ThermalInsulanceUnit fromUnit)
-        {
-            return new ThermalInsulance(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -398,10 +473,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -426,10 +500,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulance Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ThermalInsulance, ThermalInsulanceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ThermalInsulance, ThermalInsulanceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -439,10 +512,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ThermalInsulance result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -454,10 +526,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ThermalInsulance result)
-        {
-            return QuantityParser.Default.TryParse<ThermalInsulance, ThermalInsulanceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ThermalInsulance, ThermalInsulanceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -468,10 +539,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ThermalInsulanceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -484,15 +554,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ThermalInsulanceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ThermalInsulanceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ThermalInsulanceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -504,10 +571,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ThermalInsulanceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -515,45 +581,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ThermalInsulance operator -(ThermalInsulance right)
-        {
-            return new ThermalInsulance(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ThermalInsulance"/> from adding two <see cref="ThermalInsulance"/>.</summary>
         public static ThermalInsulance operator +(ThermalInsulance left, ThermalInsulance right)
-        {
-            return new ThermalInsulance(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ThermalInsulance"/> from subtracting two <see cref="ThermalInsulance"/>.</summary>
         public static ThermalInsulance operator -(ThermalInsulance left, ThermalInsulance right)
-        {
-            return new ThermalInsulance(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ThermalInsulance"/> from multiplying value and <see cref="ThermalInsulance"/>.</summary>
         public static ThermalInsulance operator *(QuantityValue left, ThermalInsulance right)
-        {
-            return new ThermalInsulance(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ThermalInsulance"/> from multiplying value and <see cref="ThermalInsulance"/>.</summary>
         public static ThermalInsulance operator *(ThermalInsulance left, QuantityValue right)
-        {
-            return new ThermalInsulance(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ThermalInsulance"/> from dividing <see cref="ThermalInsulance"/> by value.</summary>
         public static ThermalInsulance operator /(ThermalInsulance left, QuantityValue right)
-        {
-            return new ThermalInsulance(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ThermalInsulance"/> by <see cref="ThermalInsulance"/>.</summary>
         public static QuantityValue operator /(ThermalInsulance left, ThermalInsulance right)
-        {
-            return left.SquareMeterKelvinsPerKilowatt / right.SquareMeterKelvinsPerKilowatt;
-        }
+            => left.SquareMeterKelvinsPerKilowatt / right.SquareMeterKelvinsPerKilowatt;
 
         #endregion
 
@@ -562,15 +614,11 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="ThermalTransmittance"/>.</returns>
         public ThermalTransmittance Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, ThermalTransmittance.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, ThermalTransmittance.Info);
 
         /// <summary>Get <see cref="TemperatureDelta"/> from <see cref="ThermalInsulance"/> * <see cref="HeatFlux"/>.</summary>
         public static TemperatureDelta operator *(ThermalInsulance thermalInsulance, HeatFlux heatFlux)
-        {
-            return TemperatureDelta.FromKelvins(thermalInsulance.SquareMeterKelvinsPerWatt * heatFlux.WattsPerSquareMeter);
-        }
+            => TemperatureDelta.FromKelvins(thermalInsulance.SquareMeterKelvinsPerWatt * heatFlux.WattsPerSquareMeter);
 
         #endregion
 
@@ -578,27 +626,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ThermalInsulance left, ThermalInsulance right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ThermalInsulance left, ThermalInsulance right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ThermalInsulance left, ThermalInsulance right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ThermalInsulance left, ThermalInsulance right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ThermalInsulance"/> instances are equal.
@@ -609,10 +649,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ThermalInsulance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ThermalInsulance left, ThermalInsulance right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ThermalInsulance"/> instances are not equal.
@@ -622,10 +661,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ThermalInsulance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ThermalInsulance left, ThermalInsulance right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -638,12 +676,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ThermalInsulance otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ThermalInsulance otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -654,18 +687,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ThermalInsulance other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ThermalInsulance.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ThermalInsulance), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ThermalInsulance), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ThermalInsulance)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -694,9 +723,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ThermalInsulance other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -707,20 +734,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

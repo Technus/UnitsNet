@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TemperatureChangeRateInfo"/> class with the default settings.</returns>
             public static TemperatureChangeRateInfo CreateDefault()
-            {
-                return new TemperatureChangeRateInfo(nameof(TemperatureChangeRate), DefaultBaseUnit, GetDefaultMappings(), new TemperatureChangeRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(TemperatureChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TemperatureChangeRateInfo"/> class with the default settings for the TemperatureChangeRate quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TemperatureChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static TemperatureChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<TemperatureChangeRateUnit>>, IEnumerable<IUnitDefinition<TemperatureChangeRateUnit>>> customizeUnits)
-            {
-                return new TemperatureChangeRateInfo(nameof(TemperatureChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new TemperatureChangeRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(TemperatureChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="TemperatureChangeRate"/> is T^-1Θ.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, -1, 0, 1, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, -1, 0, 1, 0, 0);
 
             /// <summary>
             ///     The default base unit of TemperatureChangeRate is DegreeCelsiusPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static TemperatureChangeRateUnit DefaultBaseUnit { get; } = TemperatureChangeRateUnit.DegreeCelsiusPerSecond;
+            public static TemperatureChangeRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TemperatureChangeRateUnit.DegreeCelsiusPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="TemperatureChangeRateUnit"/>.
@@ -205,7 +210,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="TemperatureChangeRate" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<TemperatureChangeRate, TemperatureChangeRateUnit> Info { get; }
@@ -213,53 +222,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of TemperatureChangeRate, which is DegreeCelsiusPerSecond. All conversions go via this value.
         /// </summary>
-        public static TemperatureChangeRateUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static TemperatureChangeRateUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the TemperatureChangeRate quantity.
         /// </summary>
-        public static IReadOnlyCollection<TemperatureChangeRateUnit> Units => Info.Units;
+        public static IReadOnlyCollection<TemperatureChangeRateUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit DegreeCelsiusPerSecond.
         /// </summary>
-        public static TemperatureChangeRate Zero => Info.Zero;
+        public static TemperatureChangeRate Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public TemperatureChangeRateUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public TemperatureChangeRateUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<TemperatureChangeRate, TemperatureChangeRateUnit> QuantityInfo => Info;
+        public QuantityInfo<TemperatureChangeRate, TemperatureChangeRateUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<TemperatureChangeRate> IQuantityOfType<TemperatureChangeRate>.QuantityInfo => Info;
+        IQuantityInstanceInfo<TemperatureChangeRate> IQuantityOfType<TemperatureChangeRate>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<TemperatureChangeRateUnit> IQuantity<TemperatureChangeRateUnit>.QuantityInfo => Info;
+        QuantityInfo<TemperatureChangeRateUnit> IQuantity<TemperatureChangeRateUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -271,87 +328,155 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue CentidegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond);
+        public QuantityValue CentidegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DecadegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue DecadegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.DecadegreeCelsiusPerSecond);
+        public QuantityValue DecadegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DecadegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DecidegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue DecidegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.DecidegreeCelsiusPerSecond);
+        public QuantityValue DecidegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DecidegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeCelsiusPerHour"/>
         /// </summary>
-        public QuantityValue DegreesCelsiusPerHour => this.As(TemperatureChangeRateUnit.DegreeCelsiusPerHour);
+        public QuantityValue DegreesCelsiusPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeCelsiusPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeCelsiusPerMinute"/>
         /// </summary>
-        public QuantityValue DegreesCelsiusPerMinute => this.As(TemperatureChangeRateUnit.DegreeCelsiusPerMinute);
+        public QuantityValue DegreesCelsiusPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeCelsiusPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue DegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.DegreeCelsiusPerSecond);
+        public QuantityValue DegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeFahrenheitPerHour"/>
         /// </summary>
-        public QuantityValue DegreesFahrenheitPerHour => this.As(TemperatureChangeRateUnit.DegreeFahrenheitPerHour);
+        public QuantityValue DegreesFahrenheitPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeFahrenheitPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeFahrenheitPerMinute"/>
         /// </summary>
-        public QuantityValue DegreesFahrenheitPerMinute => this.As(TemperatureChangeRateUnit.DegreeFahrenheitPerMinute);
+        public QuantityValue DegreesFahrenheitPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeFahrenheitPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeFahrenheitPerSecond"/>
         /// </summary>
-        public QuantityValue DegreesFahrenheitPerSecond => this.As(TemperatureChangeRateUnit.DegreeFahrenheitPerSecond);
+        public QuantityValue DegreesFahrenheitPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeFahrenheitPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeKelvinPerHour"/>
         /// </summary>
-        public QuantityValue DegreesKelvinPerHour => this.As(TemperatureChangeRateUnit.DegreeKelvinPerHour);
+        public QuantityValue DegreesKelvinPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeKelvinPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeKelvinPerMinute"/>
         /// </summary>
-        public QuantityValue DegreesKelvinPerMinute => this.As(TemperatureChangeRateUnit.DegreeKelvinPerMinute);
+        public QuantityValue DegreesKelvinPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeKelvinPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.DegreeKelvinPerSecond"/>
         /// </summary>
-        public QuantityValue DegreesKelvinPerSecond => this.As(TemperatureChangeRateUnit.DegreeKelvinPerSecond);
+        public QuantityValue DegreesKelvinPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.DegreeKelvinPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.HectodegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue HectodegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.HectodegreeCelsiusPerSecond);
+        public QuantityValue HectodegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.HectodegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.KilodegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue KilodegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.KilodegreeCelsiusPerSecond);
+        public QuantityValue KilodegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.KilodegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.MicrodegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue MicrodegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.MicrodegreeCelsiusPerSecond);
+        public QuantityValue MicrodegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.MicrodegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.MillidegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue MillidegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.MillidegreeCelsiusPerSecond);
+        public QuantityValue MillidegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.MillidegreeCelsiusPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond"/>
         /// </summary>
-        public QuantityValue NanodegreesCelsiusPerSecond => this.As(TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond);
+        public QuantityValue NanodegreesCelsiusPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond);
+        }
 
         #endregion
 
@@ -362,10 +487,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TemperatureChangeRateUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -373,10 +497,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TemperatureChangeRateUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -385,138 +508,121 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromCentidegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DecadegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDecadegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DecadegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.DecadegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DecidegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDecidegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DecidegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.DecidegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeCelsiusPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesCelsiusPerHour(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeCelsiusPerHour);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeCelsiusPerHour);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeCelsiusPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesCelsiusPerMinute(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeCelsiusPerMinute);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeCelsiusPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeFahrenheitPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesFahrenheitPerHour(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeFahrenheitPerHour);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeFahrenheitPerHour);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeFahrenheitPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesFahrenheitPerMinute(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeFahrenheitPerMinute);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeFahrenheitPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeFahrenheitPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesFahrenheitPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeFahrenheitPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeFahrenheitPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeKelvinPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesKelvinPerHour(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeKelvinPerHour);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeKelvinPerHour);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeKelvinPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesKelvinPerMinute(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeKelvinPerMinute);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeKelvinPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.DegreeKelvinPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromDegreesKelvinPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.DegreeKelvinPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.DegreeKelvinPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.HectodegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromHectodegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.HectodegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.HectodegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.KilodegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromKilodegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.KilodegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.KilodegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.MicrodegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromMicrodegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.MicrodegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.MicrodegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.MillidegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromMillidegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.MillidegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.MillidegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate FromNanodegreesCelsiusPerSecond(QuantityValue value)
-        {
-            return new TemperatureChangeRate(value, TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond);
-        }
+            => new(value, TemperatureChangeRateUnit.NanodegreeCelsiusPerSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="TemperatureChangeRateUnit" /> to <see cref="TemperatureChangeRate" />.
@@ -524,10 +630,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>TemperatureChangeRate unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate From(QuantityValue value, TemperatureChangeRateUnit fromUnit)
-        {
-            return new TemperatureChangeRate(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -555,10 +660,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -583,10 +687,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRate Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<TemperatureChangeRate, TemperatureChangeRateUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<TemperatureChangeRate, TemperatureChangeRateUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -596,10 +699,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out TemperatureChangeRate result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -611,10 +713,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out TemperatureChangeRate result)
-        {
-            return QuantityParser.Default.TryParse<TemperatureChangeRate, TemperatureChangeRateUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<TemperatureChangeRate, TemperatureChangeRateUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -625,10 +726,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureChangeRateUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -641,15 +741,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static TemperatureChangeRateUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.TemperatureChangeRateUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out TemperatureChangeRateUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -661,10 +758,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out TemperatureChangeRateUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -672,45 +768,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static TemperatureChangeRate operator -(TemperatureChangeRate right)
-        {
-            return new TemperatureChangeRate(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="TemperatureChangeRate"/> from adding two <see cref="TemperatureChangeRate"/>.</summary>
         public static TemperatureChangeRate operator +(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return new TemperatureChangeRate(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="TemperatureChangeRate"/> from subtracting two <see cref="TemperatureChangeRate"/>.</summary>
         public static TemperatureChangeRate operator -(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return new TemperatureChangeRate(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="TemperatureChangeRate"/> from multiplying value and <see cref="TemperatureChangeRate"/>.</summary>
         public static TemperatureChangeRate operator *(QuantityValue left, TemperatureChangeRate right)
-        {
-            return new TemperatureChangeRate(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="TemperatureChangeRate"/> from multiplying value and <see cref="TemperatureChangeRate"/>.</summary>
         public static TemperatureChangeRate operator *(TemperatureChangeRate left, QuantityValue right)
-        {
-            return new TemperatureChangeRate(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="TemperatureChangeRate"/> from dividing <see cref="TemperatureChangeRate"/> by value.</summary>
         public static TemperatureChangeRate operator /(TemperatureChangeRate left, QuantityValue right)
-        {
-            return new TemperatureChangeRate(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="TemperatureChangeRate"/> by <see cref="TemperatureChangeRate"/>.</summary>
         public static QuantityValue operator /(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return left.DegreesCelsiusPerSecond / right.DegreesCelsiusPerSecond;
-        }
+            => left.DegreesCelsiusPerSecond / right.DegreesCelsiusPerSecond;
 
         #endregion
 
@@ -718,9 +800,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="TemperatureDelta"/> from <see cref="TemperatureChangeRate"/> * <see cref="Duration"/>.</summary>
         public static TemperatureDelta operator *(TemperatureChangeRate temperatureChangeRate, Duration duration)
-        {
-            return TemperatureDelta.FromDegreesCelsius(temperatureChangeRate.DegreesCelsiusPerSecond * duration.Seconds);
-        }
+            => TemperatureDelta.FromDegreesCelsius(temperatureChangeRate.DegreesCelsiusPerSecond * duration.Seconds);
 
         #endregion
 
@@ -728,27 +808,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="TemperatureChangeRate"/> instances are equal.
@@ -759,10 +831,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(TemperatureChangeRate)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="TemperatureChangeRate"/> instances are not equal.
@@ -772,10 +843,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(TemperatureChangeRate)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(TemperatureChangeRate left, TemperatureChangeRate right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -788,12 +858,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not TemperatureChangeRate otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is TemperatureChangeRate otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -804,18 +869,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(TemperatureChangeRate other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current TemperatureChangeRate.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(TemperatureChangeRate), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(TemperatureChangeRate), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(TemperatureChangeRate)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -844,9 +905,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(TemperatureChangeRate other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -857,20 +916,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

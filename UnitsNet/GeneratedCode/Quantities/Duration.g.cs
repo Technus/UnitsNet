@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -105,9 +106,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="DurationInfo"/> class with the default settings.</returns>
             public static DurationInfo CreateDefault()
-            {
-                return new DurationInfo(nameof(Duration), DefaultBaseUnit, GetDefaultMappings(), new Duration(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Duration), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="DurationInfo"/> class with the default settings for the Duration quantity and a callback for customizing the default unit mappings.
@@ -119,19 +118,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="DurationInfo"/> class with the default settings.
             /// </returns>
             public static DurationInfo CreateDefault(Func<IEnumerable<UnitDefinition<DurationUnit>>, IEnumerable<IUnitDefinition<DurationUnit>>> customizeUnits)
-            {
-                return new DurationInfo(nameof(Duration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Duration(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Duration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Duration"/> is T.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, 1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, 1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Duration is Second. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static DurationUnit DefaultBaseUnit { get; } = DurationUnit.Second;
+            public static DurationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = DurationUnit.Second;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="DurationUnit"/>.
@@ -215,7 +220,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Duration" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Duration, DurationUnit> Info { get; }
@@ -223,53 +232,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Duration, which is Second. All conversions go via this value.
         /// </summary>
-        public static DurationUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static DurationUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Duration quantity.
         /// </summary>
-        public static IReadOnlyCollection<DurationUnit> Units => Info.Units;
+        public static IReadOnlyCollection<DurationUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Second.
         /// </summary>
-        public static Duration Zero => Info.Zero;
+        public static Duration Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public DurationUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public DurationUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Duration, DurationUnit> QuantityInfo => Info;
+        public QuantityInfo<Duration, DurationUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Duration> IQuantityOfType<Duration>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Duration> IQuantityOfType<Duration>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<DurationUnit> IQuantity<DurationUnit>.QuantityInfo => Info;
+        QuantityInfo<DurationUnit> IQuantity<DurationUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -281,67 +338,119 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Day"/>
         /// </summary>
-        public QuantityValue Days => this.As(DurationUnit.Day);
+        public QuantityValue Days
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Day);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Hour"/>
         /// </summary>
-        public QuantityValue Hours => this.As(DurationUnit.Hour);
+        public QuantityValue Hours
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Hour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.JulianYear"/>
         /// </summary>
-        public QuantityValue JulianYears => this.As(DurationUnit.JulianYear);
+        public QuantityValue JulianYears
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.JulianYear);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Microsecond"/>
         /// </summary>
-        public QuantityValue Microseconds => this.As(DurationUnit.Microsecond);
+        public QuantityValue Microseconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Microsecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Millisecond"/>
         /// </summary>
-        public QuantityValue Milliseconds => this.As(DurationUnit.Millisecond);
+        public QuantityValue Milliseconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Millisecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Minute"/>
         /// </summary>
-        public QuantityValue Minutes => this.As(DurationUnit.Minute);
+        public QuantityValue Minutes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Minute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Month30"/>
         /// </summary>
-        public QuantityValue Months30 => this.As(DurationUnit.Month30);
+        public QuantityValue Months30
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Month30);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Nanosecond"/>
         /// </summary>
-        public QuantityValue Nanoseconds => this.As(DurationUnit.Nanosecond);
+        public QuantityValue Nanoseconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Nanosecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Picosecond"/>
         /// </summary>
-        public QuantityValue Picoseconds => this.As(DurationUnit.Picosecond);
+        public QuantityValue Picoseconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Picosecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Second"/>
         /// </summary>
-        public QuantityValue Seconds => this.As(DurationUnit.Second);
+        public QuantityValue Seconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Second);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Sol"/>
         /// </summary>
-        public QuantityValue Sols => this.As(DurationUnit.Sol);
+        public QuantityValue Sols
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Sol);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Week"/>
         /// </summary>
-        public QuantityValue Weeks => this.As(DurationUnit.Week);
+        public QuantityValue Weeks
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Week);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Year365"/>
         /// </summary>
-        public QuantityValue Years365 => this.As(DurationUnit.Year365);
+        public QuantityValue Years365
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DurationUnit.Year365);
+        }
 
         #endregion
 
@@ -352,10 +461,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(DurationUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -363,10 +471,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(DurationUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -375,106 +482,93 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Day"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromDays(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Day);
-        }
+            => new(value, DurationUnit.Day);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Hour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromHours(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Hour);
-        }
+            => new(value, DurationUnit.Hour);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.JulianYear"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromJulianYears(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.JulianYear);
-        }
+            => new(value, DurationUnit.JulianYear);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Microsecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromMicroseconds(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Microsecond);
-        }
+            => new(value, DurationUnit.Microsecond);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Millisecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromMilliseconds(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Millisecond);
-        }
+            => new(value, DurationUnit.Millisecond);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Minute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromMinutes(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Minute);
-        }
+            => new(value, DurationUnit.Minute);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Month30"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromMonths30(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Month30);
-        }
+            => new(value, DurationUnit.Month30);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Nanosecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromNanoseconds(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Nanosecond);
-        }
+            => new(value, DurationUnit.Nanosecond);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Picosecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromPicoseconds(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Picosecond);
-        }
+            => new(value, DurationUnit.Picosecond);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Second"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromSeconds(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Second);
-        }
+            => new(value, DurationUnit.Second);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Sol"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromSols(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Sol);
-        }
+            => new(value, DurationUnit.Sol);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Week"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromWeeks(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Week);
-        }
+            => new(value, DurationUnit.Week);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Year365"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromYears365(QuantityValue value)
-        {
-            return new Duration(value, DurationUnit.Year365);
-        }
+            => new(value, DurationUnit.Year365);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="DurationUnit" /> to <see cref="Duration" />.
@@ -482,10 +576,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Duration unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration From(QuantityValue value, DurationUnit fromUnit)
-        {
-            return new Duration(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -513,10 +606,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -541,10 +633,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Duration, DurationUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Duration, DurationUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -554,10 +645,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Duration result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -569,10 +659,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Duration result)
-        {
-            return QuantityParser.Default.TryParse<Duration, DurationUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Duration, DurationUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -583,10 +672,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DurationUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -599,15 +687,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static DurationUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.DurationUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out DurationUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -619,10 +704,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out DurationUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -630,45 +714,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Duration operator -(Duration right)
-        {
-            return new Duration(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Duration"/> from adding two <see cref="Duration"/>.</summary>
         public static Duration operator +(Duration left, Duration right)
-        {
-            return new Duration(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Duration"/> from subtracting two <see cref="Duration"/>.</summary>
         public static Duration operator -(Duration left, Duration right)
-        {
-            return new Duration(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Duration"/> from multiplying value and <see cref="Duration"/>.</summary>
         public static Duration operator *(QuantityValue left, Duration right)
-        {
-            return new Duration(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Duration"/> from multiplying value and <see cref="Duration"/>.</summary>
         public static Duration operator *(Duration left, QuantityValue right)
-        {
-            return new Duration(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Duration"/> from dividing <see cref="Duration"/> by value.</summary>
         public static Duration operator /(Duration left, QuantityValue right)
-        {
-            return new Duration(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Duration"/> by <see cref="Duration"/>.</summary>
         public static QuantityValue operator /(Duration left, Duration right)
-        {
-            return left.Seconds / right.Seconds;
-        }
+            => left.Seconds / right.Seconds;
 
         #endregion
 
@@ -677,147 +747,99 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="Frequency"/>.</returns>
         public Frequency Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, Frequency.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, Frequency.Info);
 
         /// <summary>Get <see cref="Acceleration"/> from <see cref="Duration"/> * <see cref="Jerk"/>.</summary>
         public static Acceleration operator *(Duration duration, Jerk jerk)
-        {
-            return Acceleration.FromMetersPerSecondSquared(duration.Seconds * jerk.MetersPerSecondCubed);
-        }
+            => Acceleration.FromMetersPerSecondSquared(duration.Seconds * jerk.MetersPerSecondCubed);
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from <see cref="Duration"/> * <see cref="MolarFlow"/>.</summary>
         public static AmountOfSubstance operator *(Duration duration, MolarFlow molarFlow)
-        {
-            return AmountOfSubstance.FromMoles(duration.Seconds * molarFlow.MolesPerSecond);
-        }
+            => AmountOfSubstance.FromMoles(duration.Seconds * molarFlow.MolesPerSecond);
 
         /// <summary>Get <see cref="Angle"/> from <see cref="Duration"/> * <see cref="RotationalSpeed"/>.</summary>
         public static Angle operator *(Duration duration, RotationalSpeed rotationalSpeed)
-        {
-            return Angle.FromRadians(duration.Seconds * rotationalSpeed.RadiansPerSecond);
-        }
+            => Angle.FromRadians(duration.Seconds * rotationalSpeed.RadiansPerSecond);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Duration"/> * <see cref="KinematicViscosity"/>.</summary>
         public static Area operator *(Duration duration, KinematicViscosity kinematicViscosity)
-        {
-            return Area.FromSquareMeters(duration.Seconds * kinematicViscosity.SquareMetersPerSecond);
-        }
+            => Area.FromSquareMeters(duration.Seconds * kinematicViscosity.SquareMetersPerSecond);
 
         /// <summary>Get <see cref="ElectricApparentEnergy"/> from <see cref="Duration"/> * <see cref="ElectricApparentPower"/>.</summary>
         public static ElectricApparentEnergy operator *(Duration duration, ElectricApparentPower electricApparentPower)
-        {
-            return ElectricApparentEnergy.FromVoltampereHours(duration.Hours * electricApparentPower.Voltamperes);
-        }
+            => ElectricApparentEnergy.FromVoltampereHours(duration.Hours * electricApparentPower.Voltamperes);
 
         /// <summary>Get <see cref="ElectricCharge"/> from <see cref="Duration"/> * <see cref="ElectricCurrent"/>.</summary>
         public static ElectricCharge operator *(Duration duration, ElectricCurrent electricCurrent)
-        {
-            return ElectricCharge.FromAmpereHours(duration.Hours * electricCurrent.Amperes);
-        }
+            => ElectricCharge.FromAmpereHours(duration.Hours * electricCurrent.Amperes);
 
         /// <summary>Get <see cref="ElectricCurrent"/> from <see cref="Duration"/> * <see cref="ElectricCurrentGradient"/>.</summary>
         public static ElectricCurrent operator *(Duration duration, ElectricCurrentGradient electricCurrentGradient)
-        {
-            return ElectricCurrent.FromAmperes(duration.Seconds * electricCurrentGradient.AmperesPerSecond);
-        }
+            => ElectricCurrent.FromAmperes(duration.Seconds * electricCurrentGradient.AmperesPerSecond);
 
         /// <summary>Get <see cref="ElectricPotential"/> from <see cref="Duration"/> * <see cref="ElectricPotentialChangeRate"/>.</summary>
         public static ElectricPotential operator *(Duration duration, ElectricPotentialChangeRate electricPotentialChangeRate)
-        {
-            return ElectricPotential.FromVolts(duration.Seconds * electricPotentialChangeRate.VoltsPerSecond);
-        }
+            => ElectricPotential.FromVolts(duration.Seconds * electricPotentialChangeRate.VoltsPerSecond);
 
         /// <summary>Get <see cref="ElectricReactiveEnergy"/> from <see cref="Duration"/> * <see cref="ElectricReactivePower"/>.</summary>
         public static ElectricReactiveEnergy operator *(Duration duration, ElectricReactivePower electricReactivePower)
-        {
-            return ElectricReactiveEnergy.FromVoltampereReactiveHours(duration.Hours * electricReactivePower.VoltamperesReactive);
-        }
+            => ElectricReactiveEnergy.FromVoltampereReactiveHours(duration.Hours * electricReactivePower.VoltamperesReactive);
 
         /// <summary>Get <see cref="Energy"/> from <see cref="Duration"/> * <see cref="Power"/>.</summary>
         public static Energy operator *(Duration duration, Power power)
-        {
-            return Energy.FromJoules(duration.Seconds * power.Watts);
-        }
+            => Energy.FromJoules(duration.Seconds * power.Watts);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Duration"/> * <see cref="ForceChangeRate"/>.</summary>
         public static Force operator *(Duration duration, ForceChangeRate forceChangeRate)
-        {
-            return Force.FromNewtons(duration.Seconds * forceChangeRate.NewtonsPerSecond);
-        }
+            => Force.FromNewtons(duration.Seconds * forceChangeRate.NewtonsPerSecond);
 
         /// <summary>Get <see cref="Impulse"/> from <see cref="Duration"/> * <see cref="Force"/>.</summary>
         public static Impulse operator *(Duration duration, Force force)
-        {
-            return Impulse.FromNewtonSeconds(duration.Seconds * force.Newtons);
-        }
+            => Impulse.FromNewtonSeconds(duration.Seconds * force.Newtons);
 
         /// <summary>Get <see cref="Information"/> from <see cref="Duration"/> * <see cref="BitRate"/>.</summary>
         public static Information operator *(Duration duration, BitRate bitRate)
-        {
-            return Information.FromBits(duration.Seconds * bitRate.BitsPerSecond);
-        }
+            => Information.FromBits(duration.Seconds * bitRate.BitsPerSecond);
 
         /// <summary>Get <see cref="Irradiation"/> from <see cref="Duration"/> * <see cref="Irradiance"/>.</summary>
         public static Irradiation operator *(Duration duration, Irradiance irradiance)
-        {
-            return Irradiation.FromJoulesPerSquareMeter(duration.Seconds * irradiance.WattsPerSquareMeter);
-        }
+            => Irradiation.FromJoulesPerSquareMeter(duration.Seconds * irradiance.WattsPerSquareMeter);
 
         /// <summary>Get <see cref="Length"/> from <see cref="Duration"/> * <see cref="Speed"/>.</summary>
         public static Length operator *(Duration duration, Speed speed)
-        {
-            return Length.FromMeters(duration.Seconds * speed.MetersPerSecond);
-        }
+            => Length.FromMeters(duration.Seconds * speed.MetersPerSecond);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="Duration"/> * <see cref="MassFlow"/>.</summary>
         public static Mass operator *(Duration duration, MassFlow massFlow)
-        {
-            return Mass.FromKilograms(duration.Seconds * massFlow.KilogramsPerSecond);
-        }
+            => Mass.FromKilograms(duration.Seconds * massFlow.KilogramsPerSecond);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="Duration"/> * <see cref="PressureChangeRate"/>.</summary>
         public static Pressure operator *(Duration duration, PressureChangeRate pressureChangeRate)
-        {
-            return Pressure.FromPascals(duration.Seconds * pressureChangeRate.PascalsPerSecond);
-        }
+            => Pressure.FromPascals(duration.Seconds * pressureChangeRate.PascalsPerSecond);
 
         /// <summary>Get <see cref="RadiationEquivalentDose"/> from <see cref="Duration"/> * <see cref="RadiationEquivalentDoseRate"/>.</summary>
         public static RadiationEquivalentDose operator *(Duration duration, RadiationEquivalentDoseRate radiationEquivalentDoseRate)
-        {
-            return RadiationEquivalentDose.FromSieverts(duration.Hours * radiationEquivalentDoseRate.SievertsPerHour);
-        }
+            => RadiationEquivalentDose.FromSieverts(duration.Hours * radiationEquivalentDoseRate.SievertsPerHour);
 
         /// <summary>Get <see cref="Ratio"/> from <see cref="Duration"/> * <see cref="RatioChangeRate"/>.</summary>
         public static Ratio operator *(Duration duration, RatioChangeRate ratioChangeRate)
-        {
-            return Ratio.FromDecimalFractions(duration.Seconds * ratioChangeRate.DecimalFractionsPerSecond);
-        }
+            => Ratio.FromDecimalFractions(duration.Seconds * ratioChangeRate.DecimalFractionsPerSecond);
 
         /// <summary>Get <see cref="RotationalSpeed"/> from <see cref="Duration"/> * <see cref="RotationalAcceleration"/>.</summary>
         public static RotationalSpeed operator *(Duration duration, RotationalAcceleration rotationalAcceleration)
-        {
-            return RotationalSpeed.FromRadiansPerSecond(duration.Seconds * rotationalAcceleration.RadiansPerSecondSquared);
-        }
+            => RotationalSpeed.FromRadiansPerSecond(duration.Seconds * rotationalAcceleration.RadiansPerSecondSquared);
 
         /// <summary>Get <see cref="Speed"/> from <see cref="Duration"/> * <see cref="Acceleration"/>.</summary>
         public static Speed operator *(Duration duration, Acceleration acceleration)
-        {
-            return Speed.FromMetersPerSecond(duration.Seconds * acceleration.MetersPerSecondSquared);
-        }
+            => Speed.FromMetersPerSecond(duration.Seconds * acceleration.MetersPerSecondSquared);
 
         /// <summary>Get <see cref="TemperatureDelta"/> from <see cref="Duration"/> * <see cref="TemperatureChangeRate"/>.</summary>
         public static TemperatureDelta operator *(Duration duration, TemperatureChangeRate temperatureChangeRate)
-        {
-            return TemperatureDelta.FromDegreesCelsius(duration.Seconds * temperatureChangeRate.DegreesCelsiusPerSecond);
-        }
+            => TemperatureDelta.FromDegreesCelsius(duration.Seconds * temperatureChangeRate.DegreesCelsiusPerSecond);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="Duration"/> * <see cref="VolumeFlow"/>.</summary>
         public static Volume operator *(Duration duration, VolumeFlow volumeFlow)
-        {
-            return Volume.FromCubicMeters(duration.Seconds * volumeFlow.CubicMetersPerSecond);
-        }
+            => Volume.FromCubicMeters(duration.Seconds * volumeFlow.CubicMetersPerSecond);
 
         #endregion
 
@@ -825,27 +847,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Duration left, Duration right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Duration left, Duration right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Duration left, Duration right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Duration left, Duration right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Duration"/> instances are equal.
@@ -856,10 +870,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Duration)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Duration left, Duration right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Duration"/> instances are not equal.
@@ -869,10 +882,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Duration)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Duration left, Duration right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -885,12 +897,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Duration otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Duration otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -901,18 +908,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Duration other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Duration.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Duration), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Duration), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Duration)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -941,9 +944,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Duration other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -954,20 +955,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

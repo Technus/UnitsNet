@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -82,9 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PowerRatioInfo"/> class with the default settings.</returns>
             public static PowerRatioInfo CreateDefault()
-            {
-                return new PowerRatioInfo(nameof(PowerRatio), DefaultBaseUnit, GetDefaultMappings(), new PowerRatio(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(PowerRatio), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PowerRatioInfo"/> class with the default settings for the PowerRatio quantity and a callback for customizing the default unit mappings.
@@ -96,19 +95,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PowerRatioInfo"/> class with the default settings.
             /// </returns>
             public static PowerRatioInfo CreateDefault(Func<IEnumerable<UnitDefinition<PowerRatioUnit>>, IEnumerable<IUnitDefinition<PowerRatioUnit>>> customizeUnits)
-            {
-                return new PowerRatioInfo(nameof(PowerRatio), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new PowerRatio(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(PowerRatio), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="PowerRatio"/> is .
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = BaseDimensions.Dimensionless;
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = BaseDimensions.Dimensionless;
 
             /// <summary>
             ///     The default base unit of PowerRatio is DecibelWatt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static PowerRatioUnit DefaultBaseUnit { get; } = PowerRatioUnit.DecibelWatt;
+            public static PowerRatioUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PowerRatioUnit.DecibelWatt;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="PowerRatioUnit"/>.
@@ -146,7 +151,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="PowerRatio" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<PowerRatio, PowerRatioUnit> Info { get; }
@@ -154,60 +163,116 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of PowerRatio, which is DecibelWatt. All conversions go via this value.
         /// </summary>
-        public static PowerRatioUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static PowerRatioUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the PowerRatio quantity.
         /// </summary>
-        public static IReadOnlyCollection<PowerRatioUnit> Units => Info.Units;
+        public static IReadOnlyCollection<PowerRatioUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit DecibelWatt.
         /// </summary>
-        public static PowerRatio Zero => Info.Zero;
+        public static PowerRatio Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         /// <inheritdoc />
-        public static QuantityValue LogarithmicScalingFactor {get;} = 10;
+        public static QuantityValue LogarithmicScalingFactor
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get;
+        } = 10;
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public PowerRatioUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public PowerRatioUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<PowerRatio, PowerRatioUnit> QuantityInfo => Info;
+        public QuantityInfo<PowerRatio, PowerRatioUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<PowerRatio> IQuantityOfType<PowerRatio>.QuantityInfo => Info;
+        IQuantityInstanceInfo<PowerRatio> IQuantityOfType<PowerRatio>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<PowerRatioUnit> IQuantity<PowerRatioUnit>.QuantityInfo => Info;
+        QuantityInfo<PowerRatioUnit> IQuantity<PowerRatioUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
 #if NETSTANDARD2_0
-        QuantityValue ILogarithmicQuantity<PowerRatio>.LogarithmicScalingFactor => LogarithmicScalingFactor;
+        QuantityValue ILogarithmicQuantity<PowerRatio>.LogarithmicScalingFactor
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LogarithmicScalingFactor;
+        }
 #endif
 
         #endregion
@@ -219,12 +284,20 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerRatioUnit.DecibelMilliwatt"/>
         /// </summary>
-        public QuantityValue DecibelMilliwatts => this.As(PowerRatioUnit.DecibelMilliwatt);
+        public QuantityValue DecibelMilliwatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerRatioUnit.DecibelMilliwatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerRatioUnit.DecibelWatt"/>
         /// </summary>
-        public QuantityValue DecibelWatts => this.As(PowerRatioUnit.DecibelWatt);
+        public QuantityValue DecibelWatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerRatioUnit.DecibelWatt);
+        }
 
         #endregion
 
@@ -235,10 +308,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PowerRatioUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -246,10 +318,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PowerRatioUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -258,18 +329,16 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="PowerRatio"/> from <see cref="PowerRatioUnit.DecibelMilliwatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerRatio FromDecibelMilliwatts(QuantityValue value)
-        {
-            return new PowerRatio(value, PowerRatioUnit.DecibelMilliwatt);
-        }
+            => new(value, PowerRatioUnit.DecibelMilliwatt);
 
         /// <summary>
         ///     Creates a <see cref="PowerRatio"/> from <see cref="PowerRatioUnit.DecibelWatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerRatio FromDecibelWatts(QuantityValue value)
-        {
-            return new PowerRatio(value, PowerRatioUnit.DecibelWatt);
-        }
+            => new(value, PowerRatioUnit.DecibelWatt);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="PowerRatioUnit" /> to <see cref="PowerRatio" />.
@@ -277,10 +346,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>PowerRatio unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerRatio From(QuantityValue value, PowerRatioUnit fromUnit)
-        {
-            return new PowerRatio(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -308,10 +376,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerRatio Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -336,10 +403,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerRatio Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<PowerRatio, PowerRatioUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<PowerRatio, PowerRatioUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -349,10 +415,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out PowerRatio result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -364,10 +429,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out PowerRatio result)
-        {
-            return QuantityParser.Default.TryParse<PowerRatio, PowerRatioUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<PowerRatio, PowerRatioUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -378,10 +442,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerRatioUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -394,15 +457,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static PowerRatioUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.PowerRatioUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out PowerRatioUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -414,10 +474,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out PowerRatioUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -425,51 +484,37 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static PowerRatio operator -(PowerRatio quantity)
-        {
-            return new PowerRatio(-quantity.Value, quantity.Unit);
-        }
+            => new(-quantity.Value, quantity.Unit);
 
         /// <summary>Get <see cref="PowerRatio"/> from logarithmic addition of two <see cref="PowerRatio"/>.</summary>
         /// <remarks>This operation involves a conversion of the values to linear space, which is not guaranteed to produce an exact value.
         /// <para>The final result is rounded to 15 significant digits.</para>
         /// </remarks>
         public static PowerRatio operator +(PowerRatio left, PowerRatio right)
-        {
-            return new PowerRatio(QuantityValueExtensions.AddWithLogScaling(left.Value, right.As(left.Unit), LogarithmicScalingFactor), left.Unit);
-        }
+            => new(QuantityValueExtensions.AddWithLogScaling(left.Value, right.As(left.Unit), LogarithmicScalingFactor), left.Unit);
 
         /// <summary>Get <see cref="PowerRatio"/> from logarithmic subtraction of two <see cref="PowerRatio"/>.</summary>
         /// <remarks>This operation involves a conversion of the values to linear space, which is not guaranteed to produce an exact value.
         /// <para>The final result is rounded to 15 significant digits.</para>
         /// </remarks>
         public static PowerRatio operator -(PowerRatio left, PowerRatio right)
-        {
-            return new PowerRatio(QuantityValueExtensions.SubtractWithLogScaling(left.Value, right.As(left.Unit), LogarithmicScalingFactor), left.Unit);
-        }
+            => new(QuantityValueExtensions.SubtractWithLogScaling(left.Value, right.As(left.Unit), LogarithmicScalingFactor), left.Unit);
 
         /// <summary>Get <see cref="PowerRatio"/> from logarithmic multiplication of value and <see cref="PowerRatio"/>.</summary>
         public static PowerRatio operator *(QuantityValue left, PowerRatio right)
-        {
-            return new PowerRatio(left + right.Value, right.Unit);
-        }
+            => new(left + right.Value, right.Unit);
 
         /// <summary>Get <see cref="PowerRatio"/> from logarithmic multiplication of value and <see cref="PowerRatio"/>.</summary>
         public static PowerRatio operator *(PowerRatio left, QuantityValue right)
-        {
-            return new PowerRatio(left.Value + right, left.Unit);
-        }
+            => new(left.Value + right, left.Unit);
 
         /// <summary>Get <see cref="PowerRatio"/> from logarithmic division of <see cref="PowerRatio"/> by value.</summary>
         public static PowerRatio operator /(PowerRatio left, QuantityValue right)
-        {
-            return new PowerRatio(left.Value - right, left.Unit);
-        }
+            => new(left.Value - right, left.Unit);
 
         /// <summary>Get ratio value from logarithmic division of <see cref="PowerRatio"/> by <see cref="PowerRatio"/>.</summary>
         public static QuantityValue operator /(PowerRatio left, PowerRatio right)
-        {
-            return left.Value - right.As(left.Unit);
-        }
+            => left.Value - right.As(left.Unit);
 
         #endregion
 
@@ -477,27 +522,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(PowerRatio left, PowerRatio right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(PowerRatio left, PowerRatio right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(PowerRatio left, PowerRatio right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(PowerRatio left, PowerRatio right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="PowerRatio"/> instances are equal.
@@ -508,10 +545,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(PowerRatio)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(PowerRatio left, PowerRatio right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="PowerRatio"/> instances are not equal.
@@ -521,10 +557,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(PowerRatio)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(PowerRatio left, PowerRatio right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -537,12 +572,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not PowerRatio otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is PowerRatio otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -553,18 +583,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(PowerRatio other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current PowerRatio.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(PowerRatio), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(PowerRatio), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(PowerRatio)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -593,9 +619,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(PowerRatio other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -606,20 +630,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

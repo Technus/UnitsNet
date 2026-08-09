@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -101,9 +102,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PowerInfo"/> class with the default settings.</returns>
             public static PowerInfo CreateDefault()
-            {
-                return new PowerInfo(nameof(Power), DefaultBaseUnit, GetDefaultMappings(), new Power(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Power), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PowerInfo"/> class with the default settings for the Power quantity and a callback for customizing the default unit mappings.
@@ -115,19 +114,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PowerInfo"/> class with the default settings.
             /// </returns>
             public static PowerInfo CreateDefault(Func<IEnumerable<UnitDefinition<PowerUnit>>, IEnumerable<IUnitDefinition<PowerUnit>>> customizeUnits)
-            {
-                return new PowerInfo(nameof(Power), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Power(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Power), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Power"/> is T^-3L^2M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -3, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -3, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Power is Watt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static PowerUnit DefaultBaseUnit { get; } = PowerUnit.Watt;
+            public static PowerUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PowerUnit.Watt;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="PowerUnit"/>.
@@ -253,7 +258,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Power" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Power, PowerUnit> Info { get; }
@@ -261,53 +270,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Power, which is Watt. All conversions go via this value.
         /// </summary>
-        public static PowerUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static PowerUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Power quantity.
         /// </summary>
-        public static IReadOnlyCollection<PowerUnit> Units => Info.Units;
+        public static IReadOnlyCollection<PowerUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Watt.
         /// </summary>
-        public static Power Zero => Info.Zero;
+        public static Power Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public PowerUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public PowerUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Power, PowerUnit> QuantityInfo => Info;
+        public QuantityInfo<Power, PowerUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Power> IQuantityOfType<Power>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Power> IQuantityOfType<Power>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<PowerUnit> IQuantity<PowerUnit>.QuantityInfo => Info;
+        QuantityInfo<PowerUnit> IQuantity<PowerUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -319,137 +376,245 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.BoilerHorsepower"/>
         /// </summary>
-        public QuantityValue BoilerHorsepower => this.As(PowerUnit.BoilerHorsepower);
+        public QuantityValue BoilerHorsepower
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.BoilerHorsepower);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.BritishThermalUnitPerHour"/>
         /// </summary>
-        public QuantityValue BritishThermalUnitsPerHour => this.As(PowerUnit.BritishThermalUnitPerHour);
+        public QuantityValue BritishThermalUnitsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.BritishThermalUnitPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Decawatt"/>
         /// </summary>
-        public QuantityValue Decawatts => this.As(PowerUnit.Decawatt);
+        public QuantityValue Decawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Decawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Deciwatt"/>
         /// </summary>
-        public QuantityValue Deciwatts => this.As(PowerUnit.Deciwatt);
+        public QuantityValue Deciwatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Deciwatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.ElectricalHorsepower"/>
         /// </summary>
-        public QuantityValue ElectricalHorsepower => this.As(PowerUnit.ElectricalHorsepower);
+        public QuantityValue ElectricalHorsepower
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.ElectricalHorsepower);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Femtowatt"/>
         /// </summary>
-        public QuantityValue Femtowatts => this.As(PowerUnit.Femtowatt);
+        public QuantityValue Femtowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Femtowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.GigajoulePerHour"/>
         /// </summary>
-        public QuantityValue GigajoulesPerHour => this.As(PowerUnit.GigajoulePerHour);
+        public QuantityValue GigajoulesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.GigajoulePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Gigawatt"/>
         /// </summary>
-        public QuantityValue Gigawatts => this.As(PowerUnit.Gigawatt);
+        public QuantityValue Gigawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Gigawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.HydraulicHorsepower"/>
         /// </summary>
-        public QuantityValue HydraulicHorsepower => this.As(PowerUnit.HydraulicHorsepower);
+        public QuantityValue HydraulicHorsepower
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.HydraulicHorsepower);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.JoulePerHour"/>
         /// </summary>
-        public QuantityValue JoulesPerHour => this.As(PowerUnit.JoulePerHour);
+        public QuantityValue JoulesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.JoulePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.KilobritishThermalUnitPerHour"/>
         /// </summary>
-        public QuantityValue KilobritishThermalUnitsPerHour => this.As(PowerUnit.KilobritishThermalUnitPerHour);
+        public QuantityValue KilobritishThermalUnitsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.KilobritishThermalUnitPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.KilojoulePerHour"/>
         /// </summary>
-        public QuantityValue KilojoulesPerHour => this.As(PowerUnit.KilojoulePerHour);
+        public QuantityValue KilojoulesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.KilojoulePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Kilowatt"/>
         /// </summary>
-        public QuantityValue Kilowatts => this.As(PowerUnit.Kilowatt);
+        public QuantityValue Kilowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Kilowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.MechanicalHorsepower"/>
         /// </summary>
-        public QuantityValue MechanicalHorsepower => this.As(PowerUnit.MechanicalHorsepower);
+        public QuantityValue MechanicalHorsepower
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.MechanicalHorsepower);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.MegabritishThermalUnitPerHour"/>
         /// </summary>
-        public QuantityValue MegabritishThermalUnitsPerHour => this.As(PowerUnit.MegabritishThermalUnitPerHour);
+        public QuantityValue MegabritishThermalUnitsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.MegabritishThermalUnitPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.MegajoulePerHour"/>
         /// </summary>
-        public QuantityValue MegajoulesPerHour => this.As(PowerUnit.MegajoulePerHour);
+        public QuantityValue MegajoulesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.MegajoulePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Megawatt"/>
         /// </summary>
-        public QuantityValue Megawatts => this.As(PowerUnit.Megawatt);
+        public QuantityValue Megawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Megawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.MetricHorsepower"/>
         /// </summary>
-        public QuantityValue MetricHorsepower => this.As(PowerUnit.MetricHorsepower);
+        public QuantityValue MetricHorsepower
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.MetricHorsepower);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Microwatt"/>
         /// </summary>
-        public QuantityValue Microwatts => this.As(PowerUnit.Microwatt);
+        public QuantityValue Microwatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Microwatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.MillijoulePerHour"/>
         /// </summary>
-        public QuantityValue MillijoulesPerHour => this.As(PowerUnit.MillijoulePerHour);
+        public QuantityValue MillijoulesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.MillijoulePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Milliwatt"/>
         /// </summary>
-        public QuantityValue Milliwatts => this.As(PowerUnit.Milliwatt);
+        public QuantityValue Milliwatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Milliwatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Nanowatt"/>
         /// </summary>
-        public QuantityValue Nanowatts => this.As(PowerUnit.Nanowatt);
+        public QuantityValue Nanowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Nanowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Petawatt"/>
         /// </summary>
-        public QuantityValue Petawatts => this.As(PowerUnit.Petawatt);
+        public QuantityValue Petawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Petawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Picowatt"/>
         /// </summary>
-        public QuantityValue Picowatts => this.As(PowerUnit.Picowatt);
+        public QuantityValue Picowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Picowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Terawatt"/>
         /// </summary>
-        public QuantityValue Terawatts => this.As(PowerUnit.Terawatt);
+        public QuantityValue Terawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Terawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.TonOfRefrigeration"/>
         /// </summary>
-        public QuantityValue TonsOfRefrigeration => this.As(PowerUnit.TonOfRefrigeration);
+        public QuantityValue TonsOfRefrigeration
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.TonOfRefrigeration);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.Watt"/>
         /// </summary>
-        public QuantityValue Watts => this.As(PowerUnit.Watt);
+        public QuantityValue Watts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PowerUnit.Watt);
+        }
 
         #endregion
 
@@ -460,10 +625,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PowerUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -471,10 +635,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PowerUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -483,218 +646,191 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.BoilerHorsepower"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromBoilerHorsepower(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.BoilerHorsepower);
-        }
+            => new(value, PowerUnit.BoilerHorsepower);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.BritishThermalUnitPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromBritishThermalUnitsPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.BritishThermalUnitPerHour);
-        }
+            => new(value, PowerUnit.BritishThermalUnitPerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Decawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromDecawatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Decawatt);
-        }
+            => new(value, PowerUnit.Decawatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Deciwatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromDeciwatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Deciwatt);
-        }
+            => new(value, PowerUnit.Deciwatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.ElectricalHorsepower"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromElectricalHorsepower(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.ElectricalHorsepower);
-        }
+            => new(value, PowerUnit.ElectricalHorsepower);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Femtowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromFemtowatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Femtowatt);
-        }
+            => new(value, PowerUnit.Femtowatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.GigajoulePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromGigajoulesPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.GigajoulePerHour);
-        }
+            => new(value, PowerUnit.GigajoulePerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Gigawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromGigawatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Gigawatt);
-        }
+            => new(value, PowerUnit.Gigawatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.HydraulicHorsepower"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromHydraulicHorsepower(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.HydraulicHorsepower);
-        }
+            => new(value, PowerUnit.HydraulicHorsepower);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.JoulePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromJoulesPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.JoulePerHour);
-        }
+            => new(value, PowerUnit.JoulePerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.KilobritishThermalUnitPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromKilobritishThermalUnitsPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.KilobritishThermalUnitPerHour);
-        }
+            => new(value, PowerUnit.KilobritishThermalUnitPerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.KilojoulePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromKilojoulesPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.KilojoulePerHour);
-        }
+            => new(value, PowerUnit.KilojoulePerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Kilowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromKilowatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Kilowatt);
-        }
+            => new(value, PowerUnit.Kilowatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.MechanicalHorsepower"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMechanicalHorsepower(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.MechanicalHorsepower);
-        }
+            => new(value, PowerUnit.MechanicalHorsepower);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.MegabritishThermalUnitPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMegabritishThermalUnitsPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.MegabritishThermalUnitPerHour);
-        }
+            => new(value, PowerUnit.MegabritishThermalUnitPerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.MegajoulePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMegajoulesPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.MegajoulePerHour);
-        }
+            => new(value, PowerUnit.MegajoulePerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Megawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMegawatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Megawatt);
-        }
+            => new(value, PowerUnit.Megawatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.MetricHorsepower"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMetricHorsepower(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.MetricHorsepower);
-        }
+            => new(value, PowerUnit.MetricHorsepower);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Microwatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMicrowatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Microwatt);
-        }
+            => new(value, PowerUnit.Microwatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.MillijoulePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMillijoulesPerHour(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.MillijoulePerHour);
-        }
+            => new(value, PowerUnit.MillijoulePerHour);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Milliwatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromMilliwatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Milliwatt);
-        }
+            => new(value, PowerUnit.Milliwatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Nanowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromNanowatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Nanowatt);
-        }
+            => new(value, PowerUnit.Nanowatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Petawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromPetawatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Petawatt);
-        }
+            => new(value, PowerUnit.Petawatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Picowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromPicowatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Picowatt);
-        }
+            => new(value, PowerUnit.Picowatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Terawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromTerawatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Terawatt);
-        }
+            => new(value, PowerUnit.Terawatt);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.TonOfRefrigeration"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromTonsOfRefrigeration(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.TonOfRefrigeration);
-        }
+            => new(value, PowerUnit.TonOfRefrigeration);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.Watt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power FromWatts(QuantityValue value)
-        {
-            return new Power(value, PowerUnit.Watt);
-        }
+            => new(value, PowerUnit.Watt);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="PowerUnit" /> to <see cref="Power" />.
@@ -702,10 +838,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Power unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power From(QuantityValue value, PowerUnit fromUnit)
-        {
-            return new Power(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -733,10 +868,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -761,10 +895,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Power Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Power, PowerUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Power, PowerUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -774,10 +907,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Power result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -789,10 +921,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Power result)
-        {
-            return QuantityParser.Default.TryParse<Power, PowerUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Power, PowerUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -803,10 +934,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -819,15 +949,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static PowerUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.PowerUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out PowerUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -839,10 +966,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out PowerUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -850,45 +976,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Power operator -(Power right)
-        {
-            return new Power(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Power"/> from adding two <see cref="Power"/>.</summary>
         public static Power operator +(Power left, Power right)
-        {
-            return new Power(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Power"/> from subtracting two <see cref="Power"/>.</summary>
         public static Power operator -(Power left, Power right)
-        {
-            return new Power(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Power"/> from multiplying value and <see cref="Power"/>.</summary>
         public static Power operator *(QuantityValue left, Power right)
-        {
-            return new Power(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Power"/> from multiplying value and <see cref="Power"/>.</summary>
         public static Power operator *(Power left, QuantityValue right)
-        {
-            return new Power(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Power"/> from dividing <see cref="Power"/> by value.</summary>
         public static Power operator /(Power left, QuantityValue right)
-        {
-            return new Power(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Power"/> by <see cref="Power"/>.</summary>
         public static QuantityValue operator /(Power left, Power right)
-        {
-            return left.Watts / right.Watts;
-        }
+            => left.Watts / right.Watts;
 
         #endregion
 
@@ -896,117 +1008,79 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Area"/> from <see cref="Power"/> / <see cref="HeatFlux"/>.</summary>
         public static Area operator /(Power power, HeatFlux heatFlux)
-        {
-            return Area.FromSquareMeters(power.Watts / heatFlux.WattsPerSquareMeter);
-        }
+            => Area.FromSquareMeters(power.Watts / heatFlux.WattsPerSquareMeter);
 
         /// <summary>Get <see cref="ElectricCurrent"/> from <see cref="Power"/> / <see cref="ElectricPotential"/>.</summary>
         public static ElectricCurrent operator /(Power power, ElectricPotential electricPotential)
-        {
-            return ElectricCurrent.FromAmperes(power.Watts / electricPotential.Volts);
-        }
+            => ElectricCurrent.FromAmperes(power.Watts / electricPotential.Volts);
 
         /// <summary>Get <see cref="ElectricPotential"/> from <see cref="Power"/> / <see cref="ElectricCurrent"/>.</summary>
         public static ElectricPotential operator /(Power power, ElectricCurrent electricCurrent)
-        {
-            return ElectricPotential.FromVolts(power.Watts / electricCurrent.Amperes);
-        }
+            => ElectricPotential.FromVolts(power.Watts / electricCurrent.Amperes);
 
         /// <summary>Get <see cref="Energy"/> from <see cref="Power"/> * <see cref="Duration"/>.</summary>
         public static Energy operator *(Power power, Duration duration)
-        {
-            return Energy.FromJoules(power.Watts * duration.Seconds);
-        }
+            => Energy.FromJoules(power.Watts * duration.Seconds);
 
         /// <summary>Get <see cref="Energy"/> from <see cref="Power"/> / <see cref="Frequency"/>.</summary>
         public static Energy operator /(Power power, Frequency frequency)
-        {
-            return Energy.FromJoules(power.Watts / frequency.PerSecond);
-        }
+            => Energy.FromJoules(power.Watts / frequency.PerSecond);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Power"/> / <see cref="Speed"/>.</summary>
         public static Force operator /(Power power, Speed speed)
-        {
-            return Force.FromNewtons(power.Watts / speed.MetersPerSecond);
-        }
+            => Force.FromNewtons(power.Watts / speed.MetersPerSecond);
 
         /// <summary>Get <see cref="Frequency"/> from <see cref="Power"/> / <see cref="Energy"/>.</summary>
         public static Frequency operator /(Power power, Energy energy)
-        {
-            return Frequency.FromPerSecond(power.Watts / energy.Joules);
-        }
+            => Frequency.FromPerSecond(power.Watts / energy.Joules);
 
         /// <summary>Get <see cref="HeatFlux"/> from <see cref="Power"/> / <see cref="Area"/>.</summary>
         public static HeatFlux operator /(Power power, Area area)
-        {
-            return HeatFlux.FromWattsPerSquareMeter(power.Watts / area.SquareMeters);
-        }
+            => HeatFlux.FromWattsPerSquareMeter(power.Watts / area.SquareMeters);
 
         /// <summary>Get <see cref="Length"/> from <see cref="Power"/> / <see cref="LinearPowerDensity"/>.</summary>
         public static Length operator /(Power power, LinearPowerDensity linearPowerDensity)
-        {
-            return Length.FromMeters(power.Watts / linearPowerDensity.WattsPerMeter);
-        }
+            => Length.FromMeters(power.Watts / linearPowerDensity.WattsPerMeter);
 
         /// <summary>Get <see cref="LinearPowerDensity"/> from <see cref="Power"/> / <see cref="Length"/>.</summary>
         public static LinearPowerDensity operator /(Power power, Length length)
-        {
-            return LinearPowerDensity.FromWattsPerMeter(power.Watts / length.Meters);
-        }
+            => LinearPowerDensity.FromWattsPerMeter(power.Watts / length.Meters);
 
         /// <summary>Get <see cref="MassFlow"/> from <see cref="Power"/> * <see cref="BrakeSpecificFuelConsumption"/>.</summary>
         public static MassFlow operator *(Power power, BrakeSpecificFuelConsumption brakeSpecificFuelConsumption)
-        {
-            return MassFlow.FromKilogramsPerSecond(power.Watts * brakeSpecificFuelConsumption.KilogramsPerJoule);
-        }
+            => MassFlow.FromKilogramsPerSecond(power.Watts * brakeSpecificFuelConsumption.KilogramsPerJoule);
 
         /// <summary>Get <see cref="MassFlow"/> from <see cref="Power"/> / <see cref="SpecificEnergy"/>.</summary>
         public static MassFlow operator /(Power power, SpecificEnergy specificEnergy)
-        {
-            return MassFlow.FromKilogramsPerSecond(power.Watts / specificEnergy.JoulesPerKilogram);
-        }
+            => MassFlow.FromKilogramsPerSecond(power.Watts / specificEnergy.JoulesPerKilogram);
 
         /// <summary>Get <see cref="PowerDensity"/> from <see cref="Power"/> / <see cref="Volume"/>.</summary>
         public static PowerDensity operator /(Power power, Volume volume)
-        {
-            return PowerDensity.FromWattsPerCubicMeter(power.Watts / volume.CubicMeters);
-        }
+            => PowerDensity.FromWattsPerCubicMeter(power.Watts / volume.CubicMeters);
 
         /// <summary>Get <see cref="RotationalSpeed"/> from <see cref="Power"/> / <see cref="Torque"/>.</summary>
         public static RotationalSpeed operator /(Power power, Torque torque)
-        {
-            return RotationalSpeed.FromRadiansPerSecond(power.Watts / torque.NewtonMeters);
-        }
+            => RotationalSpeed.FromRadiansPerSecond(power.Watts / torque.NewtonMeters);
 
         /// <summary>Get <see cref="SpecificEnergy"/> from <see cref="Power"/> / <see cref="MassFlow"/>.</summary>
         public static SpecificEnergy operator /(Power power, MassFlow massFlow)
-        {
-            return SpecificEnergy.FromJoulesPerKilogram(power.Watts / massFlow.KilogramsPerSecond);
-        }
+            => SpecificEnergy.FromJoulesPerKilogram(power.Watts / massFlow.KilogramsPerSecond);
 
         /// <summary>Get <see cref="Speed"/> from <see cref="Power"/> / <see cref="Force"/>.</summary>
         public static Speed operator /(Power power, Force force)
-        {
-            return Speed.FromMetersPerSecond(power.Watts / force.Newtons);
-        }
+            => Speed.FromMetersPerSecond(power.Watts / force.Newtons);
 
         /// <summary>Get <see cref="TemperatureDelta"/> from <see cref="Power"/> * <see cref="ThermalResistance"/>.</summary>
         public static TemperatureDelta operator *(Power power, ThermalResistance thermalResistance)
-        {
-            return TemperatureDelta.FromKelvins(power.Watts * thermalResistance.KelvinsPerWatt);
-        }
+            => TemperatureDelta.FromKelvins(power.Watts * thermalResistance.KelvinsPerWatt);
 
         /// <summary>Get <see cref="Torque"/> from <see cref="Power"/> / <see cref="RotationalSpeed"/>.</summary>
         public static Torque operator /(Power power, RotationalSpeed rotationalSpeed)
-        {
-            return Torque.FromNewtonMeters(power.Watts / rotationalSpeed.RadiansPerSecond);
-        }
+            => Torque.FromNewtonMeters(power.Watts / rotationalSpeed.RadiansPerSecond);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="Power"/> / <see cref="PowerDensity"/>.</summary>
         public static Volume operator /(Power power, PowerDensity powerDensity)
-        {
-            return Volume.FromCubicMeters(power.Watts / powerDensity.WattsPerCubicMeter);
-        }
+            => Volume.FromCubicMeters(power.Watts / powerDensity.WattsPerCubicMeter);
 
         #endregion
 
@@ -1014,27 +1088,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Power left, Power right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Power left, Power right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Power left, Power right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Power left, Power right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Power"/> instances are equal.
@@ -1045,10 +1111,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Power)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Power left, Power right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Power"/> instances are not equal.
@@ -1058,10 +1123,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Power)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Power left, Power right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1074,12 +1138,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Power otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Power otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1090,18 +1149,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Power other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Power.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Power), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Power), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Power)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1130,9 +1185,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Power other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1143,20 +1196,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

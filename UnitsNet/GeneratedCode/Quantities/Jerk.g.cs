@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="JerkInfo"/> class with the default settings.</returns>
             public static JerkInfo CreateDefault()
-            {
-                return new JerkInfo(nameof(Jerk), DefaultBaseUnit, GetDefaultMappings(), new Jerk(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Jerk), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="JerkInfo"/> class with the default settings for the Jerk quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="JerkInfo"/> class with the default settings.
             /// </returns>
             public static JerkInfo CreateDefault(Func<IEnumerable<UnitDefinition<JerkUnit>>, IEnumerable<IUnitDefinition<JerkUnit>>> customizeUnits)
-            {
-                return new JerkInfo(nameof(Jerk), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Jerk(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Jerk), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Jerk"/> is T^-3L.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, 0, -3, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, 0, -3, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Jerk is MeterPerSecondCubed. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static JerkUnit DefaultBaseUnit { get; } = JerkUnit.MeterPerSecondCubed;
+            public static JerkUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = JerkUnit.MeterPerSecondCubed;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="JerkUnit"/>.
@@ -187,7 +192,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Jerk" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Jerk, JerkUnit> Info { get; }
@@ -195,53 +204,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Jerk, which is MeterPerSecondCubed. All conversions go via this value.
         /// </summary>
-        public static JerkUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static JerkUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Jerk quantity.
         /// </summary>
-        public static IReadOnlyCollection<JerkUnit> Units => Info.Units;
+        public static IReadOnlyCollection<JerkUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit MeterPerSecondCubed.
         /// </summary>
-        public static Jerk Zero => Info.Zero;
+        public static Jerk Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public JerkUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public JerkUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Jerk, JerkUnit> QuantityInfo => Info;
+        public QuantityInfo<Jerk, JerkUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Jerk> IQuantityOfType<Jerk>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Jerk> IQuantityOfType<Jerk>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<JerkUnit> IQuantity<JerkUnit>.QuantityInfo => Info;
+        QuantityInfo<JerkUnit> IQuantity<JerkUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -253,57 +310,101 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.CentimeterPerSecondCubed"/>
         /// </summary>
-        public QuantityValue CentimetersPerSecondCubed => this.As(JerkUnit.CentimeterPerSecondCubed);
+        public QuantityValue CentimetersPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.CentimeterPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.DecimeterPerSecondCubed"/>
         /// </summary>
-        public QuantityValue DecimetersPerSecondCubed => this.As(JerkUnit.DecimeterPerSecondCubed);
+        public QuantityValue DecimetersPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.DecimeterPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.FootPerSecondCubed"/>
         /// </summary>
-        public QuantityValue FeetPerSecondCubed => this.As(JerkUnit.FootPerSecondCubed);
+        public QuantityValue FeetPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.FootPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.InchPerSecondCubed"/>
         /// </summary>
-        public QuantityValue InchesPerSecondCubed => this.As(JerkUnit.InchPerSecondCubed);
+        public QuantityValue InchesPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.InchPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.KilometerPerSecondCubed"/>
         /// </summary>
-        public QuantityValue KilometersPerSecondCubed => this.As(JerkUnit.KilometerPerSecondCubed);
+        public QuantityValue KilometersPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.KilometerPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.MeterPerSecondCubed"/>
         /// </summary>
-        public QuantityValue MetersPerSecondCubed => this.As(JerkUnit.MeterPerSecondCubed);
+        public QuantityValue MetersPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.MeterPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.MicrometerPerSecondCubed"/>
         /// </summary>
-        public QuantityValue MicrometersPerSecondCubed => this.As(JerkUnit.MicrometerPerSecondCubed);
+        public QuantityValue MicrometersPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.MicrometerPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.MillimeterPerSecondCubed"/>
         /// </summary>
-        public QuantityValue MillimetersPerSecondCubed => this.As(JerkUnit.MillimeterPerSecondCubed);
+        public QuantityValue MillimetersPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.MillimeterPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.MillistandardGravitiesPerSecond"/>
         /// </summary>
-        public QuantityValue MillistandardGravitiesPerSecond => this.As(JerkUnit.MillistandardGravitiesPerSecond);
+        public QuantityValue MillistandardGravitiesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.MillistandardGravitiesPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.NanometerPerSecondCubed"/>
         /// </summary>
-        public QuantityValue NanometersPerSecondCubed => this.As(JerkUnit.NanometerPerSecondCubed);
+        public QuantityValue NanometersPerSecondCubed
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.NanometerPerSecondCubed);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.StandardGravitiesPerSecond"/>
         /// </summary>
-        public QuantityValue StandardGravitiesPerSecond => this.As(JerkUnit.StandardGravitiesPerSecond);
+        public QuantityValue StandardGravitiesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(JerkUnit.StandardGravitiesPerSecond);
+        }
 
         #endregion
 
@@ -314,10 +415,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(JerkUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -325,10 +425,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(JerkUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -337,90 +436,79 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.CentimeterPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromCentimetersPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.CentimeterPerSecondCubed);
-        }
+            => new(value, JerkUnit.CentimeterPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.DecimeterPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromDecimetersPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.DecimeterPerSecondCubed);
-        }
+            => new(value, JerkUnit.DecimeterPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.FootPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromFeetPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.FootPerSecondCubed);
-        }
+            => new(value, JerkUnit.FootPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.InchPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromInchesPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.InchPerSecondCubed);
-        }
+            => new(value, JerkUnit.InchPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.KilometerPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromKilometersPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.KilometerPerSecondCubed);
-        }
+            => new(value, JerkUnit.KilometerPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.MeterPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromMetersPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.MeterPerSecondCubed);
-        }
+            => new(value, JerkUnit.MeterPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.MicrometerPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromMicrometersPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.MicrometerPerSecondCubed);
-        }
+            => new(value, JerkUnit.MicrometerPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.MillimeterPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromMillimetersPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.MillimeterPerSecondCubed);
-        }
+            => new(value, JerkUnit.MillimeterPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.MillistandardGravitiesPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromMillistandardGravitiesPerSecond(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.MillistandardGravitiesPerSecond);
-        }
+            => new(value, JerkUnit.MillistandardGravitiesPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.NanometerPerSecondCubed"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromNanometersPerSecondCubed(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.NanometerPerSecondCubed);
-        }
+            => new(value, JerkUnit.NanometerPerSecondCubed);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.StandardGravitiesPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk FromStandardGravitiesPerSecond(QuantityValue value)
-        {
-            return new Jerk(value, JerkUnit.StandardGravitiesPerSecond);
-        }
+            => new(value, JerkUnit.StandardGravitiesPerSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="JerkUnit" /> to <see cref="Jerk" />.
@@ -428,10 +516,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Jerk unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk From(QuantityValue value, JerkUnit fromUnit)
-        {
-            return new Jerk(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -459,10 +546,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -487,10 +573,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Jerk Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Jerk, JerkUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Jerk, JerkUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -500,10 +585,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Jerk result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -515,10 +599,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Jerk result)
-        {
-            return QuantityParser.Default.TryParse<Jerk, JerkUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Jerk, JerkUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -529,10 +612,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static JerkUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -545,15 +627,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static JerkUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.JerkUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out JerkUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -565,10 +644,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out JerkUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -576,45 +654,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Jerk operator -(Jerk right)
-        {
-            return new Jerk(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Jerk"/> from adding two <see cref="Jerk"/>.</summary>
         public static Jerk operator +(Jerk left, Jerk right)
-        {
-            return new Jerk(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Jerk"/> from subtracting two <see cref="Jerk"/>.</summary>
         public static Jerk operator -(Jerk left, Jerk right)
-        {
-            return new Jerk(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Jerk"/> from multiplying value and <see cref="Jerk"/>.</summary>
         public static Jerk operator *(QuantityValue left, Jerk right)
-        {
-            return new Jerk(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Jerk"/> from multiplying value and <see cref="Jerk"/>.</summary>
         public static Jerk operator *(Jerk left, QuantityValue right)
-        {
-            return new Jerk(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Jerk"/> from dividing <see cref="Jerk"/> by value.</summary>
         public static Jerk operator /(Jerk left, QuantityValue right)
-        {
-            return new Jerk(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Jerk"/> by <see cref="Jerk"/>.</summary>
         public static QuantityValue operator /(Jerk left, Jerk right)
-        {
-            return left.MetersPerSecondCubed / right.MetersPerSecondCubed;
-        }
+            => left.MetersPerSecondCubed / right.MetersPerSecondCubed;
 
         #endregion
 
@@ -622,9 +686,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Acceleration"/> from <see cref="Jerk"/> * <see cref="Duration"/>.</summary>
         public static Acceleration operator *(Jerk jerk, Duration duration)
-        {
-            return Acceleration.FromMetersPerSecondSquared(jerk.MetersPerSecondCubed * duration.Seconds);
-        }
+            => Acceleration.FromMetersPerSecondSquared(jerk.MetersPerSecondCubed * duration.Seconds);
 
         #endregion
 
@@ -632,27 +694,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Jerk left, Jerk right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Jerk left, Jerk right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Jerk left, Jerk right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Jerk left, Jerk right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Jerk"/> instances are equal.
@@ -663,10 +717,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Jerk)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Jerk left, Jerk right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Jerk"/> instances are not equal.
@@ -676,10 +729,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Jerk)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Jerk left, Jerk right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -692,12 +744,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Jerk otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Jerk otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -708,18 +755,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Jerk other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Jerk.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Jerk), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Jerk), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Jerk)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -748,9 +791,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Jerk other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -761,20 +802,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

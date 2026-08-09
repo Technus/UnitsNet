@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -89,9 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AccelerationInfo"/> class with the default settings.</returns>
             public static AccelerationInfo CreateDefault()
-            {
-                return new AccelerationInfo(nameof(Acceleration), DefaultBaseUnit, GetDefaultMappings(), new Acceleration(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Acceleration), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AccelerationInfo"/> class with the default settings for the Acceleration quantity and a callback for customizing the default unit mappings.
@@ -103,19 +102,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AccelerationInfo"/> class with the default settings.
             /// </returns>
             public static AccelerationInfo CreateDefault(Func<IEnumerable<UnitDefinition<AccelerationUnit>>, IEnumerable<IUnitDefinition<AccelerationUnit>>> customizeUnits)
-            {
-                return new AccelerationInfo(nameof(Acceleration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Acceleration(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Acceleration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Acceleration"/> is T^-2L.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, 0, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, 0, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Acceleration is MeterPerSecondSquared. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static AccelerationUnit DefaultBaseUnit { get; } = AccelerationUnit.MeterPerSecondSquared;
+            public static AccelerationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AccelerationUnit.MeterPerSecondSquared;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="AccelerationUnit"/>.
@@ -202,7 +207,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Acceleration" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Acceleration, AccelerationUnit> Info { get; }
@@ -210,53 +219,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Acceleration, which is MeterPerSecondSquared. All conversions go via this value.
         /// </summary>
-        public static AccelerationUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static AccelerationUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Acceleration quantity.
         /// </summary>
-        public static IReadOnlyCollection<AccelerationUnit> Units => Info.Units;
+        public static IReadOnlyCollection<AccelerationUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit MeterPerSecondSquared.
         /// </summary>
-        public static Acceleration Zero => Info.Zero;
+        public static Acceleration Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public AccelerationUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public AccelerationUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Acceleration, AccelerationUnit> QuantityInfo => Info;
+        public QuantityInfo<Acceleration, AccelerationUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Acceleration> IQuantityOfType<Acceleration>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Acceleration> IQuantityOfType<Acceleration>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<AccelerationUnit> IQuantity<AccelerationUnit>.QuantityInfo => Info;
+        QuantityInfo<AccelerationUnit> IQuantity<AccelerationUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -268,72 +325,128 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.CentimeterPerSecondSquared"/>
         /// </summary>
-        public QuantityValue CentimetersPerSecondSquared => this.As(AccelerationUnit.CentimeterPerSecondSquared);
+        public QuantityValue CentimetersPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.CentimeterPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.DecimeterPerSecondSquared"/>
         /// </summary>
-        public QuantityValue DecimetersPerSecondSquared => this.As(AccelerationUnit.DecimeterPerSecondSquared);
+        public QuantityValue DecimetersPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.DecimeterPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.FootPerSecondSquared"/>
         /// </summary>
-        public QuantityValue FeetPerSecondSquared => this.As(AccelerationUnit.FootPerSecondSquared);
+        public QuantityValue FeetPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.FootPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.InchPerSecondSquared"/>
         /// </summary>
-        public QuantityValue InchesPerSecondSquared => this.As(AccelerationUnit.InchPerSecondSquared);
+        public QuantityValue InchesPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.InchPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.KilometerPerSecondSquared"/>
         /// </summary>
-        public QuantityValue KilometersPerSecondSquared => this.As(AccelerationUnit.KilometerPerSecondSquared);
+        public QuantityValue KilometersPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.KilometerPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.KnotPerHour"/>
         /// </summary>
-        public QuantityValue KnotsPerHour => this.As(AccelerationUnit.KnotPerHour);
+        public QuantityValue KnotsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.KnotPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.KnotPerMinute"/>
         /// </summary>
-        public QuantityValue KnotsPerMinute => this.As(AccelerationUnit.KnotPerMinute);
+        public QuantityValue KnotsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.KnotPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.KnotPerSecond"/>
         /// </summary>
-        public QuantityValue KnotsPerSecond => this.As(AccelerationUnit.KnotPerSecond);
+        public QuantityValue KnotsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.KnotPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.MeterPerSecondSquared"/>
         /// </summary>
-        public QuantityValue MetersPerSecondSquared => this.As(AccelerationUnit.MeterPerSecondSquared);
+        public QuantityValue MetersPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.MeterPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.MicrometerPerSecondSquared"/>
         /// </summary>
-        public QuantityValue MicrometersPerSecondSquared => this.As(AccelerationUnit.MicrometerPerSecondSquared);
+        public QuantityValue MicrometersPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.MicrometerPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.MillimeterPerSecondSquared"/>
         /// </summary>
-        public QuantityValue MillimetersPerSecondSquared => this.As(AccelerationUnit.MillimeterPerSecondSquared);
+        public QuantityValue MillimetersPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.MillimeterPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.MillistandardGravity"/>
         /// </summary>
-        public QuantityValue MillistandardGravity => this.As(AccelerationUnit.MillistandardGravity);
+        public QuantityValue MillistandardGravity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.MillistandardGravity);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.NanometerPerSecondSquared"/>
         /// </summary>
-        public QuantityValue NanometersPerSecondSquared => this.As(AccelerationUnit.NanometerPerSecondSquared);
+        public QuantityValue NanometersPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.NanometerPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.StandardGravity"/>
         /// </summary>
-        public QuantityValue StandardGravity => this.As(AccelerationUnit.StandardGravity);
+        public QuantityValue StandardGravity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AccelerationUnit.StandardGravity);
+        }
 
         #endregion
 
@@ -344,10 +457,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AccelerationUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -355,10 +467,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AccelerationUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -367,114 +478,100 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.CentimeterPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromCentimetersPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.CentimeterPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.CentimeterPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.DecimeterPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromDecimetersPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.DecimeterPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.DecimeterPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.FootPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromFeetPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.FootPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.FootPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.InchPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromInchesPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.InchPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.InchPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.KilometerPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromKilometersPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.KilometerPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.KilometerPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.KnotPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromKnotsPerHour(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.KnotPerHour);
-        }
+            => new(value, AccelerationUnit.KnotPerHour);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.KnotPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromKnotsPerMinute(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.KnotPerMinute);
-        }
+            => new(value, AccelerationUnit.KnotPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.KnotPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromKnotsPerSecond(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.KnotPerSecond);
-        }
+            => new(value, AccelerationUnit.KnotPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.MeterPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromMetersPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.MeterPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.MeterPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.MicrometerPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromMicrometersPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.MicrometerPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.MicrometerPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.MillimeterPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromMillimetersPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.MillimeterPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.MillimeterPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.MillistandardGravity"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromMillistandardGravity(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.MillistandardGravity);
-        }
+            => new(value, AccelerationUnit.MillistandardGravity);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.NanometerPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromNanometersPerSecondSquared(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.NanometerPerSecondSquared);
-        }
+            => new(value, AccelerationUnit.NanometerPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.StandardGravity"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration FromStandardGravity(QuantityValue value)
-        {
-            return new Acceleration(value, AccelerationUnit.StandardGravity);
-        }
+            => new(value, AccelerationUnit.StandardGravity);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="AccelerationUnit" /> to <see cref="Acceleration" />.
@@ -482,10 +579,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Acceleration unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration From(QuantityValue value, AccelerationUnit fromUnit)
-        {
-            return new Acceleration(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -513,10 +609,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -541,10 +636,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Acceleration Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Acceleration, AccelerationUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Acceleration, AccelerationUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -554,10 +648,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Acceleration result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -569,10 +662,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Acceleration result)
-        {
-            return QuantityParser.Default.TryParse<Acceleration, AccelerationUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Acceleration, AccelerationUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -583,10 +675,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AccelerationUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -599,15 +690,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static AccelerationUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.AccelerationUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out AccelerationUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -619,10 +707,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out AccelerationUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -630,45 +717,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Acceleration operator -(Acceleration right)
-        {
-            return new Acceleration(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Acceleration"/> from adding two <see cref="Acceleration"/>.</summary>
         public static Acceleration operator +(Acceleration left, Acceleration right)
-        {
-            return new Acceleration(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Acceleration"/> from subtracting two <see cref="Acceleration"/>.</summary>
         public static Acceleration operator -(Acceleration left, Acceleration right)
-        {
-            return new Acceleration(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Acceleration"/> from multiplying value and <see cref="Acceleration"/>.</summary>
         public static Acceleration operator *(QuantityValue left, Acceleration right)
-        {
-            return new Acceleration(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Acceleration"/> from multiplying value and <see cref="Acceleration"/>.</summary>
         public static Acceleration operator *(Acceleration left, QuantityValue right)
-        {
-            return new Acceleration(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Acceleration"/> from dividing <see cref="Acceleration"/> by value.</summary>
         public static Acceleration operator /(Acceleration left, QuantityValue right)
-        {
-            return new Acceleration(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Acceleration"/> by <see cref="Acceleration"/>.</summary>
         public static QuantityValue operator /(Acceleration left, Acceleration right)
-        {
-            return left.MetersPerSecondSquared / right.MetersPerSecondSquared;
-        }
+            => left.MetersPerSecondSquared / right.MetersPerSecondSquared;
 
         #endregion
 
@@ -676,45 +749,31 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Acceleration"/> / <see cref="Jerk"/>.</summary>
         public static Duration operator /(Acceleration acceleration, Jerk jerk)
-        {
-            return Duration.FromSeconds(acceleration.MetersPerSecondSquared / jerk.MetersPerSecondCubed);
-        }
+            => Duration.FromSeconds(acceleration.MetersPerSecondSquared / jerk.MetersPerSecondCubed);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Acceleration"/> * <see cref="Mass"/>.</summary>
         public static Force operator *(Acceleration acceleration, Mass mass)
-        {
-            return Force.FromNewtons(acceleration.MetersPerSecondSquared * mass.Kilograms);
-        }
+            => Force.FromNewtons(acceleration.MetersPerSecondSquared * mass.Kilograms);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="Acceleration"/> * <see cref="LinearDensity"/>.</summary>
         public static ForcePerLength operator *(Acceleration acceleration, LinearDensity linearDensity)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(acceleration.MetersPerSecondSquared * linearDensity.KilogramsPerMeter);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(acceleration.MetersPerSecondSquared * linearDensity.KilogramsPerMeter);
 
         /// <summary>Get <see cref="Jerk"/> from <see cref="Acceleration"/> / <see cref="Duration"/>.</summary>
         public static Jerk operator /(Acceleration acceleration, Duration duration)
-        {
-            return Jerk.FromMetersPerSecondCubed(acceleration.MetersPerSecondSquared / duration.Seconds);
-        }
+            => Jerk.FromMetersPerSecondCubed(acceleration.MetersPerSecondSquared / duration.Seconds);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="Acceleration"/> * <see cref="AreaDensity"/>.</summary>
         public static Pressure operator *(Acceleration acceleration, AreaDensity areaDensity)
-        {
-            return Pressure.FromPascals(acceleration.MetersPerSecondSquared * areaDensity.KilogramsPerSquareMeter);
-        }
+            => Pressure.FromPascals(acceleration.MetersPerSecondSquared * areaDensity.KilogramsPerSquareMeter);
 
         /// <summary>Get <see cref="SpecificWeight"/> from <see cref="Acceleration"/> * <see cref="Density"/>.</summary>
         public static SpecificWeight operator *(Acceleration acceleration, Density density)
-        {
-            return SpecificWeight.FromNewtonsPerCubicMeter(acceleration.MetersPerSecondSquared * density.KilogramsPerCubicMeter);
-        }
+            => SpecificWeight.FromNewtonsPerCubicMeter(acceleration.MetersPerSecondSquared * density.KilogramsPerCubicMeter);
 
         /// <summary>Get <see cref="Speed"/> from <see cref="Acceleration"/> * <see cref="Duration"/>.</summary>
         public static Speed operator *(Acceleration acceleration, Duration duration)
-        {
-            return Speed.FromMetersPerSecond(acceleration.MetersPerSecondSquared * duration.Seconds);
-        }
+            => Speed.FromMetersPerSecond(acceleration.MetersPerSecondSquared * duration.Seconds);
 
         #endregion
 
@@ -722,27 +781,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Acceleration left, Acceleration right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Acceleration left, Acceleration right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Acceleration left, Acceleration right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Acceleration left, Acceleration right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Acceleration"/> instances are equal.
@@ -753,10 +804,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Acceleration)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Acceleration left, Acceleration right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Acceleration"/> instances are not equal.
@@ -766,10 +816,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Acceleration)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Acceleration left, Acceleration right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -782,12 +831,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Acceleration otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Acceleration otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -798,18 +842,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Acceleration other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Acceleration.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Acceleration), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Acceleration), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Acceleration)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -838,9 +878,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Acceleration other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -851,20 +889,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

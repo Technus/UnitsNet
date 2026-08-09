@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -97,9 +98,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ForceInfo"/> class with the default settings.</returns>
             public static ForceInfo CreateDefault()
-            {
-                return new ForceInfo(nameof(Force), DefaultBaseUnit, GetDefaultMappings(), new Force(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Force), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ForceInfo"/> class with the default settings for the Force quantity and a callback for customizing the default unit mappings.
@@ -111,19 +110,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ForceInfo"/> class with the default settings.
             /// </returns>
             public static ForceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ForceUnit>>, IEnumerable<IUnitDefinition<ForceUnit>>> customizeUnits)
-            {
-                return new ForceInfo(nameof(Force), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Force(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Force), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Force"/> is T^-2LM.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, 1, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, 1, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Force is Newton. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ForceUnit DefaultBaseUnit { get; } = ForceUnit.Newton;
+            public static ForceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ForceUnit.Newton;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ForceUnit"/>.
@@ -216,7 +221,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Force" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Force, ForceUnit> Info { get; }
@@ -224,53 +233,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Force, which is Newton. All conversions go via this value.
         /// </summary>
-        public static ForceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ForceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Force quantity.
         /// </summary>
-        public static IReadOnlyCollection<ForceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ForceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Newton.
         /// </summary>
-        public static Force Zero => Info.Zero;
+        public static Force Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ForceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ForceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Force, ForceUnit> QuantityInfo => Info;
+        public QuantityInfo<Force, ForceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Force> IQuantityOfType<Force>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Force> IQuantityOfType<Force>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ForceUnit> IQuantity<ForceUnit>.QuantityInfo => Info;
+        QuantityInfo<ForceUnit> IQuantity<ForceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -282,82 +339,146 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Decanewton"/>
         /// </summary>
-        public QuantityValue Decanewtons => this.As(ForceUnit.Decanewton);
+        public QuantityValue Decanewtons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Decanewton);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Dyn"/>
         /// </summary>
-        public QuantityValue Dyne => this.As(ForceUnit.Dyn);
+        public QuantityValue Dyne
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Dyn);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.GramForce"/>
         /// </summary>
-        public QuantityValue GramsForce => this.As(ForceUnit.GramForce);
+        public QuantityValue GramsForce
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.GramForce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.KilogramForce"/>
         /// </summary>
-        public QuantityValue KilogramsForce => this.As(ForceUnit.KilogramForce);
+        public QuantityValue KilogramsForce
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.KilogramForce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Kilonewton"/>
         /// </summary>
-        public QuantityValue Kilonewtons => this.As(ForceUnit.Kilonewton);
+        public QuantityValue Kilonewtons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Kilonewton);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Kilopond"/>
         /// </summary>
-        public QuantityValue Kiloponds => this.As(ForceUnit.Kilopond);
+        public QuantityValue Kiloponds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Kilopond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.KilopoundForce"/>
         /// </summary>
-        public QuantityValue KilopoundsForce => this.As(ForceUnit.KilopoundForce);
+        public QuantityValue KilopoundsForce
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.KilopoundForce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Meganewton"/>
         /// </summary>
-        public QuantityValue Meganewtons => this.As(ForceUnit.Meganewton);
+        public QuantityValue Meganewtons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Meganewton);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Micronewton"/>
         /// </summary>
-        public QuantityValue Micronewtons => this.As(ForceUnit.Micronewton);
+        public QuantityValue Micronewtons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Micronewton);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Millinewton"/>
         /// </summary>
-        public QuantityValue Millinewtons => this.As(ForceUnit.Millinewton);
+        public QuantityValue Millinewtons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Millinewton);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Newton"/>
         /// </summary>
-        public QuantityValue Newtons => this.As(ForceUnit.Newton);
+        public QuantityValue Newtons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Newton);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.OunceForce"/>
         /// </summary>
-        public QuantityValue OunceForce => this.As(ForceUnit.OunceForce);
+        public QuantityValue OunceForce
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.OunceForce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Poundal"/>
         /// </summary>
-        public QuantityValue Poundals => this.As(ForceUnit.Poundal);
+        public QuantityValue Poundals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.Poundal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.PoundForce"/>
         /// </summary>
-        public QuantityValue PoundsForce => this.As(ForceUnit.PoundForce);
+        public QuantityValue PoundsForce
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.PoundForce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.ShortTonForce"/>
         /// </summary>
-        public QuantityValue ShortTonsForce => this.As(ForceUnit.ShortTonForce);
+        public QuantityValue ShortTonsForce
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.ShortTonForce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.TonneForce"/>
         /// </summary>
-        public QuantityValue TonnesForce => this.As(ForceUnit.TonneForce);
+        public QuantityValue TonnesForce
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ForceUnit.TonneForce);
+        }
 
         #endregion
 
@@ -368,10 +489,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ForceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -379,10 +499,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ForceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -391,130 +510,114 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Decanewton"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromDecanewtons(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Decanewton);
-        }
+            => new(value, ForceUnit.Decanewton);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Dyn"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromDyne(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Dyn);
-        }
+            => new(value, ForceUnit.Dyn);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.GramForce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromGramsForce(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.GramForce);
-        }
+            => new(value, ForceUnit.GramForce);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.KilogramForce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromKilogramsForce(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.KilogramForce);
-        }
+            => new(value, ForceUnit.KilogramForce);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Kilonewton"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromKilonewtons(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Kilonewton);
-        }
+            => new(value, ForceUnit.Kilonewton);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Kilopond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromKiloponds(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Kilopond);
-        }
+            => new(value, ForceUnit.Kilopond);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.KilopoundForce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromKilopoundsForce(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.KilopoundForce);
-        }
+            => new(value, ForceUnit.KilopoundForce);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Meganewton"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromMeganewtons(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Meganewton);
-        }
+            => new(value, ForceUnit.Meganewton);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Micronewton"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromMicronewtons(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Micronewton);
-        }
+            => new(value, ForceUnit.Micronewton);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Millinewton"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromMillinewtons(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Millinewton);
-        }
+            => new(value, ForceUnit.Millinewton);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Newton"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromNewtons(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Newton);
-        }
+            => new(value, ForceUnit.Newton);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.OunceForce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromOunceForce(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.OunceForce);
-        }
+            => new(value, ForceUnit.OunceForce);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Poundal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromPoundals(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.Poundal);
-        }
+            => new(value, ForceUnit.Poundal);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.PoundForce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromPoundsForce(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.PoundForce);
-        }
+            => new(value, ForceUnit.PoundForce);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.ShortTonForce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromShortTonsForce(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.ShortTonForce);
-        }
+            => new(value, ForceUnit.ShortTonForce);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.TonneForce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force FromTonnesForce(QuantityValue value)
-        {
-            return new Force(value, ForceUnit.TonneForce);
-        }
+            => new(value, ForceUnit.TonneForce);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ForceUnit" /> to <see cref="Force" />.
@@ -522,10 +625,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Force unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force From(QuantityValue value, ForceUnit fromUnit)
-        {
-            return new Force(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -553,10 +655,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -581,10 +682,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Force Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Force, ForceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Force, ForceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -594,10 +694,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Force result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -609,10 +708,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Force result)
-        {
-            return QuantityParser.Default.TryParse<Force, ForceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Force, ForceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -623,10 +721,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ForceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -639,15 +736,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ForceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ForceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ForceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -659,10 +753,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ForceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -670,45 +763,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Force operator -(Force right)
-        {
-            return new Force(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Force"/> from adding two <see cref="Force"/>.</summary>
         public static Force operator +(Force left, Force right)
-        {
-            return new Force(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Force"/> from subtracting two <see cref="Force"/>.</summary>
         public static Force operator -(Force left, Force right)
-        {
-            return new Force(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Force"/> from multiplying value and <see cref="Force"/>.</summary>
         public static Force operator *(QuantityValue left, Force right)
-        {
-            return new Force(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Force"/> from multiplying value and <see cref="Force"/>.</summary>
         public static Force operator *(Force left, QuantityValue right)
-        {
-            return new Force(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Force"/> from dividing <see cref="Force"/> by value.</summary>
         public static Force operator /(Force left, QuantityValue right)
-        {
-            return new Force(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Force"/> by <see cref="Force"/>.</summary>
         public static QuantityValue operator /(Force left, Force right)
-        {
-            return left.Newtons / right.Newtons;
-        }
+            => left.Newtons / right.Newtons;
 
         #endregion
 
@@ -716,93 +795,63 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Acceleration"/> from <see cref="Force"/> / <see cref="Mass"/>.</summary>
         public static Acceleration operator /(Force force, Mass mass)
-        {
-            return Acceleration.FromMetersPerSecondSquared(force.Newtons / mass.Kilograms);
-        }
+            => Acceleration.FromMetersPerSecondSquared(force.Newtons / mass.Kilograms);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Force"/> / <see cref="Pressure"/>.</summary>
         public static Area operator /(Force force, Pressure pressure)
-        {
-            return Area.FromSquareMeters(force.Newtons / pressure.Pascals);
-        }
+            => Area.FromSquareMeters(force.Newtons / pressure.Pascals);
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Force"/> / <see cref="ForceChangeRate"/>.</summary>
         public static Duration operator /(Force force, ForceChangeRate forceChangeRate)
-        {
-            return Duration.FromSeconds(force.Newtons / forceChangeRate.NewtonsPerSecond);
-        }
+            => Duration.FromSeconds(force.Newtons / forceChangeRate.NewtonsPerSecond);
 
         /// <summary>Get <see cref="ForceChangeRate"/> from <see cref="Force"/> / <see cref="Duration"/>.</summary>
         public static ForceChangeRate operator /(Force force, Duration duration)
-        {
-            return ForceChangeRate.FromNewtonsPerSecond(force.Newtons / duration.Seconds);
-        }
+            => ForceChangeRate.FromNewtonsPerSecond(force.Newtons / duration.Seconds);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="Force"/> * <see cref="ReciprocalLength"/>.</summary>
         public static ForcePerLength operator *(Force force, ReciprocalLength reciprocalLength)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(force.Newtons * reciprocalLength.InverseMeters);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(force.Newtons * reciprocalLength.InverseMeters);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="Force"/> / <see cref="Length"/>.</summary>
         public static ForcePerLength operator /(Force force, Length length)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(force.Newtons / length.Meters);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(force.Newtons / length.Meters);
 
         /// <summary>Get <see cref="Impulse"/> from <see cref="Force"/> * <see cref="Duration"/>.</summary>
         public static Impulse operator *(Force force, Duration duration)
-        {
-            return Impulse.FromNewtonSeconds(force.Newtons * duration.Seconds);
-        }
+            => Impulse.FromNewtonSeconds(force.Newtons * duration.Seconds);
 
         /// <summary>Get <see cref="Length"/> from <see cref="Force"/> / <see cref="ForcePerLength"/>.</summary>
         public static Length operator /(Force force, ForcePerLength forcePerLength)
-        {
-            return Length.FromMeters(force.Newtons / forcePerLength.NewtonsPerMeter);
-        }
+            => Length.FromMeters(force.Newtons / forcePerLength.NewtonsPerMeter);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="Force"/> / <see cref="Acceleration"/>.</summary>
         public static Mass operator /(Force force, Acceleration acceleration)
-        {
-            return Mass.FromKilograms(force.Newtons / acceleration.MetersPerSecondSquared);
-        }
+            => Mass.FromKilograms(force.Newtons / acceleration.MetersPerSecondSquared);
 
         /// <summary>Get <see cref="Power"/> from <see cref="Force"/> * <see cref="Speed"/>.</summary>
         public static Power operator *(Force force, Speed speed)
-        {
-            return Power.FromWatts(force.Newtons * speed.MetersPerSecond);
-        }
+            => Power.FromWatts(force.Newtons * speed.MetersPerSecond);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="Force"/> * <see cref="ReciprocalArea"/>.</summary>
         public static Pressure operator *(Force force, ReciprocalArea reciprocalArea)
-        {
-            return Pressure.FromNewtonsPerSquareMeter(force.Newtons * reciprocalArea.InverseSquareMeters);
-        }
+            => Pressure.FromNewtonsPerSquareMeter(force.Newtons * reciprocalArea.InverseSquareMeters);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="Force"/> / <see cref="Area"/>.</summary>
         public static Pressure operator /(Force force, Area area)
-        {
-            return Pressure.FromPascals(force.Newtons / area.SquareMeters);
-        }
+            => Pressure.FromPascals(force.Newtons / area.SquareMeters);
 
         /// <summary>Get <see cref="SpecificWeight"/> from <see cref="Force"/> / <see cref="Volume"/>.</summary>
         public static SpecificWeight operator /(Force force, Volume volume)
-        {
-            return SpecificWeight.FromNewtonsPerCubicMeter(force.Newtons / volume.CubicMeters);
-        }
+            => SpecificWeight.FromNewtonsPerCubicMeter(force.Newtons / volume.CubicMeters);
 
         /// <summary>Get <see cref="Torque"/> from <see cref="Force"/> * <see cref="Length"/>.</summary>
         public static Torque operator *(Force force, Length length)
-        {
-            return Torque.FromNewtonMeters(force.Newtons * length.Meters);
-        }
+            => Torque.FromNewtonMeters(force.Newtons * length.Meters);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="Force"/> / <see cref="SpecificWeight"/>.</summary>
         public static Volume operator /(Force force, SpecificWeight specificWeight)
-        {
-            return Volume.FromCubicMeters(force.Newtons / specificWeight.NewtonsPerCubicMeter);
-        }
+            => Volume.FromCubicMeters(force.Newtons / specificWeight.NewtonsPerCubicMeter);
 
         #endregion
 
@@ -810,27 +859,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Force left, Force right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Force left, Force right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Force left, Force right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Force left, Force right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Force"/> instances are equal.
@@ -841,10 +882,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Force)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Force left, Force right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Force"/> instances are not equal.
@@ -854,10 +894,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Force)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Force left, Force right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -870,12 +909,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Force otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Force otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -886,18 +920,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Force other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Force.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Force), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Force), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Force)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -926,9 +956,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Force other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -939,20 +967,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassFractionInfo"/> class with the default settings.</returns>
             public static MassFractionInfo CreateDefault()
-            {
-                return new MassFractionInfo(nameof(MassFraction), DefaultBaseUnit, GetDefaultMappings(), new MassFraction(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MassFraction), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassFractionInfo"/> class with the default settings for the MassFraction quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassFractionInfo"/> class with the default settings.
             /// </returns>
             public static MassFractionInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassFractionUnit>>, IEnumerable<IUnitDefinition<MassFractionUnit>>> customizeUnits)
-            {
-                return new MassFractionInfo(nameof(MassFraction), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new MassFraction(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MassFraction), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MassFraction"/> is .
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = BaseDimensions.Dimensionless;
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = BaseDimensions.Dimensionless;
 
             /// <summary>
             ///     The default base unit of MassFraction is DecimalFraction. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static MassFractionUnit DefaultBaseUnit { get; } = MassFractionUnit.DecimalFraction;
+            public static MassFractionUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassFractionUnit.DecimalFraction;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="MassFractionUnit"/>.
@@ -215,7 +220,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="MassFraction" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<MassFraction, MassFractionUnit> Info { get; }
@@ -223,53 +232,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of MassFraction, which is DecimalFraction. All conversions go via this value.
         /// </summary>
-        public static MassFractionUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static MassFractionUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the MassFraction quantity.
         /// </summary>
-        public static IReadOnlyCollection<MassFractionUnit> Units => Info.Units;
+        public static IReadOnlyCollection<MassFractionUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit DecimalFraction.
         /// </summary>
-        public static MassFraction Zero => Info.Zero;
+        public static MassFraction Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public MassFractionUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public MassFractionUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<MassFraction, MassFractionUnit> QuantityInfo => Info;
+        public QuantityInfo<MassFraction, MassFractionUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<MassFraction> IQuantityOfType<MassFraction>.QuantityInfo => Info;
+        IQuantityInstanceInfo<MassFraction> IQuantityOfType<MassFraction>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<MassFractionUnit> IQuantity<MassFractionUnit>.QuantityInfo => Info;
+        QuantityInfo<MassFractionUnit> IQuantity<MassFractionUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -281,122 +338,218 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.CentigramPerGram"/>
         /// </summary>
-        public QuantityValue CentigramsPerGram => this.As(MassFractionUnit.CentigramPerGram);
+        public QuantityValue CentigramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.CentigramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.CentigramPerKilogram"/>
         /// </summary>
-        public QuantityValue CentigramsPerKilogram => this.As(MassFractionUnit.CentigramPerKilogram);
+        public QuantityValue CentigramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.CentigramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.DecagramPerGram"/>
         /// </summary>
-        public QuantityValue DecagramsPerGram => this.As(MassFractionUnit.DecagramPerGram);
+        public QuantityValue DecagramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.DecagramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.DecagramPerKilogram"/>
         /// </summary>
-        public QuantityValue DecagramsPerKilogram => this.As(MassFractionUnit.DecagramPerKilogram);
+        public QuantityValue DecagramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.DecagramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.DecigramPerGram"/>
         /// </summary>
-        public QuantityValue DecigramsPerGram => this.As(MassFractionUnit.DecigramPerGram);
+        public QuantityValue DecigramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.DecigramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.DecigramPerKilogram"/>
         /// </summary>
-        public QuantityValue DecigramsPerKilogram => this.As(MassFractionUnit.DecigramPerKilogram);
+        public QuantityValue DecigramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.DecigramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.DecimalFraction"/>
         /// </summary>
-        public QuantityValue DecimalFractions => this.As(MassFractionUnit.DecimalFraction);
+        public QuantityValue DecimalFractions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.DecimalFraction);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.GramPerGram"/>
         /// </summary>
-        public QuantityValue GramsPerGram => this.As(MassFractionUnit.GramPerGram);
+        public QuantityValue GramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.GramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.GramPerKilogram"/>
         /// </summary>
-        public QuantityValue GramsPerKilogram => this.As(MassFractionUnit.GramPerKilogram);
+        public QuantityValue GramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.GramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.HectogramPerGram"/>
         /// </summary>
-        public QuantityValue HectogramsPerGram => this.As(MassFractionUnit.HectogramPerGram);
+        public QuantityValue HectogramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.HectogramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.HectogramPerKilogram"/>
         /// </summary>
-        public QuantityValue HectogramsPerKilogram => this.As(MassFractionUnit.HectogramPerKilogram);
+        public QuantityValue HectogramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.HectogramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.KilogramPerGram"/>
         /// </summary>
-        public QuantityValue KilogramsPerGram => this.As(MassFractionUnit.KilogramPerGram);
+        public QuantityValue KilogramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.KilogramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.KilogramPerKilogram"/>
         /// </summary>
-        public QuantityValue KilogramsPerKilogram => this.As(MassFractionUnit.KilogramPerKilogram);
+        public QuantityValue KilogramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.KilogramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.MicrogramPerGram"/>
         /// </summary>
-        public QuantityValue MicrogramsPerGram => this.As(MassFractionUnit.MicrogramPerGram);
+        public QuantityValue MicrogramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.MicrogramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.MicrogramPerKilogram"/>
         /// </summary>
-        public QuantityValue MicrogramsPerKilogram => this.As(MassFractionUnit.MicrogramPerKilogram);
+        public QuantityValue MicrogramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.MicrogramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.MilligramPerGram"/>
         /// </summary>
-        public QuantityValue MilligramsPerGram => this.As(MassFractionUnit.MilligramPerGram);
+        public QuantityValue MilligramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.MilligramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.MilligramPerKilogram"/>
         /// </summary>
-        public QuantityValue MilligramsPerKilogram => this.As(MassFractionUnit.MilligramPerKilogram);
+        public QuantityValue MilligramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.MilligramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.NanogramPerGram"/>
         /// </summary>
-        public QuantityValue NanogramsPerGram => this.As(MassFractionUnit.NanogramPerGram);
+        public QuantityValue NanogramsPerGram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.NanogramPerGram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.NanogramPerKilogram"/>
         /// </summary>
-        public QuantityValue NanogramsPerKilogram => this.As(MassFractionUnit.NanogramPerKilogram);
+        public QuantityValue NanogramsPerKilogram
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.NanogramPerKilogram);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.PartPerBillion"/>
         /// </summary>
-        public QuantityValue PartsPerBillion => this.As(MassFractionUnit.PartPerBillion);
+        public QuantityValue PartsPerBillion
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.PartPerBillion);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.PartPerMillion"/>
         /// </summary>
-        public QuantityValue PartsPerMillion => this.As(MassFractionUnit.PartPerMillion);
+        public QuantityValue PartsPerMillion
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.PartPerMillion);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.PartPerThousand"/>
         /// </summary>
-        public QuantityValue PartsPerThousand => this.As(MassFractionUnit.PartPerThousand);
+        public QuantityValue PartsPerThousand
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.PartPerThousand);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.PartPerTrillion"/>
         /// </summary>
-        public QuantityValue PartsPerTrillion => this.As(MassFractionUnit.PartPerTrillion);
+        public QuantityValue PartsPerTrillion
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.PartPerTrillion);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.Percent"/>
         /// </summary>
-        public QuantityValue Percent => this.As(MassFractionUnit.Percent);
+        public QuantityValue Percent
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFractionUnit.Percent);
+        }
 
         #endregion
 
@@ -407,10 +560,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MassFractionUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -418,10 +570,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MassFractionUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -430,194 +581,170 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.CentigramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromCentigramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.CentigramPerGram);
-        }
+            => new(value, MassFractionUnit.CentigramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.CentigramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromCentigramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.CentigramPerKilogram);
-        }
+            => new(value, MassFractionUnit.CentigramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.DecagramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromDecagramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.DecagramPerGram);
-        }
+            => new(value, MassFractionUnit.DecagramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.DecagramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromDecagramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.DecagramPerKilogram);
-        }
+            => new(value, MassFractionUnit.DecagramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.DecigramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromDecigramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.DecigramPerGram);
-        }
+            => new(value, MassFractionUnit.DecigramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.DecigramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromDecigramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.DecigramPerKilogram);
-        }
+            => new(value, MassFractionUnit.DecigramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.DecimalFraction"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromDecimalFractions(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.DecimalFraction);
-        }
+            => new(value, MassFractionUnit.DecimalFraction);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.GramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromGramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.GramPerGram);
-        }
+            => new(value, MassFractionUnit.GramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.GramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromGramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.GramPerKilogram);
-        }
+            => new(value, MassFractionUnit.GramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.HectogramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromHectogramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.HectogramPerGram);
-        }
+            => new(value, MassFractionUnit.HectogramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.HectogramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromHectogramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.HectogramPerKilogram);
-        }
+            => new(value, MassFractionUnit.HectogramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.KilogramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromKilogramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.KilogramPerGram);
-        }
+            => new(value, MassFractionUnit.KilogramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.KilogramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromKilogramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.KilogramPerKilogram);
-        }
+            => new(value, MassFractionUnit.KilogramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.MicrogramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromMicrogramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.MicrogramPerGram);
-        }
+            => new(value, MassFractionUnit.MicrogramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.MicrogramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromMicrogramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.MicrogramPerKilogram);
-        }
+            => new(value, MassFractionUnit.MicrogramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.MilligramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromMilligramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.MilligramPerGram);
-        }
+            => new(value, MassFractionUnit.MilligramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.MilligramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromMilligramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.MilligramPerKilogram);
-        }
+            => new(value, MassFractionUnit.MilligramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.NanogramPerGram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromNanogramsPerGram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.NanogramPerGram);
-        }
+            => new(value, MassFractionUnit.NanogramPerGram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.NanogramPerKilogram"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromNanogramsPerKilogram(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.NanogramPerKilogram);
-        }
+            => new(value, MassFractionUnit.NanogramPerKilogram);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.PartPerBillion"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromPartsPerBillion(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.PartPerBillion);
-        }
+            => new(value, MassFractionUnit.PartPerBillion);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.PartPerMillion"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromPartsPerMillion(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.PartPerMillion);
-        }
+            => new(value, MassFractionUnit.PartPerMillion);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.PartPerThousand"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromPartsPerThousand(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.PartPerThousand);
-        }
+            => new(value, MassFractionUnit.PartPerThousand);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.PartPerTrillion"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromPartsPerTrillion(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.PartPerTrillion);
-        }
+            => new(value, MassFractionUnit.PartPerTrillion);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.Percent"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction FromPercent(QuantityValue value)
-        {
-            return new MassFraction(value, MassFractionUnit.Percent);
-        }
+            => new(value, MassFractionUnit.Percent);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="MassFractionUnit" /> to <see cref="MassFraction" />.
@@ -625,10 +752,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>MassFraction unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction From(QuantityValue value, MassFractionUnit fromUnit)
-        {
-            return new MassFraction(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -656,10 +782,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -684,10 +809,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFraction Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<MassFraction, MassFractionUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<MassFraction, MassFractionUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -697,10 +821,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out MassFraction result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -712,10 +835,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out MassFraction result)
-        {
-            return QuantityParser.Default.TryParse<MassFraction, MassFractionUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<MassFraction, MassFractionUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -726,10 +848,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFractionUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -742,15 +863,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static MassFractionUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.MassFractionUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out MassFractionUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -762,10 +880,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out MassFractionUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -773,45 +890,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static MassFraction operator -(MassFraction right)
-        {
-            return new MassFraction(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="MassFraction"/> from adding two <see cref="MassFraction"/>.</summary>
         public static MassFraction operator +(MassFraction left, MassFraction right)
-        {
-            return new MassFraction(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MassFraction"/> from subtracting two <see cref="MassFraction"/>.</summary>
         public static MassFraction operator -(MassFraction left, MassFraction right)
-        {
-            return new MassFraction(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MassFraction"/> from multiplying value and <see cref="MassFraction"/>.</summary>
         public static MassFraction operator *(QuantityValue left, MassFraction right)
-        {
-            return new MassFraction(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="MassFraction"/> from multiplying value and <see cref="MassFraction"/>.</summary>
         public static MassFraction operator *(MassFraction left, QuantityValue right)
-        {
-            return new MassFraction(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="MassFraction"/> from dividing <see cref="MassFraction"/> by value.</summary>
         public static MassFraction operator /(MassFraction left, QuantityValue right)
-        {
-            return new MassFraction(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="MassFraction"/> by <see cref="MassFraction"/>.</summary>
         public static QuantityValue operator /(MassFraction left, MassFraction right)
-        {
-            return left.DecimalFractions / right.DecimalFractions;
-        }
+            => left.DecimalFractions / right.DecimalFractions;
 
         #endregion
 
@@ -819,9 +922,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Mass"/> from <see cref="MassFraction"/> * <see cref="Mass"/>.</summary>
         public static Mass operator *(MassFraction massFraction, Mass mass)
-        {
-            return Mass.FromKilograms(massFraction.DecimalFractions * mass.Kilograms);
-        }
+            => Mass.FromKilograms(massFraction.DecimalFractions * mass.Kilograms);
 
         #endregion
 
@@ -829,27 +930,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(MassFraction left, MassFraction right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(MassFraction left, MassFraction right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(MassFraction left, MassFraction right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(MassFraction left, MassFraction right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="MassFraction"/> instances are equal.
@@ -860,10 +953,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(MassFraction)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(MassFraction left, MassFraction right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="MassFraction"/> instances are not equal.
@@ -873,10 +965,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(MassFraction)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(MassFraction left, MassFraction right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -889,12 +980,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not MassFraction otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is MassFraction otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -905,18 +991,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(MassFraction other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current MassFraction.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(MassFraction), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(MassFraction), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(MassFraction)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -945,9 +1027,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(MassFraction other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -958,20 +1038,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricReactivePowerInfo"/> class with the default settings.</returns>
             public static ElectricReactivePowerInfo CreateDefault()
-            {
-                return new ElectricReactivePowerInfo(nameof(ElectricReactivePower), DefaultBaseUnit, GetDefaultMappings(), new ElectricReactivePower(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricReactivePower), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricReactivePowerInfo"/> class with the default settings for the ElectricReactivePower quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricReactivePowerInfo"/> class with the default settings.
             /// </returns>
             public static ElectricReactivePowerInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricReactivePowerUnit>>, IEnumerable<IUnitDefinition<ElectricReactivePowerUnit>>> customizeUnits)
-            {
-                return new ElectricReactivePowerInfo(nameof(ElectricReactivePower), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricReactivePower(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricReactivePower), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricReactivePower"/> is T^-3L^2M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -3, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -3, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricReactivePower is VoltampereReactive. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricReactivePowerUnit DefaultBaseUnit { get; } = ElectricReactivePowerUnit.VoltampereReactive;
+            public static ElectricReactivePowerUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricReactivePowerUnit.VoltampereReactive;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricReactivePowerUnit"/>.
@@ -169,7 +174,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricReactivePower" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricReactivePower, ElectricReactivePowerUnit> Info { get; }
@@ -177,53 +186,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricReactivePower, which is VoltampereReactive. All conversions go via this value.
         /// </summary>
-        public static ElectricReactivePowerUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricReactivePowerUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricReactivePower quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricReactivePowerUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricReactivePowerUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit VoltampereReactive.
         /// </summary>
-        public static ElectricReactivePower Zero => Info.Zero;
+        public static ElectricReactivePower Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricReactivePowerUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricReactivePowerUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricReactivePower, ElectricReactivePowerUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricReactivePower, ElectricReactivePowerUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricReactivePower> IQuantityOfType<ElectricReactivePower>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricReactivePower> IQuantityOfType<ElectricReactivePower>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricReactivePowerUnit> IQuantity<ElectricReactivePowerUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricReactivePowerUnit> IQuantity<ElectricReactivePowerUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -235,22 +292,38 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactivePowerUnit.GigavoltampereReactive"/>
         /// </summary>
-        public QuantityValue GigavoltamperesReactive => this.As(ElectricReactivePowerUnit.GigavoltampereReactive);
+        public QuantityValue GigavoltamperesReactive
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactivePowerUnit.GigavoltampereReactive);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactivePowerUnit.KilovoltampereReactive"/>
         /// </summary>
-        public QuantityValue KilovoltamperesReactive => this.As(ElectricReactivePowerUnit.KilovoltampereReactive);
+        public QuantityValue KilovoltamperesReactive
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactivePowerUnit.KilovoltampereReactive);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactivePowerUnit.MegavoltampereReactive"/>
         /// </summary>
-        public QuantityValue MegavoltamperesReactive => this.As(ElectricReactivePowerUnit.MegavoltampereReactive);
+        public QuantityValue MegavoltamperesReactive
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactivePowerUnit.MegavoltampereReactive);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactivePowerUnit.VoltampereReactive"/>
         /// </summary>
-        public QuantityValue VoltamperesReactive => this.As(ElectricReactivePowerUnit.VoltampereReactive);
+        public QuantityValue VoltamperesReactive
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactivePowerUnit.VoltampereReactive);
+        }
 
         #endregion
 
@@ -261,10 +334,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricReactivePowerUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -272,10 +344,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricReactivePowerUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -284,34 +355,30 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricReactivePower"/> from <see cref="ElectricReactivePowerUnit.GigavoltampereReactive"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePower FromGigavoltamperesReactive(QuantityValue value)
-        {
-            return new ElectricReactivePower(value, ElectricReactivePowerUnit.GigavoltampereReactive);
-        }
+            => new(value, ElectricReactivePowerUnit.GigavoltampereReactive);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactivePower"/> from <see cref="ElectricReactivePowerUnit.KilovoltampereReactive"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePower FromKilovoltamperesReactive(QuantityValue value)
-        {
-            return new ElectricReactivePower(value, ElectricReactivePowerUnit.KilovoltampereReactive);
-        }
+            => new(value, ElectricReactivePowerUnit.KilovoltampereReactive);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactivePower"/> from <see cref="ElectricReactivePowerUnit.MegavoltampereReactive"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePower FromMegavoltamperesReactive(QuantityValue value)
-        {
-            return new ElectricReactivePower(value, ElectricReactivePowerUnit.MegavoltampereReactive);
-        }
+            => new(value, ElectricReactivePowerUnit.MegavoltampereReactive);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactivePower"/> from <see cref="ElectricReactivePowerUnit.VoltampereReactive"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePower FromVoltamperesReactive(QuantityValue value)
-        {
-            return new ElectricReactivePower(value, ElectricReactivePowerUnit.VoltampereReactive);
-        }
+            => new(value, ElectricReactivePowerUnit.VoltampereReactive);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricReactivePowerUnit" /> to <see cref="ElectricReactivePower" />.
@@ -319,10 +386,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricReactivePower unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePower From(QuantityValue value, ElectricReactivePowerUnit fromUnit)
-        {
-            return new ElectricReactivePower(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -350,10 +416,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePower Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -378,10 +443,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePower Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricReactivePower, ElectricReactivePowerUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricReactivePower, ElectricReactivePowerUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -391,10 +455,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricReactivePower result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -406,10 +469,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricReactivePower result)
-        {
-            return QuantityParser.Default.TryParse<ElectricReactivePower, ElectricReactivePowerUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricReactivePower, ElectricReactivePowerUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -420,10 +482,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactivePowerUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -436,15 +497,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricReactivePowerUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricReactivePowerUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricReactivePowerUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -456,10 +514,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricReactivePowerUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -467,45 +524,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricReactivePower operator -(ElectricReactivePower right)
-        {
-            return new ElectricReactivePower(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricReactivePower"/> from adding two <see cref="ElectricReactivePower"/>.</summary>
         public static ElectricReactivePower operator +(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return new ElectricReactivePower(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricReactivePower"/> from subtracting two <see cref="ElectricReactivePower"/>.</summary>
         public static ElectricReactivePower operator -(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return new ElectricReactivePower(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricReactivePower"/> from multiplying value and <see cref="ElectricReactivePower"/>.</summary>
         public static ElectricReactivePower operator *(QuantityValue left, ElectricReactivePower right)
-        {
-            return new ElectricReactivePower(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricReactivePower"/> from multiplying value and <see cref="ElectricReactivePower"/>.</summary>
         public static ElectricReactivePower operator *(ElectricReactivePower left, QuantityValue right)
-        {
-            return new ElectricReactivePower(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricReactivePower"/> from dividing <see cref="ElectricReactivePower"/> by value.</summary>
         public static ElectricReactivePower operator /(ElectricReactivePower left, QuantityValue right)
-        {
-            return new ElectricReactivePower(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricReactivePower"/> by <see cref="ElectricReactivePower"/>.</summary>
         public static QuantityValue operator /(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return left.VoltamperesReactive / right.VoltamperesReactive;
-        }
+            => left.VoltamperesReactive / right.VoltamperesReactive;
 
         #endregion
 
@@ -513,9 +556,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="ElectricReactiveEnergy"/> from <see cref="ElectricReactivePower"/> * <see cref="Duration"/>.</summary>
         public static ElectricReactiveEnergy operator *(ElectricReactivePower electricReactivePower, Duration duration)
-        {
-            return ElectricReactiveEnergy.FromVoltampereReactiveHours(electricReactivePower.VoltamperesReactive * duration.Hours);
-        }
+            => ElectricReactiveEnergy.FromVoltampereReactiveHours(electricReactivePower.VoltamperesReactive * duration.Hours);
 
         #endregion
 
@@ -523,27 +564,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricReactivePower"/> instances are equal.
@@ -554,10 +587,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricReactivePower)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricReactivePower"/> instances are not equal.
@@ -567,10 +599,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricReactivePower)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricReactivePower left, ElectricReactivePower right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -583,12 +614,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricReactivePower otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricReactivePower otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -599,18 +625,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricReactivePower other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricReactivePower.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricReactivePower), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricReactivePower), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricReactivePower)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -639,9 +661,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricReactivePower other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -652,20 +672,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

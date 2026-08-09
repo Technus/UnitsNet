@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RatioInfo"/> class with the default settings.</returns>
             public static RatioInfo CreateDefault()
-            {
-                return new RatioInfo(nameof(Ratio), DefaultBaseUnit, GetDefaultMappings(), new Ratio(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Ratio), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RatioInfo"/> class with the default settings for the Ratio quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RatioInfo"/> class with the default settings.
             /// </returns>
             public static RatioInfo CreateDefault(Func<IEnumerable<UnitDefinition<RatioUnit>>, IEnumerable<IUnitDefinition<RatioUnit>>> customizeUnits)
-            {
-                return new RatioInfo(nameof(Ratio), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Ratio(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Ratio), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Ratio"/> is .
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = BaseDimensions.Dimensionless;
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = BaseDimensions.Dimensionless;
 
             /// <summary>
             ///     The default base unit of Ratio is DecimalFraction. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static RatioUnit DefaultBaseUnit { get; } = RatioUnit.DecimalFraction;
+            public static RatioUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RatioUnit.DecimalFraction;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="RatioUnit"/>.
@@ -161,7 +166,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Ratio" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Ratio, RatioUnit> Info { get; }
@@ -169,53 +178,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Ratio, which is DecimalFraction. All conversions go via this value.
         /// </summary>
-        public static RatioUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static RatioUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Ratio quantity.
         /// </summary>
-        public static IReadOnlyCollection<RatioUnit> Units => Info.Units;
+        public static IReadOnlyCollection<RatioUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit DecimalFraction.
         /// </summary>
-        public static Ratio Zero => Info.Zero;
+        public static Ratio Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public RatioUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public RatioUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Ratio, RatioUnit> QuantityInfo => Info;
+        public QuantityInfo<Ratio, RatioUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Ratio> IQuantityOfType<Ratio>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Ratio> IQuantityOfType<Ratio>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<RatioUnit> IQuantity<RatioUnit>.QuantityInfo => Info;
+        QuantityInfo<RatioUnit> IQuantity<RatioUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -227,32 +284,56 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioUnit.DecimalFraction"/>
         /// </summary>
-        public QuantityValue DecimalFractions => this.As(RatioUnit.DecimalFraction);
+        public QuantityValue DecimalFractions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RatioUnit.DecimalFraction);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioUnit.PartPerBillion"/>
         /// </summary>
-        public QuantityValue PartsPerBillion => this.As(RatioUnit.PartPerBillion);
+        public QuantityValue PartsPerBillion
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RatioUnit.PartPerBillion);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioUnit.PartPerMillion"/>
         /// </summary>
-        public QuantityValue PartsPerMillion => this.As(RatioUnit.PartPerMillion);
+        public QuantityValue PartsPerMillion
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RatioUnit.PartPerMillion);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioUnit.PartPerThousand"/>
         /// </summary>
-        public QuantityValue PartsPerThousand => this.As(RatioUnit.PartPerThousand);
+        public QuantityValue PartsPerThousand
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RatioUnit.PartPerThousand);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioUnit.PartPerTrillion"/>
         /// </summary>
-        public QuantityValue PartsPerTrillion => this.As(RatioUnit.PartPerTrillion);
+        public QuantityValue PartsPerTrillion
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RatioUnit.PartPerTrillion);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioUnit.Percent"/>
         /// </summary>
-        public QuantityValue Percent => this.As(RatioUnit.Percent);
+        public QuantityValue Percent
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RatioUnit.Percent);
+        }
 
         #endregion
 
@@ -263,10 +344,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RatioUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -274,10 +354,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RatioUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -286,50 +365,44 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Ratio"/> from <see cref="RatioUnit.DecimalFraction"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio FromDecimalFractions(QuantityValue value)
-        {
-            return new Ratio(value, RatioUnit.DecimalFraction);
-        }
+            => new(value, RatioUnit.DecimalFraction);
 
         /// <summary>
         ///     Creates a <see cref="Ratio"/> from <see cref="RatioUnit.PartPerBillion"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio FromPartsPerBillion(QuantityValue value)
-        {
-            return new Ratio(value, RatioUnit.PartPerBillion);
-        }
+            => new(value, RatioUnit.PartPerBillion);
 
         /// <summary>
         ///     Creates a <see cref="Ratio"/> from <see cref="RatioUnit.PartPerMillion"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio FromPartsPerMillion(QuantityValue value)
-        {
-            return new Ratio(value, RatioUnit.PartPerMillion);
-        }
+            => new(value, RatioUnit.PartPerMillion);
 
         /// <summary>
         ///     Creates a <see cref="Ratio"/> from <see cref="RatioUnit.PartPerThousand"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio FromPartsPerThousand(QuantityValue value)
-        {
-            return new Ratio(value, RatioUnit.PartPerThousand);
-        }
+            => new(value, RatioUnit.PartPerThousand);
 
         /// <summary>
         ///     Creates a <see cref="Ratio"/> from <see cref="RatioUnit.PartPerTrillion"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio FromPartsPerTrillion(QuantityValue value)
-        {
-            return new Ratio(value, RatioUnit.PartPerTrillion);
-        }
+            => new(value, RatioUnit.PartPerTrillion);
 
         /// <summary>
         ///     Creates a <see cref="Ratio"/> from <see cref="RatioUnit.Percent"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio FromPercent(QuantityValue value)
-        {
-            return new Ratio(value, RatioUnit.Percent);
-        }
+            => new(value, RatioUnit.Percent);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="RatioUnit" /> to <see cref="Ratio" />.
@@ -337,10 +410,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Ratio unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio From(QuantityValue value, RatioUnit fromUnit)
-        {
-            return new Ratio(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -368,10 +440,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -396,10 +467,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Ratio Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Ratio, RatioUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Ratio, RatioUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -409,10 +479,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Ratio result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -424,10 +493,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Ratio result)
-        {
-            return QuantityParser.Default.TryParse<Ratio, RatioUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Ratio, RatioUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -438,10 +506,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RatioUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -454,15 +521,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static RatioUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.RatioUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out RatioUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -474,10 +538,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out RatioUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -485,45 +548,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Ratio operator -(Ratio right)
-        {
-            return new Ratio(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Ratio"/> from adding two <see cref="Ratio"/>.</summary>
         public static Ratio operator +(Ratio left, Ratio right)
-        {
-            return new Ratio(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Ratio"/> from subtracting two <see cref="Ratio"/>.</summary>
         public static Ratio operator -(Ratio left, Ratio right)
-        {
-            return new Ratio(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Ratio"/> from multiplying value and <see cref="Ratio"/>.</summary>
         public static Ratio operator *(QuantityValue left, Ratio right)
-        {
-            return new Ratio(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Ratio"/> from multiplying value and <see cref="Ratio"/>.</summary>
         public static Ratio operator *(Ratio left, QuantityValue right)
-        {
-            return new Ratio(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Ratio"/> from dividing <see cref="Ratio"/> by value.</summary>
         public static Ratio operator /(Ratio left, QuantityValue right)
-        {
-            return new Ratio(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Ratio"/> by <see cref="Ratio"/>.</summary>
         public static QuantityValue operator /(Ratio left, Ratio right)
-        {
-            return left.DecimalFractions / right.DecimalFractions;
-        }
+            => left.DecimalFractions / right.DecimalFractions;
 
         #endregion
 
@@ -531,27 +580,19 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Compressibility"/> from <see cref="Ratio"/> / <see cref="Pressure"/>.</summary>
         public static Compressibility operator /(Ratio ratio, Pressure pressure)
-        {
-            return Compressibility.FromInversePascals(ratio.DecimalFractions / pressure.Pascals);
-        }
+            => Compressibility.FromInversePascals(ratio.DecimalFractions / pressure.Pascals);
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Ratio"/> / <see cref="RatioChangeRate"/>.</summary>
         public static Duration operator /(Ratio ratio, RatioChangeRate ratioChangeRate)
-        {
-            return Duration.FromSeconds(ratio.DecimalFractions / ratioChangeRate.DecimalFractionsPerSecond);
-        }
+            => Duration.FromSeconds(ratio.DecimalFractions / ratioChangeRate.DecimalFractionsPerSecond);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="Ratio"/> / <see cref="Compressibility"/>.</summary>
         public static Pressure operator /(Ratio ratio, Compressibility compressibility)
-        {
-            return Pressure.FromPascals(ratio.DecimalFractions / compressibility.InversePascals);
-        }
+            => Pressure.FromPascals(ratio.DecimalFractions / compressibility.InversePascals);
 
         /// <summary>Get <see cref="RatioChangeRate"/> from <see cref="Ratio"/> / <see cref="Duration"/>.</summary>
         public static RatioChangeRate operator /(Ratio ratio, Duration duration)
-        {
-            return RatioChangeRate.FromDecimalFractionsPerSecond(ratio.DecimalFractions / duration.Seconds);
-        }
+            => RatioChangeRate.FromDecimalFractionsPerSecond(ratio.DecimalFractions / duration.Seconds);
 
         #endregion
 
@@ -559,27 +600,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Ratio left, Ratio right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Ratio left, Ratio right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Ratio left, Ratio right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Ratio left, Ratio right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Ratio"/> instances are equal.
@@ -590,10 +623,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Ratio)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Ratio left, Ratio right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Ratio"/> instances are not equal.
@@ -603,10 +635,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Ratio)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Ratio left, Ratio right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -619,12 +650,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Ratio otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Ratio otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -635,18 +661,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Ratio other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Ratio.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Ratio), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Ratio), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Ratio)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -675,9 +697,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Ratio other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -688,20 +708,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

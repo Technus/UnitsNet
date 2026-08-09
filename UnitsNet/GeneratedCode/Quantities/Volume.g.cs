@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -98,9 +99,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumeInfo"/> class with the default settings.</returns>
             public static VolumeInfo CreateDefault()
-            {
-                return new VolumeInfo(nameof(Volume), DefaultBaseUnit, GetDefaultMappings(), new Volume(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Volume), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumeInfo"/> class with the default settings for the Volume quantity and a callback for customizing the default unit mappings.
@@ -112,19 +111,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumeInfo"/> class with the default settings.
             /// </returns>
             public static VolumeInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumeUnit>>, IEnumerable<IUnitDefinition<VolumeUnit>>> customizeUnits)
-            {
-                return new VolumeInfo(nameof(Volume), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Volume(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Volume), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Volume"/> is L^3.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(3, 0, 0, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(3, 0, 0, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Volume is CubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static VolumeUnit DefaultBaseUnit { get; } = VolumeUnit.CubicMeter;
+            public static VolumeUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumeUnit.CubicMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="VolumeUnit"/>.
@@ -331,7 +336,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Volume" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Volume, VolumeUnit> Info { get; }
@@ -339,53 +348,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Volume, which is CubicMeter. All conversions go via this value.
         /// </summary>
-        public static VolumeUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static VolumeUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Volume quantity.
         /// </summary>
-        public static IReadOnlyCollection<VolumeUnit> Units => Info.Units;
+        public static IReadOnlyCollection<VolumeUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit CubicMeter.
         /// </summary>
-        public static Volume Zero => Info.Zero;
+        public static Volume Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public VolumeUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public VolumeUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Volume, VolumeUnit> QuantityInfo => Info;
+        public QuantityInfo<Volume, VolumeUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Volume> IQuantityOfType<Volume>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Volume> IQuantityOfType<Volume>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<VolumeUnit> IQuantity<VolumeUnit>.QuantityInfo => Info;
+        QuantityInfo<VolumeUnit> IQuantity<VolumeUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -397,272 +454,488 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.AcreFoot"/>
         /// </summary>
-        public QuantityValue AcreFeet => this.As(VolumeUnit.AcreFoot);
+        public QuantityValue AcreFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.AcreFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.AuTablespoon"/>
         /// </summary>
-        public QuantityValue AuTablespoons => this.As(VolumeUnit.AuTablespoon);
+        public QuantityValue AuTablespoons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.AuTablespoon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.BoardFoot"/>
         /// </summary>
-        public QuantityValue BoardFeet => this.As(VolumeUnit.BoardFoot);
+        public QuantityValue BoardFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.BoardFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Centiliter"/>
         /// </summary>
-        public QuantityValue Centiliters => this.As(VolumeUnit.Centiliter);
+        public QuantityValue Centiliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Centiliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicCentimeter"/>
         /// </summary>
-        public QuantityValue CubicCentimeters => this.As(VolumeUnit.CubicCentimeter);
+        public QuantityValue CubicCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicDecimeter"/>
         /// </summary>
-        public QuantityValue CubicDecimeters => this.As(VolumeUnit.CubicDecimeter);
+        public QuantityValue CubicDecimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicDecimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicFoot"/>
         /// </summary>
-        public QuantityValue CubicFeet => this.As(VolumeUnit.CubicFoot);
+        public QuantityValue CubicFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicHectometer"/>
         /// </summary>
-        public QuantityValue CubicHectometers => this.As(VolumeUnit.CubicHectometer);
+        public QuantityValue CubicHectometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicHectometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicInch"/>
         /// </summary>
-        public QuantityValue CubicInches => this.As(VolumeUnit.CubicInch);
+        public QuantityValue CubicInches
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicKilometer"/>
         /// </summary>
-        public QuantityValue CubicKilometers => this.As(VolumeUnit.CubicKilometer);
+        public QuantityValue CubicKilometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicKilometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicMeter"/>
         /// </summary>
-        public QuantityValue CubicMeters => this.As(VolumeUnit.CubicMeter);
+        public QuantityValue CubicMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicMicrometer"/>
         /// </summary>
-        public QuantityValue CubicMicrometers => this.As(VolumeUnit.CubicMicrometer);
+        public QuantityValue CubicMicrometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicMicrometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicMile"/>
         /// </summary>
-        public QuantityValue CubicMiles => this.As(VolumeUnit.CubicMile);
+        public QuantityValue CubicMiles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicMile);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicMillimeter"/>
         /// </summary>
-        public QuantityValue CubicMillimeters => this.As(VolumeUnit.CubicMillimeter);
+        public QuantityValue CubicMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.CubicYard"/>
         /// </summary>
-        public QuantityValue CubicYards => this.As(VolumeUnit.CubicYard);
+        public QuantityValue CubicYards
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.CubicYard);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Decaliter"/>
         /// </summary>
-        public QuantityValue Decaliters => this.As(VolumeUnit.Decaliter);
+        public QuantityValue Decaliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Decaliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.DecausGallon"/>
         /// </summary>
-        public QuantityValue DecausGallons => this.As(VolumeUnit.DecausGallon);
+        public QuantityValue DecausGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.DecausGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Deciliter"/>
         /// </summary>
-        public QuantityValue Deciliters => this.As(VolumeUnit.Deciliter);
+        public QuantityValue Deciliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Deciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.DeciusGallon"/>
         /// </summary>
-        public QuantityValue DeciusGallons => this.As(VolumeUnit.DeciusGallon);
+        public QuantityValue DeciusGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.DeciusGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Hectoliter"/>
         /// </summary>
-        public QuantityValue Hectoliters => this.As(VolumeUnit.Hectoliter);
+        public QuantityValue Hectoliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Hectoliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.HectousGallon"/>
         /// </summary>
-        public QuantityValue HectousGallons => this.As(VolumeUnit.HectousGallon);
+        public QuantityValue HectousGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.HectousGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.HundredCubicFoot"/>
         /// </summary>
-        public QuantityValue HundredCubicFeet => this.As(VolumeUnit.HundredCubicFoot);
+        public QuantityValue HundredCubicFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.HundredCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.ImperialBeerBarrel"/>
         /// </summary>
-        public QuantityValue ImperialBeerBarrels => this.As(VolumeUnit.ImperialBeerBarrel);
+        public QuantityValue ImperialBeerBarrels
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.ImperialBeerBarrel);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.ImperialGallon"/>
         /// </summary>
-        public QuantityValue ImperialGallons => this.As(VolumeUnit.ImperialGallon);
+        public QuantityValue ImperialGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.ImperialGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.ImperialOunce"/>
         /// </summary>
-        public QuantityValue ImperialOunces => this.As(VolumeUnit.ImperialOunce);
+        public QuantityValue ImperialOunces
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.ImperialOunce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.ImperialPint"/>
         /// </summary>
-        public QuantityValue ImperialPints => this.As(VolumeUnit.ImperialPint);
+        public QuantityValue ImperialPints
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.ImperialPint);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.ImperialQuart"/>
         /// </summary>
-        public QuantityValue ImperialQuarts => this.As(VolumeUnit.ImperialQuart);
+        public QuantityValue ImperialQuarts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.ImperialQuart);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.KiloimperialGallon"/>
         /// </summary>
-        public QuantityValue KiloimperialGallons => this.As(VolumeUnit.KiloimperialGallon);
+        public QuantityValue KiloimperialGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.KiloimperialGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Kiloliter"/>
         /// </summary>
-        public QuantityValue Kiloliters => this.As(VolumeUnit.Kiloliter);
+        public QuantityValue Kiloliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Kiloliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.KilousGallon"/>
         /// </summary>
-        public QuantityValue KilousGallons => this.As(VolumeUnit.KilousGallon);
+        public QuantityValue KilousGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.KilousGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Liter"/>
         /// </summary>
-        public QuantityValue Liters => this.As(VolumeUnit.Liter);
+        public QuantityValue Liters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Liter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.MegaimperialGallon"/>
         /// </summary>
-        public QuantityValue MegaimperialGallons => this.As(VolumeUnit.MegaimperialGallon);
+        public QuantityValue MegaimperialGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.MegaimperialGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Megaliter"/>
         /// </summary>
-        public QuantityValue Megaliters => this.As(VolumeUnit.Megaliter);
+        public QuantityValue Megaliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Megaliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.MegausGallon"/>
         /// </summary>
-        public QuantityValue MegausGallons => this.As(VolumeUnit.MegausGallon);
+        public QuantityValue MegausGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.MegausGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.MetricCup"/>
         /// </summary>
-        public QuantityValue MetricCups => this.As(VolumeUnit.MetricCup);
+        public QuantityValue MetricCups
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.MetricCup);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.MetricTablespoon"/>
         /// </summary>
-        public QuantityValue MetricTablespoons => this.As(VolumeUnit.MetricTablespoon);
+        public QuantityValue MetricTablespoons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.MetricTablespoon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.MetricTeaspoon"/>
         /// </summary>
-        public QuantityValue MetricTeaspoons => this.As(VolumeUnit.MetricTeaspoon);
+        public QuantityValue MetricTeaspoons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.MetricTeaspoon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Microliter"/>
         /// </summary>
-        public QuantityValue Microliters => this.As(VolumeUnit.Microliter);
+        public QuantityValue Microliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Microliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Milliliter"/>
         /// </summary>
-        public QuantityValue Milliliters => this.As(VolumeUnit.Milliliter);
+        public QuantityValue Milliliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Milliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.MillionCubicFoot"/>
         /// </summary>
-        public QuantityValue MillionCubicFeet => this.As(VolumeUnit.MillionCubicFoot);
+        public QuantityValue MillionCubicFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.MillionCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.Nanoliter"/>
         /// </summary>
-        public QuantityValue Nanoliters => this.As(VolumeUnit.Nanoliter);
+        public QuantityValue Nanoliters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.Nanoliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.OilBarrel"/>
         /// </summary>
-        public QuantityValue OilBarrels => this.As(VolumeUnit.OilBarrel);
+        public QuantityValue OilBarrels
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.OilBarrel);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.ThousandCubicFoot"/>
         /// </summary>
-        public QuantityValue ThousandCubicFeet => this.As(VolumeUnit.ThousandCubicFoot);
+        public QuantityValue ThousandCubicFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.ThousandCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.ThousandCubicMeter"/>
         /// </summary>
-        public QuantityValue ThousandCubicMeters => this.As(VolumeUnit.ThousandCubicMeter);
+        public QuantityValue ThousandCubicMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.ThousandCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UkTablespoon"/>
         /// </summary>
-        public QuantityValue UkTablespoons => this.As(VolumeUnit.UkTablespoon);
+        public QuantityValue UkTablespoons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UkTablespoon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsBeerBarrel"/>
         /// </summary>
-        public QuantityValue UsBeerBarrels => this.As(VolumeUnit.UsBeerBarrel);
+        public QuantityValue UsBeerBarrels
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsBeerBarrel);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsCustomaryCup"/>
         /// </summary>
-        public QuantityValue UsCustomaryCups => this.As(VolumeUnit.UsCustomaryCup);
+        public QuantityValue UsCustomaryCups
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsCustomaryCup);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsGallon"/>
         /// </summary>
-        public QuantityValue UsGallons => this.As(VolumeUnit.UsGallon);
+        public QuantityValue UsGallons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsLegalCup"/>
         /// </summary>
-        public QuantityValue UsLegalCups => this.As(VolumeUnit.UsLegalCup);
+        public QuantityValue UsLegalCups
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsLegalCup);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsOunce"/>
         /// </summary>
-        public QuantityValue UsOunces => this.As(VolumeUnit.UsOunce);
+        public QuantityValue UsOunces
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsOunce);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsPint"/>
         /// </summary>
-        public QuantityValue UsPints => this.As(VolumeUnit.UsPint);
+        public QuantityValue UsPints
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsPint);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsQuart"/>
         /// </summary>
-        public QuantityValue UsQuarts => this.As(VolumeUnit.UsQuart);
+        public QuantityValue UsQuarts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsQuart);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsTablespoon"/>
         /// </summary>
-        public QuantityValue UsTablespoons => this.As(VolumeUnit.UsTablespoon);
+        public QuantityValue UsTablespoons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsTablespoon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.UsTeaspoon"/>
         /// </summary>
-        public QuantityValue UsTeaspoons => this.As(VolumeUnit.UsTeaspoon);
+        public QuantityValue UsTeaspoons
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeUnit.UsTeaspoon);
+        }
 
         #endregion
 
@@ -673,10 +946,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(VolumeUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -684,10 +956,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(VolumeUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -696,434 +967,380 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.AcreFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromAcreFeet(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.AcreFoot);
-        }
+            => new(value, VolumeUnit.AcreFoot);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.AuTablespoon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromAuTablespoons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.AuTablespoon);
-        }
+            => new(value, VolumeUnit.AuTablespoon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.BoardFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromBoardFeet(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.BoardFoot);
-        }
+            => new(value, VolumeUnit.BoardFoot);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Centiliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCentiliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Centiliter);
-        }
+            => new(value, VolumeUnit.Centiliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicCentimeters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicCentimeter);
-        }
+            => new(value, VolumeUnit.CubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicDecimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicDecimeters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicDecimeter);
-        }
+            => new(value, VolumeUnit.CubicDecimeter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicFeet(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicFoot);
-        }
+            => new(value, VolumeUnit.CubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicHectometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicHectometers(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicHectometer);
-        }
+            => new(value, VolumeUnit.CubicHectometer);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicInches(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicInch);
-        }
+            => new(value, VolumeUnit.CubicInch);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicKilometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicKilometers(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicKilometer);
-        }
+            => new(value, VolumeUnit.CubicKilometer);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicMeters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicMeter);
-        }
+            => new(value, VolumeUnit.CubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicMicrometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicMicrometers(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicMicrometer);
-        }
+            => new(value, VolumeUnit.CubicMicrometer);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicMile"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicMiles(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicMile);
-        }
+            => new(value, VolumeUnit.CubicMile);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicMillimeters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicMillimeter);
-        }
+            => new(value, VolumeUnit.CubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.CubicYard"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromCubicYards(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.CubicYard);
-        }
+            => new(value, VolumeUnit.CubicYard);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Decaliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromDecaliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Decaliter);
-        }
+            => new(value, VolumeUnit.Decaliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.DecausGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromDecausGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.DecausGallon);
-        }
+            => new(value, VolumeUnit.DecausGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Deciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromDeciliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Deciliter);
-        }
+            => new(value, VolumeUnit.Deciliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.DeciusGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromDeciusGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.DeciusGallon);
-        }
+            => new(value, VolumeUnit.DeciusGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Hectoliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromHectoliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Hectoliter);
-        }
+            => new(value, VolumeUnit.Hectoliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.HectousGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromHectousGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.HectousGallon);
-        }
+            => new(value, VolumeUnit.HectousGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.HundredCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromHundredCubicFeet(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.HundredCubicFoot);
-        }
+            => new(value, VolumeUnit.HundredCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.ImperialBeerBarrel"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromImperialBeerBarrels(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.ImperialBeerBarrel);
-        }
+            => new(value, VolumeUnit.ImperialBeerBarrel);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.ImperialGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromImperialGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.ImperialGallon);
-        }
+            => new(value, VolumeUnit.ImperialGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.ImperialOunce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromImperialOunces(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.ImperialOunce);
-        }
+            => new(value, VolumeUnit.ImperialOunce);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.ImperialPint"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromImperialPints(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.ImperialPint);
-        }
+            => new(value, VolumeUnit.ImperialPint);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.ImperialQuart"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromImperialQuarts(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.ImperialQuart);
-        }
+            => new(value, VolumeUnit.ImperialQuart);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.KiloimperialGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromKiloimperialGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.KiloimperialGallon);
-        }
+            => new(value, VolumeUnit.KiloimperialGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Kiloliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromKiloliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Kiloliter);
-        }
+            => new(value, VolumeUnit.Kiloliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.KilousGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromKilousGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.KilousGallon);
-        }
+            => new(value, VolumeUnit.KilousGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Liter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromLiters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Liter);
-        }
+            => new(value, VolumeUnit.Liter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.MegaimperialGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMegaimperialGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.MegaimperialGallon);
-        }
+            => new(value, VolumeUnit.MegaimperialGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Megaliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMegaliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Megaliter);
-        }
+            => new(value, VolumeUnit.Megaliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.MegausGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMegausGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.MegausGallon);
-        }
+            => new(value, VolumeUnit.MegausGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.MetricCup"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMetricCups(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.MetricCup);
-        }
+            => new(value, VolumeUnit.MetricCup);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.MetricTablespoon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMetricTablespoons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.MetricTablespoon);
-        }
+            => new(value, VolumeUnit.MetricTablespoon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.MetricTeaspoon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMetricTeaspoons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.MetricTeaspoon);
-        }
+            => new(value, VolumeUnit.MetricTeaspoon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Microliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMicroliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Microliter);
-        }
+            => new(value, VolumeUnit.Microliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Milliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMilliliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Milliliter);
-        }
+            => new(value, VolumeUnit.Milliliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.MillionCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromMillionCubicFeet(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.MillionCubicFoot);
-        }
+            => new(value, VolumeUnit.MillionCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.Nanoliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromNanoliters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.Nanoliter);
-        }
+            => new(value, VolumeUnit.Nanoliter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.OilBarrel"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromOilBarrels(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.OilBarrel);
-        }
+            => new(value, VolumeUnit.OilBarrel);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.ThousandCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromThousandCubicFeet(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.ThousandCubicFoot);
-        }
+            => new(value, VolumeUnit.ThousandCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.ThousandCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromThousandCubicMeters(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.ThousandCubicMeter);
-        }
+            => new(value, VolumeUnit.ThousandCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UkTablespoon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUkTablespoons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UkTablespoon);
-        }
+            => new(value, VolumeUnit.UkTablespoon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsBeerBarrel"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsBeerBarrels(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsBeerBarrel);
-        }
+            => new(value, VolumeUnit.UsBeerBarrel);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsCustomaryCup"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsCustomaryCups(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsCustomaryCup);
-        }
+            => new(value, VolumeUnit.UsCustomaryCup);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsGallons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsGallon);
-        }
+            => new(value, VolumeUnit.UsGallon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsLegalCup"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsLegalCups(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsLegalCup);
-        }
+            => new(value, VolumeUnit.UsLegalCup);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsOunce"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsOunces(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsOunce);
-        }
+            => new(value, VolumeUnit.UsOunce);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsPint"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsPints(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsPint);
-        }
+            => new(value, VolumeUnit.UsPint);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsQuart"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsQuarts(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsQuart);
-        }
+            => new(value, VolumeUnit.UsQuart);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsTablespoon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsTablespoons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsTablespoon);
-        }
+            => new(value, VolumeUnit.UsTablespoon);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.UsTeaspoon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume FromUsTeaspoons(QuantityValue value)
-        {
-            return new Volume(value, VolumeUnit.UsTeaspoon);
-        }
+            => new(value, VolumeUnit.UsTeaspoon);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="VolumeUnit" /> to <see cref="Volume" />.
@@ -1131,10 +1348,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Volume unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume From(QuantityValue value, VolumeUnit fromUnit)
-        {
-            return new Volume(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -1162,10 +1378,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1190,10 +1405,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Volume Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Volume, VolumeUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Volume, VolumeUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1203,10 +1417,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Volume result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1218,10 +1431,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Volume result)
-        {
-            return QuantityParser.Default.TryParse<Volume, VolumeUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Volume, VolumeUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1232,10 +1444,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1248,15 +1459,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static VolumeUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.VolumeUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out VolumeUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1268,10 +1476,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out VolumeUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -1279,45 +1486,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Volume operator -(Volume right)
-        {
-            return new Volume(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Volume"/> from adding two <see cref="Volume"/>.</summary>
         public static Volume operator +(Volume left, Volume right)
-        {
-            return new Volume(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Volume"/> from subtracting two <see cref="Volume"/>.</summary>
         public static Volume operator -(Volume left, Volume right)
-        {
-            return new Volume(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Volume"/> from multiplying value and <see cref="Volume"/>.</summary>
         public static Volume operator *(QuantityValue left, Volume right)
-        {
-            return new Volume(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Volume"/> from multiplying value and <see cref="Volume"/>.</summary>
         public static Volume operator *(Volume left, QuantityValue right)
-        {
-            return new Volume(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Volume"/> from dividing <see cref="Volume"/> by value.</summary>
         public static Volume operator /(Volume left, QuantityValue right)
-        {
-            return new Volume(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Volume"/> by <see cref="Volume"/>.</summary>
         public static QuantityValue operator /(Volume left, Volume right)
-        {
-            return left.CubicMeters / right.CubicMeters;
-        }
+            => left.CubicMeters / right.CubicMeters;
 
         #endregion
 
@@ -1325,99 +1518,67 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from <see cref="Volume"/> * <see cref="Molarity"/>.</summary>
         public static AmountOfSubstance operator *(Volume volume, Molarity molarity)
-        {
-            return AmountOfSubstance.FromMoles(volume.CubicMeters * molarity.MolesPerCubicMeter);
-        }
+            => AmountOfSubstance.FromMoles(volume.CubicMeters * molarity.MolesPerCubicMeter);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Volume"/> * <see cref="ReciprocalLength"/>.</summary>
         public static Area operator *(Volume volume, ReciprocalLength reciprocalLength)
-        {
-            return Area.FromSquareMeters(volume.CubicMeters * reciprocalLength.InverseMeters);
-        }
+            => Area.FromSquareMeters(volume.CubicMeters * reciprocalLength.InverseMeters);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Volume"/> / <see cref="Length"/>.</summary>
         public static Area operator /(Volume volume, Length length)
-        {
-            return Area.FromSquareMeters(volume.CubicMeters / length.Meters);
-        }
+            => Area.FromSquareMeters(volume.CubicMeters / length.Meters);
 
         /// <summary>Get <see cref="AreaMomentOfInertia"/> from <see cref="Volume"/> * <see cref="Length"/>.</summary>
         public static AreaMomentOfInertia operator *(Volume volume, Length length)
-        {
-            return AreaMomentOfInertia.FromMetersToTheFourth(volume.CubicMeters * length.Meters);
-        }
+            => AreaMomentOfInertia.FromMetersToTheFourth(volume.CubicMeters * length.Meters);
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Volume"/> / <see cref="VolumeFlow"/>.</summary>
         public static Duration operator /(Volume volume, VolumeFlow volumeFlow)
-        {
-            return Duration.FromSeconds(volume.CubicMeters / volumeFlow.CubicMetersPerSecond);
-        }
+            => Duration.FromSeconds(volume.CubicMeters / volumeFlow.CubicMetersPerSecond);
 
         /// <summary>Get <see cref="ElectricCharge"/> from <see cref="Volume"/> * <see cref="ElectricChargeDensity"/>.</summary>
         public static ElectricCharge operator *(Volume volume, ElectricChargeDensity electricChargeDensity)
-        {
-            return ElectricCharge.FromCoulombs(volume.CubicMeters * electricChargeDensity.CoulombsPerCubicMeter);
-        }
+            => ElectricCharge.FromCoulombs(volume.CubicMeters * electricChargeDensity.CoulombsPerCubicMeter);
 
         /// <summary>Get <see cref="Energy"/> from <see cref="Volume"/> * <see cref="EnergyDensity"/>.</summary>
         public static Energy operator *(Volume volume, EnergyDensity energyDensity)
-        {
-            return Energy.FromJoules(volume.CubicMeters * energyDensity.JoulesPerCubicMeter);
-        }
+            => Energy.FromJoules(volume.CubicMeters * energyDensity.JoulesPerCubicMeter);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Volume"/> * <see cref="SpecificWeight"/>.</summary>
         public static Force operator *(Volume volume, SpecificWeight specificWeight)
-        {
-            return Force.FromNewtons(volume.CubicMeters * specificWeight.NewtonsPerCubicMeter);
-        }
+            => Force.FromNewtons(volume.CubicMeters * specificWeight.NewtonsPerCubicMeter);
 
         /// <summary>Get <see cref="Length"/> from <see cref="Volume"/> * <see cref="ReciprocalArea"/>.</summary>
         public static Length operator *(Volume volume, ReciprocalArea reciprocalArea)
-        {
-            return Length.FromMeters(volume.CubicMeters * reciprocalArea.InverseSquareMeters);
-        }
+            => Length.FromMeters(volume.CubicMeters * reciprocalArea.InverseSquareMeters);
 
         /// <summary>Get <see cref="Length"/> from <see cref="Volume"/> / <see cref="Area"/>.</summary>
         public static Length operator /(Volume volume, Area area)
-        {
-            return Length.FromMeters(volume.CubicMeters / area.SquareMeters);
-        }
+            => Length.FromMeters(volume.CubicMeters / area.SquareMeters);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="Volume"/> * <see cref="Density"/>.</summary>
         public static Mass operator *(Volume volume, Density density)
-        {
-            return Mass.FromKilograms(volume.CubicMeters * density.KilogramsPerCubicMeter);
-        }
+            => Mass.FromKilograms(volume.CubicMeters * density.KilogramsPerCubicMeter);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="Volume"/> * <see cref="MassConcentration"/>.</summary>
         public static Mass operator *(Volume volume, MassConcentration massConcentration)
-        {
-            return Mass.FromKilograms(volume.CubicMeters * massConcentration.KilogramsPerCubicMeter);
-        }
+            => Mass.FromKilograms(volume.CubicMeters * massConcentration.KilogramsPerCubicMeter);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="Volume"/> / <see cref="SpecificVolume"/>.</summary>
         public static Mass operator /(Volume volume, SpecificVolume specificVolume)
-        {
-            return Mass.FromKilograms(volume.CubicMeters / specificVolume.CubicMetersPerKilogram);
-        }
+            => Mass.FromKilograms(volume.CubicMeters / specificVolume.CubicMetersPerKilogram);
 
         /// <summary>Get <see cref="Power"/> from <see cref="Volume"/> * <see cref="PowerDensity"/>.</summary>
         public static Power operator *(Volume volume, PowerDensity powerDensity)
-        {
-            return Power.FromWatts(volume.CubicMeters * powerDensity.WattsPerCubicMeter);
-        }
+            => Power.FromWatts(volume.CubicMeters * powerDensity.WattsPerCubicMeter);
 
         /// <summary>Get <see cref="SpecificVolume"/> from <see cref="Volume"/> / <see cref="Mass"/>.</summary>
         public static SpecificVolume operator /(Volume volume, Mass mass)
-        {
-            return SpecificVolume.FromCubicMetersPerKilogram(volume.CubicMeters / mass.Kilograms);
-        }
+            => SpecificVolume.FromCubicMetersPerKilogram(volume.CubicMeters / mass.Kilograms);
 
         /// <summary>Get <see cref="VolumeFlow"/> from <see cref="Volume"/> / <see cref="Duration"/>.</summary>
         public static VolumeFlow operator /(Volume volume, Duration duration)
-        {
-            return VolumeFlow.FromCubicMetersPerSecond(volume.CubicMeters / duration.Seconds);
-        }
+            => VolumeFlow.FromCubicMetersPerSecond(volume.CubicMeters / duration.Seconds);
 
         #endregion
 
@@ -1425,27 +1586,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Volume left, Volume right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Volume left, Volume right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Volume left, Volume right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Volume left, Volume right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Volume"/> instances are equal.
@@ -1456,10 +1609,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Volume)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Volume left, Volume right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Volume"/> instances are not equal.
@@ -1469,10 +1621,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Volume)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Volume left, Volume right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1485,12 +1636,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Volume otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Volume otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1501,18 +1647,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Volume other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Volume.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Volume), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Volume), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Volume)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1541,9 +1683,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Volume other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1554,20 +1694,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

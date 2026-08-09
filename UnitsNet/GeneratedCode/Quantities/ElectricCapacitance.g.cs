@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricCapacitanceInfo"/> class with the default settings.</returns>
             public static ElectricCapacitanceInfo CreateDefault()
-            {
-                return new ElectricCapacitanceInfo(nameof(ElectricCapacitance), DefaultBaseUnit, GetDefaultMappings(), new ElectricCapacitance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricCapacitance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricCapacitanceInfo"/> class with the default settings for the ElectricCapacitance quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricCapacitanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricCapacitanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricCapacitanceUnit>>, IEnumerable<IUnitDefinition<ElectricCapacitanceUnit>>> customizeUnits)
-            {
-                return new ElectricCapacitanceInfo(nameof(ElectricCapacitance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricCapacitance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricCapacitance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricCapacitance"/> is T^4L^-2M^-1I^2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-2, -1, 4, 2, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-2, -1, 4, 2, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricCapacitance is Farad. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricCapacitanceUnit DefaultBaseUnit { get; } = ElectricCapacitanceUnit.Farad;
+            public static ElectricCapacitanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricCapacitanceUnit.Farad;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricCapacitanceUnit"/>.
@@ -178,7 +183,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricCapacitance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricCapacitance, ElectricCapacitanceUnit> Info { get; }
@@ -186,53 +195,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricCapacitance, which is Farad. All conversions go via this value.
         /// </summary>
-        public static ElectricCapacitanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricCapacitanceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricCapacitance quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricCapacitanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricCapacitanceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Farad.
         /// </summary>
-        public static ElectricCapacitance Zero => Info.Zero;
+        public static ElectricCapacitance Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricCapacitanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricCapacitanceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricCapacitance, ElectricCapacitanceUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricCapacitance, ElectricCapacitanceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricCapacitance> IQuantityOfType<ElectricCapacitance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricCapacitance> IQuantityOfType<ElectricCapacitance>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricCapacitanceUnit> IQuantity<ElectricCapacitanceUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricCapacitanceUnit> IQuantity<ElectricCapacitanceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -244,37 +301,65 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Farad"/>
         /// </summary>
-        public QuantityValue Farads => this.As(ElectricCapacitanceUnit.Farad);
+        public QuantityValue Farads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricCapacitanceUnit.Farad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Kilofarad"/>
         /// </summary>
-        public QuantityValue Kilofarads => this.As(ElectricCapacitanceUnit.Kilofarad);
+        public QuantityValue Kilofarads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricCapacitanceUnit.Kilofarad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Megafarad"/>
         /// </summary>
-        public QuantityValue Megafarads => this.As(ElectricCapacitanceUnit.Megafarad);
+        public QuantityValue Megafarads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricCapacitanceUnit.Megafarad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Microfarad"/>
         /// </summary>
-        public QuantityValue Microfarads => this.As(ElectricCapacitanceUnit.Microfarad);
+        public QuantityValue Microfarads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricCapacitanceUnit.Microfarad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Millifarad"/>
         /// </summary>
-        public QuantityValue Millifarads => this.As(ElectricCapacitanceUnit.Millifarad);
+        public QuantityValue Millifarads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricCapacitanceUnit.Millifarad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Nanofarad"/>
         /// </summary>
-        public QuantityValue Nanofarads => this.As(ElectricCapacitanceUnit.Nanofarad);
+        public QuantityValue Nanofarads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricCapacitanceUnit.Nanofarad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Picofarad"/>
         /// </summary>
-        public QuantityValue Picofarads => this.As(ElectricCapacitanceUnit.Picofarad);
+        public QuantityValue Picofarads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricCapacitanceUnit.Picofarad);
+        }
 
         #endregion
 
@@ -285,10 +370,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricCapacitanceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -296,10 +380,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricCapacitanceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -308,58 +391,51 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Farad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance FromFarads(QuantityValue value)
-        {
-            return new ElectricCapacitance(value, ElectricCapacitanceUnit.Farad);
-        }
+            => new(value, ElectricCapacitanceUnit.Farad);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Kilofarad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance FromKilofarads(QuantityValue value)
-        {
-            return new ElectricCapacitance(value, ElectricCapacitanceUnit.Kilofarad);
-        }
+            => new(value, ElectricCapacitanceUnit.Kilofarad);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Megafarad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance FromMegafarads(QuantityValue value)
-        {
-            return new ElectricCapacitance(value, ElectricCapacitanceUnit.Megafarad);
-        }
+            => new(value, ElectricCapacitanceUnit.Megafarad);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Microfarad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance FromMicrofarads(QuantityValue value)
-        {
-            return new ElectricCapacitance(value, ElectricCapacitanceUnit.Microfarad);
-        }
+            => new(value, ElectricCapacitanceUnit.Microfarad);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Millifarad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance FromMillifarads(QuantityValue value)
-        {
-            return new ElectricCapacitance(value, ElectricCapacitanceUnit.Millifarad);
-        }
+            => new(value, ElectricCapacitanceUnit.Millifarad);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Nanofarad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance FromNanofarads(QuantityValue value)
-        {
-            return new ElectricCapacitance(value, ElectricCapacitanceUnit.Nanofarad);
-        }
+            => new(value, ElectricCapacitanceUnit.Nanofarad);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Picofarad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance FromPicofarads(QuantityValue value)
-        {
-            return new ElectricCapacitance(value, ElectricCapacitanceUnit.Picofarad);
-        }
+            => new(value, ElectricCapacitanceUnit.Picofarad);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricCapacitanceUnit" /> to <see cref="ElectricCapacitance" />.
@@ -367,10 +443,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricCapacitance unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance From(QuantityValue value, ElectricCapacitanceUnit fromUnit)
-        {
-            return new ElectricCapacitance(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -398,10 +473,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -426,10 +500,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitance Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricCapacitance, ElectricCapacitanceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricCapacitance, ElectricCapacitanceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -439,10 +512,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricCapacitance result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -454,10 +526,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricCapacitance result)
-        {
-            return QuantityParser.Default.TryParse<ElectricCapacitance, ElectricCapacitanceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricCapacitance, ElectricCapacitanceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -468,10 +539,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricCapacitanceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -484,15 +554,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricCapacitanceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricCapacitanceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricCapacitanceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -504,10 +571,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricCapacitanceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -515,45 +581,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricCapacitance operator -(ElectricCapacitance right)
-        {
-            return new ElectricCapacitance(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricCapacitance"/> from adding two <see cref="ElectricCapacitance"/>.</summary>
         public static ElectricCapacitance operator +(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return new ElectricCapacitance(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricCapacitance"/> from subtracting two <see cref="ElectricCapacitance"/>.</summary>
         public static ElectricCapacitance operator -(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return new ElectricCapacitance(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricCapacitance"/> from multiplying value and <see cref="ElectricCapacitance"/>.</summary>
         public static ElectricCapacitance operator *(QuantityValue left, ElectricCapacitance right)
-        {
-            return new ElectricCapacitance(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricCapacitance"/> from multiplying value and <see cref="ElectricCapacitance"/>.</summary>
         public static ElectricCapacitance operator *(ElectricCapacitance left, QuantityValue right)
-        {
-            return new ElectricCapacitance(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricCapacitance"/> from dividing <see cref="ElectricCapacitance"/> by value.</summary>
         public static ElectricCapacitance operator /(ElectricCapacitance left, QuantityValue right)
-        {
-            return new ElectricCapacitance(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricCapacitance"/> by <see cref="ElectricCapacitance"/>.</summary>
         public static QuantityValue operator /(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return left.Farads / right.Farads;
-        }
+            => left.Farads / right.Farads;
 
         #endregion
 
@@ -561,9 +613,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="ElectricCharge"/> from <see cref="ElectricCapacitance"/> * <see cref="ElectricPotential"/>.</summary>
         public static ElectricCharge operator *(ElectricCapacitance electricCapacitance, ElectricPotential electricPotential)
-        {
-            return ElectricCharge.FromCoulombs(electricCapacitance.Farads * electricPotential.Volts);
-        }
+            => ElectricCharge.FromCoulombs(electricCapacitance.Farads * electricPotential.Volts);
 
         #endregion
 
@@ -571,27 +621,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricCapacitance"/> instances are equal.
@@ -602,10 +644,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricCapacitance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricCapacitance"/> instances are not equal.
@@ -615,10 +656,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricCapacitance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricCapacitance left, ElectricCapacitance right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -631,12 +671,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricCapacitance otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricCapacitance otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -647,18 +682,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricCapacitance other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricCapacitance.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricCapacitance), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricCapacitance), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricCapacitance)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -687,9 +718,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricCapacitance other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -700,20 +729,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

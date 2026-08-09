@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -95,9 +96,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricPotentialInfo"/> class with the default settings.</returns>
             public static ElectricPotentialInfo CreateDefault()
-            {
-                return new ElectricPotentialInfo(nameof(ElectricPotential), DefaultBaseUnit, GetDefaultMappings(), new ElectricPotential(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricPotential), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricPotentialInfo"/> class with the default settings for the ElectricPotential quantity and a callback for customizing the default unit mappings.
@@ -109,19 +108,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricPotentialInfo"/> class with the default settings.
             /// </returns>
             public static ElectricPotentialInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricPotentialUnit>>, IEnumerable<IUnitDefinition<ElectricPotentialUnit>>> customizeUnits)
-            {
-                return new ElectricPotentialInfo(nameof(ElectricPotential), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricPotential(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricPotential), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricPotential"/> is T^-3L^2MI^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -3, -1, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -3, -1, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricPotential is Volt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricPotentialUnit DefaultBaseUnit { get; } = ElectricPotentialUnit.Volt;
+            public static ElectricPotentialUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricPotentialUnit.Volt;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricPotentialUnit"/>.
@@ -184,7 +189,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricPotential" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricPotential, ElectricPotentialUnit> Info { get; }
@@ -192,53 +201,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricPotential, which is Volt. All conversions go via this value.
         /// </summary>
-        public static ElectricPotentialUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricPotentialUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricPotential quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricPotentialUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricPotentialUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Volt.
         /// </summary>
-        public static ElectricPotential Zero => Info.Zero;
+        public static ElectricPotential Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricPotentialUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricPotentialUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricPotential, ElectricPotentialUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricPotential, ElectricPotentialUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricPotential> IQuantityOfType<ElectricPotential>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricPotential> IQuantityOfType<ElectricPotential>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricPotentialUnit> IQuantity<ElectricPotentialUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricPotentialUnit> IQuantity<ElectricPotentialUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -250,32 +307,56 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialUnit.Kilovolt"/>
         /// </summary>
-        public QuantityValue Kilovolts => this.As(ElectricPotentialUnit.Kilovolt);
+        public QuantityValue Kilovolts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialUnit.Kilovolt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialUnit.Megavolt"/>
         /// </summary>
-        public QuantityValue Megavolts => this.As(ElectricPotentialUnit.Megavolt);
+        public QuantityValue Megavolts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialUnit.Megavolt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialUnit.Microvolt"/>
         /// </summary>
-        public QuantityValue Microvolts => this.As(ElectricPotentialUnit.Microvolt);
+        public QuantityValue Microvolts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialUnit.Microvolt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialUnit.Millivolt"/>
         /// </summary>
-        public QuantityValue Millivolts => this.As(ElectricPotentialUnit.Millivolt);
+        public QuantityValue Millivolts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialUnit.Millivolt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialUnit.Nanovolt"/>
         /// </summary>
-        public QuantityValue Nanovolts => this.As(ElectricPotentialUnit.Nanovolt);
+        public QuantityValue Nanovolts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialUnit.Nanovolt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialUnit.Volt"/>
         /// </summary>
-        public QuantityValue Volts => this.As(ElectricPotentialUnit.Volt);
+        public QuantityValue Volts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialUnit.Volt);
+        }
 
         #endregion
 
@@ -286,10 +367,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricPotentialUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -297,10 +377,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricPotentialUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -309,50 +388,44 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricPotential"/> from <see cref="ElectricPotentialUnit.Kilovolt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential FromKilovolts(QuantityValue value)
-        {
-            return new ElectricPotential(value, ElectricPotentialUnit.Kilovolt);
-        }
+            => new(value, ElectricPotentialUnit.Kilovolt);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotential"/> from <see cref="ElectricPotentialUnit.Megavolt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential FromMegavolts(QuantityValue value)
-        {
-            return new ElectricPotential(value, ElectricPotentialUnit.Megavolt);
-        }
+            => new(value, ElectricPotentialUnit.Megavolt);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotential"/> from <see cref="ElectricPotentialUnit.Microvolt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential FromMicrovolts(QuantityValue value)
-        {
-            return new ElectricPotential(value, ElectricPotentialUnit.Microvolt);
-        }
+            => new(value, ElectricPotentialUnit.Microvolt);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotential"/> from <see cref="ElectricPotentialUnit.Millivolt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential FromMillivolts(QuantityValue value)
-        {
-            return new ElectricPotential(value, ElectricPotentialUnit.Millivolt);
-        }
+            => new(value, ElectricPotentialUnit.Millivolt);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotential"/> from <see cref="ElectricPotentialUnit.Nanovolt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential FromNanovolts(QuantityValue value)
-        {
-            return new ElectricPotential(value, ElectricPotentialUnit.Nanovolt);
-        }
+            => new(value, ElectricPotentialUnit.Nanovolt);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotential"/> from <see cref="ElectricPotentialUnit.Volt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential FromVolts(QuantityValue value)
-        {
-            return new ElectricPotential(value, ElectricPotentialUnit.Volt);
-        }
+            => new(value, ElectricPotentialUnit.Volt);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricPotentialUnit" /> to <see cref="ElectricPotential" />.
@@ -360,10 +433,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricPotential unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential From(QuantityValue value, ElectricPotentialUnit fromUnit)
-        {
-            return new ElectricPotential(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -391,10 +463,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -419,10 +490,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotential Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricPotential, ElectricPotentialUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricPotential, ElectricPotentialUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -432,10 +502,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricPotential result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -447,10 +516,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricPotential result)
-        {
-            return QuantityParser.Default.TryParse<ElectricPotential, ElectricPotentialUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricPotential, ElectricPotentialUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -461,10 +529,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -477,15 +544,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricPotentialUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricPotentialUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricPotentialUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -497,10 +561,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricPotentialUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -508,45 +571,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricPotential operator -(ElectricPotential right)
-        {
-            return new ElectricPotential(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricPotential"/> from adding two <see cref="ElectricPotential"/>.</summary>
         public static ElectricPotential operator +(ElectricPotential left, ElectricPotential right)
-        {
-            return new ElectricPotential(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricPotential"/> from subtracting two <see cref="ElectricPotential"/>.</summary>
         public static ElectricPotential operator -(ElectricPotential left, ElectricPotential right)
-        {
-            return new ElectricPotential(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricPotential"/> from multiplying value and <see cref="ElectricPotential"/>.</summary>
         public static ElectricPotential operator *(QuantityValue left, ElectricPotential right)
-        {
-            return new ElectricPotential(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricPotential"/> from multiplying value and <see cref="ElectricPotential"/>.</summary>
         public static ElectricPotential operator *(ElectricPotential left, QuantityValue right)
-        {
-            return new ElectricPotential(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricPotential"/> from dividing <see cref="ElectricPotential"/> by value.</summary>
         public static ElectricPotential operator /(ElectricPotential left, QuantityValue right)
-        {
-            return new ElectricPotential(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricPotential"/> by <see cref="ElectricPotential"/>.</summary>
         public static QuantityValue operator /(ElectricPotential left, ElectricPotential right)
-        {
-            return left.Volts / right.Volts;
-        }
+            => left.Volts / right.Volts;
 
         #endregion
 
@@ -554,63 +603,43 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Duration"/> from <see cref="ElectricPotential"/> / <see cref="ElectricPotentialChangeRate"/>.</summary>
         public static Duration operator /(ElectricPotential electricPotential, ElectricPotentialChangeRate electricPotentialChangeRate)
-        {
-            return Duration.FromSeconds(electricPotential.Volts / electricPotentialChangeRate.VoltsPerSecond);
-        }
+            => Duration.FromSeconds(electricPotential.Volts / electricPotentialChangeRate.VoltsPerSecond);
 
         /// <summary>Get <see cref="ElectricCharge"/> from <see cref="ElectricPotential"/> * <see cref="ElectricCapacitance"/>.</summary>
         public static ElectricCharge operator *(ElectricPotential electricPotential, ElectricCapacitance electricCapacitance)
-        {
-            return ElectricCharge.FromCoulombs(electricPotential.Volts * electricCapacitance.Farads);
-        }
+            => ElectricCharge.FromCoulombs(electricPotential.Volts * electricCapacitance.Farads);
 
         /// <summary>Get <see cref="ElectricCurrent"/> from <see cref="ElectricPotential"/> * <see cref="ElectricConductance"/>.</summary>
         public static ElectricCurrent operator *(ElectricPotential electricPotential, ElectricConductance electricConductance)
-        {
-            return ElectricCurrent.FromAmperes(electricPotential.Volts * electricConductance.Siemens);
-        }
+            => ElectricCurrent.FromAmperes(electricPotential.Volts * electricConductance.Siemens);
 
         /// <summary>Get <see cref="ElectricCurrent"/> from <see cref="ElectricPotential"/> / <see cref="ElectricResistance"/>.</summary>
         public static ElectricCurrent operator /(ElectricPotential electricPotential, ElectricResistance electricResistance)
-        {
-            return ElectricCurrent.FromAmperes(electricPotential.Volts / electricResistance.Ohms);
-        }
+            => ElectricCurrent.FromAmperes(electricPotential.Volts / electricResistance.Ohms);
 
         /// <summary>Get <see cref="ElectricField"/> from <see cref="ElectricPotential"/> / <see cref="Length"/>.</summary>
         public static ElectricField operator /(ElectricPotential electricPotential, Length length)
-        {
-            return ElectricField.FromVoltsPerMeter(electricPotential.Volts / length.Meters);
-        }
+            => ElectricField.FromVoltsPerMeter(electricPotential.Volts / length.Meters);
 
         /// <summary>Get <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotential"/> / <see cref="Duration"/>.</summary>
         public static ElectricPotentialChangeRate operator /(ElectricPotential electricPotential, Duration duration)
-        {
-            return ElectricPotentialChangeRate.FromVoltsPerSecond(electricPotential.Volts / duration.Seconds);
-        }
+            => ElectricPotentialChangeRate.FromVoltsPerSecond(electricPotential.Volts / duration.Seconds);
 
         /// <summary>Get <see cref="ElectricResistance"/> from <see cref="ElectricPotential"/> / <see cref="ElectricCurrent"/>.</summary>
         public static ElectricResistance operator /(ElectricPotential electricPotential, ElectricCurrent electricCurrent)
-        {
-            return ElectricResistance.FromOhms(electricPotential.Volts / electricCurrent.Amperes);
-        }
+            => ElectricResistance.FromOhms(electricPotential.Volts / electricCurrent.Amperes);
 
         /// <summary>Get <see cref="Energy"/> from <see cref="ElectricPotential"/> * <see cref="ElectricCharge"/>.</summary>
         public static Energy operator *(ElectricPotential electricPotential, ElectricCharge electricCharge)
-        {
-            return Energy.FromJoules(electricPotential.Volts * electricCharge.Coulombs);
-        }
+            => Energy.FromJoules(electricPotential.Volts * electricCharge.Coulombs);
 
         /// <summary>Get <see cref="Length"/> from <see cref="ElectricPotential"/> / <see cref="ElectricField"/>.</summary>
         public static Length operator /(ElectricPotential electricPotential, ElectricField electricField)
-        {
-            return Length.FromMeters(electricPotential.Volts / electricField.VoltsPerMeter);
-        }
+            => Length.FromMeters(electricPotential.Volts / electricField.VoltsPerMeter);
 
         /// <summary>Get <see cref="Power"/> from <see cref="ElectricPotential"/> * <see cref="ElectricCurrent"/>.</summary>
         public static Power operator *(ElectricPotential electricPotential, ElectricCurrent electricCurrent)
-        {
-            return Power.FromWatts(electricPotential.Volts * electricCurrent.Amperes);
-        }
+            => Power.FromWatts(electricPotential.Volts * electricCurrent.Amperes);
 
         #endregion
 
@@ -618,27 +647,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricPotential left, ElectricPotential right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricPotential left, ElectricPotential right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricPotential left, ElectricPotential right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricPotential left, ElectricPotential right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricPotential"/> instances are equal.
@@ -649,10 +670,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricPotential)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricPotential left, ElectricPotential right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricPotential"/> instances are not equal.
@@ -662,10 +682,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricPotential)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricPotential left, ElectricPotential right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -678,12 +697,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricPotential otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricPotential otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -694,18 +708,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricPotential other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricPotential.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricPotential), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricPotential), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricPotential)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -734,9 +744,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricPotential other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -747,20 +755,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

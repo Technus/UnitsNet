@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -85,9 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AngleInfo"/> class with the default settings.</returns>
             public static AngleInfo CreateDefault()
-            {
-                return new AngleInfo(nameof(Angle), DefaultBaseUnit, GetDefaultMappings(), new Angle(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Angle), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AngleInfo"/> class with the default settings for the Angle quantity and a callback for customizing the default unit mappings.
@@ -99,19 +98,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AngleInfo"/> class with the default settings.
             /// </returns>
             public static AngleInfo CreateDefault(Func<IEnumerable<UnitDefinition<AngleUnit>>, IEnumerable<IUnitDefinition<AngleUnit>>> customizeUnits)
-            {
-                return new AngleInfo(nameof(Angle), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Angle(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Angle), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Angle"/> is .
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = BaseDimensions.Dimensionless;
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = BaseDimensions.Dimensionless;
 
             /// <summary>
             ///     The default base unit of Angle is Radian. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static AngleUnit DefaultBaseUnit { get; } = AngleUnit.Radian;
+            public static AngleUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AngleUnit.Radian;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="AngleUnit"/>.
@@ -187,7 +192,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Angle" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Angle, AngleUnit> Info { get; }
@@ -195,53 +204,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Angle, which is Radian. All conversions go via this value.
         /// </summary>
-        public static AngleUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static AngleUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Angle quantity.
         /// </summary>
-        public static IReadOnlyCollection<AngleUnit> Units => Info.Units;
+        public static IReadOnlyCollection<AngleUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Radian.
         /// </summary>
-        public static Angle Zero => Info.Zero;
+        public static Angle Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public AngleUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public AngleUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Angle, AngleUnit> QuantityInfo => Info;
+        public QuantityInfo<Angle, AngleUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Angle> IQuantityOfType<Angle>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Angle> IQuantityOfType<Angle>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<AngleUnit> IQuantity<AngleUnit>.QuantityInfo => Info;
+        QuantityInfo<AngleUnit> IQuantity<AngleUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -253,77 +310,137 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Arcminute"/>
         /// </summary>
-        public QuantityValue Arcminutes => this.As(AngleUnit.Arcminute);
+        public QuantityValue Arcminutes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Arcminute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Arcsecond"/>
         /// </summary>
-        public QuantityValue Arcseconds => this.As(AngleUnit.Arcsecond);
+        public QuantityValue Arcseconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Arcsecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Centiradian"/>
         /// </summary>
-        public QuantityValue Centiradians => this.As(AngleUnit.Centiradian);
+        public QuantityValue Centiradians
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Centiradian);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Deciradian"/>
         /// </summary>
-        public QuantityValue Deciradians => this.As(AngleUnit.Deciradian);
+        public QuantityValue Deciradians
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Deciradian);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Degree"/>
         /// </summary>
-        public QuantityValue Degrees => this.As(AngleUnit.Degree);
+        public QuantityValue Degrees
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Degree);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Gradian"/>
         /// </summary>
-        public QuantityValue Gradians => this.As(AngleUnit.Gradian);
+        public QuantityValue Gradians
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Gradian);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Microdegree"/>
         /// </summary>
-        public QuantityValue Microdegrees => this.As(AngleUnit.Microdegree);
+        public QuantityValue Microdegrees
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Microdegree);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Microradian"/>
         /// </summary>
-        public QuantityValue Microradians => this.As(AngleUnit.Microradian);
+        public QuantityValue Microradians
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Microradian);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Millidegree"/>
         /// </summary>
-        public QuantityValue Millidegrees => this.As(AngleUnit.Millidegree);
+        public QuantityValue Millidegrees
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Millidegree);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Milliradian"/>
         /// </summary>
-        public QuantityValue Milliradians => this.As(AngleUnit.Milliradian);
+        public QuantityValue Milliradians
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Milliradian);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Nanodegree"/>
         /// </summary>
-        public QuantityValue Nanodegrees => this.As(AngleUnit.Nanodegree);
+        public QuantityValue Nanodegrees
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Nanodegree);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Nanoradian"/>
         /// </summary>
-        public QuantityValue Nanoradians => this.As(AngleUnit.Nanoradian);
+        public QuantityValue Nanoradians
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Nanoradian);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.NatoMil"/>
         /// </summary>
-        public QuantityValue NatoMils => this.As(AngleUnit.NatoMil);
+        public QuantityValue NatoMils
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.NatoMil);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Radian"/>
         /// </summary>
-        public QuantityValue Radians => this.As(AngleUnit.Radian);
+        public QuantityValue Radians
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Radian);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Revolution"/>
         /// </summary>
-        public QuantityValue Revolutions => this.As(AngleUnit.Revolution);
+        public QuantityValue Revolutions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AngleUnit.Revolution);
+        }
 
         #endregion
 
@@ -334,10 +451,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AngleUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -345,10 +461,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AngleUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -357,122 +472,107 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Arcminute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromArcminutes(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Arcminute);
-        }
+            => new(value, AngleUnit.Arcminute);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Arcsecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromArcseconds(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Arcsecond);
-        }
+            => new(value, AngleUnit.Arcsecond);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Centiradian"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromCentiradians(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Centiradian);
-        }
+            => new(value, AngleUnit.Centiradian);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Deciradian"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromDeciradians(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Deciradian);
-        }
+            => new(value, AngleUnit.Deciradian);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Degree"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromDegrees(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Degree);
-        }
+            => new(value, AngleUnit.Degree);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Gradian"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromGradians(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Gradian);
-        }
+            => new(value, AngleUnit.Gradian);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Microdegree"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromMicrodegrees(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Microdegree);
-        }
+            => new(value, AngleUnit.Microdegree);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Microradian"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromMicroradians(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Microradian);
-        }
+            => new(value, AngleUnit.Microradian);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Millidegree"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromMillidegrees(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Millidegree);
-        }
+            => new(value, AngleUnit.Millidegree);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Milliradian"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromMilliradians(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Milliradian);
-        }
+            => new(value, AngleUnit.Milliradian);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Nanodegree"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromNanodegrees(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Nanodegree);
-        }
+            => new(value, AngleUnit.Nanodegree);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Nanoradian"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromNanoradians(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Nanoradian);
-        }
+            => new(value, AngleUnit.Nanoradian);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.NatoMil"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromNatoMils(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.NatoMil);
-        }
+            => new(value, AngleUnit.NatoMil);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Radian"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromRadians(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Radian);
-        }
+            => new(value, AngleUnit.Radian);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Revolution"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle FromRevolutions(QuantityValue value)
-        {
-            return new Angle(value, AngleUnit.Revolution);
-        }
+            => new(value, AngleUnit.Revolution);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="AngleUnit" /> to <see cref="Angle" />.
@@ -480,10 +580,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Angle unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle From(QuantityValue value, AngleUnit fromUnit)
-        {
-            return new Angle(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -511,10 +610,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -539,10 +637,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Angle Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Angle, AngleUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Angle, AngleUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -552,10 +649,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Angle result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -567,10 +663,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Angle result)
-        {
-            return QuantityParser.Default.TryParse<Angle, AngleUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Angle, AngleUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -581,10 +676,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AngleUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -597,15 +691,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static AngleUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.AngleUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out AngleUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -617,10 +708,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out AngleUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -628,45 +718,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Angle operator -(Angle right)
-        {
-            return new Angle(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Angle"/> from adding two <see cref="Angle"/>.</summary>
         public static Angle operator +(Angle left, Angle right)
-        {
-            return new Angle(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Angle"/> from subtracting two <see cref="Angle"/>.</summary>
         public static Angle operator -(Angle left, Angle right)
-        {
-            return new Angle(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Angle"/> from multiplying value and <see cref="Angle"/>.</summary>
         public static Angle operator *(QuantityValue left, Angle right)
-        {
-            return new Angle(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Angle"/> from multiplying value and <see cref="Angle"/>.</summary>
         public static Angle operator *(Angle left, QuantityValue right)
-        {
-            return new Angle(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Angle"/> from dividing <see cref="Angle"/> by value.</summary>
         public static Angle operator /(Angle left, QuantityValue right)
-        {
-            return new Angle(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Angle"/> by <see cref="Angle"/>.</summary>
         public static QuantityValue operator /(Angle left, Angle right)
-        {
-            return left.Radians / right.Radians;
-        }
+            => left.Radians / right.Radians;
 
         #endregion
 
@@ -674,21 +750,15 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Angle"/> / <see cref="RotationalSpeed"/>.</summary>
         public static Duration operator /(Angle angle, RotationalSpeed rotationalSpeed)
-        {
-            return Duration.FromSeconds(angle.Radians / rotationalSpeed.RadiansPerSecond);
-        }
+            => Duration.FromSeconds(angle.Radians / rotationalSpeed.RadiansPerSecond);
 
         /// <summary>Get <see cref="RotationalSpeed"/> from <see cref="Angle"/> / <see cref="Duration"/>.</summary>
         public static RotationalSpeed operator /(Angle angle, Duration duration)
-        {
-            return RotationalSpeed.FromRadiansPerSecond(angle.Radians / duration.Seconds);
-        }
+            => RotationalSpeed.FromRadiansPerSecond(angle.Radians / duration.Seconds);
 
         /// <summary>Get <see cref="Torque"/> from <see cref="Angle"/> * <see cref="RotationalStiffness"/>.</summary>
         public static Torque operator *(Angle angle, RotationalStiffness rotationalStiffness)
-        {
-            return Torque.FromNewtonMeters(angle.Radians * rotationalStiffness.NewtonMetersPerRadian);
-        }
+            => Torque.FromNewtonMeters(angle.Radians * rotationalStiffness.NewtonMetersPerRadian);
 
         #endregion
 
@@ -696,27 +766,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Angle left, Angle right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Angle left, Angle right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Angle left, Angle right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Angle left, Angle right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Angle"/> instances are equal.
@@ -727,10 +789,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Angle)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Angle left, Angle right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Angle"/> instances are not equal.
@@ -740,10 +801,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Angle)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Angle left, Angle right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -756,12 +816,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Angle otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Angle otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -772,18 +827,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Angle other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Angle.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Angle), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Angle), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Angle)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -812,9 +863,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Angle other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -825,20 +874,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

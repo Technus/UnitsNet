@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -89,9 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumeFlowInfo"/> class with the default settings.</returns>
             public static VolumeFlowInfo CreateDefault()
-            {
-                return new VolumeFlowInfo(nameof(VolumeFlow), DefaultBaseUnit, GetDefaultMappings(), new VolumeFlow(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(VolumeFlow), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumeFlowInfo"/> class with the default settings for the VolumeFlow quantity and a callback for customizing the default unit mappings.
@@ -103,19 +102,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumeFlowInfo"/> class with the default settings.
             /// </returns>
             public static VolumeFlowInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumeFlowUnit>>, IEnumerable<IUnitDefinition<VolumeFlowUnit>>> customizeUnits)
-            {
-                return new VolumeFlowInfo(nameof(VolumeFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new VolumeFlow(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(VolumeFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="VolumeFlow"/> is T^-1L^3.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(3, 0, -1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(3, 0, -1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of VolumeFlow is CubicMeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static VolumeFlowUnit DefaultBaseUnit { get; } = VolumeFlowUnit.CubicMeterPerSecond;
+            public static VolumeFlowUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumeFlowUnit.CubicMeterPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="VolumeFlowUnit"/>.
@@ -394,7 +399,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="VolumeFlow" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<VolumeFlow, VolumeFlowUnit> Info { get; }
@@ -402,53 +411,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of VolumeFlow, which is CubicMeterPerSecond. All conversions go via this value.
         /// </summary>
-        public static VolumeFlowUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static VolumeFlowUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the VolumeFlow quantity.
         /// </summary>
-        public static IReadOnlyCollection<VolumeFlowUnit> Units => Info.Units;
+        public static IReadOnlyCollection<VolumeFlowUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit CubicMeterPerSecond.
         /// </summary>
-        public static VolumeFlow Zero => Info.Zero;
+        public static VolumeFlow Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public VolumeFlowUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public VolumeFlowUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<VolumeFlow, VolumeFlowUnit> QuantityInfo => Info;
+        public QuantityInfo<VolumeFlow, VolumeFlowUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<VolumeFlow> IQuantityOfType<VolumeFlow>.QuantityInfo => Info;
+        IQuantityInstanceInfo<VolumeFlow> IQuantityOfType<VolumeFlow>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<VolumeFlowUnit> IQuantity<VolumeFlowUnit>.QuantityInfo => Info;
+        QuantityInfo<VolumeFlowUnit> IQuantity<VolumeFlowUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -460,392 +517,704 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.AcreFootPerDay"/>
         /// </summary>
-        public QuantityValue AcreFeetPerDay => this.As(VolumeFlowUnit.AcreFootPerDay);
+        public QuantityValue AcreFeetPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.AcreFootPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.AcreFootPerHour"/>
         /// </summary>
-        public QuantityValue AcreFeetPerHour => this.As(VolumeFlowUnit.AcreFootPerHour);
+        public QuantityValue AcreFeetPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.AcreFootPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.AcreFootPerMinute"/>
         /// </summary>
-        public QuantityValue AcreFeetPerMinute => this.As(VolumeFlowUnit.AcreFootPerMinute);
+        public QuantityValue AcreFeetPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.AcreFootPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.AcreFootPerSecond"/>
         /// </summary>
-        public QuantityValue AcreFeetPerSecond => this.As(VolumeFlowUnit.AcreFootPerSecond);
+        public QuantityValue AcreFeetPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.AcreFootPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CentiliterPerDay"/>
         /// </summary>
-        public QuantityValue CentilitersPerDay => this.As(VolumeFlowUnit.CentiliterPerDay);
+        public QuantityValue CentilitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CentiliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CentiliterPerHour"/>
         /// </summary>
-        public QuantityValue CentilitersPerHour => this.As(VolumeFlowUnit.CentiliterPerHour);
+        public QuantityValue CentilitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CentiliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CentiliterPerMinute"/>
         /// </summary>
-        public QuantityValue CentilitersPerMinute => this.As(VolumeFlowUnit.CentiliterPerMinute);
+        public QuantityValue CentilitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CentiliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CentiliterPerSecond"/>
         /// </summary>
-        public QuantityValue CentilitersPerSecond => this.As(VolumeFlowUnit.CentiliterPerSecond);
+        public QuantityValue CentilitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CentiliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicCentimeterPerMinute"/>
         /// </summary>
-        public QuantityValue CubicCentimetersPerMinute => this.As(VolumeFlowUnit.CubicCentimeterPerMinute);
+        public QuantityValue CubicCentimetersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicCentimeterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicDecimeterPerMinute"/>
         /// </summary>
-        public QuantityValue CubicDecimetersPerMinute => this.As(VolumeFlowUnit.CubicDecimeterPerMinute);
+        public QuantityValue CubicDecimetersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicDecimeterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicFootPerHour"/>
         /// </summary>
-        public QuantityValue CubicFeetPerHour => this.As(VolumeFlowUnit.CubicFootPerHour);
+        public QuantityValue CubicFeetPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicFootPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicFootPerMinute"/>
         /// </summary>
-        public QuantityValue CubicFeetPerMinute => this.As(VolumeFlowUnit.CubicFootPerMinute);
+        public QuantityValue CubicFeetPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicFootPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicFootPerSecond"/>
         /// </summary>
-        public QuantityValue CubicFeetPerSecond => this.As(VolumeFlowUnit.CubicFootPerSecond);
+        public QuantityValue CubicFeetPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicFootPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicInchPerMinute"/>
         /// </summary>
-        public QuantityValue CubicInchesPerMinute => this.As(VolumeFlowUnit.CubicInchPerMinute);
+        public QuantityValue CubicInchesPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicInchPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicInchPerSecond"/>
         /// </summary>
-        public QuantityValue CubicInchesPerSecond => this.As(VolumeFlowUnit.CubicInchPerSecond);
+        public QuantityValue CubicInchesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicInchPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicMeterPerDay"/>
         /// </summary>
-        public QuantityValue CubicMetersPerDay => this.As(VolumeFlowUnit.CubicMeterPerDay);
+        public QuantityValue CubicMetersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicMeterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicMeterPerHour"/>
         /// </summary>
-        public QuantityValue CubicMetersPerHour => this.As(VolumeFlowUnit.CubicMeterPerHour);
+        public QuantityValue CubicMetersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicMeterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicMeterPerMinute"/>
         /// </summary>
-        public QuantityValue CubicMetersPerMinute => this.As(VolumeFlowUnit.CubicMeterPerMinute);
+        public QuantityValue CubicMetersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicMeterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicMeterPerSecond"/>
         /// </summary>
-        public QuantityValue CubicMetersPerSecond => this.As(VolumeFlowUnit.CubicMeterPerSecond);
+        public QuantityValue CubicMetersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicMeterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicMillimeterPerMinute"/>
         /// </summary>
-        public QuantityValue CubicMillimetersPerMinute => this.As(VolumeFlowUnit.CubicMillimeterPerMinute);
+        public QuantityValue CubicMillimetersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicMillimeterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicMillimeterPerSecond"/>
         /// </summary>
-        public QuantityValue CubicMillimetersPerSecond => this.As(VolumeFlowUnit.CubicMillimeterPerSecond);
+        public QuantityValue CubicMillimetersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicMillimeterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicYardPerDay"/>
         /// </summary>
-        public QuantityValue CubicYardsPerDay => this.As(VolumeFlowUnit.CubicYardPerDay);
+        public QuantityValue CubicYardsPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicYardPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicYardPerHour"/>
         /// </summary>
-        public QuantityValue CubicYardsPerHour => this.As(VolumeFlowUnit.CubicYardPerHour);
+        public QuantityValue CubicYardsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicYardPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicYardPerMinute"/>
         /// </summary>
-        public QuantityValue CubicYardsPerMinute => this.As(VolumeFlowUnit.CubicYardPerMinute);
+        public QuantityValue CubicYardsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicYardPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.CubicYardPerSecond"/>
         /// </summary>
-        public QuantityValue CubicYardsPerSecond => this.As(VolumeFlowUnit.CubicYardPerSecond);
+        public QuantityValue CubicYardsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.CubicYardPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DecaliterPerDay"/>
         /// </summary>
-        public QuantityValue DecalitersPerDay => this.As(VolumeFlowUnit.DecaliterPerDay);
+        public QuantityValue DecalitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DecaliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DecaliterPerHour"/>
         /// </summary>
-        public QuantityValue DecalitersPerHour => this.As(VolumeFlowUnit.DecaliterPerHour);
+        public QuantityValue DecalitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DecaliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DecaliterPerMinute"/>
         /// </summary>
-        public QuantityValue DecalitersPerMinute => this.As(VolumeFlowUnit.DecaliterPerMinute);
+        public QuantityValue DecalitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DecaliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DecaliterPerSecond"/>
         /// </summary>
-        public QuantityValue DecalitersPerSecond => this.As(VolumeFlowUnit.DecaliterPerSecond);
+        public QuantityValue DecalitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DecaliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DeciliterPerDay"/>
         /// </summary>
-        public QuantityValue DecilitersPerDay => this.As(VolumeFlowUnit.DeciliterPerDay);
+        public QuantityValue DecilitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DeciliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DeciliterPerHour"/>
         /// </summary>
-        public QuantityValue DecilitersPerHour => this.As(VolumeFlowUnit.DeciliterPerHour);
+        public QuantityValue DecilitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DeciliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DeciliterPerMinute"/>
         /// </summary>
-        public QuantityValue DecilitersPerMinute => this.As(VolumeFlowUnit.DeciliterPerMinute);
+        public QuantityValue DecilitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DeciliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.DeciliterPerSecond"/>
         /// </summary>
-        public QuantityValue DecilitersPerSecond => this.As(VolumeFlowUnit.DeciliterPerSecond);
+        public QuantityValue DecilitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.DeciliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.HectoliterPerDay"/>
         /// </summary>
-        public QuantityValue HectolitersPerDay => this.As(VolumeFlowUnit.HectoliterPerDay);
+        public QuantityValue HectolitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.HectoliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.HectoliterPerHour"/>
         /// </summary>
-        public QuantityValue HectolitersPerHour => this.As(VolumeFlowUnit.HectoliterPerHour);
+        public QuantityValue HectolitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.HectoliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.HectoliterPerMinute"/>
         /// </summary>
-        public QuantityValue HectolitersPerMinute => this.As(VolumeFlowUnit.HectoliterPerMinute);
+        public QuantityValue HectolitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.HectoliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.HectoliterPerSecond"/>
         /// </summary>
-        public QuantityValue HectolitersPerSecond => this.As(VolumeFlowUnit.HectoliterPerSecond);
+        public QuantityValue HectolitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.HectoliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.KiloliterPerDay"/>
         /// </summary>
-        public QuantityValue KilolitersPerDay => this.As(VolumeFlowUnit.KiloliterPerDay);
+        public QuantityValue KilolitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.KiloliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.KiloliterPerHour"/>
         /// </summary>
-        public QuantityValue KilolitersPerHour => this.As(VolumeFlowUnit.KiloliterPerHour);
+        public QuantityValue KilolitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.KiloliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.KiloliterPerMinute"/>
         /// </summary>
-        public QuantityValue KilolitersPerMinute => this.As(VolumeFlowUnit.KiloliterPerMinute);
+        public QuantityValue KilolitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.KiloliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.KiloliterPerSecond"/>
         /// </summary>
-        public QuantityValue KilolitersPerSecond => this.As(VolumeFlowUnit.KiloliterPerSecond);
+        public QuantityValue KilolitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.KiloliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.KilousGallonPerMinute"/>
         /// </summary>
-        public QuantityValue KilousGallonsPerMinute => this.As(VolumeFlowUnit.KilousGallonPerMinute);
+        public QuantityValue KilousGallonsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.KilousGallonPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.LiterPerDay"/>
         /// </summary>
-        public QuantityValue LitersPerDay => this.As(VolumeFlowUnit.LiterPerDay);
+        public QuantityValue LitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.LiterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.LiterPerHour"/>
         /// </summary>
-        public QuantityValue LitersPerHour => this.As(VolumeFlowUnit.LiterPerHour);
+        public QuantityValue LitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.LiterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.LiterPerMinute"/>
         /// </summary>
-        public QuantityValue LitersPerMinute => this.As(VolumeFlowUnit.LiterPerMinute);
+        public QuantityValue LitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.LiterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.LiterPerSecond"/>
         /// </summary>
-        public QuantityValue LitersPerSecond => this.As(VolumeFlowUnit.LiterPerSecond);
+        public QuantityValue LitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.LiterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MegaliterPerDay"/>
         /// </summary>
-        public QuantityValue MegalitersPerDay => this.As(VolumeFlowUnit.MegaliterPerDay);
+        public QuantityValue MegalitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MegaliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MegaliterPerHour"/>
         /// </summary>
-        public QuantityValue MegalitersPerHour => this.As(VolumeFlowUnit.MegaliterPerHour);
+        public QuantityValue MegalitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MegaliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MegaliterPerMinute"/>
         /// </summary>
-        public QuantityValue MegalitersPerMinute => this.As(VolumeFlowUnit.MegaliterPerMinute);
+        public QuantityValue MegalitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MegaliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MegaliterPerSecond"/>
         /// </summary>
-        public QuantityValue MegalitersPerSecond => this.As(VolumeFlowUnit.MegaliterPerSecond);
+        public QuantityValue MegalitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MegaliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MegaukGallonPerDay"/>
         /// </summary>
-        public QuantityValue MegaukGallonsPerDay => this.As(VolumeFlowUnit.MegaukGallonPerDay);
+        public QuantityValue MegaukGallonsPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MegaukGallonPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MegaukGallonPerSecond"/>
         /// </summary>
-        public QuantityValue MegaukGallonsPerSecond => this.As(VolumeFlowUnit.MegaukGallonPerSecond);
+        public QuantityValue MegaukGallonsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MegaukGallonPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MegausGallonPerDay"/>
         /// </summary>
-        public QuantityValue MegausGallonsPerDay => this.As(VolumeFlowUnit.MegausGallonPerDay);
+        public QuantityValue MegausGallonsPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MegausGallonPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MicroliterPerDay"/>
         /// </summary>
-        public QuantityValue MicrolitersPerDay => this.As(VolumeFlowUnit.MicroliterPerDay);
+        public QuantityValue MicrolitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MicroliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MicroliterPerHour"/>
         /// </summary>
-        public QuantityValue MicrolitersPerHour => this.As(VolumeFlowUnit.MicroliterPerHour);
+        public QuantityValue MicrolitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MicroliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MicroliterPerMinute"/>
         /// </summary>
-        public QuantityValue MicrolitersPerMinute => this.As(VolumeFlowUnit.MicroliterPerMinute);
+        public QuantityValue MicrolitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MicroliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MicroliterPerSecond"/>
         /// </summary>
-        public QuantityValue MicrolitersPerSecond => this.As(VolumeFlowUnit.MicroliterPerSecond);
+        public QuantityValue MicrolitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MicroliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MilliliterPerDay"/>
         /// </summary>
-        public QuantityValue MillilitersPerDay => this.As(VolumeFlowUnit.MilliliterPerDay);
+        public QuantityValue MillilitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MilliliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MilliliterPerHour"/>
         /// </summary>
-        public QuantityValue MillilitersPerHour => this.As(VolumeFlowUnit.MilliliterPerHour);
+        public QuantityValue MillilitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MilliliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MilliliterPerMinute"/>
         /// </summary>
-        public QuantityValue MillilitersPerMinute => this.As(VolumeFlowUnit.MilliliterPerMinute);
+        public QuantityValue MillilitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MilliliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MilliliterPerSecond"/>
         /// </summary>
-        public QuantityValue MillilitersPerSecond => this.As(VolumeFlowUnit.MilliliterPerSecond);
+        public QuantityValue MillilitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MilliliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.MillionUsGallonPerDay"/>
         /// </summary>
-        public QuantityValue MillionUsGallonsPerDay => this.As(VolumeFlowUnit.MillionUsGallonPerDay);
+        public QuantityValue MillionUsGallonsPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.MillionUsGallonPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.NanoliterPerDay"/>
         /// </summary>
-        public QuantityValue NanolitersPerDay => this.As(VolumeFlowUnit.NanoliterPerDay);
+        public QuantityValue NanolitersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.NanoliterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.NanoliterPerHour"/>
         /// </summary>
-        public QuantityValue NanolitersPerHour => this.As(VolumeFlowUnit.NanoliterPerHour);
+        public QuantityValue NanolitersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.NanoliterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.NanoliterPerMinute"/>
         /// </summary>
-        public QuantityValue NanolitersPerMinute => this.As(VolumeFlowUnit.NanoliterPerMinute);
+        public QuantityValue NanolitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.NanoliterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.NanoliterPerSecond"/>
         /// </summary>
-        public QuantityValue NanolitersPerSecond => this.As(VolumeFlowUnit.NanoliterPerSecond);
+        public QuantityValue NanolitersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.NanoliterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.OilBarrelPerDay"/>
         /// </summary>
-        public QuantityValue OilBarrelsPerDay => this.As(VolumeFlowUnit.OilBarrelPerDay);
+        public QuantityValue OilBarrelsPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.OilBarrelPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.OilBarrelPerHour"/>
         /// </summary>
-        public QuantityValue OilBarrelsPerHour => this.As(VolumeFlowUnit.OilBarrelPerHour);
+        public QuantityValue OilBarrelsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.OilBarrelPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.OilBarrelPerMinute"/>
         /// </summary>
-        public QuantityValue OilBarrelsPerMinute => this.As(VolumeFlowUnit.OilBarrelPerMinute);
+        public QuantityValue OilBarrelsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.OilBarrelPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.OilBarrelPerSecond"/>
         /// </summary>
-        public QuantityValue OilBarrelsPerSecond => this.As(VolumeFlowUnit.OilBarrelPerSecond);
+        public QuantityValue OilBarrelsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.OilBarrelPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UkGallonPerDay"/>
         /// </summary>
-        public QuantityValue UkGallonsPerDay => this.As(VolumeFlowUnit.UkGallonPerDay);
+        public QuantityValue UkGallonsPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UkGallonPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UkGallonPerHour"/>
         /// </summary>
-        public QuantityValue UkGallonsPerHour => this.As(VolumeFlowUnit.UkGallonPerHour);
+        public QuantityValue UkGallonsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UkGallonPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UkGallonPerMinute"/>
         /// </summary>
-        public QuantityValue UkGallonsPerMinute => this.As(VolumeFlowUnit.UkGallonPerMinute);
+        public QuantityValue UkGallonsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UkGallonPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UkGallonPerSecond"/>
         /// </summary>
-        public QuantityValue UkGallonsPerSecond => this.As(VolumeFlowUnit.UkGallonPerSecond);
+        public QuantityValue UkGallonsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UkGallonPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UsGallonPerDay"/>
         /// </summary>
-        public QuantityValue UsGallonsPerDay => this.As(VolumeFlowUnit.UsGallonPerDay);
+        public QuantityValue UsGallonsPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UsGallonPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UsGallonPerHour"/>
         /// </summary>
-        public QuantityValue UsGallonsPerHour => this.As(VolumeFlowUnit.UsGallonPerHour);
+        public QuantityValue UsGallonsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UsGallonPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UsGallonPerMinute"/>
         /// </summary>
-        public QuantityValue UsGallonsPerMinute => this.As(VolumeFlowUnit.UsGallonPerMinute);
+        public QuantityValue UsGallonsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UsGallonPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.UsGallonPerSecond"/>
         /// </summary>
-        public QuantityValue UsGallonsPerSecond => this.As(VolumeFlowUnit.UsGallonPerSecond);
+        public QuantityValue UsGallonsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(VolumeFlowUnit.UsGallonPerSecond);
+        }
 
         #endregion
 
@@ -856,10 +1225,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(VolumeFlowUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -867,10 +1235,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(VolumeFlowUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -879,626 +1246,548 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.AcreFootPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromAcreFeetPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.AcreFootPerDay);
-        }
+            => new(value, VolumeFlowUnit.AcreFootPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.AcreFootPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromAcreFeetPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.AcreFootPerHour);
-        }
+            => new(value, VolumeFlowUnit.AcreFootPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.AcreFootPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromAcreFeetPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.AcreFootPerMinute);
-        }
+            => new(value, VolumeFlowUnit.AcreFootPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.AcreFootPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromAcreFeetPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.AcreFootPerSecond);
-        }
+            => new(value, VolumeFlowUnit.AcreFootPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CentiliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCentilitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CentiliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.CentiliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CentiliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCentilitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CentiliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.CentiliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CentiliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCentilitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CentiliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CentiliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CentiliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCentilitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CentiliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.CentiliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicCentimeterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicCentimetersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicCentimeterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CubicCentimeterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicDecimeterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicDecimetersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicDecimeterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CubicDecimeterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicFootPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicFeetPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicFootPerHour);
-        }
+            => new(value, VolumeFlowUnit.CubicFootPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicFootPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicFeetPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicFootPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CubicFootPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicFootPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicFeetPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicFootPerSecond);
-        }
+            => new(value, VolumeFlowUnit.CubicFootPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicInchPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicInchesPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicInchPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CubicInchPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicInchPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicInchesPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicInchPerSecond);
-        }
+            => new(value, VolumeFlowUnit.CubicInchPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicMeterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicMetersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicMeterPerDay);
-        }
+            => new(value, VolumeFlowUnit.CubicMeterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicMeterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicMetersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicMeterPerHour);
-        }
+            => new(value, VolumeFlowUnit.CubicMeterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicMeterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicMetersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicMeterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CubicMeterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicMeterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicMetersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicMeterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.CubicMeterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicMillimeterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicMillimetersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicMillimeterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CubicMillimeterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicMillimeterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicMillimetersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicMillimeterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.CubicMillimeterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicYardPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicYardsPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicYardPerDay);
-        }
+            => new(value, VolumeFlowUnit.CubicYardPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicYardPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicYardsPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicYardPerHour);
-        }
+            => new(value, VolumeFlowUnit.CubicYardPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicYardPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicYardsPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicYardPerMinute);
-        }
+            => new(value, VolumeFlowUnit.CubicYardPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.CubicYardPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromCubicYardsPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.CubicYardPerSecond);
-        }
+            => new(value, VolumeFlowUnit.CubicYardPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DecaliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecalitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DecaliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.DecaliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DecaliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecalitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DecaliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.DecaliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DecaliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecalitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DecaliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.DecaliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DecaliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecalitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DecaliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.DecaliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DeciliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecilitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DeciliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.DeciliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DeciliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecilitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DeciliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.DeciliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DeciliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecilitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DeciliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.DeciliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.DeciliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromDecilitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.DeciliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.DeciliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.HectoliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromHectolitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.HectoliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.HectoliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.HectoliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromHectolitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.HectoliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.HectoliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.HectoliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromHectolitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.HectoliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.HectoliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.HectoliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromHectolitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.HectoliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.HectoliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.KiloliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromKilolitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.KiloliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.KiloliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.KiloliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromKilolitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.KiloliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.KiloliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.KiloliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromKilolitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.KiloliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.KiloliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.KiloliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromKilolitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.KiloliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.KiloliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.KilousGallonPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromKilousGallonsPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.KilousGallonPerMinute);
-        }
+            => new(value, VolumeFlowUnit.KilousGallonPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.LiterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromLitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.LiterPerDay);
-        }
+            => new(value, VolumeFlowUnit.LiterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.LiterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromLitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.LiterPerHour);
-        }
+            => new(value, VolumeFlowUnit.LiterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.LiterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromLitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.LiterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.LiterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.LiterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromLitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.LiterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.LiterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MegaliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMegalitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MegaliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.MegaliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MegaliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMegalitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MegaliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.MegaliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MegaliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMegalitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MegaliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.MegaliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MegaliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMegalitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MegaliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.MegaliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MegaukGallonPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMegaukGallonsPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MegaukGallonPerDay);
-        }
+            => new(value, VolumeFlowUnit.MegaukGallonPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MegaukGallonPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMegaukGallonsPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MegaukGallonPerSecond);
-        }
+            => new(value, VolumeFlowUnit.MegaukGallonPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MegausGallonPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMegausGallonsPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MegausGallonPerDay);
-        }
+            => new(value, VolumeFlowUnit.MegausGallonPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MicroliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMicrolitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MicroliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.MicroliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MicroliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMicrolitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MicroliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.MicroliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MicroliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMicrolitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MicroliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.MicroliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MicroliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMicrolitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MicroliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.MicroliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MilliliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMillilitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MilliliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.MilliliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MilliliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMillilitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MilliliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.MilliliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MilliliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMillilitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MilliliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.MilliliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MilliliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMillilitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MilliliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.MilliliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.MillionUsGallonPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromMillionUsGallonsPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.MillionUsGallonPerDay);
-        }
+            => new(value, VolumeFlowUnit.MillionUsGallonPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.NanoliterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromNanolitersPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.NanoliterPerDay);
-        }
+            => new(value, VolumeFlowUnit.NanoliterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.NanoliterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromNanolitersPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.NanoliterPerHour);
-        }
+            => new(value, VolumeFlowUnit.NanoliterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.NanoliterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromNanolitersPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.NanoliterPerMinute);
-        }
+            => new(value, VolumeFlowUnit.NanoliterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.NanoliterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromNanolitersPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.NanoliterPerSecond);
-        }
+            => new(value, VolumeFlowUnit.NanoliterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.OilBarrelPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromOilBarrelsPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.OilBarrelPerDay);
-        }
+            => new(value, VolumeFlowUnit.OilBarrelPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.OilBarrelPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromOilBarrelsPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.OilBarrelPerHour);
-        }
+            => new(value, VolumeFlowUnit.OilBarrelPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.OilBarrelPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromOilBarrelsPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.OilBarrelPerMinute);
-        }
+            => new(value, VolumeFlowUnit.OilBarrelPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.OilBarrelPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromOilBarrelsPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.OilBarrelPerSecond);
-        }
+            => new(value, VolumeFlowUnit.OilBarrelPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UkGallonPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUkGallonsPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UkGallonPerDay);
-        }
+            => new(value, VolumeFlowUnit.UkGallonPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UkGallonPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUkGallonsPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UkGallonPerHour);
-        }
+            => new(value, VolumeFlowUnit.UkGallonPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UkGallonPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUkGallonsPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UkGallonPerMinute);
-        }
+            => new(value, VolumeFlowUnit.UkGallonPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UkGallonPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUkGallonsPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UkGallonPerSecond);
-        }
+            => new(value, VolumeFlowUnit.UkGallonPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UsGallonPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUsGallonsPerDay(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UsGallonPerDay);
-        }
+            => new(value, VolumeFlowUnit.UsGallonPerDay);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UsGallonPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUsGallonsPerHour(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UsGallonPerHour);
-        }
+            => new(value, VolumeFlowUnit.UsGallonPerHour);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UsGallonPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUsGallonsPerMinute(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UsGallonPerMinute);
-        }
+            => new(value, VolumeFlowUnit.UsGallonPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.UsGallonPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow FromUsGallonsPerSecond(QuantityValue value)
-        {
-            return new VolumeFlow(value, VolumeFlowUnit.UsGallonPerSecond);
-        }
+            => new(value, VolumeFlowUnit.UsGallonPerSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="VolumeFlowUnit" /> to <see cref="VolumeFlow" />.
@@ -1506,10 +1795,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>VolumeFlow unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow From(QuantityValue value, VolumeFlowUnit fromUnit)
-        {
-            return new VolumeFlow(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -1537,10 +1825,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1565,10 +1852,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlow Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<VolumeFlow, VolumeFlowUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<VolumeFlow, VolumeFlowUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1578,10 +1864,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out VolumeFlow result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1593,10 +1878,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out VolumeFlow result)
-        {
-            return QuantityParser.Default.TryParse<VolumeFlow, VolumeFlowUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<VolumeFlow, VolumeFlowUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1607,10 +1891,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static VolumeFlowUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1623,15 +1906,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static VolumeFlowUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.VolumeFlowUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out VolumeFlowUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1643,10 +1923,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out VolumeFlowUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -1654,45 +1933,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static VolumeFlow operator -(VolumeFlow right)
-        {
-            return new VolumeFlow(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="VolumeFlow"/> from adding two <see cref="VolumeFlow"/>.</summary>
         public static VolumeFlow operator +(VolumeFlow left, VolumeFlow right)
-        {
-            return new VolumeFlow(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="VolumeFlow"/> from subtracting two <see cref="VolumeFlow"/>.</summary>
         public static VolumeFlow operator -(VolumeFlow left, VolumeFlow right)
-        {
-            return new VolumeFlow(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="VolumeFlow"/> from multiplying value and <see cref="VolumeFlow"/>.</summary>
         public static VolumeFlow operator *(QuantityValue left, VolumeFlow right)
-        {
-            return new VolumeFlow(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="VolumeFlow"/> from multiplying value and <see cref="VolumeFlow"/>.</summary>
         public static VolumeFlow operator *(VolumeFlow left, QuantityValue right)
-        {
-            return new VolumeFlow(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="VolumeFlow"/> from dividing <see cref="VolumeFlow"/> by value.</summary>
         public static VolumeFlow operator /(VolumeFlow left, QuantityValue right)
-        {
-            return new VolumeFlow(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="VolumeFlow"/> by <see cref="VolumeFlow"/>.</summary>
         public static QuantityValue operator /(VolumeFlow left, VolumeFlow right)
-        {
-            return left.CubicMetersPerSecond / right.CubicMetersPerSecond;
-        }
+            => left.CubicMetersPerSecond / right.CubicMetersPerSecond;
 
         #endregion
 
@@ -1700,45 +1965,31 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Area"/> from <see cref="VolumeFlow"/> / <see cref="Speed"/>.</summary>
         public static Area operator /(VolumeFlow volumeFlow, Speed speed)
-        {
-            return Area.FromSquareMeters(volumeFlow.CubicMetersPerSecond / speed.MetersPerSecond);
-        }
+            => Area.FromSquareMeters(volumeFlow.CubicMetersPerSecond / speed.MetersPerSecond);
 
         /// <summary>Get <see cref="LeakRate"/> from <see cref="VolumeFlow"/> * <see cref="Pressure"/>.</summary>
         public static LeakRate operator *(VolumeFlow volumeFlow, Pressure pressure)
-        {
-            return LeakRate.FromPascalCubicMetersPerSecond(volumeFlow.CubicMetersPerSecond * pressure.Pascals);
-        }
+            => LeakRate.FromPascalCubicMetersPerSecond(volumeFlow.CubicMetersPerSecond * pressure.Pascals);
 
         /// <summary>Get <see cref="MassFlow"/> from <see cref="VolumeFlow"/> * <see cref="Density"/>.</summary>
         public static MassFlow operator *(VolumeFlow volumeFlow, Density density)
-        {
-            return MassFlow.FromKilogramsPerSecond(volumeFlow.CubicMetersPerSecond * density.KilogramsPerCubicMeter);
-        }
+            => MassFlow.FromKilogramsPerSecond(volumeFlow.CubicMetersPerSecond * density.KilogramsPerCubicMeter);
 
         /// <summary>Get <see cref="MolarFlow"/> from <see cref="VolumeFlow"/> * <see cref="Molarity"/>.</summary>
         public static MolarFlow operator *(VolumeFlow volumeFlow, Molarity molarity)
-        {
-            return MolarFlow.FromMolesPerSecond(volumeFlow.CubicMetersPerSecond * molarity.MolesPerCubicMeter);
-        }
+            => MolarFlow.FromMolesPerSecond(volumeFlow.CubicMetersPerSecond * molarity.MolesPerCubicMeter);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="VolumeFlow"/> * <see cref="FluidResistance"/>.</summary>
         public static Pressure operator *(VolumeFlow volumeFlow, FluidResistance fluidResistance)
-        {
-            return Pressure.FromPascals(volumeFlow.CubicMetersPerSecond * fluidResistance.PascalSecondsPerCubicMeter);
-        }
+            => Pressure.FromPascals(volumeFlow.CubicMetersPerSecond * fluidResistance.PascalSecondsPerCubicMeter);
 
         /// <summary>Get <see cref="Speed"/> from <see cref="VolumeFlow"/> / <see cref="Area"/>.</summary>
         public static Speed operator /(VolumeFlow volumeFlow, Area area)
-        {
-            return Speed.FromMetersPerSecond(volumeFlow.CubicMetersPerSecond / area.SquareMeters);
-        }
+            => Speed.FromMetersPerSecond(volumeFlow.CubicMetersPerSecond / area.SquareMeters);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="VolumeFlow"/> * <see cref="Duration"/>.</summary>
         public static Volume operator *(VolumeFlow volumeFlow, Duration duration)
-        {
-            return Volume.FromCubicMeters(volumeFlow.CubicMetersPerSecond * duration.Seconds);
-        }
+            => Volume.FromCubicMeters(volumeFlow.CubicMetersPerSecond * duration.Seconds);
 
         #endregion
 
@@ -1746,27 +1997,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(VolumeFlow left, VolumeFlow right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(VolumeFlow left, VolumeFlow right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(VolumeFlow left, VolumeFlow right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(VolumeFlow left, VolumeFlow right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="VolumeFlow"/> instances are equal.
@@ -1777,10 +2020,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(VolumeFlow)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(VolumeFlow left, VolumeFlow right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="VolumeFlow"/> instances are not equal.
@@ -1790,10 +2032,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(VolumeFlow)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(VolumeFlow left, VolumeFlow right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1806,12 +2047,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not VolumeFlow otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is VolumeFlow otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1822,18 +2058,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(VolumeFlow other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current VolumeFlow.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(VolumeFlow), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(VolumeFlow), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(VolumeFlow)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1862,9 +2094,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(VolumeFlow other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1875,20 +2105,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

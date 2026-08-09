@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -98,9 +99,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PressureInfo"/> class with the default settings.</returns>
             public static PressureInfo CreateDefault()
-            {
-                return new PressureInfo(nameof(Pressure), DefaultBaseUnit, GetDefaultMappings(), new Pressure(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Pressure), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PressureInfo"/> class with the default settings for the Pressure quantity and a callback for customizing the default unit mappings.
@@ -112,19 +111,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PressureInfo"/> class with the default settings.
             /// </returns>
             public static PressureInfo CreateDefault(Func<IEnumerable<UnitDefinition<PressureUnit>>, IEnumerable<IUnitDefinition<PressureUnit>>> customizeUnits)
-            {
-                return new PressureInfo(nameof(Pressure), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Pressure(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Pressure), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Pressure"/> is T^-2L^-1M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-1, 1, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-1, 1, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Pressure is Pascal. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static PressureUnit DefaultBaseUnit { get; } = PressureUnit.Pascal;
+            public static PressureUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PressureUnit.Pascal;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="PressureUnit"/>.
@@ -319,7 +324,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Pressure" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Pressure, PressureUnit> Info { get; }
@@ -327,53 +336,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Pressure, which is Pascal. All conversions go via this value.
         /// </summary>
-        public static PressureUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static PressureUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Pressure quantity.
         /// </summary>
-        public static IReadOnlyCollection<PressureUnit> Units => Info.Units;
+        public static IReadOnlyCollection<PressureUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Pascal.
         /// </summary>
-        public static Pressure Zero => Info.Zero;
+        public static Pressure Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public PressureUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public PressureUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Pressure, PressureUnit> QuantityInfo => Info;
+        public QuantityInfo<Pressure, PressureUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Pressure> IQuantityOfType<Pressure>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Pressure> IQuantityOfType<Pressure>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<PressureUnit> IQuantity<PressureUnit>.QuantityInfo => Info;
+        QuantityInfo<PressureUnit> IQuantity<PressureUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -385,252 +442,452 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Atmosphere"/>
         /// </summary>
-        public QuantityValue Atmospheres => this.As(PressureUnit.Atmosphere);
+        public QuantityValue Atmospheres
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Atmosphere);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Bar"/>
         /// </summary>
-        public QuantityValue Bars => this.As(PressureUnit.Bar);
+        public QuantityValue Bars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Bar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Centibar"/>
         /// </summary>
-        public QuantityValue Centibars => this.As(PressureUnit.Centibar);
+        public QuantityValue Centibars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Centibar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.CentimeterOfWaterColumn"/>
         /// </summary>
-        public QuantityValue CentimetersOfWaterColumn => this.As(PressureUnit.CentimeterOfWaterColumn);
+        public QuantityValue CentimetersOfWaterColumn
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.CentimeterOfWaterColumn);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Decapascal"/>
         /// </summary>
-        public QuantityValue Decapascals => this.As(PressureUnit.Decapascal);
+        public QuantityValue Decapascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Decapascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Decibar"/>
         /// </summary>
-        public QuantityValue Decibars => this.As(PressureUnit.Decibar);
+        public QuantityValue Decibars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Decibar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.DynePerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue DynesPerSquareCentimeter => this.As(PressureUnit.DynePerSquareCentimeter);
+        public QuantityValue DynesPerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.DynePerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.FootOfHead"/>
         /// </summary>
-        public QuantityValue FeetOfHead => this.As(PressureUnit.FootOfHead);
+        public QuantityValue FeetOfHead
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.FootOfHead);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Gigapascal"/>
         /// </summary>
-        public QuantityValue Gigapascals => this.As(PressureUnit.Gigapascal);
+        public QuantityValue Gigapascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Gigapascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Hectopascal"/>
         /// </summary>
-        public QuantityValue Hectopascals => this.As(PressureUnit.Hectopascal);
+        public QuantityValue Hectopascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Hectopascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.InchOfMercury"/>
         /// </summary>
-        public QuantityValue InchesOfMercury => this.As(PressureUnit.InchOfMercury);
+        public QuantityValue InchesOfMercury
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.InchOfMercury);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.InchOfWaterColumn"/>
         /// </summary>
-        public QuantityValue InchesOfWaterColumn => this.As(PressureUnit.InchOfWaterColumn);
+        public QuantityValue InchesOfWaterColumn
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.InchOfWaterColumn);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Kilobar"/>
         /// </summary>
-        public QuantityValue Kilobars => this.As(PressureUnit.Kilobar);
+        public QuantityValue Kilobars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Kilobar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilogramForcePerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue KilogramsForcePerSquareCentimeter => this.As(PressureUnit.KilogramForcePerSquareCentimeter);
+        public QuantityValue KilogramsForcePerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilogramForcePerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilogramForcePerSquareMeter"/>
         /// </summary>
-        public QuantityValue KilogramsForcePerSquareMeter => this.As(PressureUnit.KilogramForcePerSquareMeter);
+        public QuantityValue KilogramsForcePerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilogramForcePerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilogramForcePerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue KilogramsForcePerSquareMillimeter => this.As(PressureUnit.KilogramForcePerSquareMillimeter);
+        public QuantityValue KilogramsForcePerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilogramForcePerSquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilonewtonPerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue KilonewtonsPerSquareCentimeter => this.As(PressureUnit.KilonewtonPerSquareCentimeter);
+        public QuantityValue KilonewtonsPerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilonewtonPerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilonewtonPerSquareMeter"/>
         /// </summary>
-        public QuantityValue KilonewtonsPerSquareMeter => this.As(PressureUnit.KilonewtonPerSquareMeter);
+        public QuantityValue KilonewtonsPerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilonewtonPerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilonewtonPerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue KilonewtonsPerSquareMillimeter => this.As(PressureUnit.KilonewtonPerSquareMillimeter);
+        public QuantityValue KilonewtonsPerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilonewtonPerSquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Kilopascal"/>
         /// </summary>
-        public QuantityValue Kilopascals => this.As(PressureUnit.Kilopascal);
+        public QuantityValue Kilopascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Kilopascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilopoundForcePerSquareFoot"/>
         /// </summary>
-        public QuantityValue KilopoundsForcePerSquareFoot => this.As(PressureUnit.KilopoundForcePerSquareFoot);
+        public QuantityValue KilopoundsForcePerSquareFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilopoundForcePerSquareFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilopoundForcePerSquareInch"/>
         /// </summary>
-        public QuantityValue KilopoundsForcePerSquareInch => this.As(PressureUnit.KilopoundForcePerSquareInch);
+        public QuantityValue KilopoundsForcePerSquareInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilopoundForcePerSquareInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.KilopoundForcePerSquareMil"/>
         /// </summary>
-        public QuantityValue KilopoundsForcePerSquareMil => this.As(PressureUnit.KilopoundForcePerSquareMil);
+        public QuantityValue KilopoundsForcePerSquareMil
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.KilopoundForcePerSquareMil);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Megabar"/>
         /// </summary>
-        public QuantityValue Megabars => this.As(PressureUnit.Megabar);
+        public QuantityValue Megabars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Megabar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.MeganewtonPerSquareMeter"/>
         /// </summary>
-        public QuantityValue MeganewtonsPerSquareMeter => this.As(PressureUnit.MeganewtonPerSquareMeter);
+        public QuantityValue MeganewtonsPerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.MeganewtonPerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Megapascal"/>
         /// </summary>
-        public QuantityValue Megapascals => this.As(PressureUnit.Megapascal);
+        public QuantityValue Megapascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Megapascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.MeterOfHead"/>
         /// </summary>
-        public QuantityValue MetersOfHead => this.As(PressureUnit.MeterOfHead);
+        public QuantityValue MetersOfHead
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.MeterOfHead);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.MeterOfWaterColumn"/>
         /// </summary>
-        public QuantityValue MetersOfWaterColumn => this.As(PressureUnit.MeterOfWaterColumn);
+        public QuantityValue MetersOfWaterColumn
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.MeterOfWaterColumn);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Microbar"/>
         /// </summary>
-        public QuantityValue Microbars => this.As(PressureUnit.Microbar);
+        public QuantityValue Microbars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Microbar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Micropascal"/>
         /// </summary>
-        public QuantityValue Micropascals => this.As(PressureUnit.Micropascal);
+        public QuantityValue Micropascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Micropascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Millibar"/>
         /// </summary>
-        public QuantityValue Millibars => this.As(PressureUnit.Millibar);
+        public QuantityValue Millibars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Millibar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.MilligramForcePerSquareFoot"/>
         /// </summary>
-        public QuantityValue MilligramsForcePerSquareFoot => this.As(PressureUnit.MilligramForcePerSquareFoot);
+        public QuantityValue MilligramsForcePerSquareFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.MilligramForcePerSquareFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.MilligramForcePerSquareMeter"/>
         /// </summary>
-        public QuantityValue MilligramsForcePerSquareMeter => this.As(PressureUnit.MilligramForcePerSquareMeter);
+        public QuantityValue MilligramsForcePerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.MilligramForcePerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.MillimeterOfMercury"/>
         /// </summary>
-        public QuantityValue MillimetersOfMercury => this.As(PressureUnit.MillimeterOfMercury);
+        public QuantityValue MillimetersOfMercury
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.MillimeterOfMercury);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.MillimeterOfWaterColumn"/>
         /// </summary>
-        public QuantityValue MillimetersOfWaterColumn => this.As(PressureUnit.MillimeterOfWaterColumn);
+        public QuantityValue MillimetersOfWaterColumn
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.MillimeterOfWaterColumn);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Millipascal"/>
         /// </summary>
-        public QuantityValue Millipascals => this.As(PressureUnit.Millipascal);
+        public QuantityValue Millipascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Millipascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Millitorr"/>
         /// </summary>
-        public QuantityValue Millitorrs => this.As(PressureUnit.Millitorr);
+        public QuantityValue Millitorrs
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Millitorr);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.NewtonPerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue NewtonsPerSquareCentimeter => this.As(PressureUnit.NewtonPerSquareCentimeter);
+        public QuantityValue NewtonsPerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.NewtonPerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.NewtonPerSquareMeter"/>
         /// </summary>
-        public QuantityValue NewtonsPerSquareMeter => this.As(PressureUnit.NewtonPerSquareMeter);
+        public QuantityValue NewtonsPerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.NewtonPerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.NewtonPerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue NewtonsPerSquareMillimeter => this.As(PressureUnit.NewtonPerSquareMillimeter);
+        public QuantityValue NewtonsPerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.NewtonPerSquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Pascal"/>
         /// </summary>
-        public QuantityValue Pascals => this.As(PressureUnit.Pascal);
+        public QuantityValue Pascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Pascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.PoundForcePerSquareFoot"/>
         /// </summary>
-        public QuantityValue PoundsForcePerSquareFoot => this.As(PressureUnit.PoundForcePerSquareFoot);
+        public QuantityValue PoundsForcePerSquareFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.PoundForcePerSquareFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.PoundForcePerSquareInch"/>
         /// </summary>
-        public QuantityValue PoundsForcePerSquareInch => this.As(PressureUnit.PoundForcePerSquareInch);
+        public QuantityValue PoundsForcePerSquareInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.PoundForcePerSquareInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.PoundForcePerSquareMil"/>
         /// </summary>
-        public QuantityValue PoundsForcePerSquareMil => this.As(PressureUnit.PoundForcePerSquareMil);
+        public QuantityValue PoundsForcePerSquareMil
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.PoundForcePerSquareMil);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.PoundPerInchSecondSquared"/>
         /// </summary>
-        public QuantityValue PoundsPerInchSecondSquared => this.As(PressureUnit.PoundPerInchSecondSquared);
+        public QuantityValue PoundsPerInchSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.PoundPerInchSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.TechnicalAtmosphere"/>
         /// </summary>
-        public QuantityValue TechnicalAtmospheres => this.As(PressureUnit.TechnicalAtmosphere);
+        public QuantityValue TechnicalAtmospheres
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.TechnicalAtmosphere);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.TonneForcePerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue TonnesForcePerSquareCentimeter => this.As(PressureUnit.TonneForcePerSquareCentimeter);
+        public QuantityValue TonnesForcePerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.TonneForcePerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.TonneForcePerSquareMeter"/>
         /// </summary>
-        public QuantityValue TonnesForcePerSquareMeter => this.As(PressureUnit.TonneForcePerSquareMeter);
+        public QuantityValue TonnesForcePerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.TonneForcePerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.TonneForcePerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue TonnesForcePerSquareMillimeter => this.As(PressureUnit.TonneForcePerSquareMillimeter);
+        public QuantityValue TonnesForcePerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.TonneForcePerSquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Torr"/>
         /// </summary>
-        public QuantityValue Torrs => this.As(PressureUnit.Torr);
+        public QuantityValue Torrs
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(PressureUnit.Torr);
+        }
 
         #endregion
 
@@ -641,10 +898,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PressureUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -652,10 +908,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(PressureUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -664,402 +919,352 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Atmosphere"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromAtmospheres(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Atmosphere);
-        }
+            => new(value, PressureUnit.Atmosphere);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Bar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromBars(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Bar);
-        }
+            => new(value, PressureUnit.Bar);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Centibar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromCentibars(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Centibar);
-        }
+            => new(value, PressureUnit.Centibar);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.CentimeterOfWaterColumn"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromCentimetersOfWaterColumn(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.CentimeterOfWaterColumn);
-        }
+            => new(value, PressureUnit.CentimeterOfWaterColumn);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Decapascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromDecapascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Decapascal);
-        }
+            => new(value, PressureUnit.Decapascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Decibar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromDecibars(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Decibar);
-        }
+            => new(value, PressureUnit.Decibar);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.DynePerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromDynesPerSquareCentimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.DynePerSquareCentimeter);
-        }
+            => new(value, PressureUnit.DynePerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.FootOfHead"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromFeetOfHead(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.FootOfHead);
-        }
+            => new(value, PressureUnit.FootOfHead);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Gigapascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromGigapascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Gigapascal);
-        }
+            => new(value, PressureUnit.Gigapascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Hectopascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromHectopascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Hectopascal);
-        }
+            => new(value, PressureUnit.Hectopascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.InchOfMercury"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromInchesOfMercury(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.InchOfMercury);
-        }
+            => new(value, PressureUnit.InchOfMercury);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.InchOfWaterColumn"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromInchesOfWaterColumn(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.InchOfWaterColumn);
-        }
+            => new(value, PressureUnit.InchOfWaterColumn);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Kilobar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilobars(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Kilobar);
-        }
+            => new(value, PressureUnit.Kilobar);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilogramForcePerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilogramsForcePerSquareCentimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilogramForcePerSquareCentimeter);
-        }
+            => new(value, PressureUnit.KilogramForcePerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilogramForcePerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilogramsForcePerSquareMeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilogramForcePerSquareMeter);
-        }
+            => new(value, PressureUnit.KilogramForcePerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilogramForcePerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilogramsForcePerSquareMillimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilogramForcePerSquareMillimeter);
-        }
+            => new(value, PressureUnit.KilogramForcePerSquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilonewtonPerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilonewtonsPerSquareCentimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilonewtonPerSquareCentimeter);
-        }
+            => new(value, PressureUnit.KilonewtonPerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilonewtonPerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilonewtonsPerSquareMeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilonewtonPerSquareMeter);
-        }
+            => new(value, PressureUnit.KilonewtonPerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilonewtonPerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilonewtonsPerSquareMillimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilonewtonPerSquareMillimeter);
-        }
+            => new(value, PressureUnit.KilonewtonPerSquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Kilopascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilopascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Kilopascal);
-        }
+            => new(value, PressureUnit.Kilopascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilopoundForcePerSquareFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilopoundsForcePerSquareFoot(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilopoundForcePerSquareFoot);
-        }
+            => new(value, PressureUnit.KilopoundForcePerSquareFoot);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilopoundForcePerSquareInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilopoundsForcePerSquareInch(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilopoundForcePerSquareInch);
-        }
+            => new(value, PressureUnit.KilopoundForcePerSquareInch);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.KilopoundForcePerSquareMil"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromKilopoundsForcePerSquareMil(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.KilopoundForcePerSquareMil);
-        }
+            => new(value, PressureUnit.KilopoundForcePerSquareMil);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Megabar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMegabars(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Megabar);
-        }
+            => new(value, PressureUnit.Megabar);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.MeganewtonPerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMeganewtonsPerSquareMeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.MeganewtonPerSquareMeter);
-        }
+            => new(value, PressureUnit.MeganewtonPerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Megapascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMegapascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Megapascal);
-        }
+            => new(value, PressureUnit.Megapascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.MeterOfHead"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMetersOfHead(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.MeterOfHead);
-        }
+            => new(value, PressureUnit.MeterOfHead);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.MeterOfWaterColumn"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMetersOfWaterColumn(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.MeterOfWaterColumn);
-        }
+            => new(value, PressureUnit.MeterOfWaterColumn);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Microbar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMicrobars(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Microbar);
-        }
+            => new(value, PressureUnit.Microbar);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Micropascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMicropascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Micropascal);
-        }
+            => new(value, PressureUnit.Micropascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Millibar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMillibars(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Millibar);
-        }
+            => new(value, PressureUnit.Millibar);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.MilligramForcePerSquareFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMilligramsForcePerSquareFoot(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.MilligramForcePerSquareFoot);
-        }
+            => new(value, PressureUnit.MilligramForcePerSquareFoot);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.MilligramForcePerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMilligramsForcePerSquareMeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.MilligramForcePerSquareMeter);
-        }
+            => new(value, PressureUnit.MilligramForcePerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.MillimeterOfMercury"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMillimetersOfMercury(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.MillimeterOfMercury);
-        }
+            => new(value, PressureUnit.MillimeterOfMercury);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.MillimeterOfWaterColumn"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMillimetersOfWaterColumn(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.MillimeterOfWaterColumn);
-        }
+            => new(value, PressureUnit.MillimeterOfWaterColumn);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Millipascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMillipascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Millipascal);
-        }
+            => new(value, PressureUnit.Millipascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Millitorr"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromMillitorrs(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Millitorr);
-        }
+            => new(value, PressureUnit.Millitorr);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.NewtonPerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromNewtonsPerSquareCentimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.NewtonPerSquareCentimeter);
-        }
+            => new(value, PressureUnit.NewtonPerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.NewtonPerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromNewtonsPerSquareMeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.NewtonPerSquareMeter);
-        }
+            => new(value, PressureUnit.NewtonPerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.NewtonPerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromNewtonsPerSquareMillimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.NewtonPerSquareMillimeter);
-        }
+            => new(value, PressureUnit.NewtonPerSquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Pascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromPascals(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Pascal);
-        }
+            => new(value, PressureUnit.Pascal);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.PoundForcePerSquareFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromPoundsForcePerSquareFoot(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.PoundForcePerSquareFoot);
-        }
+            => new(value, PressureUnit.PoundForcePerSquareFoot);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.PoundForcePerSquareInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromPoundsForcePerSquareInch(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.PoundForcePerSquareInch);
-        }
+            => new(value, PressureUnit.PoundForcePerSquareInch);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.PoundForcePerSquareMil"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromPoundsForcePerSquareMil(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.PoundForcePerSquareMil);
-        }
+            => new(value, PressureUnit.PoundForcePerSquareMil);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.PoundPerInchSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromPoundsPerInchSecondSquared(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.PoundPerInchSecondSquared);
-        }
+            => new(value, PressureUnit.PoundPerInchSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.TechnicalAtmosphere"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromTechnicalAtmospheres(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.TechnicalAtmosphere);
-        }
+            => new(value, PressureUnit.TechnicalAtmosphere);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.TonneForcePerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromTonnesForcePerSquareCentimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.TonneForcePerSquareCentimeter);
-        }
+            => new(value, PressureUnit.TonneForcePerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.TonneForcePerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromTonnesForcePerSquareMeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.TonneForcePerSquareMeter);
-        }
+            => new(value, PressureUnit.TonneForcePerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.TonneForcePerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromTonnesForcePerSquareMillimeter(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.TonneForcePerSquareMillimeter);
-        }
+            => new(value, PressureUnit.TonneForcePerSquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Torr"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure FromTorrs(QuantityValue value)
-        {
-            return new Pressure(value, PressureUnit.Torr);
-        }
+            => new(value, PressureUnit.Torr);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="PressureUnit" /> to <see cref="Pressure" />.
@@ -1067,10 +1272,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Pressure unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure From(QuantityValue value, PressureUnit fromUnit)
-        {
-            return new Pressure(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -1098,10 +1302,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1126,10 +1329,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Pressure Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Pressure, PressureUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Pressure, PressureUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1139,10 +1341,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Pressure result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1154,10 +1355,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Pressure result)
-        {
-            return QuantityParser.Default.TryParse<Pressure, PressureUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Pressure, PressureUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1168,10 +1368,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PressureUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1184,15 +1383,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static PressureUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.PressureUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out PressureUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1204,10 +1400,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out PressureUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -1215,45 +1410,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Pressure operator -(Pressure right)
-        {
-            return new Pressure(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Pressure"/> from adding two <see cref="Pressure"/>.</summary>
         public static Pressure operator +(Pressure left, Pressure right)
-        {
-            return new Pressure(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Pressure"/> from subtracting two <see cref="Pressure"/>.</summary>
         public static Pressure operator -(Pressure left, Pressure right)
-        {
-            return new Pressure(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Pressure"/> from multiplying value and <see cref="Pressure"/>.</summary>
         public static Pressure operator *(QuantityValue left, Pressure right)
-        {
-            return new Pressure(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Pressure"/> from multiplying value and <see cref="Pressure"/>.</summary>
         public static Pressure operator *(Pressure left, QuantityValue right)
-        {
-            return new Pressure(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Pressure"/> from dividing <see cref="Pressure"/> by value.</summary>
         public static Pressure operator /(Pressure left, QuantityValue right)
-        {
-            return new Pressure(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Pressure"/> by <see cref="Pressure"/>.</summary>
         public static QuantityValue operator /(Pressure left, Pressure right)
-        {
-            return left.Pascals / right.Pascals;
-        }
+            => left.Pascals / right.Pascals;
 
         #endregion
 
@@ -1261,99 +1442,67 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Acceleration"/> from <see cref="Pressure"/> / <see cref="AreaDensity"/>.</summary>
         public static Acceleration operator /(Pressure pressure, AreaDensity areaDensity)
-        {
-            return Acceleration.FromMetersPerSecondSquared(pressure.Pascals / areaDensity.KilogramsPerSquareMeter);
-        }
+            => Acceleration.FromMetersPerSecondSquared(pressure.Pascals / areaDensity.KilogramsPerSquareMeter);
 
         /// <summary>Get <see cref="AreaDensity"/> from <see cref="Pressure"/> / <see cref="Acceleration"/>.</summary>
         public static AreaDensity operator /(Pressure pressure, Acceleration acceleration)
-        {
-            return AreaDensity.FromKilogramsPerSquareMeter(pressure.Pascals / acceleration.MetersPerSecondSquared);
-        }
+            => AreaDensity.FromKilogramsPerSquareMeter(pressure.Pascals / acceleration.MetersPerSecondSquared);
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Pressure"/> / <see cref="PressureChangeRate"/>.</summary>
         public static Duration operator /(Pressure pressure, PressureChangeRate pressureChangeRate)
-        {
-            return Duration.FromSeconds(pressure.Pascals / pressureChangeRate.PascalsPerSecond);
-        }
+            => Duration.FromSeconds(pressure.Pascals / pressureChangeRate.PascalsPerSecond);
 
         /// <summary>Get <see cref="FluidResistance"/> from <see cref="Pressure"/> / <see cref="VolumeFlow"/>.</summary>
         public static FluidResistance operator /(Pressure pressure, VolumeFlow volumeFlow)
-        {
-            return FluidResistance.FromPascalSecondsPerCubicMeter(pressure.Pascals / volumeFlow.CubicMetersPerSecond);
-        }
+            => FluidResistance.FromPascalSecondsPerCubicMeter(pressure.Pascals / volumeFlow.CubicMetersPerSecond);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Pressure"/> / <see cref="ReciprocalArea"/>.</summary>
         public static Force operator /(Pressure pressure, ReciprocalArea reciprocalArea)
-        {
-            return Force.FromNewtons(pressure.NewtonsPerSquareMeter / reciprocalArea.InverseSquareMeters);
-        }
+            => Force.FromNewtons(pressure.NewtonsPerSquareMeter / reciprocalArea.InverseSquareMeters);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Pressure"/> * <see cref="Area"/>.</summary>
         public static Force operator *(Pressure pressure, Area area)
-        {
-            return Force.FromNewtons(pressure.Pascals * area.SquareMeters);
-        }
+            => Force.FromNewtons(pressure.Pascals * area.SquareMeters);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="Pressure"/> * <see cref="Length"/>.</summary>
         public static ForcePerLength operator *(Pressure pressure, Length length)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(pressure.NewtonsPerSquareMeter * length.Meters);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(pressure.NewtonsPerSquareMeter * length.Meters);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="Pressure"/> / <see cref="ReciprocalLength"/>.</summary>
         public static ForcePerLength operator /(Pressure pressure, ReciprocalLength reciprocalLength)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(pressure.NewtonsPerSquareMeter / reciprocalLength.InverseMeters);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(pressure.NewtonsPerSquareMeter / reciprocalLength.InverseMeters);
 
         /// <summary>Get <see cref="LeakRate"/> from <see cref="Pressure"/> * <see cref="VolumeFlow"/>.</summary>
         public static LeakRate operator *(Pressure pressure, VolumeFlow volumeFlow)
-        {
-            return LeakRate.FromPascalCubicMetersPerSecond(pressure.Pascals * volumeFlow.CubicMetersPerSecond);
-        }
+            => LeakRate.FromPascalCubicMetersPerSecond(pressure.Pascals * volumeFlow.CubicMetersPerSecond);
 
         /// <summary>Get <see cref="Length"/> from <see cref="Pressure"/> / <see cref="SpecificWeight"/>.</summary>
         public static Length operator /(Pressure pressure, SpecificWeight specificWeight)
-        {
-            return Length.FromMeters(pressure.Pascals / specificWeight.NewtonsPerCubicMeter);
-        }
+            => Length.FromMeters(pressure.Pascals / specificWeight.NewtonsPerCubicMeter);
 
         /// <summary>Get <see cref="PressureChangeRate"/> from <see cref="Pressure"/> / <see cref="Duration"/>.</summary>
         public static PressureChangeRate operator /(Pressure pressure, Duration duration)
-        {
-            return PressureChangeRate.FromPascalsPerSecond(pressure.Pascals / duration.Seconds);
-        }
+            => PressureChangeRate.FromPascalsPerSecond(pressure.Pascals / duration.Seconds);
 
         /// <summary>Get <see cref="Ratio"/> from <see cref="Pressure"/> * <see cref="Compressibility"/>.</summary>
         public static Ratio operator *(Pressure pressure, Compressibility compressibility)
-        {
-            return Ratio.FromDecimalFractions(pressure.Pascals * compressibility.InversePascals);
-        }
+            => Ratio.FromDecimalFractions(pressure.Pascals * compressibility.InversePascals);
 
         /// <summary>Get <see cref="ReciprocalArea"/> from <see cref="Pressure"/> / <see cref="Force"/>.</summary>
         public static ReciprocalArea operator /(Pressure pressure, Force force)
-        {
-            return ReciprocalArea.FromInverseSquareMeters(pressure.NewtonsPerSquareMeter / force.Newtons);
-        }
+            => ReciprocalArea.FromInverseSquareMeters(pressure.NewtonsPerSquareMeter / force.Newtons);
 
         /// <summary>Get <see cref="ReciprocalLength"/> from <see cref="Pressure"/> / <see cref="ForcePerLength"/>.</summary>
         public static ReciprocalLength operator /(Pressure pressure, ForcePerLength forcePerLength)
-        {
-            return ReciprocalLength.FromInverseMeters(pressure.NewtonsPerSquareMeter / forcePerLength.NewtonsPerMeter);
-        }
+            => ReciprocalLength.FromInverseMeters(pressure.NewtonsPerSquareMeter / forcePerLength.NewtonsPerMeter);
 
         /// <summary>Get <see cref="SpecificWeight"/> from <see cref="Pressure"/> / <see cref="Length"/>.</summary>
         public static SpecificWeight operator /(Pressure pressure, Length length)
-        {
-            return SpecificWeight.FromNewtonsPerCubicMeter(pressure.Pascals / length.Meters);
-        }
+            => SpecificWeight.FromNewtonsPerCubicMeter(pressure.Pascals / length.Meters);
 
         /// <summary>Get <see cref="VolumeFlow"/> from <see cref="Pressure"/> / <see cref="FluidResistance"/>.</summary>
         public static VolumeFlow operator /(Pressure pressure, FluidResistance fluidResistance)
-        {
-            return VolumeFlow.FromCubicMetersPerSecond(pressure.Pascals / fluidResistance.PascalSecondsPerCubicMeter);
-        }
+            => VolumeFlow.FromCubicMetersPerSecond(pressure.Pascals / fluidResistance.PascalSecondsPerCubicMeter);
 
         #endregion
 
@@ -1361,27 +1510,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Pressure left, Pressure right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Pressure left, Pressure right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Pressure left, Pressure right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Pressure left, Pressure right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Pressure"/> instances are equal.
@@ -1392,10 +1533,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Pressure)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Pressure left, Pressure right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Pressure"/> instances are not equal.
@@ -1405,10 +1545,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Pressure)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Pressure left, Pressure right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1421,12 +1560,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Pressure otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Pressure otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1437,18 +1571,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Pressure other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Pressure.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Pressure), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Pressure), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Pressure)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1477,9 +1607,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Pressure other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1490,20 +1618,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

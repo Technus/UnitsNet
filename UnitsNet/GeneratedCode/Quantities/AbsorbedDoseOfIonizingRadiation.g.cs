@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AbsorbedDoseOfIonizingRadiationInfo"/> class with the default settings.</returns>
             public static AbsorbedDoseOfIonizingRadiationInfo CreateDefault()
-            {
-                return new AbsorbedDoseOfIonizingRadiationInfo(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, GetDefaultMappings(), new AbsorbedDoseOfIonizingRadiation(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AbsorbedDoseOfIonizingRadiationInfo"/> class with the default settings for the AbsorbedDoseOfIonizingRadiation quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AbsorbedDoseOfIonizingRadiationInfo"/> class with the default settings.
             /// </returns>
             public static AbsorbedDoseOfIonizingRadiationInfo CreateDefault(Func<IEnumerable<UnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>>, IEnumerable<IUnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>>> customizeUnits)
-            {
-                return new AbsorbedDoseOfIonizingRadiationInfo(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new AbsorbedDoseOfIonizingRadiation(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AbsorbedDoseOfIonizingRadiation"/> is T^-2L^2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 0, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 0, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of AbsorbedDoseOfIonizingRadiation is Gray. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static AbsorbedDoseOfIonizingRadiationUnit DefaultBaseUnit { get; } = AbsorbedDoseOfIonizingRadiationUnit.Gray;
+            public static AbsorbedDoseOfIonizingRadiationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AbsorbedDoseOfIonizingRadiationUnit.Gray;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="AbsorbedDoseOfIonizingRadiationUnit"/>.
@@ -208,7 +213,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="AbsorbedDoseOfIonizingRadiation" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit> Info { get; }
@@ -216,53 +225,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of AbsorbedDoseOfIonizingRadiation, which is Gray. All conversions go via this value.
         /// </summary>
-        public static AbsorbedDoseOfIonizingRadiationUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static AbsorbedDoseOfIonizingRadiationUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the AbsorbedDoseOfIonizingRadiation quantity.
         /// </summary>
-        public static IReadOnlyCollection<AbsorbedDoseOfIonizingRadiationUnit> Units => Info.Units;
+        public static IReadOnlyCollection<AbsorbedDoseOfIonizingRadiationUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Gray.
         /// </summary>
-        public static AbsorbedDoseOfIonizingRadiation Zero => Info.Zero;
+        public static AbsorbedDoseOfIonizingRadiation Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public AbsorbedDoseOfIonizingRadiationUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public AbsorbedDoseOfIonizingRadiationUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit> QuantityInfo => Info;
+        public QuantityInfo<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<AbsorbedDoseOfIonizingRadiation> IQuantityOfType<AbsorbedDoseOfIonizingRadiation>.QuantityInfo => Info;
+        IQuantityInstanceInfo<AbsorbedDoseOfIonizingRadiation> IQuantityOfType<AbsorbedDoseOfIonizingRadiation>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<AbsorbedDoseOfIonizingRadiationUnit> IQuantity<AbsorbedDoseOfIonizingRadiationUnit>.QuantityInfo => Info;
+        QuantityInfo<AbsorbedDoseOfIonizingRadiationUnit> IQuantity<AbsorbedDoseOfIonizingRadiationUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -274,87 +331,155 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Centigray"/>
         /// </summary>
-        public QuantityValue Centigrays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Centigray);
+        public QuantityValue Centigrays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Centigray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Decigray"/>
         /// </summary>
-        public QuantityValue Decigrays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Decigray);
+        public QuantityValue Decigrays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Decigray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Femtogray"/>
         /// </summary>
-        public QuantityValue Femtograys => this.As(AbsorbedDoseOfIonizingRadiationUnit.Femtogray);
+        public QuantityValue Femtograys
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Femtogray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Gigagray"/>
         /// </summary>
-        public QuantityValue Gigagrays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Gigagray);
+        public QuantityValue Gigagrays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Gigagray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Gray"/>
         /// </summary>
-        public QuantityValue Grays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Gray);
+        public QuantityValue Grays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Gray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Kilogray"/>
         /// </summary>
-        public QuantityValue Kilograys => this.As(AbsorbedDoseOfIonizingRadiationUnit.Kilogray);
+        public QuantityValue Kilograys
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Kilogray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Kilorad"/>
         /// </summary>
-        public QuantityValue Kilorads => this.As(AbsorbedDoseOfIonizingRadiationUnit.Kilorad);
+        public QuantityValue Kilorads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Kilorad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Megagray"/>
         /// </summary>
-        public QuantityValue Megagrays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Megagray);
+        public QuantityValue Megagrays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Megagray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Megarad"/>
         /// </summary>
-        public QuantityValue Megarads => this.As(AbsorbedDoseOfIonizingRadiationUnit.Megarad);
+        public QuantityValue Megarads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Megarad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Microgray"/>
         /// </summary>
-        public QuantityValue Micrograys => this.As(AbsorbedDoseOfIonizingRadiationUnit.Microgray);
+        public QuantityValue Micrograys
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Microgray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Milligray"/>
         /// </summary>
-        public QuantityValue Milligrays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Milligray);
+        public QuantityValue Milligrays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Milligray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Millirad"/>
         /// </summary>
-        public QuantityValue Millirads => this.As(AbsorbedDoseOfIonizingRadiationUnit.Millirad);
+        public QuantityValue Millirads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Millirad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Nanogray"/>
         /// </summary>
-        public QuantityValue Nanograys => this.As(AbsorbedDoseOfIonizingRadiationUnit.Nanogray);
+        public QuantityValue Nanograys
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Nanogray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Petagray"/>
         /// </summary>
-        public QuantityValue Petagrays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Petagray);
+        public QuantityValue Petagrays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Petagray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Picogray"/>
         /// </summary>
-        public QuantityValue Picograys => this.As(AbsorbedDoseOfIonizingRadiationUnit.Picogray);
+        public QuantityValue Picograys
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Picogray);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Rad"/>
         /// </summary>
-        public QuantityValue Rads => this.As(AbsorbedDoseOfIonizingRadiationUnit.Rad);
+        public QuantityValue Rads
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Rad);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Teragray"/>
         /// </summary>
-        public QuantityValue Teragrays => this.As(AbsorbedDoseOfIonizingRadiationUnit.Teragray);
+        public QuantityValue Teragrays
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AbsorbedDoseOfIonizingRadiationUnit.Teragray);
+        }
 
         #endregion
 
@@ -365,10 +490,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AbsorbedDoseOfIonizingRadiationUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -376,10 +500,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AbsorbedDoseOfIonizingRadiationUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -388,138 +511,121 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Centigray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromCentigrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Centigray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Centigray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Decigray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromDecigrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Decigray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Decigray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Femtogray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromFemtograys(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Femtogray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Femtogray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Gigagray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromGigagrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Gigagray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Gigagray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Gray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromGrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Gray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Gray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Kilogray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromKilograys(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Kilogray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Kilogray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Kilorad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromKilorads(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Kilorad);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Kilorad);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Megagray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromMegagrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Megagray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Megagray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Megarad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromMegarads(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Megarad);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Megarad);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Microgray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromMicrograys(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Microgray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Microgray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Milligray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromMilligrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Milligray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Milligray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Millirad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromMillirads(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Millirad);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Millirad);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Nanogray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromNanograys(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Nanogray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Nanogray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Petagray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromPetagrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Petagray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Petagray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Picogray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromPicograys(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Picogray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Picogray);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Rad"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromRads(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Rad);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Rad);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Teragray"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation FromTeragrays(QuantityValue value)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationUnit.Teragray);
-        }
+            => new(value, AbsorbedDoseOfIonizingRadiationUnit.Teragray);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="AbsorbedDoseOfIonizingRadiationUnit" /> to <see cref="AbsorbedDoseOfIonizingRadiation" />.
@@ -527,10 +633,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>AbsorbedDoseOfIonizingRadiation unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation From(QuantityValue value, AbsorbedDoseOfIonizingRadiationUnit fromUnit)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -558,10 +663,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -586,10 +690,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiation Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -599,10 +702,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out AbsorbedDoseOfIonizingRadiation result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -614,10 +716,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out AbsorbedDoseOfIonizingRadiation result)
-        {
-            return QuantityParser.Default.TryParse<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -628,10 +729,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AbsorbedDoseOfIonizingRadiationUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -644,15 +744,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static AbsorbedDoseOfIonizingRadiationUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.AbsorbedDoseOfIonizingRadiationUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out AbsorbedDoseOfIonizingRadiationUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -664,10 +761,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out AbsorbedDoseOfIonizingRadiationUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -675,45 +771,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static AbsorbedDoseOfIonizingRadiation operator -(AbsorbedDoseOfIonizingRadiation right)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="AbsorbedDoseOfIonizingRadiation"/> from adding two <see cref="AbsorbedDoseOfIonizingRadiation"/>.</summary>
         public static AbsorbedDoseOfIonizingRadiation operator +(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="AbsorbedDoseOfIonizingRadiation"/> from subtracting two <see cref="AbsorbedDoseOfIonizingRadiation"/>.</summary>
         public static AbsorbedDoseOfIonizingRadiation operator -(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="AbsorbedDoseOfIonizingRadiation"/> from multiplying value and <see cref="AbsorbedDoseOfIonizingRadiation"/>.</summary>
         public static AbsorbedDoseOfIonizingRadiation operator *(QuantityValue left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="AbsorbedDoseOfIonizingRadiation"/> from multiplying value and <see cref="AbsorbedDoseOfIonizingRadiation"/>.</summary>
         public static AbsorbedDoseOfIonizingRadiation operator *(AbsorbedDoseOfIonizingRadiation left, QuantityValue right)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="AbsorbedDoseOfIonizingRadiation"/> from dividing <see cref="AbsorbedDoseOfIonizingRadiation"/> by value.</summary>
         public static AbsorbedDoseOfIonizingRadiation operator /(AbsorbedDoseOfIonizingRadiation left, QuantityValue right)
-        {
-            return new AbsorbedDoseOfIonizingRadiation(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="AbsorbedDoseOfIonizingRadiation"/> by <see cref="AbsorbedDoseOfIonizingRadiation"/>.</summary>
         public static QuantityValue operator /(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return left.Grays / right.Grays;
-        }
+            => left.Grays / right.Grays;
 
         #endregion
 
@@ -721,9 +803,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="DoseAreaProduct"/> from <see cref="AbsorbedDoseOfIonizingRadiation"/> * <see cref="Area"/>.</summary>
         public static DoseAreaProduct operator *(AbsorbedDoseOfIonizingRadiation absorbedDoseOfIonizingRadiation, Area area)
-        {
-            return DoseAreaProduct.FromGraySquareMeters(absorbedDoseOfIonizingRadiation.Grays * area.SquareMeters);
-        }
+            => DoseAreaProduct.FromGraySquareMeters(absorbedDoseOfIonizingRadiation.Grays * area.SquareMeters);
 
         #endregion
 
@@ -731,27 +811,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="AbsorbedDoseOfIonizingRadiation"/> instances are equal.
@@ -762,10 +834,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(AbsorbedDoseOfIonizingRadiation)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="AbsorbedDoseOfIonizingRadiation"/> instances are not equal.
@@ -775,10 +846,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(AbsorbedDoseOfIonizingRadiation)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(AbsorbedDoseOfIonizingRadiation left, AbsorbedDoseOfIonizingRadiation right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -791,12 +861,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not AbsorbedDoseOfIonizingRadiation otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is AbsorbedDoseOfIonizingRadiation otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -807,18 +872,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(AbsorbedDoseOfIonizingRadiation other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current AbsorbedDoseOfIonizingRadiation.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(AbsorbedDoseOfIonizingRadiation), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(AbsorbedDoseOfIonizingRadiation), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(AbsorbedDoseOfIonizingRadiation)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -847,9 +908,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(AbsorbedDoseOfIonizingRadiation other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -860,20 +919,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

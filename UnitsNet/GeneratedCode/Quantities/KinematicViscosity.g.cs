@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -89,9 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="KinematicViscosityInfo"/> class with the default settings.</returns>
             public static KinematicViscosityInfo CreateDefault()
-            {
-                return new KinematicViscosityInfo(nameof(KinematicViscosity), DefaultBaseUnit, GetDefaultMappings(), new KinematicViscosity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(KinematicViscosity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="KinematicViscosityInfo"/> class with the default settings for the KinematicViscosity quantity and a callback for customizing the default unit mappings.
@@ -103,19 +102,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="KinematicViscosityInfo"/> class with the default settings.
             /// </returns>
             public static KinematicViscosityInfo CreateDefault(Func<IEnumerable<UnitDefinition<KinematicViscosityUnit>>, IEnumerable<IUnitDefinition<KinematicViscosityUnit>>> customizeUnits)
-            {
-                return new KinematicViscosityInfo(nameof(KinematicViscosity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new KinematicViscosity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(KinematicViscosity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="KinematicViscosity"/> is T^-1L^2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 0, -1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 0, -1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of KinematicViscosity is SquareMeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static KinematicViscosityUnit DefaultBaseUnit { get; } = KinematicViscosityUnit.SquareMeterPerSecond;
+            public static KinematicViscosityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = KinematicViscosityUnit.SquareMeterPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="KinematicViscosityUnit"/>.
@@ -187,7 +192,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="KinematicViscosity" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<KinematicViscosity, KinematicViscosityUnit> Info { get; }
@@ -195,53 +204,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of KinematicViscosity, which is SquareMeterPerSecond. All conversions go via this value.
         /// </summary>
-        public static KinematicViscosityUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static KinematicViscosityUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the KinematicViscosity quantity.
         /// </summary>
-        public static IReadOnlyCollection<KinematicViscosityUnit> Units => Info.Units;
+        public static IReadOnlyCollection<KinematicViscosityUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit SquareMeterPerSecond.
         /// </summary>
-        public static KinematicViscosity Zero => Info.Zero;
+        public static KinematicViscosity Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public KinematicViscosityUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public KinematicViscosityUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<KinematicViscosity, KinematicViscosityUnit> QuantityInfo => Info;
+        public QuantityInfo<KinematicViscosity, KinematicViscosityUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<KinematicViscosity> IQuantityOfType<KinematicViscosity>.QuantityInfo => Info;
+        IQuantityInstanceInfo<KinematicViscosity> IQuantityOfType<KinematicViscosity>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<KinematicViscosityUnit> IQuantity<KinematicViscosityUnit>.QuantityInfo => Info;
+        QuantityInfo<KinematicViscosityUnit> IQuantity<KinematicViscosityUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -253,47 +310,83 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Centistokes"/>
         /// </summary>
-        public QuantityValue Centistokes => this.As(KinematicViscosityUnit.Centistokes);
+        public QuantityValue Centistokes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.Centistokes);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Decistokes"/>
         /// </summary>
-        public QuantityValue Decistokes => this.As(KinematicViscosityUnit.Decistokes);
+        public QuantityValue Decistokes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.Decistokes);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Kilostokes"/>
         /// </summary>
-        public QuantityValue Kilostokes => this.As(KinematicViscosityUnit.Kilostokes);
+        public QuantityValue Kilostokes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.Kilostokes);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Microstokes"/>
         /// </summary>
-        public QuantityValue Microstokes => this.As(KinematicViscosityUnit.Microstokes);
+        public QuantityValue Microstokes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.Microstokes);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Millistokes"/>
         /// </summary>
-        public QuantityValue Millistokes => this.As(KinematicViscosityUnit.Millistokes);
+        public QuantityValue Millistokes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.Millistokes);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Nanostokes"/>
         /// </summary>
-        public QuantityValue Nanostokes => this.As(KinematicViscosityUnit.Nanostokes);
+        public QuantityValue Nanostokes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.Nanostokes);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.SquareFootPerSecond"/>
         /// </summary>
-        public QuantityValue SquareFeetPerSecond => this.As(KinematicViscosityUnit.SquareFootPerSecond);
+        public QuantityValue SquareFeetPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.SquareFootPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.SquareMeterPerSecond"/>
         /// </summary>
-        public QuantityValue SquareMetersPerSecond => this.As(KinematicViscosityUnit.SquareMeterPerSecond);
+        public QuantityValue SquareMetersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.SquareMeterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Stokes"/>
         /// </summary>
-        public QuantityValue Stokes => this.As(KinematicViscosityUnit.Stokes);
+        public QuantityValue Stokes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(KinematicViscosityUnit.Stokes);
+        }
 
         #endregion
 
@@ -304,10 +397,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(KinematicViscosityUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -315,10 +407,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(KinematicViscosityUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -327,74 +418,65 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Centistokes"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromCentistokes(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.Centistokes);
-        }
+            => new(value, KinematicViscosityUnit.Centistokes);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Decistokes"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromDecistokes(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.Decistokes);
-        }
+            => new(value, KinematicViscosityUnit.Decistokes);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Kilostokes"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromKilostokes(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.Kilostokes);
-        }
+            => new(value, KinematicViscosityUnit.Kilostokes);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Microstokes"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromMicrostokes(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.Microstokes);
-        }
+            => new(value, KinematicViscosityUnit.Microstokes);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Millistokes"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromMillistokes(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.Millistokes);
-        }
+            => new(value, KinematicViscosityUnit.Millistokes);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Nanostokes"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromNanostokes(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.Nanostokes);
-        }
+            => new(value, KinematicViscosityUnit.Nanostokes);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.SquareFootPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromSquareFeetPerSecond(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.SquareFootPerSecond);
-        }
+            => new(value, KinematicViscosityUnit.SquareFootPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.SquareMeterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromSquareMetersPerSecond(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.SquareMeterPerSecond);
-        }
+            => new(value, KinematicViscosityUnit.SquareMeterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Stokes"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity FromStokes(QuantityValue value)
-        {
-            return new KinematicViscosity(value, KinematicViscosityUnit.Stokes);
-        }
+            => new(value, KinematicViscosityUnit.Stokes);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="KinematicViscosityUnit" /> to <see cref="KinematicViscosity" />.
@@ -402,10 +484,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>KinematicViscosity unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity From(QuantityValue value, KinematicViscosityUnit fromUnit)
-        {
-            return new KinematicViscosity(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -433,10 +514,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -461,10 +541,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosity Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<KinematicViscosity, KinematicViscosityUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<KinematicViscosity, KinematicViscosityUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -474,10 +553,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out KinematicViscosity result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -489,10 +567,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out KinematicViscosity result)
-        {
-            return QuantityParser.Default.TryParse<KinematicViscosity, KinematicViscosityUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<KinematicViscosity, KinematicViscosityUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -503,10 +580,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KinematicViscosityUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -519,15 +595,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static KinematicViscosityUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.KinematicViscosityUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out KinematicViscosityUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -539,10 +612,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out KinematicViscosityUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -550,45 +622,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static KinematicViscosity operator -(KinematicViscosity right)
-        {
-            return new KinematicViscosity(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="KinematicViscosity"/> from adding two <see cref="KinematicViscosity"/>.</summary>
         public static KinematicViscosity operator +(KinematicViscosity left, KinematicViscosity right)
-        {
-            return new KinematicViscosity(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="KinematicViscosity"/> from subtracting two <see cref="KinematicViscosity"/>.</summary>
         public static KinematicViscosity operator -(KinematicViscosity left, KinematicViscosity right)
-        {
-            return new KinematicViscosity(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="KinematicViscosity"/> from multiplying value and <see cref="KinematicViscosity"/>.</summary>
         public static KinematicViscosity operator *(QuantityValue left, KinematicViscosity right)
-        {
-            return new KinematicViscosity(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="KinematicViscosity"/> from multiplying value and <see cref="KinematicViscosity"/>.</summary>
         public static KinematicViscosity operator *(KinematicViscosity left, QuantityValue right)
-        {
-            return new KinematicViscosity(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="KinematicViscosity"/> from dividing <see cref="KinematicViscosity"/> by value.</summary>
         public static KinematicViscosity operator /(KinematicViscosity left, QuantityValue right)
-        {
-            return new KinematicViscosity(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="KinematicViscosity"/> by <see cref="KinematicViscosity"/>.</summary>
         public static QuantityValue operator /(KinematicViscosity left, KinematicViscosity right)
-        {
-            return left.SquareMetersPerSecond / right.SquareMetersPerSecond;
-        }
+            => left.SquareMetersPerSecond / right.SquareMetersPerSecond;
 
         #endregion
 
@@ -596,27 +654,19 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Area"/> from <see cref="KinematicViscosity"/> * <see cref="Duration"/>.</summary>
         public static Area operator *(KinematicViscosity kinematicViscosity, Duration duration)
-        {
-            return Area.FromSquareMeters(kinematicViscosity.SquareMetersPerSecond * duration.Seconds);
-        }
+            => Area.FromSquareMeters(kinematicViscosity.SquareMetersPerSecond * duration.Seconds);
 
         /// <summary>Get <see cref="DynamicViscosity"/> from <see cref="KinematicViscosity"/> * <see cref="Density"/>.</summary>
         public static DynamicViscosity operator *(KinematicViscosity kinematicViscosity, Density density)
-        {
-            return DynamicViscosity.FromNewtonSecondsPerMeterSquared(kinematicViscosity.SquareMetersPerSecond * density.KilogramsPerCubicMeter);
-        }
+            => DynamicViscosity.FromNewtonSecondsPerMeterSquared(kinematicViscosity.SquareMetersPerSecond * density.KilogramsPerCubicMeter);
 
         /// <summary>Get <see cref="Length"/> from <see cref="KinematicViscosity"/> / <see cref="Speed"/>.</summary>
         public static Length operator /(KinematicViscosity kinematicViscosity, Speed speed)
-        {
-            return Length.FromMeters(kinematicViscosity.SquareMetersPerSecond / speed.MetersPerSecond);
-        }
+            => Length.FromMeters(kinematicViscosity.SquareMetersPerSecond / speed.MetersPerSecond);
 
         /// <summary>Get <see cref="Speed"/> from <see cref="KinematicViscosity"/> / <see cref="Length"/>.</summary>
         public static Speed operator /(KinematicViscosity kinematicViscosity, Length length)
-        {
-            return Speed.FromMetersPerSecond(kinematicViscosity.SquareMetersPerSecond / length.Meters);
-        }
+            => Speed.FromMetersPerSecond(kinematicViscosity.SquareMetersPerSecond / length.Meters);
 
         #endregion
 
@@ -624,27 +674,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(KinematicViscosity left, KinematicViscosity right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(KinematicViscosity left, KinematicViscosity right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(KinematicViscosity left, KinematicViscosity right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(KinematicViscosity left, KinematicViscosity right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="KinematicViscosity"/> instances are equal.
@@ -655,10 +697,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(KinematicViscosity)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(KinematicViscosity left, KinematicViscosity right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="KinematicViscosity"/> instances are not equal.
@@ -668,10 +709,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(KinematicViscosity)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(KinematicViscosity left, KinematicViscosity right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -684,12 +724,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not KinematicViscosity otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is KinematicViscosity otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -700,18 +735,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(KinematicViscosity other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current KinematicViscosity.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(KinematicViscosity), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(KinematicViscosity), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(KinematicViscosity)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -740,9 +771,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(KinematicViscosity other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -753,20 +782,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

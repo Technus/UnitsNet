@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MagneticFieldInfo"/> class with the default settings.</returns>
             public static MagneticFieldInfo CreateDefault()
-            {
-                return new MagneticFieldInfo(nameof(MagneticField), DefaultBaseUnit, GetDefaultMappings(), new MagneticField(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MagneticField), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MagneticFieldInfo"/> class with the default settings for the MagneticField quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MagneticFieldInfo"/> class with the default settings.
             /// </returns>
             public static MagneticFieldInfo CreateDefault(Func<IEnumerable<UnitDefinition<MagneticFieldUnit>>, IEnumerable<IUnitDefinition<MagneticFieldUnit>>> customizeUnits)
-            {
-                return new MagneticFieldInfo(nameof(MagneticField), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new MagneticField(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MagneticField), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MagneticField"/> is T^-2MI^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 1, -2, -1, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 1, -2, -1, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of MagneticField is Tesla. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static MagneticFieldUnit DefaultBaseUnit { get; } = MagneticFieldUnit.Tesla;
+            public static MagneticFieldUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MagneticFieldUnit.Tesla;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="MagneticFieldUnit"/>.
@@ -175,7 +180,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="MagneticField" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<MagneticField, MagneticFieldUnit> Info { get; }
@@ -183,53 +192,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of MagneticField, which is Tesla. All conversions go via this value.
         /// </summary>
-        public static MagneticFieldUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static MagneticFieldUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the MagneticField quantity.
         /// </summary>
-        public static IReadOnlyCollection<MagneticFieldUnit> Units => Info.Units;
+        public static IReadOnlyCollection<MagneticFieldUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Tesla.
         /// </summary>
-        public static MagneticField Zero => Info.Zero;
+        public static MagneticField Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public MagneticFieldUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public MagneticFieldUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<MagneticField, MagneticFieldUnit> QuantityInfo => Info;
+        public QuantityInfo<MagneticField, MagneticFieldUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<MagneticField> IQuantityOfType<MagneticField>.QuantityInfo => Info;
+        IQuantityInstanceInfo<MagneticField> IQuantityOfType<MagneticField>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<MagneticFieldUnit> IQuantity<MagneticFieldUnit>.QuantityInfo => Info;
+        QuantityInfo<MagneticFieldUnit> IQuantity<MagneticFieldUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -241,32 +298,56 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFieldUnit.Gauss"/>
         /// </summary>
-        public QuantityValue Gausses => this.As(MagneticFieldUnit.Gauss);
+        public QuantityValue Gausses
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MagneticFieldUnit.Gauss);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFieldUnit.Microtesla"/>
         /// </summary>
-        public QuantityValue Microteslas => this.As(MagneticFieldUnit.Microtesla);
+        public QuantityValue Microteslas
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MagneticFieldUnit.Microtesla);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFieldUnit.Milligauss"/>
         /// </summary>
-        public QuantityValue Milligausses => this.As(MagneticFieldUnit.Milligauss);
+        public QuantityValue Milligausses
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MagneticFieldUnit.Milligauss);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFieldUnit.Millitesla"/>
         /// </summary>
-        public QuantityValue Milliteslas => this.As(MagneticFieldUnit.Millitesla);
+        public QuantityValue Milliteslas
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MagneticFieldUnit.Millitesla);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFieldUnit.Nanotesla"/>
         /// </summary>
-        public QuantityValue Nanoteslas => this.As(MagneticFieldUnit.Nanotesla);
+        public QuantityValue Nanoteslas
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MagneticFieldUnit.Nanotesla);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFieldUnit.Tesla"/>
         /// </summary>
-        public QuantityValue Teslas => this.As(MagneticFieldUnit.Tesla);
+        public QuantityValue Teslas
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MagneticFieldUnit.Tesla);
+        }
 
         #endregion
 
@@ -277,10 +358,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MagneticFieldUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -288,10 +368,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MagneticFieldUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -300,50 +379,44 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="MagneticField"/> from <see cref="MagneticFieldUnit.Gauss"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField FromGausses(QuantityValue value)
-        {
-            return new MagneticField(value, MagneticFieldUnit.Gauss);
-        }
+            => new(value, MagneticFieldUnit.Gauss);
 
         /// <summary>
         ///     Creates a <see cref="MagneticField"/> from <see cref="MagneticFieldUnit.Microtesla"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField FromMicroteslas(QuantityValue value)
-        {
-            return new MagneticField(value, MagneticFieldUnit.Microtesla);
-        }
+            => new(value, MagneticFieldUnit.Microtesla);
 
         /// <summary>
         ///     Creates a <see cref="MagneticField"/> from <see cref="MagneticFieldUnit.Milligauss"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField FromMilligausses(QuantityValue value)
-        {
-            return new MagneticField(value, MagneticFieldUnit.Milligauss);
-        }
+            => new(value, MagneticFieldUnit.Milligauss);
 
         /// <summary>
         ///     Creates a <see cref="MagneticField"/> from <see cref="MagneticFieldUnit.Millitesla"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField FromMilliteslas(QuantityValue value)
-        {
-            return new MagneticField(value, MagneticFieldUnit.Millitesla);
-        }
+            => new(value, MagneticFieldUnit.Millitesla);
 
         /// <summary>
         ///     Creates a <see cref="MagneticField"/> from <see cref="MagneticFieldUnit.Nanotesla"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField FromNanoteslas(QuantityValue value)
-        {
-            return new MagneticField(value, MagneticFieldUnit.Nanotesla);
-        }
+            => new(value, MagneticFieldUnit.Nanotesla);
 
         /// <summary>
         ///     Creates a <see cref="MagneticField"/> from <see cref="MagneticFieldUnit.Tesla"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField FromTeslas(QuantityValue value)
-        {
-            return new MagneticField(value, MagneticFieldUnit.Tesla);
-        }
+            => new(value, MagneticFieldUnit.Tesla);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="MagneticFieldUnit" /> to <see cref="MagneticField" />.
@@ -351,10 +424,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>MagneticField unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField From(QuantityValue value, MagneticFieldUnit fromUnit)
-        {
-            return new MagneticField(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -382,10 +454,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -410,10 +481,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticField Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<MagneticField, MagneticFieldUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<MagneticField, MagneticFieldUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -423,10 +493,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out MagneticField result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -438,10 +507,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out MagneticField result)
-        {
-            return QuantityParser.Default.TryParse<MagneticField, MagneticFieldUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<MagneticField, MagneticFieldUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -452,10 +520,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticFieldUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -468,15 +535,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static MagneticFieldUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.MagneticFieldUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out MagneticFieldUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -488,10 +552,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out MagneticFieldUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -499,45 +562,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static MagneticField operator -(MagneticField right)
-        {
-            return new MagneticField(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="MagneticField"/> from adding two <see cref="MagneticField"/>.</summary>
         public static MagneticField operator +(MagneticField left, MagneticField right)
-        {
-            return new MagneticField(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MagneticField"/> from subtracting two <see cref="MagneticField"/>.</summary>
         public static MagneticField operator -(MagneticField left, MagneticField right)
-        {
-            return new MagneticField(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MagneticField"/> from multiplying value and <see cref="MagneticField"/>.</summary>
         public static MagneticField operator *(QuantityValue left, MagneticField right)
-        {
-            return new MagneticField(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="MagneticField"/> from multiplying value and <see cref="MagneticField"/>.</summary>
         public static MagneticField operator *(MagneticField left, QuantityValue right)
-        {
-            return new MagneticField(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="MagneticField"/> from dividing <see cref="MagneticField"/> by value.</summary>
         public static MagneticField operator /(MagneticField left, QuantityValue right)
-        {
-            return new MagneticField(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="MagneticField"/> by <see cref="MagneticField"/>.</summary>
         public static QuantityValue operator /(MagneticField left, MagneticField right)
-        {
-            return left.Teslas / right.Teslas;
-        }
+            => left.Teslas / right.Teslas;
 
         #endregion
 
@@ -545,9 +594,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="MagneticFlux"/> from <see cref="MagneticField"/> * <see cref="Area"/>.</summary>
         public static MagneticFlux operator *(MagneticField magneticField, Area area)
-        {
-            return MagneticFlux.FromWebers(magneticField.Teslas * area.SquareMeters);
-        }
+            => MagneticFlux.FromWebers(magneticField.Teslas * area.SquareMeters);
 
         #endregion
 
@@ -555,27 +602,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(MagneticField left, MagneticField right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(MagneticField left, MagneticField right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(MagneticField left, MagneticField right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(MagneticField left, MagneticField right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="MagneticField"/> instances are equal.
@@ -586,10 +625,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(MagneticField)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(MagneticField left, MagneticField right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="MagneticField"/> instances are not equal.
@@ -599,10 +637,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(MagneticField)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(MagneticField left, MagneticField right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -615,12 +652,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not MagneticField otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is MagneticField otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -631,18 +663,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(MagneticField other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current MagneticField.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(MagneticField), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(MagneticField), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(MagneticField)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -671,9 +699,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(MagneticField other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -684,20 +710,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

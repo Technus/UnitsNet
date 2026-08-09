@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -85,9 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="InformationInfo"/> class with the default settings.</returns>
             public static InformationInfo CreateDefault()
-            {
-                return new InformationInfo(nameof(Information), DefaultBaseUnit, GetDefaultMappings(), new Information(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Information), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="InformationInfo"/> class with the default settings for the Information quantity and a callback for customizing the default unit mappings.
@@ -99,19 +98,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="InformationInfo"/> class with the default settings.
             /// </returns>
             public static InformationInfo CreateDefault(Func<IEnumerable<UnitDefinition<InformationUnit>>, IEnumerable<IUnitDefinition<InformationUnit>>> customizeUnits)
-            {
-                return new InformationInfo(nameof(Information), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Information(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Information), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Information"/> is .
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = BaseDimensions.Dimensionless;
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = BaseDimensions.Dimensionless;
 
             /// <summary>
             ///     The default base unit of Information is Bit. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static InformationUnit DefaultBaseUnit { get; } = InformationUnit.Bit;
+            public static InformationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = InformationUnit.Bit;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="InformationUnit"/>.
@@ -259,7 +264,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Information" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Information, InformationUnit> Info { get; }
@@ -267,53 +276,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Information, which is Bit. All conversions go via this value.
         /// </summary>
-        public static InformationUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static InformationUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Information quantity.
         /// </summary>
-        public static IReadOnlyCollection<InformationUnit> Units => Info.Units;
+        public static IReadOnlyCollection<InformationUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Bit.
         /// </summary>
-        public static Information Zero => Info.Zero;
+        public static Information Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public InformationUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public InformationUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Information, InformationUnit> QuantityInfo => Info;
+        public QuantityInfo<Information, InformationUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Information> IQuantityOfType<Information>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Information> IQuantityOfType<Information>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<InformationUnit> IQuantity<InformationUnit>.QuantityInfo => Info;
+        QuantityInfo<InformationUnit> IQuantity<InformationUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -325,197 +382,353 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Bit"/>
         /// </summary>
-        public QuantityValue Bits => this.As(InformationUnit.Bit);
+        public QuantityValue Bits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Bit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Byte"/>
         /// </summary>
-        public QuantityValue Bytes => this.As(InformationUnit.Byte);
+        public QuantityValue Bytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Byte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Exabit"/>
         /// </summary>
-        public QuantityValue Exabits => this.As(InformationUnit.Exabit);
+        public QuantityValue Exabits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Exabit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Exabyte"/>
         /// </summary>
-        public QuantityValue Exabytes => this.As(InformationUnit.Exabyte);
+        public QuantityValue Exabytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Exabyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Exaoctet"/>
         /// </summary>
-        public QuantityValue Exaoctets => this.As(InformationUnit.Exaoctet);
+        public QuantityValue Exaoctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Exaoctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Exbibit"/>
         /// </summary>
-        public QuantityValue Exbibits => this.As(InformationUnit.Exbibit);
+        public QuantityValue Exbibits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Exbibit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Exbibyte"/>
         /// </summary>
-        public QuantityValue Exbibytes => this.As(InformationUnit.Exbibyte);
+        public QuantityValue Exbibytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Exbibyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Exbioctet"/>
         /// </summary>
-        public QuantityValue Exbioctets => this.As(InformationUnit.Exbioctet);
+        public QuantityValue Exbioctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Exbioctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Gibibit"/>
         /// </summary>
-        public QuantityValue Gibibits => this.As(InformationUnit.Gibibit);
+        public QuantityValue Gibibits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Gibibit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Gibibyte"/>
         /// </summary>
-        public QuantityValue Gibibytes => this.As(InformationUnit.Gibibyte);
+        public QuantityValue Gibibytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Gibibyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Gibioctet"/>
         /// </summary>
-        public QuantityValue Gibioctets => this.As(InformationUnit.Gibioctet);
+        public QuantityValue Gibioctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Gibioctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Gigabit"/>
         /// </summary>
-        public QuantityValue Gigabits => this.As(InformationUnit.Gigabit);
+        public QuantityValue Gigabits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Gigabit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Gigabyte"/>
         /// </summary>
-        public QuantityValue Gigabytes => this.As(InformationUnit.Gigabyte);
+        public QuantityValue Gigabytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Gigabyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Gigaoctet"/>
         /// </summary>
-        public QuantityValue Gigaoctets => this.As(InformationUnit.Gigaoctet);
+        public QuantityValue Gigaoctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Gigaoctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Kibibit"/>
         /// </summary>
-        public QuantityValue Kibibits => this.As(InformationUnit.Kibibit);
+        public QuantityValue Kibibits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Kibibit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Kibibyte"/>
         /// </summary>
-        public QuantityValue Kibibytes => this.As(InformationUnit.Kibibyte);
+        public QuantityValue Kibibytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Kibibyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Kibioctet"/>
         /// </summary>
-        public QuantityValue Kibioctets => this.As(InformationUnit.Kibioctet);
+        public QuantityValue Kibioctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Kibioctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Kilobit"/>
         /// </summary>
-        public QuantityValue Kilobits => this.As(InformationUnit.Kilobit);
+        public QuantityValue Kilobits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Kilobit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Kilobyte"/>
         /// </summary>
-        public QuantityValue Kilobytes => this.As(InformationUnit.Kilobyte);
+        public QuantityValue Kilobytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Kilobyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Kilooctet"/>
         /// </summary>
-        public QuantityValue Kilooctets => this.As(InformationUnit.Kilooctet);
+        public QuantityValue Kilooctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Kilooctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Mebibit"/>
         /// </summary>
-        public QuantityValue Mebibits => this.As(InformationUnit.Mebibit);
+        public QuantityValue Mebibits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Mebibit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Mebibyte"/>
         /// </summary>
-        public QuantityValue Mebibytes => this.As(InformationUnit.Mebibyte);
+        public QuantityValue Mebibytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Mebibyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Mebioctet"/>
         /// </summary>
-        public QuantityValue Mebioctets => this.As(InformationUnit.Mebioctet);
+        public QuantityValue Mebioctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Mebioctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Megabit"/>
         /// </summary>
-        public QuantityValue Megabits => this.As(InformationUnit.Megabit);
+        public QuantityValue Megabits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Megabit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Megabyte"/>
         /// </summary>
-        public QuantityValue Megabytes => this.As(InformationUnit.Megabyte);
+        public QuantityValue Megabytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Megabyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Megaoctet"/>
         /// </summary>
-        public QuantityValue Megaoctets => this.As(InformationUnit.Megaoctet);
+        public QuantityValue Megaoctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Megaoctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Octet"/>
         /// </summary>
-        public QuantityValue Octets => this.As(InformationUnit.Octet);
+        public QuantityValue Octets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Octet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Pebibit"/>
         /// </summary>
-        public QuantityValue Pebibits => this.As(InformationUnit.Pebibit);
+        public QuantityValue Pebibits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Pebibit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Pebibyte"/>
         /// </summary>
-        public QuantityValue Pebibytes => this.As(InformationUnit.Pebibyte);
+        public QuantityValue Pebibytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Pebibyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Pebioctet"/>
         /// </summary>
-        public QuantityValue Pebioctets => this.As(InformationUnit.Pebioctet);
+        public QuantityValue Pebioctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Pebioctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Petabit"/>
         /// </summary>
-        public QuantityValue Petabits => this.As(InformationUnit.Petabit);
+        public QuantityValue Petabits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Petabit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Petabyte"/>
         /// </summary>
-        public QuantityValue Petabytes => this.As(InformationUnit.Petabyte);
+        public QuantityValue Petabytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Petabyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Petaoctet"/>
         /// </summary>
-        public QuantityValue Petaoctets => this.As(InformationUnit.Petaoctet);
+        public QuantityValue Petaoctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Petaoctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Tebibit"/>
         /// </summary>
-        public QuantityValue Tebibits => this.As(InformationUnit.Tebibit);
+        public QuantityValue Tebibits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Tebibit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Tebibyte"/>
         /// </summary>
-        public QuantityValue Tebibytes => this.As(InformationUnit.Tebibyte);
+        public QuantityValue Tebibytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Tebibyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Tebioctet"/>
         /// </summary>
-        public QuantityValue Tebioctets => this.As(InformationUnit.Tebioctet);
+        public QuantityValue Tebioctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Tebioctet);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Terabit"/>
         /// </summary>
-        public QuantityValue Terabits => this.As(InformationUnit.Terabit);
+        public QuantityValue Terabits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Terabit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Terabyte"/>
         /// </summary>
-        public QuantityValue Terabytes => this.As(InformationUnit.Terabyte);
+        public QuantityValue Terabytes
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Terabyte);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Teraoctet"/>
         /// </summary>
-        public QuantityValue Teraoctets => this.As(InformationUnit.Teraoctet);
+        public QuantityValue Teraoctets
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(InformationUnit.Teraoctet);
+        }
 
         #endregion
 
@@ -526,10 +739,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(InformationUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -537,10 +749,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(InformationUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -549,314 +760,275 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Bit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromBits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Bit);
-        }
+            => new(value, InformationUnit.Bit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Byte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromBytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Byte);
-        }
+            => new(value, InformationUnit.Byte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Exabit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromExabits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Exabit);
-        }
+            => new(value, InformationUnit.Exabit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Exabyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromExabytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Exabyte);
-        }
+            => new(value, InformationUnit.Exabyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Exaoctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromExaoctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Exaoctet);
-        }
+            => new(value, InformationUnit.Exaoctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Exbibit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromExbibits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Exbibit);
-        }
+            => new(value, InformationUnit.Exbibit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Exbibyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromExbibytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Exbibyte);
-        }
+            => new(value, InformationUnit.Exbibyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Exbioctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromExbioctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Exbioctet);
-        }
+            => new(value, InformationUnit.Exbioctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Gibibit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromGibibits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Gibibit);
-        }
+            => new(value, InformationUnit.Gibibit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Gibibyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromGibibytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Gibibyte);
-        }
+            => new(value, InformationUnit.Gibibyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Gibioctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromGibioctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Gibioctet);
-        }
+            => new(value, InformationUnit.Gibioctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Gigabit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromGigabits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Gigabit);
-        }
+            => new(value, InformationUnit.Gigabit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Gigabyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromGigabytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Gigabyte);
-        }
+            => new(value, InformationUnit.Gigabyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Gigaoctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromGigaoctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Gigaoctet);
-        }
+            => new(value, InformationUnit.Gigaoctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Kibibit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromKibibits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Kibibit);
-        }
+            => new(value, InformationUnit.Kibibit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Kibibyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromKibibytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Kibibyte);
-        }
+            => new(value, InformationUnit.Kibibyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Kibioctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromKibioctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Kibioctet);
-        }
+            => new(value, InformationUnit.Kibioctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Kilobit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromKilobits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Kilobit);
-        }
+            => new(value, InformationUnit.Kilobit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Kilobyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromKilobytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Kilobyte);
-        }
+            => new(value, InformationUnit.Kilobyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Kilooctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromKilooctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Kilooctet);
-        }
+            => new(value, InformationUnit.Kilooctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Mebibit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromMebibits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Mebibit);
-        }
+            => new(value, InformationUnit.Mebibit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Mebibyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromMebibytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Mebibyte);
-        }
+            => new(value, InformationUnit.Mebibyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Mebioctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromMebioctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Mebioctet);
-        }
+            => new(value, InformationUnit.Mebioctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Megabit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromMegabits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Megabit);
-        }
+            => new(value, InformationUnit.Megabit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Megabyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromMegabytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Megabyte);
-        }
+            => new(value, InformationUnit.Megabyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Megaoctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromMegaoctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Megaoctet);
-        }
+            => new(value, InformationUnit.Megaoctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Octet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromOctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Octet);
-        }
+            => new(value, InformationUnit.Octet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Pebibit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromPebibits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Pebibit);
-        }
+            => new(value, InformationUnit.Pebibit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Pebibyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromPebibytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Pebibyte);
-        }
+            => new(value, InformationUnit.Pebibyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Pebioctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromPebioctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Pebioctet);
-        }
+            => new(value, InformationUnit.Pebioctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Petabit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromPetabits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Petabit);
-        }
+            => new(value, InformationUnit.Petabit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Petabyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromPetabytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Petabyte);
-        }
+            => new(value, InformationUnit.Petabyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Petaoctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromPetaoctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Petaoctet);
-        }
+            => new(value, InformationUnit.Petaoctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Tebibit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromTebibits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Tebibit);
-        }
+            => new(value, InformationUnit.Tebibit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Tebibyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromTebibytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Tebibyte);
-        }
+            => new(value, InformationUnit.Tebibyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Tebioctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromTebioctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Tebioctet);
-        }
+            => new(value, InformationUnit.Tebioctet);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Terabit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromTerabits(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Terabit);
-        }
+            => new(value, InformationUnit.Terabit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Terabyte"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromTerabytes(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Terabyte);
-        }
+            => new(value, InformationUnit.Terabyte);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Teraoctet"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information FromTeraoctets(QuantityValue value)
-        {
-            return new Information(value, InformationUnit.Teraoctet);
-        }
+            => new(value, InformationUnit.Teraoctet);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="InformationUnit" /> to <see cref="Information" />.
@@ -864,10 +1036,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Information unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information From(QuantityValue value, InformationUnit fromUnit)
-        {
-            return new Information(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -895,10 +1066,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -923,10 +1093,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Information Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Information, InformationUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Information, InformationUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -936,10 +1105,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Information result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -951,10 +1119,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Information result)
-        {
-            return QuantityParser.Default.TryParse<Information, InformationUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Information, InformationUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -965,10 +1132,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static InformationUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -981,15 +1147,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static InformationUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.InformationUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out InformationUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1001,10 +1164,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out InformationUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -1012,45 +1174,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Information operator -(Information right)
-        {
-            return new Information(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Information"/> from adding two <see cref="Information"/>.</summary>
         public static Information operator +(Information left, Information right)
-        {
-            return new Information(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Information"/> from subtracting two <see cref="Information"/>.</summary>
         public static Information operator -(Information left, Information right)
-        {
-            return new Information(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Information"/> from multiplying value and <see cref="Information"/>.</summary>
         public static Information operator *(QuantityValue left, Information right)
-        {
-            return new Information(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Information"/> from multiplying value and <see cref="Information"/>.</summary>
         public static Information operator *(Information left, QuantityValue right)
-        {
-            return new Information(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Information"/> from dividing <see cref="Information"/> by value.</summary>
         public static Information operator /(Information left, QuantityValue right)
-        {
-            return new Information(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Information"/> by <see cref="Information"/>.</summary>
         public static QuantityValue operator /(Information left, Information right)
-        {
-            return left.Bits / right.Bits;
-        }
+            => left.Bits / right.Bits;
 
         #endregion
 
@@ -1058,21 +1206,15 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="BitRate"/> from <see cref="Information"/> * <see cref="Frequency"/>.</summary>
         public static BitRate operator *(Information information, Frequency frequency)
-        {
-            return BitRate.FromBitsPerSecond(information.Bits * frequency.PerSecond);
-        }
+            => BitRate.FromBitsPerSecond(information.Bits * frequency.PerSecond);
 
         /// <summary>Get <see cref="BitRate"/> from <see cref="Information"/> / <see cref="Duration"/>.</summary>
         public static BitRate operator /(Information information, Duration duration)
-        {
-            return BitRate.FromBitsPerSecond(information.Bits / duration.Seconds);
-        }
+            => BitRate.FromBitsPerSecond(information.Bits / duration.Seconds);
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Information"/> / <see cref="BitRate"/>.</summary>
         public static Duration operator /(Information information, BitRate bitRate)
-        {
-            return Duration.FromSeconds(information.Bits / bitRate.BitsPerSecond);
-        }
+            => Duration.FromSeconds(information.Bits / bitRate.BitsPerSecond);
 
         #endregion
 
@@ -1080,27 +1222,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Information left, Information right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Information left, Information right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Information left, Information right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Information left, Information right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Information"/> instances are equal.
@@ -1111,10 +1245,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Information)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Information left, Information right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Information"/> instances are not equal.
@@ -1124,10 +1257,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Information)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Information left, Information right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1140,12 +1272,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Information otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Information otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1156,18 +1283,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Information other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Information.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Information), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Information), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Information)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1196,9 +1319,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Information other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1209,20 +1330,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

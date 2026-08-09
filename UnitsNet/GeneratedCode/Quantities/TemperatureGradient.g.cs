@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TemperatureGradientInfo"/> class with the default settings.</returns>
             public static TemperatureGradientInfo CreateDefault()
-            {
-                return new TemperatureGradientInfo(nameof(TemperatureGradient), DefaultBaseUnit, GetDefaultMappings(), new TemperatureGradient(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(TemperatureGradient), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TemperatureGradientInfo"/> class with the default settings for the TemperatureGradient quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TemperatureGradientInfo"/> class with the default settings.
             /// </returns>
             public static TemperatureGradientInfo CreateDefault(Func<IEnumerable<UnitDefinition<TemperatureGradientUnit>>, IEnumerable<IUnitDefinition<TemperatureGradientUnit>>> customizeUnits)
-            {
-                return new TemperatureGradientInfo(nameof(TemperatureGradient), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new TemperatureGradient(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(TemperatureGradient), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="TemperatureGradient"/> is L^-1Θ.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-1, 0, 0, 0, 1, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-1, 0, 0, 0, 1, 0, 0);
 
             /// <summary>
             ///     The default base unit of TemperatureGradient is KelvinPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static TemperatureGradientUnit DefaultBaseUnit { get; } = TemperatureGradientUnit.KelvinPerMeter;
+            public static TemperatureGradientUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TemperatureGradientUnit.KelvinPerMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="TemperatureGradientUnit"/>.
@@ -166,7 +171,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="TemperatureGradient" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<TemperatureGradient, TemperatureGradientUnit> Info { get; }
@@ -174,53 +183,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of TemperatureGradient, which is KelvinPerMeter. All conversions go via this value.
         /// </summary>
-        public static TemperatureGradientUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static TemperatureGradientUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the TemperatureGradient quantity.
         /// </summary>
-        public static IReadOnlyCollection<TemperatureGradientUnit> Units => Info.Units;
+        public static IReadOnlyCollection<TemperatureGradientUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit KelvinPerMeter.
         /// </summary>
-        public static TemperatureGradient Zero => Info.Zero;
+        public static TemperatureGradient Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public TemperatureGradientUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public TemperatureGradientUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<TemperatureGradient, TemperatureGradientUnit> QuantityInfo => Info;
+        public QuantityInfo<TemperatureGradient, TemperatureGradientUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<TemperatureGradient> IQuantityOfType<TemperatureGradient>.QuantityInfo => Info;
+        IQuantityInstanceInfo<TemperatureGradient> IQuantityOfType<TemperatureGradient>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<TemperatureGradientUnit> IQuantity<TemperatureGradientUnit>.QuantityInfo => Info;
+        QuantityInfo<TemperatureGradientUnit> IQuantity<TemperatureGradientUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -232,22 +289,38 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureGradientUnit.DegreeCelsiusPerKilometer"/>
         /// </summary>
-        public QuantityValue DegreesCelsiusPerKilometer => this.As(TemperatureGradientUnit.DegreeCelsiusPerKilometer);
+        public QuantityValue DegreesCelsiusPerKilometer
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureGradientUnit.DegreeCelsiusPerKilometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureGradientUnit.DegreeCelsiusPerMeter"/>
         /// </summary>
-        public QuantityValue DegreesCelsiusPerMeter => this.As(TemperatureGradientUnit.DegreeCelsiusPerMeter);
+        public QuantityValue DegreesCelsiusPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureGradientUnit.DegreeCelsiusPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureGradientUnit.DegreeFahrenheitPerFoot"/>
         /// </summary>
-        public QuantityValue DegreesFahrenheitPerFoot => this.As(TemperatureGradientUnit.DegreeFahrenheitPerFoot);
+        public QuantityValue DegreesFahrenheitPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureGradientUnit.DegreeFahrenheitPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureGradientUnit.KelvinPerMeter"/>
         /// </summary>
-        public QuantityValue KelvinsPerMeter => this.As(TemperatureGradientUnit.KelvinPerMeter);
+        public QuantityValue KelvinsPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureGradientUnit.KelvinPerMeter);
+        }
 
         #endregion
 
@@ -258,10 +331,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TemperatureGradientUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -269,10 +341,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TemperatureGradientUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -281,34 +352,30 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="TemperatureGradient"/> from <see cref="TemperatureGradientUnit.DegreeCelsiusPerKilometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradient FromDegreesCelsiusPerKilometer(QuantityValue value)
-        {
-            return new TemperatureGradient(value, TemperatureGradientUnit.DegreeCelsiusPerKilometer);
-        }
+            => new(value, TemperatureGradientUnit.DegreeCelsiusPerKilometer);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureGradient"/> from <see cref="TemperatureGradientUnit.DegreeCelsiusPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradient FromDegreesCelsiusPerMeter(QuantityValue value)
-        {
-            return new TemperatureGradient(value, TemperatureGradientUnit.DegreeCelsiusPerMeter);
-        }
+            => new(value, TemperatureGradientUnit.DegreeCelsiusPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureGradient"/> from <see cref="TemperatureGradientUnit.DegreeFahrenheitPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradient FromDegreesFahrenheitPerFoot(QuantityValue value)
-        {
-            return new TemperatureGradient(value, TemperatureGradientUnit.DegreeFahrenheitPerFoot);
-        }
+            => new(value, TemperatureGradientUnit.DegreeFahrenheitPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureGradient"/> from <see cref="TemperatureGradientUnit.KelvinPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradient FromKelvinsPerMeter(QuantityValue value)
-        {
-            return new TemperatureGradient(value, TemperatureGradientUnit.KelvinPerMeter);
-        }
+            => new(value, TemperatureGradientUnit.KelvinPerMeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="TemperatureGradientUnit" /> to <see cref="TemperatureGradient" />.
@@ -316,10 +383,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>TemperatureGradient unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradient From(QuantityValue value, TemperatureGradientUnit fromUnit)
-        {
-            return new TemperatureGradient(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -347,10 +413,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradient Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -375,10 +440,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradient Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<TemperatureGradient, TemperatureGradientUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<TemperatureGradient, TemperatureGradientUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -388,10 +452,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out TemperatureGradient result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -403,10 +466,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out TemperatureGradient result)
-        {
-            return QuantityParser.Default.TryParse<TemperatureGradient, TemperatureGradientUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<TemperatureGradient, TemperatureGradientUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -417,10 +479,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureGradientUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -433,15 +494,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static TemperatureGradientUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.TemperatureGradientUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out TemperatureGradientUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -453,10 +511,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out TemperatureGradientUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -464,45 +521,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static TemperatureGradient operator -(TemperatureGradient right)
-        {
-            return new TemperatureGradient(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="TemperatureGradient"/> from adding two <see cref="TemperatureGradient"/>.</summary>
         public static TemperatureGradient operator +(TemperatureGradient left, TemperatureGradient right)
-        {
-            return new TemperatureGradient(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="TemperatureGradient"/> from subtracting two <see cref="TemperatureGradient"/>.</summary>
         public static TemperatureGradient operator -(TemperatureGradient left, TemperatureGradient right)
-        {
-            return new TemperatureGradient(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="TemperatureGradient"/> from multiplying value and <see cref="TemperatureGradient"/>.</summary>
         public static TemperatureGradient operator *(QuantityValue left, TemperatureGradient right)
-        {
-            return new TemperatureGradient(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="TemperatureGradient"/> from multiplying value and <see cref="TemperatureGradient"/>.</summary>
         public static TemperatureGradient operator *(TemperatureGradient left, QuantityValue right)
-        {
-            return new TemperatureGradient(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="TemperatureGradient"/> from dividing <see cref="TemperatureGradient"/> by value.</summary>
         public static TemperatureGradient operator /(TemperatureGradient left, QuantityValue right)
-        {
-            return new TemperatureGradient(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="TemperatureGradient"/> by <see cref="TemperatureGradient"/>.</summary>
         public static QuantityValue operator /(TemperatureGradient left, TemperatureGradient right)
-        {
-            return left.KelvinsPerMeter / right.KelvinsPerMeter;
-        }
+            => left.KelvinsPerMeter / right.KelvinsPerMeter;
 
         #endregion
 
@@ -510,9 +553,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="TemperatureDelta"/> from <see cref="TemperatureGradient"/> * <see cref="Length"/>.</summary>
         public static TemperatureDelta operator *(TemperatureGradient temperatureGradient, Length length)
-        {
-            return TemperatureDelta.FromDegreesCelsius(temperatureGradient.DegreesCelsiusPerKilometer * length.Kilometers);
-        }
+            => TemperatureDelta.FromDegreesCelsius(temperatureGradient.DegreesCelsiusPerKilometer * length.Kilometers);
 
         #endregion
 
@@ -520,27 +561,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(TemperatureGradient left, TemperatureGradient right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(TemperatureGradient left, TemperatureGradient right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(TemperatureGradient left, TemperatureGradient right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(TemperatureGradient left, TemperatureGradient right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="TemperatureGradient"/> instances are equal.
@@ -551,10 +584,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(TemperatureGradient)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(TemperatureGradient left, TemperatureGradient right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="TemperatureGradient"/> instances are not equal.
@@ -564,10 +596,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(TemperatureGradient)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(TemperatureGradient left, TemperatureGradient right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -580,12 +611,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not TemperatureGradient otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is TemperatureGradient otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -596,18 +622,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(TemperatureGradient other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current TemperatureGradient.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(TemperatureGradient), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(TemperatureGradient), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(TemperatureGradient)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -636,9 +658,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(TemperatureGradient other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -649,20 +669,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

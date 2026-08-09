@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -84,9 +85,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="FrequencyInfo"/> class with the default settings.</returns>
             public static FrequencyInfo CreateDefault()
-            {
-                return new FrequencyInfo(nameof(Frequency), DefaultBaseUnit, GetDefaultMappings(), new Frequency(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Frequency), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="FrequencyInfo"/> class with the default settings for the Frequency quantity and a callback for customizing the default unit mappings.
@@ -98,19 +97,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="FrequencyInfo"/> class with the default settings.
             /// </returns>
             public static FrequencyInfo CreateDefault(Func<IEnumerable<UnitDefinition<FrequencyUnit>>, IEnumerable<IUnitDefinition<FrequencyUnit>>> customizeUnits)
-            {
-                return new FrequencyInfo(nameof(Frequency), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Frequency(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Frequency), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Frequency"/> is T^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, -1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, -1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Frequency is Hertz. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static FrequencyUnit DefaultBaseUnit { get; } = FrequencyUnit.Hertz;
+            public static FrequencyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = FrequencyUnit.Hertz;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="FrequencyUnit"/>.
@@ -191,7 +196,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Frequency" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Frequency, FrequencyUnit> Info { get; }
@@ -199,53 +208,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Frequency, which is Hertz. All conversions go via this value.
         /// </summary>
-        public static FrequencyUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static FrequencyUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Frequency quantity.
         /// </summary>
-        public static IReadOnlyCollection<FrequencyUnit> Units => Info.Units;
+        public static IReadOnlyCollection<FrequencyUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Hertz.
         /// </summary>
-        public static Frequency Zero => Info.Zero;
+        public static Frequency Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public FrequencyUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public FrequencyUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Frequency, FrequencyUnit> QuantityInfo => Info;
+        public QuantityInfo<Frequency, FrequencyUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Frequency> IQuantityOfType<Frequency>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Frequency> IQuantityOfType<Frequency>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<FrequencyUnit> IQuantity<FrequencyUnit>.QuantityInfo => Info;
+        QuantityInfo<FrequencyUnit> IQuantity<FrequencyUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -257,62 +314,110 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.BeatPerMinute"/>
         /// </summary>
-        public QuantityValue BeatsPerMinute => this.As(FrequencyUnit.BeatPerMinute);
+        public QuantityValue BeatsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.BeatPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.CyclePerHour"/>
         /// </summary>
-        public QuantityValue CyclesPerHour => this.As(FrequencyUnit.CyclePerHour);
+        public QuantityValue CyclesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.CyclePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.CyclePerMinute"/>
         /// </summary>
-        public QuantityValue CyclesPerMinute => this.As(FrequencyUnit.CyclePerMinute);
+        public QuantityValue CyclesPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.CyclePerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.Gigahertz"/>
         /// </summary>
-        public QuantityValue Gigahertz => this.As(FrequencyUnit.Gigahertz);
+        public QuantityValue Gigahertz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.Gigahertz);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.Hertz"/>
         /// </summary>
-        public QuantityValue Hertz => this.As(FrequencyUnit.Hertz);
+        public QuantityValue Hertz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.Hertz);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.Kilohertz"/>
         /// </summary>
-        public QuantityValue Kilohertz => this.As(FrequencyUnit.Kilohertz);
+        public QuantityValue Kilohertz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.Kilohertz);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.Megahertz"/>
         /// </summary>
-        public QuantityValue Megahertz => this.As(FrequencyUnit.Megahertz);
+        public QuantityValue Megahertz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.Megahertz);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.Microhertz"/>
         /// </summary>
-        public QuantityValue Microhertz => this.As(FrequencyUnit.Microhertz);
+        public QuantityValue Microhertz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.Microhertz);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.Millihertz"/>
         /// </summary>
-        public QuantityValue Millihertz => this.As(FrequencyUnit.Millihertz);
+        public QuantityValue Millihertz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.Millihertz);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.PerSecond"/>
         /// </summary>
-        public QuantityValue PerSecond => this.As(FrequencyUnit.PerSecond);
+        public QuantityValue PerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.PerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.RadianPerSecond"/>
         /// </summary>
-        public QuantityValue RadiansPerSecond => this.As(FrequencyUnit.RadianPerSecond);
+        public QuantityValue RadiansPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.RadianPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.Terahertz"/>
         /// </summary>
-        public QuantityValue Terahertz => this.As(FrequencyUnit.Terahertz);
+        public QuantityValue Terahertz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FrequencyUnit.Terahertz);
+        }
 
         #endregion
 
@@ -323,10 +428,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(FrequencyUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -334,10 +438,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(FrequencyUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -346,98 +449,86 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.BeatPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromBeatsPerMinute(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.BeatPerMinute);
-        }
+            => new(value, FrequencyUnit.BeatPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.CyclePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromCyclesPerHour(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.CyclePerHour);
-        }
+            => new(value, FrequencyUnit.CyclePerHour);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.CyclePerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromCyclesPerMinute(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.CyclePerMinute);
-        }
+            => new(value, FrequencyUnit.CyclePerMinute);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.Gigahertz"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromGigahertz(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.Gigahertz);
-        }
+            => new(value, FrequencyUnit.Gigahertz);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.Hertz"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromHertz(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.Hertz);
-        }
+            => new(value, FrequencyUnit.Hertz);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.Kilohertz"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromKilohertz(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.Kilohertz);
-        }
+            => new(value, FrequencyUnit.Kilohertz);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.Megahertz"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromMegahertz(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.Megahertz);
-        }
+            => new(value, FrequencyUnit.Megahertz);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.Microhertz"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromMicrohertz(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.Microhertz);
-        }
+            => new(value, FrequencyUnit.Microhertz);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.Millihertz"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromMillihertz(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.Millihertz);
-        }
+            => new(value, FrequencyUnit.Millihertz);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.PerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromPerSecond(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.PerSecond);
-        }
+            => new(value, FrequencyUnit.PerSecond);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.RadianPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromRadiansPerSecond(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.RadianPerSecond);
-        }
+            => new(value, FrequencyUnit.RadianPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.Terahertz"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency FromTerahertz(QuantityValue value)
-        {
-            return new Frequency(value, FrequencyUnit.Terahertz);
-        }
+            => new(value, FrequencyUnit.Terahertz);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="FrequencyUnit" /> to <see cref="Frequency" />.
@@ -445,10 +536,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Frequency unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency From(QuantityValue value, FrequencyUnit fromUnit)
-        {
-            return new Frequency(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -476,10 +566,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -504,10 +593,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Frequency Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Frequency, FrequencyUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Frequency, FrequencyUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -517,10 +605,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Frequency result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -532,10 +619,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Frequency result)
-        {
-            return QuantityParser.Default.TryParse<Frequency, FrequencyUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Frequency, FrequencyUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -546,10 +632,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FrequencyUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -562,15 +647,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static FrequencyUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.FrequencyUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out FrequencyUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -582,10 +664,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out FrequencyUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -593,45 +674,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Frequency operator -(Frequency right)
-        {
-            return new Frequency(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Frequency"/> from adding two <see cref="Frequency"/>.</summary>
         public static Frequency operator +(Frequency left, Frequency right)
-        {
-            return new Frequency(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Frequency"/> from subtracting two <see cref="Frequency"/>.</summary>
         public static Frequency operator -(Frequency left, Frequency right)
-        {
-            return new Frequency(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Frequency"/> from multiplying value and <see cref="Frequency"/>.</summary>
         public static Frequency operator *(QuantityValue left, Frequency right)
-        {
-            return new Frequency(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Frequency"/> from multiplying value and <see cref="Frequency"/>.</summary>
         public static Frequency operator *(Frequency left, QuantityValue right)
-        {
-            return new Frequency(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Frequency"/> from dividing <see cref="Frequency"/> by value.</summary>
         public static Frequency operator /(Frequency left, QuantityValue right)
-        {
-            return new Frequency(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Frequency"/> by <see cref="Frequency"/>.</summary>
         public static QuantityValue operator /(Frequency left, Frequency right)
-        {
-            return left.Hertz / right.Hertz;
-        }
+            => left.Hertz / right.Hertz;
 
         #endregion
 
@@ -640,21 +707,15 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="Duration"/>.</returns>
         public Duration Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, Duration.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, Duration.Info);
 
         /// <summary>Get <see cref="BitRate"/> from <see cref="Frequency"/> * <see cref="Information"/>.</summary>
         public static BitRate operator *(Frequency frequency, Information information)
-        {
-            return BitRate.FromBitsPerSecond(frequency.PerSecond * information.Bits);
-        }
+            => BitRate.FromBitsPerSecond(frequency.PerSecond * information.Bits);
 
         /// <summary>Get <see cref="Power"/> from <see cref="Frequency"/> * <see cref="Energy"/>.</summary>
         public static Power operator *(Frequency frequency, Energy energy)
-        {
-            return Power.FromWatts(frequency.PerSecond * energy.Joules);
-        }
+            => Power.FromWatts(frequency.PerSecond * energy.Joules);
 
         #endregion
 
@@ -662,27 +723,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Frequency left, Frequency right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Frequency left, Frequency right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Frequency left, Frequency right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Frequency left, Frequency right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Frequency"/> instances are equal.
@@ -693,10 +746,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Frequency)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Frequency left, Frequency right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Frequency"/> instances are not equal.
@@ -706,10 +758,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Frequency)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Frequency left, Frequency right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -722,12 +773,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Frequency otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Frequency otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -738,18 +784,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Frequency other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Frequency.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Frequency), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Frequency), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Frequency)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -778,9 +820,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Frequency other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -791,20 +831,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

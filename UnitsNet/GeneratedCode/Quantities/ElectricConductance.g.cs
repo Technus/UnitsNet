@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricConductanceInfo"/> class with the default settings.</returns>
             public static ElectricConductanceInfo CreateDefault()
-            {
-                return new ElectricConductanceInfo(nameof(ElectricConductance), DefaultBaseUnit, GetDefaultMappings(), new ElectricConductance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricConductance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricConductanceInfo"/> class with the default settings for the ElectricConductance quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricConductanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricConductanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricConductanceUnit>>, IEnumerable<IUnitDefinition<ElectricConductanceUnit>>> customizeUnits)
-            {
-                return new ElectricConductanceInfo(nameof(ElectricConductance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricConductance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricConductance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricConductance"/> is T^3L^-2M^-1I^2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-2, -1, 3, 2, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-2, -1, 3, 2, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricConductance is Siemens. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricConductanceUnit DefaultBaseUnit { get; } = ElectricConductanceUnit.Siemens;
+            public static ElectricConductanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricConductanceUnit.Siemens;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricConductanceUnit"/>.
@@ -205,7 +210,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricConductance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricConductance, ElectricConductanceUnit> Info { get; }
@@ -213,53 +222,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricConductance, which is Siemens. All conversions go via this value.
         /// </summary>
-        public static ElectricConductanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricConductanceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricConductance quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricConductanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricConductanceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Siemens.
         /// </summary>
-        public static ElectricConductance Zero => Info.Zero;
+        public static ElectricConductance Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricConductanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricConductanceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricConductance, ElectricConductanceUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricConductance, ElectricConductanceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricConductance> IQuantityOfType<ElectricConductance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricConductance> IQuantityOfType<ElectricConductance>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricConductanceUnit> IQuantity<ElectricConductanceUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricConductanceUnit> IQuantity<ElectricConductanceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -271,82 +328,146 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Gigamho"/>
         /// </summary>
-        public QuantityValue Gigamhos => this.As(ElectricConductanceUnit.Gigamho);
+        public QuantityValue Gigamhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Gigamho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Gigasiemens"/>
         /// </summary>
-        public QuantityValue Gigasiemens => this.As(ElectricConductanceUnit.Gigasiemens);
+        public QuantityValue Gigasiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Gigasiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Kilomho"/>
         /// </summary>
-        public QuantityValue Kilomhos => this.As(ElectricConductanceUnit.Kilomho);
+        public QuantityValue Kilomhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Kilomho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Kilosiemens"/>
         /// </summary>
-        public QuantityValue Kilosiemens => this.As(ElectricConductanceUnit.Kilosiemens);
+        public QuantityValue Kilosiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Kilosiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Megamho"/>
         /// </summary>
-        public QuantityValue Megamhos => this.As(ElectricConductanceUnit.Megamho);
+        public QuantityValue Megamhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Megamho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Megasiemens"/>
         /// </summary>
-        public QuantityValue Megasiemens => this.As(ElectricConductanceUnit.Megasiemens);
+        public QuantityValue Megasiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Megasiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Mho"/>
         /// </summary>
-        public QuantityValue Mhos => this.As(ElectricConductanceUnit.Mho);
+        public QuantityValue Mhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Mho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Micromho"/>
         /// </summary>
-        public QuantityValue Micromhos => this.As(ElectricConductanceUnit.Micromho);
+        public QuantityValue Micromhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Micromho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Microsiemens"/>
         /// </summary>
-        public QuantityValue Microsiemens => this.As(ElectricConductanceUnit.Microsiemens);
+        public QuantityValue Microsiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Microsiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Millimho"/>
         /// </summary>
-        public QuantityValue Millimhos => this.As(ElectricConductanceUnit.Millimho);
+        public QuantityValue Millimhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Millimho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Millisiemens"/>
         /// </summary>
-        public QuantityValue Millisiemens => this.As(ElectricConductanceUnit.Millisiemens);
+        public QuantityValue Millisiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Millisiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Nanomho"/>
         /// </summary>
-        public QuantityValue Nanomhos => this.As(ElectricConductanceUnit.Nanomho);
+        public QuantityValue Nanomhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Nanomho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Nanosiemens"/>
         /// </summary>
-        public QuantityValue Nanosiemens => this.As(ElectricConductanceUnit.Nanosiemens);
+        public QuantityValue Nanosiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Nanosiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Siemens"/>
         /// </summary>
-        public QuantityValue Siemens => this.As(ElectricConductanceUnit.Siemens);
+        public QuantityValue Siemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Siemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Teramho"/>
         /// </summary>
-        public QuantityValue Teramhos => this.As(ElectricConductanceUnit.Teramho);
+        public QuantityValue Teramhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Teramho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Terasiemens"/>
         /// </summary>
-        public QuantityValue Terasiemens => this.As(ElectricConductanceUnit.Terasiemens);
+        public QuantityValue Terasiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricConductanceUnit.Terasiemens);
+        }
 
         #endregion
 
@@ -357,10 +478,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricConductanceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -368,10 +488,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricConductanceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -380,130 +499,114 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Gigamho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromGigamhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Gigamho);
-        }
+            => new(value, ElectricConductanceUnit.Gigamho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Gigasiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromGigasiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Gigasiemens);
-        }
+            => new(value, ElectricConductanceUnit.Gigasiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Kilomho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromKilomhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Kilomho);
-        }
+            => new(value, ElectricConductanceUnit.Kilomho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Kilosiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromKilosiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Kilosiemens);
-        }
+            => new(value, ElectricConductanceUnit.Kilosiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Megamho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromMegamhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Megamho);
-        }
+            => new(value, ElectricConductanceUnit.Megamho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Megasiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromMegasiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Megasiemens);
-        }
+            => new(value, ElectricConductanceUnit.Megasiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Mho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromMhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Mho);
-        }
+            => new(value, ElectricConductanceUnit.Mho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Micromho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromMicromhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Micromho);
-        }
+            => new(value, ElectricConductanceUnit.Micromho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Microsiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromMicrosiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Microsiemens);
-        }
+            => new(value, ElectricConductanceUnit.Microsiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Millimho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromMillimhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Millimho);
-        }
+            => new(value, ElectricConductanceUnit.Millimho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Millisiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromMillisiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Millisiemens);
-        }
+            => new(value, ElectricConductanceUnit.Millisiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Nanomho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromNanomhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Nanomho);
-        }
+            => new(value, ElectricConductanceUnit.Nanomho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Nanosiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromNanosiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Nanosiemens);
-        }
+            => new(value, ElectricConductanceUnit.Nanosiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Siemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromSiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Siemens);
-        }
+            => new(value, ElectricConductanceUnit.Siemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Teramho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromTeramhos(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Teramho);
-        }
+            => new(value, ElectricConductanceUnit.Teramho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Terasiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance FromTerasiemens(QuantityValue value)
-        {
-            return new ElectricConductance(value, ElectricConductanceUnit.Terasiemens);
-        }
+            => new(value, ElectricConductanceUnit.Terasiemens);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricConductanceUnit" /> to <see cref="ElectricConductance" />.
@@ -511,10 +614,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricConductance unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance From(QuantityValue value, ElectricConductanceUnit fromUnit)
-        {
-            return new ElectricConductance(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -542,10 +644,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -570,10 +671,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductance Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricConductance, ElectricConductanceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricConductance, ElectricConductanceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -583,10 +683,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricConductance result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -598,10 +697,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricConductance result)
-        {
-            return QuantityParser.Default.TryParse<ElectricConductance, ElectricConductanceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricConductance, ElectricConductanceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -612,10 +710,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricConductanceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -628,15 +725,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricConductanceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricConductanceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricConductanceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -648,10 +742,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricConductanceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -659,45 +752,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricConductance operator -(ElectricConductance right)
-        {
-            return new ElectricConductance(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricConductance"/> from adding two <see cref="ElectricConductance"/>.</summary>
         public static ElectricConductance operator +(ElectricConductance left, ElectricConductance right)
-        {
-            return new ElectricConductance(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricConductance"/> from subtracting two <see cref="ElectricConductance"/>.</summary>
         public static ElectricConductance operator -(ElectricConductance left, ElectricConductance right)
-        {
-            return new ElectricConductance(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricConductance"/> from multiplying value and <see cref="ElectricConductance"/>.</summary>
         public static ElectricConductance operator *(QuantityValue left, ElectricConductance right)
-        {
-            return new ElectricConductance(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricConductance"/> from multiplying value and <see cref="ElectricConductance"/>.</summary>
         public static ElectricConductance operator *(ElectricConductance left, QuantityValue right)
-        {
-            return new ElectricConductance(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricConductance"/> from dividing <see cref="ElectricConductance"/> by value.</summary>
         public static ElectricConductance operator /(ElectricConductance left, QuantityValue right)
-        {
-            return new ElectricConductance(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricConductance"/> by <see cref="ElectricConductance"/>.</summary>
         public static QuantityValue operator /(ElectricConductance left, ElectricConductance right)
-        {
-            return left.Siemens / right.Siemens;
-        }
+            => left.Siemens / right.Siemens;
 
         #endregion
 
@@ -706,15 +785,11 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="ElectricResistance"/>.</returns>
         public ElectricResistance Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricResistance.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, ElectricResistance.Info);
 
         /// <summary>Get <see cref="ElectricCurrent"/> from <see cref="ElectricConductance"/> * <see cref="ElectricPotential"/>.</summary>
         public static ElectricCurrent operator *(ElectricConductance electricConductance, ElectricPotential electricPotential)
-        {
-            return ElectricCurrent.FromAmperes(electricConductance.Siemens * electricPotential.Volts);
-        }
+            => ElectricCurrent.FromAmperes(electricConductance.Siemens * electricPotential.Volts);
 
         #endregion
 
@@ -722,27 +797,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricConductance left, ElectricConductance right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricConductance left, ElectricConductance right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricConductance left, ElectricConductance right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricConductance left, ElectricConductance right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricConductance"/> instances are equal.
@@ -753,10 +820,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricConductance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricConductance left, ElectricConductance right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricConductance"/> instances are not equal.
@@ -766,10 +832,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricConductance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricConductance left, ElectricConductance right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -782,12 +847,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricConductance otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricConductance otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -798,18 +858,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricConductance other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricConductance.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricConductance), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricConductance), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricConductance)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -838,9 +894,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricConductance other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -851,20 +905,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

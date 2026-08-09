@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -84,9 +85,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RadiationEquivalentDoseInfo"/> class with the default settings.</returns>
             public static RadiationEquivalentDoseInfo CreateDefault()
-            {
-                return new RadiationEquivalentDoseInfo(nameof(RadiationEquivalentDose), DefaultBaseUnit, GetDefaultMappings(), new RadiationEquivalentDose(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(RadiationEquivalentDose), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RadiationEquivalentDoseInfo"/> class with the default settings for the RadiationEquivalentDose quantity and a callback for customizing the default unit mappings.
@@ -98,19 +97,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RadiationEquivalentDoseInfo"/> class with the default settings.
             /// </returns>
             public static RadiationEquivalentDoseInfo CreateDefault(Func<IEnumerable<UnitDefinition<RadiationEquivalentDoseUnit>>, IEnumerable<IUnitDefinition<RadiationEquivalentDoseUnit>>> customizeUnits)
-            {
-                return new RadiationEquivalentDoseInfo(nameof(RadiationEquivalentDose), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new RadiationEquivalentDose(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(RadiationEquivalentDose), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RadiationEquivalentDose"/> is T^-2L^2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 0, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 0, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of RadiationEquivalentDose is Sievert. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static RadiationEquivalentDoseUnit DefaultBaseUnit { get; } = RadiationEquivalentDoseUnit.Sievert;
+            public static RadiationEquivalentDoseUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RadiationEquivalentDoseUnit.Sievert;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="RadiationEquivalentDoseUnit"/>.
@@ -173,7 +178,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="RadiationEquivalentDose" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<RadiationEquivalentDose, RadiationEquivalentDoseUnit> Info { get; }
@@ -181,53 +190,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of RadiationEquivalentDose, which is Sievert. All conversions go via this value.
         /// </summary>
-        public static RadiationEquivalentDoseUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static RadiationEquivalentDoseUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the RadiationEquivalentDose quantity.
         /// </summary>
-        public static IReadOnlyCollection<RadiationEquivalentDoseUnit> Units => Info.Units;
+        public static IReadOnlyCollection<RadiationEquivalentDoseUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Sievert.
         /// </summary>
-        public static RadiationEquivalentDose Zero => Info.Zero;
+        public static RadiationEquivalentDose Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public RadiationEquivalentDoseUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public RadiationEquivalentDoseUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<RadiationEquivalentDose, RadiationEquivalentDoseUnit> QuantityInfo => Info;
+        public QuantityInfo<RadiationEquivalentDose, RadiationEquivalentDoseUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<RadiationEquivalentDose> IQuantityOfType<RadiationEquivalentDose>.QuantityInfo => Info;
+        IQuantityInstanceInfo<RadiationEquivalentDose> IQuantityOfType<RadiationEquivalentDose>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<RadiationEquivalentDoseUnit> IQuantity<RadiationEquivalentDoseUnit>.QuantityInfo => Info;
+        QuantityInfo<RadiationEquivalentDoseUnit> IQuantity<RadiationEquivalentDoseUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -239,32 +296,56 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadiationEquivalentDoseUnit.Microsievert"/>
         /// </summary>
-        public QuantityValue Microsieverts => this.As(RadiationEquivalentDoseUnit.Microsievert);
+        public QuantityValue Microsieverts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RadiationEquivalentDoseUnit.Microsievert);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadiationEquivalentDoseUnit.MilliroentgenEquivalentMan"/>
         /// </summary>
-        public QuantityValue MilliroentgensEquivalentMan => this.As(RadiationEquivalentDoseUnit.MilliroentgenEquivalentMan);
+        public QuantityValue MilliroentgensEquivalentMan
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RadiationEquivalentDoseUnit.MilliroentgenEquivalentMan);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadiationEquivalentDoseUnit.Millisievert"/>
         /// </summary>
-        public QuantityValue Millisieverts => this.As(RadiationEquivalentDoseUnit.Millisievert);
+        public QuantityValue Millisieverts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RadiationEquivalentDoseUnit.Millisievert);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadiationEquivalentDoseUnit.Nanosievert"/>
         /// </summary>
-        public QuantityValue Nanosieverts => this.As(RadiationEquivalentDoseUnit.Nanosievert);
+        public QuantityValue Nanosieverts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RadiationEquivalentDoseUnit.Nanosievert);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadiationEquivalentDoseUnit.RoentgenEquivalentMan"/>
         /// </summary>
-        public QuantityValue RoentgensEquivalentMan => this.As(RadiationEquivalentDoseUnit.RoentgenEquivalentMan);
+        public QuantityValue RoentgensEquivalentMan
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RadiationEquivalentDoseUnit.RoentgenEquivalentMan);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadiationEquivalentDoseUnit.Sievert"/>
         /// </summary>
-        public QuantityValue Sieverts => this.As(RadiationEquivalentDoseUnit.Sievert);
+        public QuantityValue Sieverts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RadiationEquivalentDoseUnit.Sievert);
+        }
 
         #endregion
 
@@ -275,10 +356,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RadiationEquivalentDoseUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -286,10 +366,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RadiationEquivalentDoseUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -298,50 +377,44 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="RadiationEquivalentDose"/> from <see cref="RadiationEquivalentDoseUnit.Microsievert"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose FromMicrosieverts(QuantityValue value)
-        {
-            return new RadiationEquivalentDose(value, RadiationEquivalentDoseUnit.Microsievert);
-        }
+            => new(value, RadiationEquivalentDoseUnit.Microsievert);
 
         /// <summary>
         ///     Creates a <see cref="RadiationEquivalentDose"/> from <see cref="RadiationEquivalentDoseUnit.MilliroentgenEquivalentMan"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose FromMilliroentgensEquivalentMan(QuantityValue value)
-        {
-            return new RadiationEquivalentDose(value, RadiationEquivalentDoseUnit.MilliroentgenEquivalentMan);
-        }
+            => new(value, RadiationEquivalentDoseUnit.MilliroentgenEquivalentMan);
 
         /// <summary>
         ///     Creates a <see cref="RadiationEquivalentDose"/> from <see cref="RadiationEquivalentDoseUnit.Millisievert"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose FromMillisieverts(QuantityValue value)
-        {
-            return new RadiationEquivalentDose(value, RadiationEquivalentDoseUnit.Millisievert);
-        }
+            => new(value, RadiationEquivalentDoseUnit.Millisievert);
 
         /// <summary>
         ///     Creates a <see cref="RadiationEquivalentDose"/> from <see cref="RadiationEquivalentDoseUnit.Nanosievert"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose FromNanosieverts(QuantityValue value)
-        {
-            return new RadiationEquivalentDose(value, RadiationEquivalentDoseUnit.Nanosievert);
-        }
+            => new(value, RadiationEquivalentDoseUnit.Nanosievert);
 
         /// <summary>
         ///     Creates a <see cref="RadiationEquivalentDose"/> from <see cref="RadiationEquivalentDoseUnit.RoentgenEquivalentMan"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose FromRoentgensEquivalentMan(QuantityValue value)
-        {
-            return new RadiationEquivalentDose(value, RadiationEquivalentDoseUnit.RoentgenEquivalentMan);
-        }
+            => new(value, RadiationEquivalentDoseUnit.RoentgenEquivalentMan);
 
         /// <summary>
         ///     Creates a <see cref="RadiationEquivalentDose"/> from <see cref="RadiationEquivalentDoseUnit.Sievert"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose FromSieverts(QuantityValue value)
-        {
-            return new RadiationEquivalentDose(value, RadiationEquivalentDoseUnit.Sievert);
-        }
+            => new(value, RadiationEquivalentDoseUnit.Sievert);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="RadiationEquivalentDoseUnit" /> to <see cref="RadiationEquivalentDose" />.
@@ -349,10 +422,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>RadiationEquivalentDose unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose From(QuantityValue value, RadiationEquivalentDoseUnit fromUnit)
-        {
-            return new RadiationEquivalentDose(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -380,10 +452,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -408,10 +479,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDose Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<RadiationEquivalentDose, RadiationEquivalentDoseUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<RadiationEquivalentDose, RadiationEquivalentDoseUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -421,10 +491,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out RadiationEquivalentDose result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -436,10 +505,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out RadiationEquivalentDose result)
-        {
-            return QuantityParser.Default.TryParse<RadiationEquivalentDose, RadiationEquivalentDoseUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<RadiationEquivalentDose, RadiationEquivalentDoseUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -450,10 +518,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RadiationEquivalentDoseUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -466,15 +533,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static RadiationEquivalentDoseUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.RadiationEquivalentDoseUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out RadiationEquivalentDoseUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -486,10 +550,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out RadiationEquivalentDoseUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -497,45 +560,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static RadiationEquivalentDose operator -(RadiationEquivalentDose right)
-        {
-            return new RadiationEquivalentDose(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="RadiationEquivalentDose"/> from adding two <see cref="RadiationEquivalentDose"/>.</summary>
         public static RadiationEquivalentDose operator +(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return new RadiationEquivalentDose(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="RadiationEquivalentDose"/> from subtracting two <see cref="RadiationEquivalentDose"/>.</summary>
         public static RadiationEquivalentDose operator -(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return new RadiationEquivalentDose(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="RadiationEquivalentDose"/> from multiplying value and <see cref="RadiationEquivalentDose"/>.</summary>
         public static RadiationEquivalentDose operator *(QuantityValue left, RadiationEquivalentDose right)
-        {
-            return new RadiationEquivalentDose(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="RadiationEquivalentDose"/> from multiplying value and <see cref="RadiationEquivalentDose"/>.</summary>
         public static RadiationEquivalentDose operator *(RadiationEquivalentDose left, QuantityValue right)
-        {
-            return new RadiationEquivalentDose(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="RadiationEquivalentDose"/> from dividing <see cref="RadiationEquivalentDose"/> by value.</summary>
         public static RadiationEquivalentDose operator /(RadiationEquivalentDose left, QuantityValue right)
-        {
-            return new RadiationEquivalentDose(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="RadiationEquivalentDose"/> by <see cref="RadiationEquivalentDose"/>.</summary>
         public static QuantityValue operator /(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return left.Sieverts / right.Sieverts;
-        }
+            => left.Sieverts / right.Sieverts;
 
         #endregion
 
@@ -543,15 +592,11 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Duration"/> from <see cref="RadiationEquivalentDose"/> / <see cref="RadiationEquivalentDoseRate"/>.</summary>
         public static Duration operator /(RadiationEquivalentDose radiationEquivalentDose, RadiationEquivalentDoseRate radiationEquivalentDoseRate)
-        {
-            return Duration.FromHours(radiationEquivalentDose.Sieverts / radiationEquivalentDoseRate.SievertsPerHour);
-        }
+            => Duration.FromHours(radiationEquivalentDose.Sieverts / radiationEquivalentDoseRate.SievertsPerHour);
 
         /// <summary>Get <see cref="RadiationEquivalentDoseRate"/> from <see cref="RadiationEquivalentDose"/> / <see cref="Duration"/>.</summary>
         public static RadiationEquivalentDoseRate operator /(RadiationEquivalentDose radiationEquivalentDose, Duration duration)
-        {
-            return RadiationEquivalentDoseRate.FromSievertsPerHour(radiationEquivalentDose.Sieverts / duration.Hours);
-        }
+            => RadiationEquivalentDoseRate.FromSievertsPerHour(radiationEquivalentDose.Sieverts / duration.Hours);
 
         #endregion
 
@@ -559,27 +604,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="RadiationEquivalentDose"/> instances are equal.
@@ -590,10 +627,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(RadiationEquivalentDose)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="RadiationEquivalentDose"/> instances are not equal.
@@ -603,10 +639,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(RadiationEquivalentDose)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(RadiationEquivalentDose left, RadiationEquivalentDose right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -619,12 +654,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not RadiationEquivalentDose otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is RadiationEquivalentDose otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -635,18 +665,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(RadiationEquivalentDose other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current RadiationEquivalentDose.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(RadiationEquivalentDose), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(RadiationEquivalentDose), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(RadiationEquivalentDose)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -675,9 +701,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(RadiationEquivalentDose other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -688,20 +712,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

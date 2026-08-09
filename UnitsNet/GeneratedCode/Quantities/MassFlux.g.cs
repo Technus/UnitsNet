@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -85,9 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassFluxInfo"/> class with the default settings.</returns>
             public static MassFluxInfo CreateDefault()
-            {
-                return new MassFluxInfo(nameof(MassFlux), DefaultBaseUnit, GetDefaultMappings(), new MassFlux(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MassFlux), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassFluxInfo"/> class with the default settings for the MassFlux quantity and a callback for customizing the default unit mappings.
@@ -99,19 +98,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassFluxInfo"/> class with the default settings.
             /// </returns>
             public static MassFluxInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassFluxUnit>>, IEnumerable<IUnitDefinition<MassFluxUnit>>> customizeUnits)
-            {
-                return new MassFluxInfo(nameof(MassFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new MassFlux(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MassFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MassFlux"/> is T^-1L^-2M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-2, 1, -1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-2, 1, -1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of MassFlux is KilogramPerSecondPerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static MassFluxUnit DefaultBaseUnit { get; } = MassFluxUnit.KilogramPerSecondPerSquareMeter;
+            public static MassFluxUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassFluxUnit.KilogramPerSecondPerSquareMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="MassFluxUnit"/>.
@@ -192,7 +197,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="MassFlux" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<MassFlux, MassFluxUnit> Info { get; }
@@ -200,53 +209,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of MassFlux, which is KilogramPerSecondPerSquareMeter. All conversions go via this value.
         /// </summary>
-        public static MassFluxUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static MassFluxUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the MassFlux quantity.
         /// </summary>
-        public static IReadOnlyCollection<MassFluxUnit> Units => Info.Units;
+        public static IReadOnlyCollection<MassFluxUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit KilogramPerSecondPerSquareMeter.
         /// </summary>
-        public static MassFlux Zero => Info.Zero;
+        public static MassFlux Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public MassFluxUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public MassFluxUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<MassFlux, MassFluxUnit> QuantityInfo => Info;
+        public QuantityInfo<MassFlux, MassFluxUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<MassFlux> IQuantityOfType<MassFlux>.QuantityInfo => Info;
+        IQuantityInstanceInfo<MassFlux> IQuantityOfType<MassFlux>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<MassFluxUnit> IQuantity<MassFluxUnit>.QuantityInfo => Info;
+        QuantityInfo<MassFluxUnit> IQuantity<MassFluxUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -258,62 +315,110 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.GramPerHourPerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue GramsPerHourPerSquareCentimeter => this.As(MassFluxUnit.GramPerHourPerSquareCentimeter);
+        public QuantityValue GramsPerHourPerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.GramPerHourPerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.GramPerHourPerSquareMeter"/>
         /// </summary>
-        public QuantityValue GramsPerHourPerSquareMeter => this.As(MassFluxUnit.GramPerHourPerSquareMeter);
+        public QuantityValue GramsPerHourPerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.GramPerHourPerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.GramPerHourPerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue GramsPerHourPerSquareMillimeter => this.As(MassFluxUnit.GramPerHourPerSquareMillimeter);
+        public QuantityValue GramsPerHourPerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.GramPerHourPerSquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.GramPerSecondPerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue GramsPerSecondPerSquareCentimeter => this.As(MassFluxUnit.GramPerSecondPerSquareCentimeter);
+        public QuantityValue GramsPerSecondPerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.GramPerSecondPerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.GramPerSecondPerSquareMeter"/>
         /// </summary>
-        public QuantityValue GramsPerSecondPerSquareMeter => this.As(MassFluxUnit.GramPerSecondPerSquareMeter);
+        public QuantityValue GramsPerSecondPerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.GramPerSecondPerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.GramPerSecondPerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue GramsPerSecondPerSquareMillimeter => this.As(MassFluxUnit.GramPerSecondPerSquareMillimeter);
+        public QuantityValue GramsPerSecondPerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.GramPerSecondPerSquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.KilogramPerHourPerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerHourPerSquareCentimeter => this.As(MassFluxUnit.KilogramPerHourPerSquareCentimeter);
+        public QuantityValue KilogramsPerHourPerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.KilogramPerHourPerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.KilogramPerHourPerSquareMeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerHourPerSquareMeter => this.As(MassFluxUnit.KilogramPerHourPerSquareMeter);
+        public QuantityValue KilogramsPerHourPerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.KilogramPerHourPerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.KilogramPerHourPerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerHourPerSquareMillimeter => this.As(MassFluxUnit.KilogramPerHourPerSquareMillimeter);
+        public QuantityValue KilogramsPerHourPerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.KilogramPerHourPerSquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.KilogramPerSecondPerSquareCentimeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerSecondPerSquareCentimeter => this.As(MassFluxUnit.KilogramPerSecondPerSquareCentimeter);
+        public QuantityValue KilogramsPerSecondPerSquareCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.KilogramPerSecondPerSquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.KilogramPerSecondPerSquareMeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerSecondPerSquareMeter => this.As(MassFluxUnit.KilogramPerSecondPerSquareMeter);
+        public QuantityValue KilogramsPerSecondPerSquareMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.KilogramPerSecondPerSquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.KilogramPerSecondPerSquareMillimeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerSecondPerSquareMillimeter => this.As(MassFluxUnit.KilogramPerSecondPerSquareMillimeter);
+        public QuantityValue KilogramsPerSecondPerSquareMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MassFluxUnit.KilogramPerSecondPerSquareMillimeter);
+        }
 
         #endregion
 
@@ -324,10 +429,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MassFluxUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -335,10 +439,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MassFluxUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -347,98 +450,86 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.GramPerHourPerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromGramsPerHourPerSquareCentimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.GramPerHourPerSquareCentimeter);
-        }
+            => new(value, MassFluxUnit.GramPerHourPerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.GramPerHourPerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromGramsPerHourPerSquareMeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.GramPerHourPerSquareMeter);
-        }
+            => new(value, MassFluxUnit.GramPerHourPerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.GramPerHourPerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromGramsPerHourPerSquareMillimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.GramPerHourPerSquareMillimeter);
-        }
+            => new(value, MassFluxUnit.GramPerHourPerSquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.GramPerSecondPerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromGramsPerSecondPerSquareCentimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.GramPerSecondPerSquareCentimeter);
-        }
+            => new(value, MassFluxUnit.GramPerSecondPerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.GramPerSecondPerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromGramsPerSecondPerSquareMeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.GramPerSecondPerSquareMeter);
-        }
+            => new(value, MassFluxUnit.GramPerSecondPerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.GramPerSecondPerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromGramsPerSecondPerSquareMillimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.GramPerSecondPerSquareMillimeter);
-        }
+            => new(value, MassFluxUnit.GramPerSecondPerSquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.KilogramPerHourPerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromKilogramsPerHourPerSquareCentimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.KilogramPerHourPerSquareCentimeter);
-        }
+            => new(value, MassFluxUnit.KilogramPerHourPerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.KilogramPerHourPerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromKilogramsPerHourPerSquareMeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.KilogramPerHourPerSquareMeter);
-        }
+            => new(value, MassFluxUnit.KilogramPerHourPerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.KilogramPerHourPerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromKilogramsPerHourPerSquareMillimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.KilogramPerHourPerSquareMillimeter);
-        }
+            => new(value, MassFluxUnit.KilogramPerHourPerSquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.KilogramPerSecondPerSquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromKilogramsPerSecondPerSquareCentimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.KilogramPerSecondPerSquareCentimeter);
-        }
+            => new(value, MassFluxUnit.KilogramPerSecondPerSquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.KilogramPerSecondPerSquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromKilogramsPerSecondPerSquareMeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.KilogramPerSecondPerSquareMeter);
-        }
+            => new(value, MassFluxUnit.KilogramPerSecondPerSquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.KilogramPerSecondPerSquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux FromKilogramsPerSecondPerSquareMillimeter(QuantityValue value)
-        {
-            return new MassFlux(value, MassFluxUnit.KilogramPerSecondPerSquareMillimeter);
-        }
+            => new(value, MassFluxUnit.KilogramPerSecondPerSquareMillimeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="MassFluxUnit" /> to <see cref="MassFlux" />.
@@ -446,10 +537,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>MassFlux unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux From(QuantityValue value, MassFluxUnit fromUnit)
-        {
-            return new MassFlux(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -477,10 +567,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -505,10 +594,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFlux Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<MassFlux, MassFluxUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<MassFlux, MassFluxUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -518,10 +606,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out MassFlux result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -533,10 +620,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out MassFlux result)
-        {
-            return QuantityParser.Default.TryParse<MassFlux, MassFluxUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<MassFlux, MassFluxUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -547,10 +633,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MassFluxUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -563,15 +648,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static MassFluxUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.MassFluxUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out MassFluxUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -583,10 +665,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out MassFluxUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -594,45 +675,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static MassFlux operator -(MassFlux right)
-        {
-            return new MassFlux(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="MassFlux"/> from adding two <see cref="MassFlux"/>.</summary>
         public static MassFlux operator +(MassFlux left, MassFlux right)
-        {
-            return new MassFlux(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MassFlux"/> from subtracting two <see cref="MassFlux"/>.</summary>
         public static MassFlux operator -(MassFlux left, MassFlux right)
-        {
-            return new MassFlux(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MassFlux"/> from multiplying value and <see cref="MassFlux"/>.</summary>
         public static MassFlux operator *(QuantityValue left, MassFlux right)
-        {
-            return new MassFlux(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="MassFlux"/> from multiplying value and <see cref="MassFlux"/>.</summary>
         public static MassFlux operator *(MassFlux left, QuantityValue right)
-        {
-            return new MassFlux(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="MassFlux"/> from dividing <see cref="MassFlux"/> by value.</summary>
         public static MassFlux operator /(MassFlux left, QuantityValue right)
-        {
-            return new MassFlux(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="MassFlux"/> by <see cref="MassFlux"/>.</summary>
         public static QuantityValue operator /(MassFlux left, MassFlux right)
-        {
-            return left.KilogramsPerSecondPerSquareMeter / right.KilogramsPerSecondPerSquareMeter;
-        }
+            => left.KilogramsPerSecondPerSquareMeter / right.KilogramsPerSecondPerSquareMeter;
 
         #endregion
 
@@ -640,21 +707,15 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Density"/> from <see cref="MassFlux"/> / <see cref="Speed"/>.</summary>
         public static Density operator /(MassFlux massFlux, Speed speed)
-        {
-            return Density.FromKilogramsPerCubicMeter(massFlux.KilogramsPerSecondPerSquareMeter / speed.MetersPerSecond);
-        }
+            => Density.FromKilogramsPerCubicMeter(massFlux.KilogramsPerSecondPerSquareMeter / speed.MetersPerSecond);
 
         /// <summary>Get <see cref="MassFlow"/> from <see cref="MassFlux"/> * <see cref="Area"/>.</summary>
         public static MassFlow operator *(MassFlux massFlux, Area area)
-        {
-            return MassFlow.FromKilogramsPerSecond(massFlux.KilogramsPerSecondPerSquareMeter * area.SquareMeters);
-        }
+            => MassFlow.FromKilogramsPerSecond(massFlux.KilogramsPerSecondPerSquareMeter * area.SquareMeters);
 
         /// <summary>Get <see cref="Speed"/> from <see cref="MassFlux"/> / <see cref="Density"/>.</summary>
         public static Speed operator /(MassFlux massFlux, Density density)
-        {
-            return Speed.FromMetersPerSecond(massFlux.KilogramsPerSecondPerSquareMeter / density.KilogramsPerCubicMeter);
-        }
+            => Speed.FromMetersPerSecond(massFlux.KilogramsPerSecondPerSquareMeter / density.KilogramsPerCubicMeter);
 
         #endregion
 
@@ -662,27 +723,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(MassFlux left, MassFlux right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(MassFlux left, MassFlux right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(MassFlux left, MassFlux right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(MassFlux left, MassFlux right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="MassFlux"/> instances are equal.
@@ -693,10 +746,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(MassFlux)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(MassFlux left, MassFlux right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="MassFlux"/> instances are not equal.
@@ -706,10 +758,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(MassFlux)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(MassFlux left, MassFlux right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -722,12 +773,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not MassFlux otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is MassFlux otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -738,18 +784,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(MassFlux other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current MassFlux.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(MassFlux), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(MassFlux), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(MassFlux)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -778,9 +820,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(MassFlux other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -791,20 +831,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

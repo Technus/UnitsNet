@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RotationalStiffnessPerLengthInfo"/> class with the default settings.</returns>
             public static RotationalStiffnessPerLengthInfo CreateDefault()
-            {
-                return new RotationalStiffnessPerLengthInfo(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, GetDefaultMappings(), new RotationalStiffnessPerLength(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RotationalStiffnessPerLengthInfo"/> class with the default settings for the RotationalStiffnessPerLength quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RotationalStiffnessPerLengthInfo"/> class with the default settings.
             /// </returns>
             public static RotationalStiffnessPerLengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<RotationalStiffnessPerLengthUnit>>, IEnumerable<IUnitDefinition<RotationalStiffnessPerLengthUnit>>> customizeUnits)
-            {
-                return new RotationalStiffnessPerLengthInfo(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new RotationalStiffnessPerLength(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RotationalStiffnessPerLength"/> is T^-2LM.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, 1, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, 1, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of RotationalStiffnessPerLength is NewtonMeterPerRadianPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static RotationalStiffnessPerLengthUnit DefaultBaseUnit { get; } = RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter;
+            public static RotationalStiffnessPerLengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="RotationalStiffnessPerLengthUnit"/>.
@@ -169,7 +174,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="RotationalStiffnessPerLength" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit> Info { get; }
@@ -177,53 +186,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of RotationalStiffnessPerLength, which is NewtonMeterPerRadianPerMeter. All conversions go via this value.
         /// </summary>
-        public static RotationalStiffnessPerLengthUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static RotationalStiffnessPerLengthUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the RotationalStiffnessPerLength quantity.
         /// </summary>
-        public static IReadOnlyCollection<RotationalStiffnessPerLengthUnit> Units => Info.Units;
+        public static IReadOnlyCollection<RotationalStiffnessPerLengthUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit NewtonMeterPerRadianPerMeter.
         /// </summary>
-        public static RotationalStiffnessPerLength Zero => Info.Zero;
+        public static RotationalStiffnessPerLength Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public RotationalStiffnessPerLengthUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public RotationalStiffnessPerLengthUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit> QuantityInfo => Info;
+        public QuantityInfo<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<RotationalStiffnessPerLength> IQuantityOfType<RotationalStiffnessPerLength>.QuantityInfo => Info;
+        IQuantityInstanceInfo<RotationalStiffnessPerLength> IQuantityOfType<RotationalStiffnessPerLength>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<RotationalStiffnessPerLengthUnit> IQuantity<RotationalStiffnessPerLengthUnit>.QuantityInfo => Info;
+        QuantityInfo<RotationalStiffnessPerLengthUnit> IQuantity<RotationalStiffnessPerLengthUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -235,27 +292,47 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter"/>
         /// </summary>
-        public QuantityValue KilonewtonMetersPerRadianPerMeter => this.As(RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter);
+        public QuantityValue KilonewtonMetersPerRadianPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalStiffnessPerLengthUnit.KilopoundForceFootPerDegreesPerFoot"/>
         /// </summary>
-        public QuantityValue KilopoundForceFeetPerDegreesPerFeet => this.As(RotationalStiffnessPerLengthUnit.KilopoundForceFootPerDegreesPerFoot);
+        public QuantityValue KilopoundForceFeetPerDegreesPerFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalStiffnessPerLengthUnit.KilopoundForceFootPerDegreesPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalStiffnessPerLengthUnit.MeganewtonMeterPerRadianPerMeter"/>
         /// </summary>
-        public QuantityValue MeganewtonMetersPerRadianPerMeter => this.As(RotationalStiffnessPerLengthUnit.MeganewtonMeterPerRadianPerMeter);
+        public QuantityValue MeganewtonMetersPerRadianPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalStiffnessPerLengthUnit.MeganewtonMeterPerRadianPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter"/>
         /// </summary>
-        public QuantityValue NewtonMetersPerRadianPerMeter => this.As(RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter);
+        public QuantityValue NewtonMetersPerRadianPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalStiffnessPerLengthUnit.PoundForceFootPerDegreesPerFoot"/>
         /// </summary>
-        public QuantityValue PoundForceFeetPerDegreesPerFeet => this.As(RotationalStiffnessPerLengthUnit.PoundForceFootPerDegreesPerFoot);
+        public QuantityValue PoundForceFeetPerDegreesPerFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalStiffnessPerLengthUnit.PoundForceFootPerDegreesPerFoot);
+        }
 
         #endregion
 
@@ -266,10 +343,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RotationalStiffnessPerLengthUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -277,10 +353,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RotationalStiffnessPerLengthUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -289,42 +364,37 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="RotationalStiffnessPerLength"/> from <see cref="RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength FromKilonewtonMetersPerRadianPerMeter(QuantityValue value)
-        {
-            return new RotationalStiffnessPerLength(value, RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter);
-        }
+            => new(value, RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="RotationalStiffnessPerLength"/> from <see cref="RotationalStiffnessPerLengthUnit.KilopoundForceFootPerDegreesPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength FromKilopoundForceFeetPerDegreesPerFeet(QuantityValue value)
-        {
-            return new RotationalStiffnessPerLength(value, RotationalStiffnessPerLengthUnit.KilopoundForceFootPerDegreesPerFoot);
-        }
+            => new(value, RotationalStiffnessPerLengthUnit.KilopoundForceFootPerDegreesPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="RotationalStiffnessPerLength"/> from <see cref="RotationalStiffnessPerLengthUnit.MeganewtonMeterPerRadianPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength FromMeganewtonMetersPerRadianPerMeter(QuantityValue value)
-        {
-            return new RotationalStiffnessPerLength(value, RotationalStiffnessPerLengthUnit.MeganewtonMeterPerRadianPerMeter);
-        }
+            => new(value, RotationalStiffnessPerLengthUnit.MeganewtonMeterPerRadianPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="RotationalStiffnessPerLength"/> from <see cref="RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength FromNewtonMetersPerRadianPerMeter(QuantityValue value)
-        {
-            return new RotationalStiffnessPerLength(value, RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter);
-        }
+            => new(value, RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="RotationalStiffnessPerLength"/> from <see cref="RotationalStiffnessPerLengthUnit.PoundForceFootPerDegreesPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength FromPoundForceFeetPerDegreesPerFeet(QuantityValue value)
-        {
-            return new RotationalStiffnessPerLength(value, RotationalStiffnessPerLengthUnit.PoundForceFootPerDegreesPerFoot);
-        }
+            => new(value, RotationalStiffnessPerLengthUnit.PoundForceFootPerDegreesPerFoot);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="RotationalStiffnessPerLengthUnit" /> to <see cref="RotationalStiffnessPerLength" />.
@@ -332,10 +402,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>RotationalStiffnessPerLength unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength From(QuantityValue value, RotationalStiffnessPerLengthUnit fromUnit)
-        {
-            return new RotationalStiffnessPerLength(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -363,10 +432,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -391,10 +459,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLength Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -404,10 +471,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out RotationalStiffnessPerLength result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -419,10 +485,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out RotationalStiffnessPerLength result)
-        {
-            return QuantityParser.Default.TryParse<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -433,10 +498,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalStiffnessPerLengthUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -449,15 +513,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static RotationalStiffnessPerLengthUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.RotationalStiffnessPerLengthUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out RotationalStiffnessPerLengthUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -469,10 +530,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out RotationalStiffnessPerLengthUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -480,45 +540,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static RotationalStiffnessPerLength operator -(RotationalStiffnessPerLength right)
-        {
-            return new RotationalStiffnessPerLength(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="RotationalStiffnessPerLength"/> from adding two <see cref="RotationalStiffnessPerLength"/>.</summary>
         public static RotationalStiffnessPerLength operator +(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return new RotationalStiffnessPerLength(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="RotationalStiffnessPerLength"/> from subtracting two <see cref="RotationalStiffnessPerLength"/>.</summary>
         public static RotationalStiffnessPerLength operator -(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return new RotationalStiffnessPerLength(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="RotationalStiffnessPerLength"/> from multiplying value and <see cref="RotationalStiffnessPerLength"/>.</summary>
         public static RotationalStiffnessPerLength operator *(QuantityValue left, RotationalStiffnessPerLength right)
-        {
-            return new RotationalStiffnessPerLength(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="RotationalStiffnessPerLength"/> from multiplying value and <see cref="RotationalStiffnessPerLength"/>.</summary>
         public static RotationalStiffnessPerLength operator *(RotationalStiffnessPerLength left, QuantityValue right)
-        {
-            return new RotationalStiffnessPerLength(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="RotationalStiffnessPerLength"/> from dividing <see cref="RotationalStiffnessPerLength"/> by value.</summary>
         public static RotationalStiffnessPerLength operator /(RotationalStiffnessPerLength left, QuantityValue right)
-        {
-            return new RotationalStiffnessPerLength(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="RotationalStiffnessPerLength"/> by <see cref="RotationalStiffnessPerLength"/>.</summary>
         public static QuantityValue operator /(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return left.NewtonMetersPerRadianPerMeter / right.NewtonMetersPerRadianPerMeter;
-        }
+            => left.NewtonMetersPerRadianPerMeter / right.NewtonMetersPerRadianPerMeter;
 
         #endregion
 
@@ -526,9 +572,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="RotationalStiffness"/> from <see cref="RotationalStiffnessPerLength"/> * <see cref="Length"/>.</summary>
         public static RotationalStiffness operator *(RotationalStiffnessPerLength rotationalStiffnessPerLength, Length length)
-        {
-            return RotationalStiffness.FromNewtonMetersPerRadian(rotationalStiffnessPerLength.NewtonMetersPerRadianPerMeter * length.Meters);
-        }
+            => RotationalStiffness.FromNewtonMetersPerRadian(rotationalStiffnessPerLength.NewtonMetersPerRadianPerMeter * length.Meters);
 
         #endregion
 
@@ -536,27 +580,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="RotationalStiffnessPerLength"/> instances are equal.
@@ -567,10 +603,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(RotationalStiffnessPerLength)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="RotationalStiffnessPerLength"/> instances are not equal.
@@ -580,10 +615,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(RotationalStiffnessPerLength)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(RotationalStiffnessPerLength left, RotationalStiffnessPerLength right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -596,12 +630,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not RotationalStiffnessPerLength otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is RotationalStiffnessPerLength otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -612,18 +641,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(RotationalStiffnessPerLength other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current RotationalStiffnessPerLength.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(RotationalStiffnessPerLength), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(RotationalStiffnessPerLength), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(RotationalStiffnessPerLength)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -652,9 +677,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(RotationalStiffnessPerLength other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -665,20 +688,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

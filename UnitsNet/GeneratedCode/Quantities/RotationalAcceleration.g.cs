@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RotationalAccelerationInfo"/> class with the default settings.</returns>
             public static RotationalAccelerationInfo CreateDefault()
-            {
-                return new RotationalAccelerationInfo(nameof(RotationalAcceleration), DefaultBaseUnit, GetDefaultMappings(), new RotationalAcceleration(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(RotationalAcceleration), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RotationalAccelerationInfo"/> class with the default settings for the RotationalAcceleration quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RotationalAccelerationInfo"/> class with the default settings.
             /// </returns>
             public static RotationalAccelerationInfo CreateDefault(Func<IEnumerable<UnitDefinition<RotationalAccelerationUnit>>, IEnumerable<IUnitDefinition<RotationalAccelerationUnit>>> customizeUnits)
-            {
-                return new RotationalAccelerationInfo(nameof(RotationalAcceleration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new RotationalAcceleration(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(RotationalAcceleration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RotationalAcceleration"/> is T^-2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of RotationalAcceleration is RadianPerSecondSquared. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static RotationalAccelerationUnit DefaultBaseUnit { get; } = RotationalAccelerationUnit.RadianPerSecondSquared;
+            public static RotationalAccelerationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RotationalAccelerationUnit.RadianPerSecondSquared;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="RotationalAccelerationUnit"/>.
@@ -166,7 +171,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="RotationalAcceleration" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<RotationalAcceleration, RotationalAccelerationUnit> Info { get; }
@@ -174,53 +183,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of RotationalAcceleration, which is RadianPerSecondSquared. All conversions go via this value.
         /// </summary>
-        public static RotationalAccelerationUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static RotationalAccelerationUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the RotationalAcceleration quantity.
         /// </summary>
-        public static IReadOnlyCollection<RotationalAccelerationUnit> Units => Info.Units;
+        public static IReadOnlyCollection<RotationalAccelerationUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit RadianPerSecondSquared.
         /// </summary>
-        public static RotationalAcceleration Zero => Info.Zero;
+        public static RotationalAcceleration Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public RotationalAccelerationUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public RotationalAccelerationUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<RotationalAcceleration, RotationalAccelerationUnit> QuantityInfo => Info;
+        public QuantityInfo<RotationalAcceleration, RotationalAccelerationUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<RotationalAcceleration> IQuantityOfType<RotationalAcceleration>.QuantityInfo => Info;
+        IQuantityInstanceInfo<RotationalAcceleration> IQuantityOfType<RotationalAcceleration>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<RotationalAccelerationUnit> IQuantity<RotationalAccelerationUnit>.QuantityInfo => Info;
+        QuantityInfo<RotationalAccelerationUnit> IQuantity<RotationalAccelerationUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -232,22 +289,38 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalAccelerationUnit.DegreePerSecondSquared"/>
         /// </summary>
-        public QuantityValue DegreesPerSecondSquared => this.As(RotationalAccelerationUnit.DegreePerSecondSquared);
+        public QuantityValue DegreesPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalAccelerationUnit.DegreePerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalAccelerationUnit.RadianPerSecondSquared"/>
         /// </summary>
-        public QuantityValue RadiansPerSecondSquared => this.As(RotationalAccelerationUnit.RadianPerSecondSquared);
+        public QuantityValue RadiansPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalAccelerationUnit.RadianPerSecondSquared);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalAccelerationUnit.RevolutionPerMinutePerSecond"/>
         /// </summary>
-        public QuantityValue RevolutionsPerMinutePerSecond => this.As(RotationalAccelerationUnit.RevolutionPerMinutePerSecond);
+        public QuantityValue RevolutionsPerMinutePerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalAccelerationUnit.RevolutionPerMinutePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalAccelerationUnit.RevolutionPerSecondSquared"/>
         /// </summary>
-        public QuantityValue RevolutionsPerSecondSquared => this.As(RotationalAccelerationUnit.RevolutionPerSecondSquared);
+        public QuantityValue RevolutionsPerSecondSquared
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(RotationalAccelerationUnit.RevolutionPerSecondSquared);
+        }
 
         #endregion
 
@@ -258,10 +331,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RotationalAccelerationUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -269,10 +341,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(RotationalAccelerationUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -281,34 +352,30 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="RotationalAcceleration"/> from <see cref="RotationalAccelerationUnit.DegreePerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAcceleration FromDegreesPerSecondSquared(QuantityValue value)
-        {
-            return new RotationalAcceleration(value, RotationalAccelerationUnit.DegreePerSecondSquared);
-        }
+            => new(value, RotationalAccelerationUnit.DegreePerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="RotationalAcceleration"/> from <see cref="RotationalAccelerationUnit.RadianPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAcceleration FromRadiansPerSecondSquared(QuantityValue value)
-        {
-            return new RotationalAcceleration(value, RotationalAccelerationUnit.RadianPerSecondSquared);
-        }
+            => new(value, RotationalAccelerationUnit.RadianPerSecondSquared);
 
         /// <summary>
         ///     Creates a <see cref="RotationalAcceleration"/> from <see cref="RotationalAccelerationUnit.RevolutionPerMinutePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAcceleration FromRevolutionsPerMinutePerSecond(QuantityValue value)
-        {
-            return new RotationalAcceleration(value, RotationalAccelerationUnit.RevolutionPerMinutePerSecond);
-        }
+            => new(value, RotationalAccelerationUnit.RevolutionPerMinutePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="RotationalAcceleration"/> from <see cref="RotationalAccelerationUnit.RevolutionPerSecondSquared"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAcceleration FromRevolutionsPerSecondSquared(QuantityValue value)
-        {
-            return new RotationalAcceleration(value, RotationalAccelerationUnit.RevolutionPerSecondSquared);
-        }
+            => new(value, RotationalAccelerationUnit.RevolutionPerSecondSquared);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="RotationalAccelerationUnit" /> to <see cref="RotationalAcceleration" />.
@@ -316,10 +383,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>RotationalAcceleration unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAcceleration From(QuantityValue value, RotationalAccelerationUnit fromUnit)
-        {
-            return new RotationalAcceleration(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -347,10 +413,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAcceleration Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -375,10 +440,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAcceleration Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<RotationalAcceleration, RotationalAccelerationUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<RotationalAcceleration, RotationalAccelerationUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -388,10 +452,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out RotationalAcceleration result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -403,10 +466,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out RotationalAcceleration result)
-        {
-            return QuantityParser.Default.TryParse<RotationalAcceleration, RotationalAccelerationUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<RotationalAcceleration, RotationalAccelerationUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -417,10 +479,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RotationalAccelerationUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -433,15 +494,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static RotationalAccelerationUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.RotationalAccelerationUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out RotationalAccelerationUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -453,10 +511,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out RotationalAccelerationUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -464,45 +521,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static RotationalAcceleration operator -(RotationalAcceleration right)
-        {
-            return new RotationalAcceleration(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="RotationalAcceleration"/> from adding two <see cref="RotationalAcceleration"/>.</summary>
         public static RotationalAcceleration operator +(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return new RotationalAcceleration(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="RotationalAcceleration"/> from subtracting two <see cref="RotationalAcceleration"/>.</summary>
         public static RotationalAcceleration operator -(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return new RotationalAcceleration(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="RotationalAcceleration"/> from multiplying value and <see cref="RotationalAcceleration"/>.</summary>
         public static RotationalAcceleration operator *(QuantityValue left, RotationalAcceleration right)
-        {
-            return new RotationalAcceleration(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="RotationalAcceleration"/> from multiplying value and <see cref="RotationalAcceleration"/>.</summary>
         public static RotationalAcceleration operator *(RotationalAcceleration left, QuantityValue right)
-        {
-            return new RotationalAcceleration(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="RotationalAcceleration"/> from dividing <see cref="RotationalAcceleration"/> by value.</summary>
         public static RotationalAcceleration operator /(RotationalAcceleration left, QuantityValue right)
-        {
-            return new RotationalAcceleration(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="RotationalAcceleration"/> by <see cref="RotationalAcceleration"/>.</summary>
         public static QuantityValue operator /(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return left.RadiansPerSecondSquared / right.RadiansPerSecondSquared;
-        }
+            => left.RadiansPerSecondSquared / right.RadiansPerSecondSquared;
 
         #endregion
 
@@ -510,9 +553,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="RotationalSpeed"/> from <see cref="RotationalAcceleration"/> * <see cref="Duration"/>.</summary>
         public static RotationalSpeed operator *(RotationalAcceleration rotationalAcceleration, Duration duration)
-        {
-            return RotationalSpeed.FromRadiansPerSecond(rotationalAcceleration.RadiansPerSecondSquared * duration.Seconds);
-        }
+            => RotationalSpeed.FromRadiansPerSecond(rotationalAcceleration.RadiansPerSecondSquared * duration.Seconds);
 
         #endregion
 
@@ -520,27 +561,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="RotationalAcceleration"/> instances are equal.
@@ -551,10 +584,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(RotationalAcceleration)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="RotationalAcceleration"/> instances are not equal.
@@ -564,10 +596,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(RotationalAcceleration)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(RotationalAcceleration left, RotationalAcceleration right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -580,12 +611,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not RotationalAcceleration otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is RotationalAcceleration otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -596,18 +622,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(RotationalAcceleration other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current RotationalAcceleration.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(RotationalAcceleration), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(RotationalAcceleration), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(RotationalAcceleration)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -636,9 +658,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(RotationalAcceleration other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -649,20 +669,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

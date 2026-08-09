@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -93,9 +94,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="DensityInfo"/> class with the default settings.</returns>
             public static DensityInfo CreateDefault()
-            {
-                return new DensityInfo(nameof(Density), DefaultBaseUnit, GetDefaultMappings(), new Density(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Density), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="DensityInfo"/> class with the default settings for the Density quantity and a callback for customizing the default unit mappings.
@@ -107,19 +106,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="DensityInfo"/> class with the default settings.
             /// </returns>
             public static DensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<DensityUnit>>, IEnumerable<IUnitDefinition<DensityUnit>>> customizeUnits)
-            {
-                return new DensityInfo(nameof(Density), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Density(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Density), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Density"/> is L^-3M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-3, 1, 0, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-3, 1, 0, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Density is KilogramPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static DensityUnit DefaultBaseUnit { get; } = DensityUnit.KilogramPerCubicMeter;
+            public static DensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = DensityUnit.KilogramPerCubicMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="DensityUnit"/>.
@@ -332,7 +337,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Density" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Density, DensityUnit> Info { get; }
@@ -340,53 +349,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Density, which is KilogramPerCubicMeter. All conversions go via this value.
         /// </summary>
-        public static DensityUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static DensityUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Density quantity.
         /// </summary>
-        public static IReadOnlyCollection<DensityUnit> Units => Info.Units;
+        public static IReadOnlyCollection<DensityUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit KilogramPerCubicMeter.
         /// </summary>
-        public static Density Zero => Info.Zero;
+        public static Density Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public DensityUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public DensityUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Density, DensityUnit> QuantityInfo => Info;
+        public QuantityInfo<Density, DensityUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Density> IQuantityOfType<Density>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Density> IQuantityOfType<Density>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<DensityUnit> IQuantity<DensityUnit>.QuantityInfo => Info;
+        QuantityInfo<DensityUnit> IQuantity<DensityUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -398,282 +455,506 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.CentigramPerDeciliter"/>
         /// </summary>
-        public QuantityValue CentigramsPerDeciliter => this.As(DensityUnit.CentigramPerDeciliter);
+        public QuantityValue CentigramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.CentigramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.CentigramPerLiter"/>
         /// </summary>
-        public QuantityValue CentigramsPerLiter => this.As(DensityUnit.CentigramPerLiter);
+        public QuantityValue CentigramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.CentigramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.CentigramPerMilliliter"/>
         /// </summary>
-        public QuantityValue CentigramsPerMilliliter => this.As(DensityUnit.CentigramPerMilliliter);
+        public QuantityValue CentigramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.CentigramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.DecigramPerDeciliter"/>
         /// </summary>
-        public QuantityValue DecigramsPerDeciliter => this.As(DensityUnit.DecigramPerDeciliter);
+        public QuantityValue DecigramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.DecigramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.DecigramPerLiter"/>
         /// </summary>
-        public QuantityValue DecigramsPerLiter => this.As(DensityUnit.DecigramPerLiter);
+        public QuantityValue DecigramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.DecigramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.DecigramPerMilliliter"/>
         /// </summary>
-        public QuantityValue DecigramsPerMilliliter => this.As(DensityUnit.DecigramPerMilliliter);
+        public QuantityValue DecigramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.DecigramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.FemtogramPerDeciliter"/>
         /// </summary>
-        public QuantityValue FemtogramsPerDeciliter => this.As(DensityUnit.FemtogramPerDeciliter);
+        public QuantityValue FemtogramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.FemtogramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.FemtogramPerLiter"/>
         /// </summary>
-        public QuantityValue FemtogramsPerLiter => this.As(DensityUnit.FemtogramPerLiter);
+        public QuantityValue FemtogramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.FemtogramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.FemtogramPerMilliliter"/>
         /// </summary>
-        public QuantityValue FemtogramsPerMilliliter => this.As(DensityUnit.FemtogramPerMilliliter);
+        public QuantityValue FemtogramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.FemtogramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue GramsPerCubicCentimeter => this.As(DensityUnit.GramPerCubicCentimeter);
+        public QuantityValue GramsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerCubicFoot"/>
         /// </summary>
-        public QuantityValue GramsPerCubicFoot => this.As(DensityUnit.GramPerCubicFoot);
+        public QuantityValue GramsPerCubicFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerCubicInch"/>
         /// </summary>
-        public QuantityValue GramsPerCubicInch => this.As(DensityUnit.GramPerCubicInch);
+        public QuantityValue GramsPerCubicInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerCubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerCubicMeter"/>
         /// </summary>
-        public QuantityValue GramsPerCubicMeter => this.As(DensityUnit.GramPerCubicMeter);
+        public QuantityValue GramsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue GramsPerCubicMillimeter => this.As(DensityUnit.GramPerCubicMillimeter);
+        public QuantityValue GramsPerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerCubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerDeciliter"/>
         /// </summary>
-        public QuantityValue GramsPerDeciliter => this.As(DensityUnit.GramPerDeciliter);
+        public QuantityValue GramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerLiter"/>
         /// </summary>
-        public QuantityValue GramsPerLiter => this.As(DensityUnit.GramPerLiter);
+        public QuantityValue GramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.GramPerMilliliter"/>
         /// </summary>
-        public QuantityValue GramsPerMilliliter => this.As(DensityUnit.GramPerMilliliter);
+        public QuantityValue GramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.GramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.KilogramPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerCubicCentimeter => this.As(DensityUnit.KilogramPerCubicCentimeter);
+        public QuantityValue KilogramsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.KilogramPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.KilogramPerCubicMeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerCubicMeter => this.As(DensityUnit.KilogramPerCubicMeter);
+        public QuantityValue KilogramsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.KilogramPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.KilogramPerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue KilogramsPerCubicMillimeter => this.As(DensityUnit.KilogramPerCubicMillimeter);
+        public QuantityValue KilogramsPerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.KilogramPerCubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.KilogramPerLiter"/>
         /// </summary>
-        public QuantityValue KilogramsPerLiter => this.As(DensityUnit.KilogramPerLiter);
+        public QuantityValue KilogramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.KilogramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.KilopoundPerCubicFoot"/>
         /// </summary>
-        public QuantityValue KilopoundsPerCubicFoot => this.As(DensityUnit.KilopoundPerCubicFoot);
+        public QuantityValue KilopoundsPerCubicFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.KilopoundPerCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.KilopoundPerCubicInch"/>
         /// </summary>
-        public QuantityValue KilopoundsPerCubicInch => this.As(DensityUnit.KilopoundPerCubicInch);
+        public QuantityValue KilopoundsPerCubicInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.KilopoundPerCubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.KilopoundPerCubicYard"/>
         /// </summary>
-        public QuantityValue KilopoundsPerCubicYard => this.As(DensityUnit.KilopoundPerCubicYard);
+        public QuantityValue KilopoundsPerCubicYard
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.KilopoundPerCubicYard);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MicrogramPerCubicMeter"/>
         /// </summary>
-        public QuantityValue MicrogramsPerCubicMeter => this.As(DensityUnit.MicrogramPerCubicMeter);
+        public QuantityValue MicrogramsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MicrogramPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MicrogramPerDeciliter"/>
         /// </summary>
-        public QuantityValue MicrogramsPerDeciliter => this.As(DensityUnit.MicrogramPerDeciliter);
+        public QuantityValue MicrogramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MicrogramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MicrogramPerLiter"/>
         /// </summary>
-        public QuantityValue MicrogramsPerLiter => this.As(DensityUnit.MicrogramPerLiter);
+        public QuantityValue MicrogramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MicrogramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MicrogramPerMilliliter"/>
         /// </summary>
-        public QuantityValue MicrogramsPerMilliliter => this.As(DensityUnit.MicrogramPerMilliliter);
+        public QuantityValue MicrogramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MicrogramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MilligramPerCubicMeter"/>
         /// </summary>
-        public QuantityValue MilligramsPerCubicMeter => this.As(DensityUnit.MilligramPerCubicMeter);
+        public QuantityValue MilligramsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MilligramPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MilligramPerDeciliter"/>
         /// </summary>
-        public QuantityValue MilligramsPerDeciliter => this.As(DensityUnit.MilligramPerDeciliter);
+        public QuantityValue MilligramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MilligramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MilligramPerLiter"/>
         /// </summary>
-        public QuantityValue MilligramsPerLiter => this.As(DensityUnit.MilligramPerLiter);
+        public QuantityValue MilligramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MilligramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.MilligramPerMilliliter"/>
         /// </summary>
-        public QuantityValue MilligramsPerMilliliter => this.As(DensityUnit.MilligramPerMilliliter);
+        public QuantityValue MilligramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.MilligramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.NanogramPerDeciliter"/>
         /// </summary>
-        public QuantityValue NanogramsPerDeciliter => this.As(DensityUnit.NanogramPerDeciliter);
+        public QuantityValue NanogramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.NanogramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.NanogramPerLiter"/>
         /// </summary>
-        public QuantityValue NanogramsPerLiter => this.As(DensityUnit.NanogramPerLiter);
+        public QuantityValue NanogramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.NanogramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.NanogramPerMilliliter"/>
         /// </summary>
-        public QuantityValue NanogramsPerMilliliter => this.As(DensityUnit.NanogramPerMilliliter);
+        public QuantityValue NanogramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.NanogramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PicogramPerDeciliter"/>
         /// </summary>
-        public QuantityValue PicogramsPerDeciliter => this.As(DensityUnit.PicogramPerDeciliter);
+        public QuantityValue PicogramsPerDeciliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PicogramPerDeciliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PicogramPerLiter"/>
         /// </summary>
-        public QuantityValue PicogramsPerLiter => this.As(DensityUnit.PicogramPerLiter);
+        public QuantityValue PicogramsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PicogramPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PicogramPerMilliliter"/>
         /// </summary>
-        public QuantityValue PicogramsPerMilliliter => this.As(DensityUnit.PicogramPerMilliliter);
+        public QuantityValue PicogramsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PicogramPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue PoundsPerCubicCentimeter => this.As(DensityUnit.PoundPerCubicCentimeter);
+        public QuantityValue PoundsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerCubicFoot"/>
         /// </summary>
-        public QuantityValue PoundsPerCubicFoot => this.As(DensityUnit.PoundPerCubicFoot);
+        public QuantityValue PoundsPerCubicFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerCubicInch"/>
         /// </summary>
-        public QuantityValue PoundsPerCubicInch => this.As(DensityUnit.PoundPerCubicInch);
+        public QuantityValue PoundsPerCubicInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerCubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerCubicMeter"/>
         /// </summary>
-        public QuantityValue PoundsPerCubicMeter => this.As(DensityUnit.PoundPerCubicMeter);
+        public QuantityValue PoundsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue PoundsPerCubicMillimeter => this.As(DensityUnit.PoundPerCubicMillimeter);
+        public QuantityValue PoundsPerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerCubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerCubicYard"/>
         /// </summary>
-        public QuantityValue PoundsPerCubicYard => this.As(DensityUnit.PoundPerCubicYard);
+        public QuantityValue PoundsPerCubicYard
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerCubicYard);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerImperialGallon"/>
         /// </summary>
-        public QuantityValue PoundsPerImperialGallon => this.As(DensityUnit.PoundPerImperialGallon);
+        public QuantityValue PoundsPerImperialGallon
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerImperialGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.PoundPerUSGallon"/>
         /// </summary>
-        public QuantityValue PoundsPerUSGallon => this.As(DensityUnit.PoundPerUSGallon);
+        public QuantityValue PoundsPerUSGallon
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.PoundPerUSGallon);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.SlugPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue SlugsPerCubicCentimeter => this.As(DensityUnit.SlugPerCubicCentimeter);
+        public QuantityValue SlugsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.SlugPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.SlugPerCubicFoot"/>
         /// </summary>
-        public QuantityValue SlugsPerCubicFoot => this.As(DensityUnit.SlugPerCubicFoot);
+        public QuantityValue SlugsPerCubicFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.SlugPerCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.SlugPerCubicInch"/>
         /// </summary>
-        public QuantityValue SlugsPerCubicInch => this.As(DensityUnit.SlugPerCubicInch);
+        public QuantityValue SlugsPerCubicInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.SlugPerCubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.SlugPerCubicMeter"/>
         /// </summary>
-        public QuantityValue SlugsPerCubicMeter => this.As(DensityUnit.SlugPerCubicMeter);
+        public QuantityValue SlugsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.SlugPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.SlugPerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue SlugsPerCubicMillimeter => this.As(DensityUnit.SlugPerCubicMillimeter);
+        public QuantityValue SlugsPerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.SlugPerCubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.TonnePerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue TonnesPerCubicCentimeter => this.As(DensityUnit.TonnePerCubicCentimeter);
+        public QuantityValue TonnesPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.TonnePerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.TonnePerCubicFoot"/>
         /// </summary>
-        public QuantityValue TonnesPerCubicFoot => this.As(DensityUnit.TonnePerCubicFoot);
+        public QuantityValue TonnesPerCubicFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.TonnePerCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.TonnePerCubicInch"/>
         /// </summary>
-        public QuantityValue TonnesPerCubicInch => this.As(DensityUnit.TonnePerCubicInch);
+        public QuantityValue TonnesPerCubicInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.TonnePerCubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.TonnePerCubicMeter"/>
         /// </summary>
-        public QuantityValue TonnesPerCubicMeter => this.As(DensityUnit.TonnePerCubicMeter);
+        public QuantityValue TonnesPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.TonnePerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.TonnePerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue TonnesPerCubicMillimeter => this.As(DensityUnit.TonnePerCubicMillimeter);
+        public QuantityValue TonnesPerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DensityUnit.TonnePerCubicMillimeter);
+        }
 
         #endregion
 
@@ -684,10 +965,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(DensityUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -695,10 +975,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(DensityUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -707,450 +986,394 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.CentigramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromCentigramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.CentigramPerDeciliter);
-        }
+            => new(value, DensityUnit.CentigramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.CentigramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromCentigramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.CentigramPerLiter);
-        }
+            => new(value, DensityUnit.CentigramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.CentigramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromCentigramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.CentigramPerMilliliter);
-        }
+            => new(value, DensityUnit.CentigramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.DecigramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromDecigramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.DecigramPerDeciliter);
-        }
+            => new(value, DensityUnit.DecigramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.DecigramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromDecigramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.DecigramPerLiter);
-        }
+            => new(value, DensityUnit.DecigramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.DecigramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromDecigramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.DecigramPerMilliliter);
-        }
+            => new(value, DensityUnit.DecigramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.FemtogramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromFemtogramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.FemtogramPerDeciliter);
-        }
+            => new(value, DensityUnit.FemtogramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.FemtogramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromFemtogramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.FemtogramPerLiter);
-        }
+            => new(value, DensityUnit.FemtogramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.FemtogramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromFemtogramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.FemtogramPerMilliliter);
-        }
+            => new(value, DensityUnit.FemtogramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerCubicCentimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerCubicCentimeter);
-        }
+            => new(value, DensityUnit.GramPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerCubicFoot(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerCubicFoot);
-        }
+            => new(value, DensityUnit.GramPerCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerCubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerCubicInch(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerCubicInch);
-        }
+            => new(value, DensityUnit.GramPerCubicInch);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerCubicMeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerCubicMeter);
-        }
+            => new(value, DensityUnit.GramPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerCubicMillimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerCubicMillimeter);
-        }
+            => new(value, DensityUnit.GramPerCubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerDeciliter);
-        }
+            => new(value, DensityUnit.GramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerLiter);
-        }
+            => new(value, DensityUnit.GramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.GramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromGramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.GramPerMilliliter);
-        }
+            => new(value, DensityUnit.GramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.KilogramPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromKilogramsPerCubicCentimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.KilogramPerCubicCentimeter);
-        }
+            => new(value, DensityUnit.KilogramPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.KilogramPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromKilogramsPerCubicMeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.KilogramPerCubicMeter);
-        }
+            => new(value, DensityUnit.KilogramPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.KilogramPerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromKilogramsPerCubicMillimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.KilogramPerCubicMillimeter);
-        }
+            => new(value, DensityUnit.KilogramPerCubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.KilogramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromKilogramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.KilogramPerLiter);
-        }
+            => new(value, DensityUnit.KilogramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.KilopoundPerCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromKilopoundsPerCubicFoot(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.KilopoundPerCubicFoot);
-        }
+            => new(value, DensityUnit.KilopoundPerCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.KilopoundPerCubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromKilopoundsPerCubicInch(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.KilopoundPerCubicInch);
-        }
+            => new(value, DensityUnit.KilopoundPerCubicInch);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.KilopoundPerCubicYard"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromKilopoundsPerCubicYard(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.KilopoundPerCubicYard);
-        }
+            => new(value, DensityUnit.KilopoundPerCubicYard);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MicrogramPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMicrogramsPerCubicMeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MicrogramPerCubicMeter);
-        }
+            => new(value, DensityUnit.MicrogramPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MicrogramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMicrogramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MicrogramPerDeciliter);
-        }
+            => new(value, DensityUnit.MicrogramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MicrogramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMicrogramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MicrogramPerLiter);
-        }
+            => new(value, DensityUnit.MicrogramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MicrogramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMicrogramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MicrogramPerMilliliter);
-        }
+            => new(value, DensityUnit.MicrogramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MilligramPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMilligramsPerCubicMeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MilligramPerCubicMeter);
-        }
+            => new(value, DensityUnit.MilligramPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MilligramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMilligramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MilligramPerDeciliter);
-        }
+            => new(value, DensityUnit.MilligramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MilligramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMilligramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MilligramPerLiter);
-        }
+            => new(value, DensityUnit.MilligramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.MilligramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromMilligramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.MilligramPerMilliliter);
-        }
+            => new(value, DensityUnit.MilligramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.NanogramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromNanogramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.NanogramPerDeciliter);
-        }
+            => new(value, DensityUnit.NanogramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.NanogramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromNanogramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.NanogramPerLiter);
-        }
+            => new(value, DensityUnit.NanogramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.NanogramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromNanogramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.NanogramPerMilliliter);
-        }
+            => new(value, DensityUnit.NanogramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PicogramPerDeciliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPicogramsPerDeciliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PicogramPerDeciliter);
-        }
+            => new(value, DensityUnit.PicogramPerDeciliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PicogramPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPicogramsPerLiter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PicogramPerLiter);
-        }
+            => new(value, DensityUnit.PicogramPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PicogramPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPicogramsPerMilliliter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PicogramPerMilliliter);
-        }
+            => new(value, DensityUnit.PicogramPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerCubicCentimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerCubicCentimeter);
-        }
+            => new(value, DensityUnit.PoundPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerCubicFoot(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerCubicFoot);
-        }
+            => new(value, DensityUnit.PoundPerCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerCubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerCubicInch(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerCubicInch);
-        }
+            => new(value, DensityUnit.PoundPerCubicInch);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerCubicMeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerCubicMeter);
-        }
+            => new(value, DensityUnit.PoundPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerCubicMillimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerCubicMillimeter);
-        }
+            => new(value, DensityUnit.PoundPerCubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerCubicYard"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerCubicYard(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerCubicYard);
-        }
+            => new(value, DensityUnit.PoundPerCubicYard);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerImperialGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerImperialGallon(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerImperialGallon);
-        }
+            => new(value, DensityUnit.PoundPerImperialGallon);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.PoundPerUSGallon"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromPoundsPerUSGallon(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.PoundPerUSGallon);
-        }
+            => new(value, DensityUnit.PoundPerUSGallon);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.SlugPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromSlugsPerCubicCentimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.SlugPerCubicCentimeter);
-        }
+            => new(value, DensityUnit.SlugPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.SlugPerCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromSlugsPerCubicFoot(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.SlugPerCubicFoot);
-        }
+            => new(value, DensityUnit.SlugPerCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.SlugPerCubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromSlugsPerCubicInch(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.SlugPerCubicInch);
-        }
+            => new(value, DensityUnit.SlugPerCubicInch);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.SlugPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromSlugsPerCubicMeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.SlugPerCubicMeter);
-        }
+            => new(value, DensityUnit.SlugPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.SlugPerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromSlugsPerCubicMillimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.SlugPerCubicMillimeter);
-        }
+            => new(value, DensityUnit.SlugPerCubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.TonnePerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromTonnesPerCubicCentimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.TonnePerCubicCentimeter);
-        }
+            => new(value, DensityUnit.TonnePerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.TonnePerCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromTonnesPerCubicFoot(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.TonnePerCubicFoot);
-        }
+            => new(value, DensityUnit.TonnePerCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.TonnePerCubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromTonnesPerCubicInch(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.TonnePerCubicInch);
-        }
+            => new(value, DensityUnit.TonnePerCubicInch);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.TonnePerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromTonnesPerCubicMeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.TonnePerCubicMeter);
-        }
+            => new(value, DensityUnit.TonnePerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.TonnePerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density FromTonnesPerCubicMillimeter(QuantityValue value)
-        {
-            return new Density(value, DensityUnit.TonnePerCubicMillimeter);
-        }
+            => new(value, DensityUnit.TonnePerCubicMillimeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="DensityUnit" /> to <see cref="Density" />.
@@ -1158,10 +1381,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Density unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density From(QuantityValue value, DensityUnit fromUnit)
-        {
-            return new Density(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -1189,10 +1411,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1217,10 +1438,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Density Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Density, DensityUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Density, DensityUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1230,10 +1450,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Density result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1245,10 +1464,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Density result)
-        {
-            return QuantityParser.Default.TryParse<Density, DensityUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Density, DensityUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1259,10 +1477,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DensityUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1275,15 +1492,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static DensityUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.DensityUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out DensityUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1295,10 +1509,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out DensityUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -1306,45 +1519,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Density operator -(Density right)
-        {
-            return new Density(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Density"/> from adding two <see cref="Density"/>.</summary>
         public static Density operator +(Density left, Density right)
-        {
-            return new Density(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Density"/> from subtracting two <see cref="Density"/>.</summary>
         public static Density operator -(Density left, Density right)
-        {
-            return new Density(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Density"/> from multiplying value and <see cref="Density"/>.</summary>
         public static Density operator *(QuantityValue left, Density right)
-        {
-            return new Density(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Density"/> from multiplying value and <see cref="Density"/>.</summary>
         public static Density operator *(Density left, QuantityValue right)
-        {
-            return new Density(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Density"/> from dividing <see cref="Density"/> by value.</summary>
         public static Density operator /(Density left, QuantityValue right)
-        {
-            return new Density(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Density"/> by <see cref="Density"/>.</summary>
         public static QuantityValue operator /(Density left, Density right)
-        {
-            return left.KilogramsPerCubicMeter / right.KilogramsPerCubicMeter;
-        }
+            => left.KilogramsPerCubicMeter / right.KilogramsPerCubicMeter;
 
         #endregion
 
@@ -1353,57 +1552,39 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="SpecificVolume"/>.</returns>
         public SpecificVolume Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, SpecificVolume.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, SpecificVolume.Info);
 
         /// <summary>Get <see cref="AreaDensity"/> from <see cref="Density"/> * <see cref="Length"/>.</summary>
         public static AreaDensity operator *(Density density, Length length)
-        {
-            return AreaDensity.FromKilogramsPerSquareMeter(density.KilogramsPerCubicMeter * length.Meters);
-        }
+            => AreaDensity.FromKilogramsPerSquareMeter(density.KilogramsPerCubicMeter * length.Meters);
 
         /// <summary>Get <see cref="DynamicViscosity"/> from <see cref="Density"/> * <see cref="KinematicViscosity"/>.</summary>
         public static DynamicViscosity operator *(Density density, KinematicViscosity kinematicViscosity)
-        {
-            return DynamicViscosity.FromNewtonSecondsPerMeterSquared(density.KilogramsPerCubicMeter * kinematicViscosity.SquareMetersPerSecond);
-        }
+            => DynamicViscosity.FromNewtonSecondsPerMeterSquared(density.KilogramsPerCubicMeter * kinematicViscosity.SquareMetersPerSecond);
 
         /// <summary>Get <see cref="LinearDensity"/> from <see cref="Density"/> * <see cref="Area"/>.</summary>
         public static LinearDensity operator *(Density density, Area area)
-        {
-            return LinearDensity.FromKilogramsPerMeter(density.KilogramsPerCubicMeter * area.SquareMeters);
-        }
+            => LinearDensity.FromKilogramsPerMeter(density.KilogramsPerCubicMeter * area.SquareMeters);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="Density"/> * <see cref="Volume"/>.</summary>
         public static Mass operator *(Density density, Volume volume)
-        {
-            return Mass.FromKilograms(density.KilogramsPerCubicMeter * volume.CubicMeters);
-        }
+            => Mass.FromKilograms(density.KilogramsPerCubicMeter * volume.CubicMeters);
 
         /// <summary>Get <see cref="MassConcentration"/> from <see cref="Density"/> * <see cref="VolumeConcentration"/>.</summary>
         public static MassConcentration operator *(Density density, VolumeConcentration volumeConcentration)
-        {
-            return MassConcentration.FromKilogramsPerCubicMeter(density.KilogramsPerCubicMeter * volumeConcentration.DecimalFractions);
-        }
+            => MassConcentration.FromKilogramsPerCubicMeter(density.KilogramsPerCubicMeter * volumeConcentration.DecimalFractions);
 
         /// <summary>Get <see cref="MassFlow"/> from <see cref="Density"/> * <see cref="VolumeFlow"/>.</summary>
         public static MassFlow operator *(Density density, VolumeFlow volumeFlow)
-        {
-            return MassFlow.FromKilogramsPerSecond(density.KilogramsPerCubicMeter * volumeFlow.CubicMetersPerSecond);
-        }
+            => MassFlow.FromKilogramsPerSecond(density.KilogramsPerCubicMeter * volumeFlow.CubicMetersPerSecond);
 
         /// <summary>Get <see cref="MassFlux"/> from <see cref="Density"/> * <see cref="Speed"/>.</summary>
         public static MassFlux operator *(Density density, Speed speed)
-        {
-            return MassFlux.FromKilogramsPerSecondPerSquareMeter(density.KilogramsPerCubicMeter * speed.MetersPerSecond);
-        }
+            => MassFlux.FromKilogramsPerSecondPerSquareMeter(density.KilogramsPerCubicMeter * speed.MetersPerSecond);
 
         /// <summary>Get <see cref="SpecificWeight"/> from <see cref="Density"/> * <see cref="Acceleration"/>.</summary>
         public static SpecificWeight operator *(Density density, Acceleration acceleration)
-        {
-            return SpecificWeight.FromNewtonsPerCubicMeter(density.KilogramsPerCubicMeter * acceleration.MetersPerSecondSquared);
-        }
+            => SpecificWeight.FromNewtonsPerCubicMeter(density.KilogramsPerCubicMeter * acceleration.MetersPerSecondSquared);
 
         #endregion
 
@@ -1411,27 +1592,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Density left, Density right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Density left, Density right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Density left, Density right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Density left, Density right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Density"/> instances are equal.
@@ -1442,10 +1615,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Density)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Density left, Density right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Density"/> instances are not equal.
@@ -1455,10 +1627,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Density)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Density left, Density right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1471,12 +1642,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Density otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Density otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1487,18 +1653,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Density other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Density.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Density), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Density), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Density)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1527,9 +1689,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Density other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1540,20 +1700,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LinearPowerDensityInfo"/> class with the default settings.</returns>
             public static LinearPowerDensityInfo CreateDefault()
-            {
-                return new LinearPowerDensityInfo(nameof(LinearPowerDensity), DefaultBaseUnit, GetDefaultMappings(), new LinearPowerDensity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(LinearPowerDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LinearPowerDensityInfo"/> class with the default settings for the LinearPowerDensity quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LinearPowerDensityInfo"/> class with the default settings.
             /// </returns>
             public static LinearPowerDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<LinearPowerDensityUnit>>, IEnumerable<IUnitDefinition<LinearPowerDensityUnit>>> customizeUnits)
-            {
-                return new LinearPowerDensityInfo(nameof(LinearPowerDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new LinearPowerDensity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(LinearPowerDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="LinearPowerDensity"/> is T^-3LM.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, 1, -3, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, 1, -3, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of LinearPowerDensity is WattPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static LinearPowerDensityUnit DefaultBaseUnit { get; } = LinearPowerDensityUnit.WattPerMeter;
+            public static LinearPowerDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LinearPowerDensityUnit.WattPerMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="LinearPowerDensityUnit"/>.
@@ -232,7 +237,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="LinearPowerDensity" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<LinearPowerDensity, LinearPowerDensityUnit> Info { get; }
@@ -240,53 +249,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of LinearPowerDensity, which is WattPerMeter. All conversions go via this value.
         /// </summary>
-        public static LinearPowerDensityUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static LinearPowerDensityUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the LinearPowerDensity quantity.
         /// </summary>
-        public static IReadOnlyCollection<LinearPowerDensityUnit> Units => Info.Units;
+        public static IReadOnlyCollection<LinearPowerDensityUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit WattPerMeter.
         /// </summary>
-        public static LinearPowerDensity Zero => Info.Zero;
+        public static LinearPowerDensity Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public LinearPowerDensityUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public LinearPowerDensityUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<LinearPowerDensity, LinearPowerDensityUnit> QuantityInfo => Info;
+        public QuantityInfo<LinearPowerDensity, LinearPowerDensityUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<LinearPowerDensity> IQuantityOfType<LinearPowerDensity>.QuantityInfo => Info;
+        IQuantityInstanceInfo<LinearPowerDensity> IQuantityOfType<LinearPowerDensity>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<LinearPowerDensityUnit> IQuantity<LinearPowerDensityUnit>.QuantityInfo => Info;
+        QuantityInfo<LinearPowerDensityUnit> IQuantity<LinearPowerDensityUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -298,127 +355,227 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.GigawattPerCentimeter"/>
         /// </summary>
-        public QuantityValue GigawattsPerCentimeter => this.As(LinearPowerDensityUnit.GigawattPerCentimeter);
+        public QuantityValue GigawattsPerCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.GigawattPerCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.GigawattPerFoot"/>
         /// </summary>
-        public QuantityValue GigawattsPerFoot => this.As(LinearPowerDensityUnit.GigawattPerFoot);
+        public QuantityValue GigawattsPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.GigawattPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.GigawattPerInch"/>
         /// </summary>
-        public QuantityValue GigawattsPerInch => this.As(LinearPowerDensityUnit.GigawattPerInch);
+        public QuantityValue GigawattsPerInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.GigawattPerInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.GigawattPerMeter"/>
         /// </summary>
-        public QuantityValue GigawattsPerMeter => this.As(LinearPowerDensityUnit.GigawattPerMeter);
+        public QuantityValue GigawattsPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.GigawattPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.GigawattPerMillimeter"/>
         /// </summary>
-        public QuantityValue GigawattsPerMillimeter => this.As(LinearPowerDensityUnit.GigawattPerMillimeter);
+        public QuantityValue GigawattsPerMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.GigawattPerMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.KilowattPerCentimeter"/>
         /// </summary>
-        public QuantityValue KilowattsPerCentimeter => this.As(LinearPowerDensityUnit.KilowattPerCentimeter);
+        public QuantityValue KilowattsPerCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.KilowattPerCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.KilowattPerFoot"/>
         /// </summary>
-        public QuantityValue KilowattsPerFoot => this.As(LinearPowerDensityUnit.KilowattPerFoot);
+        public QuantityValue KilowattsPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.KilowattPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.KilowattPerInch"/>
         /// </summary>
-        public QuantityValue KilowattsPerInch => this.As(LinearPowerDensityUnit.KilowattPerInch);
+        public QuantityValue KilowattsPerInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.KilowattPerInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.KilowattPerMeter"/>
         /// </summary>
-        public QuantityValue KilowattsPerMeter => this.As(LinearPowerDensityUnit.KilowattPerMeter);
+        public QuantityValue KilowattsPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.KilowattPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.KilowattPerMillimeter"/>
         /// </summary>
-        public QuantityValue KilowattsPerMillimeter => this.As(LinearPowerDensityUnit.KilowattPerMillimeter);
+        public QuantityValue KilowattsPerMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.KilowattPerMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MegawattPerCentimeter"/>
         /// </summary>
-        public QuantityValue MegawattsPerCentimeter => this.As(LinearPowerDensityUnit.MegawattPerCentimeter);
+        public QuantityValue MegawattsPerCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MegawattPerCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MegawattPerFoot"/>
         /// </summary>
-        public QuantityValue MegawattsPerFoot => this.As(LinearPowerDensityUnit.MegawattPerFoot);
+        public QuantityValue MegawattsPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MegawattPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MegawattPerInch"/>
         /// </summary>
-        public QuantityValue MegawattsPerInch => this.As(LinearPowerDensityUnit.MegawattPerInch);
+        public QuantityValue MegawattsPerInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MegawattPerInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MegawattPerMeter"/>
         /// </summary>
-        public QuantityValue MegawattsPerMeter => this.As(LinearPowerDensityUnit.MegawattPerMeter);
+        public QuantityValue MegawattsPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MegawattPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MegawattPerMillimeter"/>
         /// </summary>
-        public QuantityValue MegawattsPerMillimeter => this.As(LinearPowerDensityUnit.MegawattPerMillimeter);
+        public QuantityValue MegawattsPerMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MegawattPerMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MilliwattPerCentimeter"/>
         /// </summary>
-        public QuantityValue MilliwattsPerCentimeter => this.As(LinearPowerDensityUnit.MilliwattPerCentimeter);
+        public QuantityValue MilliwattsPerCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MilliwattPerCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MilliwattPerFoot"/>
         /// </summary>
-        public QuantityValue MilliwattsPerFoot => this.As(LinearPowerDensityUnit.MilliwattPerFoot);
+        public QuantityValue MilliwattsPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MilliwattPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MilliwattPerInch"/>
         /// </summary>
-        public QuantityValue MilliwattsPerInch => this.As(LinearPowerDensityUnit.MilliwattPerInch);
+        public QuantityValue MilliwattsPerInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MilliwattPerInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MilliwattPerMeter"/>
         /// </summary>
-        public QuantityValue MilliwattsPerMeter => this.As(LinearPowerDensityUnit.MilliwattPerMeter);
+        public QuantityValue MilliwattsPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MilliwattPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.MilliwattPerMillimeter"/>
         /// </summary>
-        public QuantityValue MilliwattsPerMillimeter => this.As(LinearPowerDensityUnit.MilliwattPerMillimeter);
+        public QuantityValue MilliwattsPerMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.MilliwattPerMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.WattPerCentimeter"/>
         /// </summary>
-        public QuantityValue WattsPerCentimeter => this.As(LinearPowerDensityUnit.WattPerCentimeter);
+        public QuantityValue WattsPerCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.WattPerCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.WattPerFoot"/>
         /// </summary>
-        public QuantityValue WattsPerFoot => this.As(LinearPowerDensityUnit.WattPerFoot);
+        public QuantityValue WattsPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.WattPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.WattPerInch"/>
         /// </summary>
-        public QuantityValue WattsPerInch => this.As(LinearPowerDensityUnit.WattPerInch);
+        public QuantityValue WattsPerInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.WattPerInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.WattPerMeter"/>
         /// </summary>
-        public QuantityValue WattsPerMeter => this.As(LinearPowerDensityUnit.WattPerMeter);
+        public QuantityValue WattsPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.WattPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.WattPerMillimeter"/>
         /// </summary>
-        public QuantityValue WattsPerMillimeter => this.As(LinearPowerDensityUnit.WattPerMillimeter);
+        public QuantityValue WattsPerMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LinearPowerDensityUnit.WattPerMillimeter);
+        }
 
         #endregion
 
@@ -429,10 +586,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LinearPowerDensityUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -440,10 +596,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LinearPowerDensityUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -452,202 +607,177 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.GigawattPerCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromGigawattsPerCentimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.GigawattPerCentimeter);
-        }
+            => new(value, LinearPowerDensityUnit.GigawattPerCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.GigawattPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromGigawattsPerFoot(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.GigawattPerFoot);
-        }
+            => new(value, LinearPowerDensityUnit.GigawattPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.GigawattPerInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromGigawattsPerInch(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.GigawattPerInch);
-        }
+            => new(value, LinearPowerDensityUnit.GigawattPerInch);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.GigawattPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromGigawattsPerMeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.GigawattPerMeter);
-        }
+            => new(value, LinearPowerDensityUnit.GigawattPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.GigawattPerMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromGigawattsPerMillimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.GigawattPerMillimeter);
-        }
+            => new(value, LinearPowerDensityUnit.GigawattPerMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.KilowattPerCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromKilowattsPerCentimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.KilowattPerCentimeter);
-        }
+            => new(value, LinearPowerDensityUnit.KilowattPerCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.KilowattPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromKilowattsPerFoot(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.KilowattPerFoot);
-        }
+            => new(value, LinearPowerDensityUnit.KilowattPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.KilowattPerInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromKilowattsPerInch(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.KilowattPerInch);
-        }
+            => new(value, LinearPowerDensityUnit.KilowattPerInch);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.KilowattPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromKilowattsPerMeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.KilowattPerMeter);
-        }
+            => new(value, LinearPowerDensityUnit.KilowattPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.KilowattPerMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromKilowattsPerMillimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.KilowattPerMillimeter);
-        }
+            => new(value, LinearPowerDensityUnit.KilowattPerMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MegawattPerCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMegawattsPerCentimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MegawattPerCentimeter);
-        }
+            => new(value, LinearPowerDensityUnit.MegawattPerCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MegawattPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMegawattsPerFoot(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MegawattPerFoot);
-        }
+            => new(value, LinearPowerDensityUnit.MegawattPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MegawattPerInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMegawattsPerInch(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MegawattPerInch);
-        }
+            => new(value, LinearPowerDensityUnit.MegawattPerInch);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MegawattPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMegawattsPerMeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MegawattPerMeter);
-        }
+            => new(value, LinearPowerDensityUnit.MegawattPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MegawattPerMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMegawattsPerMillimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MegawattPerMillimeter);
-        }
+            => new(value, LinearPowerDensityUnit.MegawattPerMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MilliwattPerCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMilliwattsPerCentimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MilliwattPerCentimeter);
-        }
+            => new(value, LinearPowerDensityUnit.MilliwattPerCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MilliwattPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMilliwattsPerFoot(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MilliwattPerFoot);
-        }
+            => new(value, LinearPowerDensityUnit.MilliwattPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MilliwattPerInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMilliwattsPerInch(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MilliwattPerInch);
-        }
+            => new(value, LinearPowerDensityUnit.MilliwattPerInch);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MilliwattPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMilliwattsPerMeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MilliwattPerMeter);
-        }
+            => new(value, LinearPowerDensityUnit.MilliwattPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.MilliwattPerMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromMilliwattsPerMillimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.MilliwattPerMillimeter);
-        }
+            => new(value, LinearPowerDensityUnit.MilliwattPerMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.WattPerCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromWattsPerCentimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.WattPerCentimeter);
-        }
+            => new(value, LinearPowerDensityUnit.WattPerCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.WattPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromWattsPerFoot(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.WattPerFoot);
-        }
+            => new(value, LinearPowerDensityUnit.WattPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.WattPerInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromWattsPerInch(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.WattPerInch);
-        }
+            => new(value, LinearPowerDensityUnit.WattPerInch);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.WattPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromWattsPerMeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.WattPerMeter);
-        }
+            => new(value, LinearPowerDensityUnit.WattPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.WattPerMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity FromWattsPerMillimeter(QuantityValue value)
-        {
-            return new LinearPowerDensity(value, LinearPowerDensityUnit.WattPerMillimeter);
-        }
+            => new(value, LinearPowerDensityUnit.WattPerMillimeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="LinearPowerDensityUnit" /> to <see cref="LinearPowerDensity" />.
@@ -655,10 +785,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>LinearPowerDensity unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity From(QuantityValue value, LinearPowerDensityUnit fromUnit)
-        {
-            return new LinearPowerDensity(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -686,10 +815,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -714,10 +842,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensity Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<LinearPowerDensity, LinearPowerDensityUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<LinearPowerDensity, LinearPowerDensityUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -727,10 +854,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out LinearPowerDensity result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -742,10 +868,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out LinearPowerDensity result)
-        {
-            return QuantityParser.Default.TryParse<LinearPowerDensity, LinearPowerDensityUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<LinearPowerDensity, LinearPowerDensityUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -756,10 +881,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LinearPowerDensityUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -772,15 +896,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static LinearPowerDensityUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.LinearPowerDensityUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out LinearPowerDensityUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -792,10 +913,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out LinearPowerDensityUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -803,45 +923,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static LinearPowerDensity operator -(LinearPowerDensity right)
-        {
-            return new LinearPowerDensity(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="LinearPowerDensity"/> from adding two <see cref="LinearPowerDensity"/>.</summary>
         public static LinearPowerDensity operator +(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return new LinearPowerDensity(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="LinearPowerDensity"/> from subtracting two <see cref="LinearPowerDensity"/>.</summary>
         public static LinearPowerDensity operator -(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return new LinearPowerDensity(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="LinearPowerDensity"/> from multiplying value and <see cref="LinearPowerDensity"/>.</summary>
         public static LinearPowerDensity operator *(QuantityValue left, LinearPowerDensity right)
-        {
-            return new LinearPowerDensity(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="LinearPowerDensity"/> from multiplying value and <see cref="LinearPowerDensity"/>.</summary>
         public static LinearPowerDensity operator *(LinearPowerDensity left, QuantityValue right)
-        {
-            return new LinearPowerDensity(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="LinearPowerDensity"/> from dividing <see cref="LinearPowerDensity"/> by value.</summary>
         public static LinearPowerDensity operator /(LinearPowerDensity left, QuantityValue right)
-        {
-            return new LinearPowerDensity(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="LinearPowerDensity"/> by <see cref="LinearPowerDensity"/>.</summary>
         public static QuantityValue operator /(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return left.WattsPerMeter / right.WattsPerMeter;
-        }
+            => left.WattsPerMeter / right.WattsPerMeter;
 
         #endregion
 
@@ -849,9 +955,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Power"/> from <see cref="LinearPowerDensity"/> * <see cref="Length"/>.</summary>
         public static Power operator *(LinearPowerDensity linearPowerDensity, Length length)
-        {
-            return Power.FromWatts(linearPowerDensity.WattsPerMeter * length.Meters);
-        }
+            => Power.FromWatts(linearPowerDensity.WattsPerMeter * length.Meters);
 
         #endregion
 
@@ -859,27 +963,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="LinearPowerDensity"/> instances are equal.
@@ -890,10 +986,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(LinearPowerDensity)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="LinearPowerDensity"/> instances are not equal.
@@ -903,10 +998,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(LinearPowerDensity)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(LinearPowerDensity left, LinearPowerDensity right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -919,12 +1013,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not LinearPowerDensity otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is LinearPowerDensity otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -935,18 +1024,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(LinearPowerDensity other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current LinearPowerDensity.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(LinearPowerDensity), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(LinearPowerDensity), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(LinearPowerDensity)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -975,9 +1060,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(LinearPowerDensity other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -988,20 +1071,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

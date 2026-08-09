@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -87,9 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="DoseAreaProductInfo"/> class with the default settings.</returns>
             public static DoseAreaProductInfo CreateDefault()
-            {
-                return new DoseAreaProductInfo(nameof(DoseAreaProduct), DefaultBaseUnit, GetDefaultMappings(), new DoseAreaProduct(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(DoseAreaProduct), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="DoseAreaProductInfo"/> class with the default settings for the DoseAreaProduct quantity and a callback for customizing the default unit mappings.
@@ -101,19 +100,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="DoseAreaProductInfo"/> class with the default settings.
             /// </returns>
             public static DoseAreaProductInfo CreateDefault(Func<IEnumerable<UnitDefinition<DoseAreaProductUnit>>, IEnumerable<IUnitDefinition<DoseAreaProductUnit>>> customizeUnits)
-            {
-                return new DoseAreaProductInfo(nameof(DoseAreaProduct), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new DoseAreaProduct(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(DoseAreaProduct), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="DoseAreaProduct"/> is T^-2L^4.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(4, 0, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(4, 0, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of DoseAreaProduct is GraySquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static DoseAreaProductUnit DefaultBaseUnit { get; } = DoseAreaProductUnit.GraySquareMeter;
+            public static DoseAreaProductUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = DoseAreaProductUnit.GraySquareMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="DoseAreaProductUnit"/>.
@@ -233,7 +238,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="DoseAreaProduct" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<DoseAreaProduct, DoseAreaProductUnit> Info { get; }
@@ -241,53 +250,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of DoseAreaProduct, which is GraySquareMeter. All conversions go via this value.
         /// </summary>
-        public static DoseAreaProductUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static DoseAreaProductUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the DoseAreaProduct quantity.
         /// </summary>
-        public static IReadOnlyCollection<DoseAreaProductUnit> Units => Info.Units;
+        public static IReadOnlyCollection<DoseAreaProductUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit GraySquareMeter.
         /// </summary>
-        public static DoseAreaProduct Zero => Info.Zero;
+        public static DoseAreaProduct Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public DoseAreaProductUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public DoseAreaProductUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<DoseAreaProduct, DoseAreaProductUnit> QuantityInfo => Info;
+        public QuantityInfo<DoseAreaProduct, DoseAreaProductUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<DoseAreaProduct> IQuantityOfType<DoseAreaProduct>.QuantityInfo => Info;
+        IQuantityInstanceInfo<DoseAreaProduct> IQuantityOfType<DoseAreaProduct>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<DoseAreaProductUnit> IQuantity<DoseAreaProductUnit>.QuantityInfo => Info;
+        QuantityInfo<DoseAreaProductUnit> IQuantity<DoseAreaProductUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -299,127 +356,227 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.CentigraySquareCentimeter"/>
         /// </summary>
-        public QuantityValue CentigraySquareCentimeters => this.As(DoseAreaProductUnit.CentigraySquareCentimeter);
+        public QuantityValue CentigraySquareCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.CentigraySquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.CentigraySquareDecimeter"/>
         /// </summary>
-        public QuantityValue CentigraySquareDecimeters => this.As(DoseAreaProductUnit.CentigraySquareDecimeter);
+        public QuantityValue CentigraySquareDecimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.CentigraySquareDecimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.CentigraySquareMeter"/>
         /// </summary>
-        public QuantityValue CentigraySquareMeters => this.As(DoseAreaProductUnit.CentigraySquareMeter);
+        public QuantityValue CentigraySquareMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.CentigraySquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.CentigraySquareMicrometer"/>
         /// </summary>
-        public QuantityValue CentigraySquareMicrometers => this.As(DoseAreaProductUnit.CentigraySquareMicrometer);
+        public QuantityValue CentigraySquareMicrometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.CentigraySquareMicrometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.CentigraySquareMillimeter"/>
         /// </summary>
-        public QuantityValue CentigraySquareMillimeters => this.As(DoseAreaProductUnit.CentigraySquareMillimeter);
+        public QuantityValue CentigraySquareMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.CentigraySquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.DecigraySquareCentimeter"/>
         /// </summary>
-        public QuantityValue DecigraySquareCentimeters => this.As(DoseAreaProductUnit.DecigraySquareCentimeter);
+        public QuantityValue DecigraySquareCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.DecigraySquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.DecigraySquareDecimeter"/>
         /// </summary>
-        public QuantityValue DecigraySquareDecimeters => this.As(DoseAreaProductUnit.DecigraySquareDecimeter);
+        public QuantityValue DecigraySquareDecimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.DecigraySquareDecimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.DecigraySquareMeter"/>
         /// </summary>
-        public QuantityValue DecigraySquareMeters => this.As(DoseAreaProductUnit.DecigraySquareMeter);
+        public QuantityValue DecigraySquareMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.DecigraySquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.DecigraySquareMicrometer"/>
         /// </summary>
-        public QuantityValue DecigraySquareMicrometers => this.As(DoseAreaProductUnit.DecigraySquareMicrometer);
+        public QuantityValue DecigraySquareMicrometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.DecigraySquareMicrometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.DecigraySquareMillimeter"/>
         /// </summary>
-        public QuantityValue DecigraySquareMillimeters => this.As(DoseAreaProductUnit.DecigraySquareMillimeter);
+        public QuantityValue DecigraySquareMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.DecigraySquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.GraySquareCentimeter"/>
         /// </summary>
-        public QuantityValue GraySquareCentimeters => this.As(DoseAreaProductUnit.GraySquareCentimeter);
+        public QuantityValue GraySquareCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.GraySquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.GraySquareDecimeter"/>
         /// </summary>
-        public QuantityValue GraySquareDecimeters => this.As(DoseAreaProductUnit.GraySquareDecimeter);
+        public QuantityValue GraySquareDecimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.GraySquareDecimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.GraySquareMeter"/>
         /// </summary>
-        public QuantityValue GraySquareMeters => this.As(DoseAreaProductUnit.GraySquareMeter);
+        public QuantityValue GraySquareMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.GraySquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.GraySquareMicrometer"/>
         /// </summary>
-        public QuantityValue GraySquareMicrometers => this.As(DoseAreaProductUnit.GraySquareMicrometer);
+        public QuantityValue GraySquareMicrometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.GraySquareMicrometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.GraySquareMillimeter"/>
         /// </summary>
-        public QuantityValue GraySquareMillimeters => this.As(DoseAreaProductUnit.GraySquareMillimeter);
+        public QuantityValue GraySquareMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.GraySquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MicrograySquareCentimeter"/>
         /// </summary>
-        public QuantityValue MicrograySquareCentimeters => this.As(DoseAreaProductUnit.MicrograySquareCentimeter);
+        public QuantityValue MicrograySquareCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MicrograySquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MicrograySquareDecimeter"/>
         /// </summary>
-        public QuantityValue MicrograySquareDecimeters => this.As(DoseAreaProductUnit.MicrograySquareDecimeter);
+        public QuantityValue MicrograySquareDecimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MicrograySquareDecimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MicrograySquareMeter"/>
         /// </summary>
-        public QuantityValue MicrograySquareMeters => this.As(DoseAreaProductUnit.MicrograySquareMeter);
+        public QuantityValue MicrograySquareMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MicrograySquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MicrograySquareMicrometer"/>
         /// </summary>
-        public QuantityValue MicrograySquareMicrometers => this.As(DoseAreaProductUnit.MicrograySquareMicrometer);
+        public QuantityValue MicrograySquareMicrometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MicrograySquareMicrometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MicrograySquareMillimeter"/>
         /// </summary>
-        public QuantityValue MicrograySquareMillimeters => this.As(DoseAreaProductUnit.MicrograySquareMillimeter);
+        public QuantityValue MicrograySquareMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MicrograySquareMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MilligraySquareCentimeter"/>
         /// </summary>
-        public QuantityValue MilligraySquareCentimeters => this.As(DoseAreaProductUnit.MilligraySquareCentimeter);
+        public QuantityValue MilligraySquareCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MilligraySquareCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MilligraySquareDecimeter"/>
         /// </summary>
-        public QuantityValue MilligraySquareDecimeters => this.As(DoseAreaProductUnit.MilligraySquareDecimeter);
+        public QuantityValue MilligraySquareDecimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MilligraySquareDecimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MilligraySquareMeter"/>
         /// </summary>
-        public QuantityValue MilligraySquareMeters => this.As(DoseAreaProductUnit.MilligraySquareMeter);
+        public QuantityValue MilligraySquareMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MilligraySquareMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MilligraySquareMicrometer"/>
         /// </summary>
-        public QuantityValue MilligraySquareMicrometers => this.As(DoseAreaProductUnit.MilligraySquareMicrometer);
+        public QuantityValue MilligraySquareMicrometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MilligraySquareMicrometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.MilligraySquareMillimeter"/>
         /// </summary>
-        public QuantityValue MilligraySquareMillimeters => this.As(DoseAreaProductUnit.MilligraySquareMillimeter);
+        public QuantityValue MilligraySquareMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(DoseAreaProductUnit.MilligraySquareMillimeter);
+        }
 
         #endregion
 
@@ -430,10 +587,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(DoseAreaProductUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -441,10 +597,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(DoseAreaProductUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -453,202 +608,177 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.CentigraySquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromCentigraySquareCentimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.CentigraySquareCentimeter);
-        }
+            => new(value, DoseAreaProductUnit.CentigraySquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.CentigraySquareDecimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromCentigraySquareDecimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.CentigraySquareDecimeter);
-        }
+            => new(value, DoseAreaProductUnit.CentigraySquareDecimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.CentigraySquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromCentigraySquareMeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.CentigraySquareMeter);
-        }
+            => new(value, DoseAreaProductUnit.CentigraySquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.CentigraySquareMicrometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromCentigraySquareMicrometers(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.CentigraySquareMicrometer);
-        }
+            => new(value, DoseAreaProductUnit.CentigraySquareMicrometer);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.CentigraySquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromCentigraySquareMillimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.CentigraySquareMillimeter);
-        }
+            => new(value, DoseAreaProductUnit.CentigraySquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.DecigraySquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromDecigraySquareCentimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.DecigraySquareCentimeter);
-        }
+            => new(value, DoseAreaProductUnit.DecigraySquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.DecigraySquareDecimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromDecigraySquareDecimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.DecigraySquareDecimeter);
-        }
+            => new(value, DoseAreaProductUnit.DecigraySquareDecimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.DecigraySquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromDecigraySquareMeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.DecigraySquareMeter);
-        }
+            => new(value, DoseAreaProductUnit.DecigraySquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.DecigraySquareMicrometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromDecigraySquareMicrometers(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.DecigraySquareMicrometer);
-        }
+            => new(value, DoseAreaProductUnit.DecigraySquareMicrometer);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.DecigraySquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromDecigraySquareMillimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.DecigraySquareMillimeter);
-        }
+            => new(value, DoseAreaProductUnit.DecigraySquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.GraySquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromGraySquareCentimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.GraySquareCentimeter);
-        }
+            => new(value, DoseAreaProductUnit.GraySquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.GraySquareDecimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromGraySquareDecimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.GraySquareDecimeter);
-        }
+            => new(value, DoseAreaProductUnit.GraySquareDecimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.GraySquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromGraySquareMeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.GraySquareMeter);
-        }
+            => new(value, DoseAreaProductUnit.GraySquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.GraySquareMicrometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromGraySquareMicrometers(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.GraySquareMicrometer);
-        }
+            => new(value, DoseAreaProductUnit.GraySquareMicrometer);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.GraySquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromGraySquareMillimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.GraySquareMillimeter);
-        }
+            => new(value, DoseAreaProductUnit.GraySquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MicrograySquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMicrograySquareCentimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MicrograySquareCentimeter);
-        }
+            => new(value, DoseAreaProductUnit.MicrograySquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MicrograySquareDecimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMicrograySquareDecimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MicrograySquareDecimeter);
-        }
+            => new(value, DoseAreaProductUnit.MicrograySquareDecimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MicrograySquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMicrograySquareMeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MicrograySquareMeter);
-        }
+            => new(value, DoseAreaProductUnit.MicrograySquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MicrograySquareMicrometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMicrograySquareMicrometers(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MicrograySquareMicrometer);
-        }
+            => new(value, DoseAreaProductUnit.MicrograySquareMicrometer);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MicrograySquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMicrograySquareMillimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MicrograySquareMillimeter);
-        }
+            => new(value, DoseAreaProductUnit.MicrograySquareMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MilligraySquareCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMilligraySquareCentimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MilligraySquareCentimeter);
-        }
+            => new(value, DoseAreaProductUnit.MilligraySquareCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MilligraySquareDecimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMilligraySquareDecimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MilligraySquareDecimeter);
-        }
+            => new(value, DoseAreaProductUnit.MilligraySquareDecimeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MilligraySquareMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMilligraySquareMeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MilligraySquareMeter);
-        }
+            => new(value, DoseAreaProductUnit.MilligraySquareMeter);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MilligraySquareMicrometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMilligraySquareMicrometers(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MilligraySquareMicrometer);
-        }
+            => new(value, DoseAreaProductUnit.MilligraySquareMicrometer);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.MilligraySquareMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct FromMilligraySquareMillimeters(QuantityValue value)
-        {
-            return new DoseAreaProduct(value, DoseAreaProductUnit.MilligraySquareMillimeter);
-        }
+            => new(value, DoseAreaProductUnit.MilligraySquareMillimeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="DoseAreaProductUnit" /> to <see cref="DoseAreaProduct" />.
@@ -656,10 +786,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>DoseAreaProduct unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct From(QuantityValue value, DoseAreaProductUnit fromUnit)
-        {
-            return new DoseAreaProduct(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -687,10 +816,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -715,10 +843,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProduct Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<DoseAreaProduct, DoseAreaProductUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<DoseAreaProduct, DoseAreaProductUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -728,10 +855,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out DoseAreaProduct result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -743,10 +869,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out DoseAreaProduct result)
-        {
-            return QuantityParser.Default.TryParse<DoseAreaProduct, DoseAreaProductUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<DoseAreaProduct, DoseAreaProductUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -757,10 +882,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DoseAreaProductUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -773,15 +897,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static DoseAreaProductUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.DoseAreaProductUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out DoseAreaProductUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -793,10 +914,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out DoseAreaProductUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -804,45 +924,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static DoseAreaProduct operator -(DoseAreaProduct right)
-        {
-            return new DoseAreaProduct(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="DoseAreaProduct"/> from adding two <see cref="DoseAreaProduct"/>.</summary>
         public static DoseAreaProduct operator +(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return new DoseAreaProduct(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="DoseAreaProduct"/> from subtracting two <see cref="DoseAreaProduct"/>.</summary>
         public static DoseAreaProduct operator -(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return new DoseAreaProduct(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="DoseAreaProduct"/> from multiplying value and <see cref="DoseAreaProduct"/>.</summary>
         public static DoseAreaProduct operator *(QuantityValue left, DoseAreaProduct right)
-        {
-            return new DoseAreaProduct(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="DoseAreaProduct"/> from multiplying value and <see cref="DoseAreaProduct"/>.</summary>
         public static DoseAreaProduct operator *(DoseAreaProduct left, QuantityValue right)
-        {
-            return new DoseAreaProduct(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="DoseAreaProduct"/> from dividing <see cref="DoseAreaProduct"/> by value.</summary>
         public static DoseAreaProduct operator /(DoseAreaProduct left, QuantityValue right)
-        {
-            return new DoseAreaProduct(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="DoseAreaProduct"/> by <see cref="DoseAreaProduct"/>.</summary>
         public static QuantityValue operator /(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return left.GraySquareMeters / right.GraySquareMeters;
-        }
+            => left.GraySquareMeters / right.GraySquareMeters;
 
         #endregion
 
@@ -850,15 +956,11 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="DoseAreaProduct"/> / <see cref="Area"/>.</summary>
         public static AbsorbedDoseOfIonizingRadiation operator /(DoseAreaProduct doseAreaProduct, Area area)
-        {
-            return AbsorbedDoseOfIonizingRadiation.FromGrays(doseAreaProduct.GraySquareMeters / area.SquareMeters);
-        }
+            => AbsorbedDoseOfIonizingRadiation.FromGrays(doseAreaProduct.GraySquareMeters / area.SquareMeters);
 
         /// <summary>Get <see cref="Area"/> from <see cref="DoseAreaProduct"/> / <see cref="AbsorbedDoseOfIonizingRadiation"/>.</summary>
         public static Area operator /(DoseAreaProduct doseAreaProduct, AbsorbedDoseOfIonizingRadiation absorbedDoseOfIonizingRadiation)
-        {
-            return Area.FromSquareMeters(doseAreaProduct.GraySquareMeters / absorbedDoseOfIonizingRadiation.Grays);
-        }
+            => Area.FromSquareMeters(doseAreaProduct.GraySquareMeters / absorbedDoseOfIonizingRadiation.Grays);
 
         #endregion
 
@@ -866,27 +968,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="DoseAreaProduct"/> instances are equal.
@@ -897,10 +991,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(DoseAreaProduct)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="DoseAreaProduct"/> instances are not equal.
@@ -910,10 +1003,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(DoseAreaProduct)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(DoseAreaProduct left, DoseAreaProduct right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -926,12 +1018,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not DoseAreaProduct otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is DoseAreaProduct otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -942,18 +1029,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(DoseAreaProduct other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current DoseAreaProduct.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(DoseAreaProduct), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(DoseAreaProduct), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(DoseAreaProduct)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -982,9 +1065,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(DoseAreaProduct other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -995,20 +1076,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

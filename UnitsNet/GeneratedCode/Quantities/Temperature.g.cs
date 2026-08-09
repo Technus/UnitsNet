@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -81,9 +82,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TemperatureInfo"/> class with the default settings.</returns>
             public static TemperatureInfo CreateDefault()
-            {
-                return new TemperatureInfo(nameof(Temperature), DefaultBaseUnit, GetDefaultMappings(), new Temperature(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Temperature), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TemperatureInfo"/> class with the default settings for the Temperature quantity and a callback for customizing the default unit mappings.
@@ -95,19 +94,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TemperatureInfo"/> class with the default settings.
             /// </returns>
             public static TemperatureInfo CreateDefault(Func<IEnumerable<UnitDefinition<TemperatureUnit>>, IEnumerable<IUnitDefinition<TemperatureUnit>>> customizeUnits)
-            {
-                return new TemperatureInfo(nameof(Temperature), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Temperature(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Temperature), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Temperature"/> is Θ.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, 0, 0, 1, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, 0, 0, 1, 0, 0);
 
             /// <summary>
             ///     The default base unit of Temperature is Kelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static TemperatureUnit DefaultBaseUnit { get; } = TemperatureUnit.Kelvin;
+            public static TemperatureUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TemperatureUnit.Kelvin;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="TemperatureUnit"/>.
@@ -189,7 +194,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Temperature" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Temperature, TemperatureUnit> Info { get; }
@@ -197,53 +206,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Temperature, which is Kelvin. All conversions go via this value.
         /// </summary>
-        public static TemperatureUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static TemperatureUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Temperature quantity.
         /// </summary>
-        public static IReadOnlyCollection<TemperatureUnit> Units => Info.Units;
+        public static IReadOnlyCollection<TemperatureUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Kelvin.
         /// </summary>
-        public static Temperature Zero => Info.Zero;
+        public static Temperature Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public TemperatureUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public TemperatureUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Temperature, TemperatureUnit> QuantityInfo => Info;
+        public QuantityInfo<Temperature, TemperatureUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Temperature> IQuantityOfType<Temperature>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Temperature> IQuantityOfType<Temperature>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<TemperatureUnit> IQuantity<TemperatureUnit>.QuantityInfo => Info;
+        QuantityInfo<TemperatureUnit> IQuantity<TemperatureUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -255,52 +312,92 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeCelsius"/>
         /// </summary>
-        public QuantityValue DegreesCelsius => this.As(TemperatureUnit.DegreeCelsius);
+        public QuantityValue DegreesCelsius
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.DegreeCelsius);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeDelisle"/>
         /// </summary>
-        public QuantityValue DegreesDelisle => this.As(TemperatureUnit.DegreeDelisle);
+        public QuantityValue DegreesDelisle
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.DegreeDelisle);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeFahrenheit"/>
         /// </summary>
-        public QuantityValue DegreesFahrenheit => this.As(TemperatureUnit.DegreeFahrenheit);
+        public QuantityValue DegreesFahrenheit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.DegreeFahrenheit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeNewton"/>
         /// </summary>
-        public QuantityValue DegreesNewton => this.As(TemperatureUnit.DegreeNewton);
+        public QuantityValue DegreesNewton
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.DegreeNewton);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeRankine"/>
         /// </summary>
-        public QuantityValue DegreesRankine => this.As(TemperatureUnit.DegreeRankine);
+        public QuantityValue DegreesRankine
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.DegreeRankine);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeReaumur"/>
         /// </summary>
-        public QuantityValue DegreesReaumur => this.As(TemperatureUnit.DegreeReaumur);
+        public QuantityValue DegreesReaumur
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.DegreeReaumur);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeRoemer"/>
         /// </summary>
-        public QuantityValue DegreesRoemer => this.As(TemperatureUnit.DegreeRoemer);
+        public QuantityValue DegreesRoemer
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.DegreeRoemer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.Kelvin"/>
         /// </summary>
-        public QuantityValue Kelvins => this.As(TemperatureUnit.Kelvin);
+        public QuantityValue Kelvins
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.Kelvin);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.MillidegreeCelsius"/>
         /// </summary>
-        public QuantityValue MillidegreesCelsius => this.As(TemperatureUnit.MillidegreeCelsius);
+        public QuantityValue MillidegreesCelsius
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.MillidegreeCelsius);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.SolarTemperature"/>
         /// </summary>
-        public QuantityValue SolarTemperatures => this.As(TemperatureUnit.SolarTemperature);
+        public QuantityValue SolarTemperatures
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TemperatureUnit.SolarTemperature);
+        }
 
         #endregion
 
@@ -311,10 +408,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TemperatureUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -322,10 +418,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TemperatureUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -334,82 +429,72 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeCelsius"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromDegreesCelsius(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.DegreeCelsius);
-        }
+            => new(value, TemperatureUnit.DegreeCelsius);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeDelisle"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromDegreesDelisle(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.DegreeDelisle);
-        }
+            => new(value, TemperatureUnit.DegreeDelisle);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeFahrenheit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromDegreesFahrenheit(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.DegreeFahrenheit);
-        }
+            => new(value, TemperatureUnit.DegreeFahrenheit);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeNewton"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromDegreesNewton(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.DegreeNewton);
-        }
+            => new(value, TemperatureUnit.DegreeNewton);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeRankine"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromDegreesRankine(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.DegreeRankine);
-        }
+            => new(value, TemperatureUnit.DegreeRankine);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeReaumur"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromDegreesReaumur(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.DegreeReaumur);
-        }
+            => new(value, TemperatureUnit.DegreeReaumur);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeRoemer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromDegreesRoemer(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.DegreeRoemer);
-        }
+            => new(value, TemperatureUnit.DegreeRoemer);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.Kelvin"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromKelvins(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.Kelvin);
-        }
+            => new(value, TemperatureUnit.Kelvin);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.MillidegreeCelsius"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromMillidegreesCelsius(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.MillidegreeCelsius);
-        }
+            => new(value, TemperatureUnit.MillidegreeCelsius);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.SolarTemperature"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature FromSolarTemperatures(QuantityValue value)
-        {
-            return new Temperature(value, TemperatureUnit.SolarTemperature);
-        }
+            => new(value, TemperatureUnit.SolarTemperature);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="TemperatureUnit" /> to <see cref="Temperature" />.
@@ -417,10 +502,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Temperature unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature From(QuantityValue value, TemperatureUnit fromUnit)
-        {
-            return new Temperature(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -448,10 +532,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -476,10 +559,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Temperature Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Temperature, TemperatureUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Temperature, TemperatureUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -489,10 +571,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Temperature result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -504,10 +585,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Temperature result)
-        {
-            return QuantityParser.Default.TryParse<Temperature, TemperatureUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Temperature, TemperatureUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -518,10 +598,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TemperatureUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -534,15 +613,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static TemperatureUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.TemperatureUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out TemperatureUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -554,10 +630,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out TemperatureUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -565,27 +640,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Temperature left, Temperature right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Temperature left, Temperature right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Temperature left, Temperature right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Temperature left, Temperature right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Temperature"/> instances are equal.
@@ -596,10 +663,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Temperature)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Temperature left, Temperature right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Temperature"/> instances are not equal.
@@ -609,10 +675,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Temperature)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Temperature left, Temperature right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -625,12 +690,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Temperature otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Temperature otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -641,18 +701,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Temperature other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Temperature.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Temperature), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Temperature), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Temperature)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -681,9 +737,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Temperature other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -694,20 +748,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

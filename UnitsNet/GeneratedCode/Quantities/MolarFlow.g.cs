@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MolarFlowInfo"/> class with the default settings.</returns>
             public static MolarFlowInfo CreateDefault()
-            {
-                return new MolarFlowInfo(nameof(MolarFlow), DefaultBaseUnit, GetDefaultMappings(), new MolarFlow(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MolarFlow), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MolarFlowInfo"/> class with the default settings for the MolarFlow quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MolarFlowInfo"/> class with the default settings.
             /// </returns>
             public static MolarFlowInfo CreateDefault(Func<IEnumerable<UnitDefinition<MolarFlowUnit>>, IEnumerable<IUnitDefinition<MolarFlowUnit>>> customizeUnits)
-            {
-                return new MolarFlowInfo(nameof(MolarFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new MolarFlow(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MolarFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MolarFlow"/> is T^-1N.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, -1, 0, 0, 1, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, -1, 0, 0, 1, 0);
 
             /// <summary>
             ///     The default base unit of MolarFlow is MolePerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static MolarFlowUnit DefaultBaseUnit { get; } = MolarFlowUnit.MolePerSecond;
+            public static MolarFlowUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MolarFlowUnit.MolePerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="MolarFlowUnit"/>.
@@ -184,7 +189,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="MolarFlow" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<MolarFlow, MolarFlowUnit> Info { get; }
@@ -192,53 +201,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of MolarFlow, which is MolePerSecond. All conversions go via this value.
         /// </summary>
-        public static MolarFlowUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static MolarFlowUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the MolarFlow quantity.
         /// </summary>
-        public static IReadOnlyCollection<MolarFlowUnit> Units => Info.Units;
+        public static IReadOnlyCollection<MolarFlowUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit MolePerSecond.
         /// </summary>
-        public static MolarFlow Zero => Info.Zero;
+        public static MolarFlow Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public MolarFlowUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public MolarFlowUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<MolarFlow, MolarFlowUnit> QuantityInfo => Info;
+        public QuantityInfo<MolarFlow, MolarFlowUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<MolarFlow> IQuantityOfType<MolarFlow>.QuantityInfo => Info;
+        IQuantityInstanceInfo<MolarFlow> IQuantityOfType<MolarFlow>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<MolarFlowUnit> IQuantity<MolarFlowUnit>.QuantityInfo => Info;
+        QuantityInfo<MolarFlowUnit> IQuantity<MolarFlowUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -250,47 +307,83 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.KilomolePerHour"/>
         /// </summary>
-        public QuantityValue KilomolesPerHour => this.As(MolarFlowUnit.KilomolePerHour);
+        public QuantityValue KilomolesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.KilomolePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.KilomolePerMinute"/>
         /// </summary>
-        public QuantityValue KilomolesPerMinute => this.As(MolarFlowUnit.KilomolePerMinute);
+        public QuantityValue KilomolesPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.KilomolePerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.KilomolePerSecond"/>
         /// </summary>
-        public QuantityValue KilomolesPerSecond => this.As(MolarFlowUnit.KilomolePerSecond);
+        public QuantityValue KilomolesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.KilomolePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.MolePerHour"/>
         /// </summary>
-        public QuantityValue MolesPerHour => this.As(MolarFlowUnit.MolePerHour);
+        public QuantityValue MolesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.MolePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.MolePerMinute"/>
         /// </summary>
-        public QuantityValue MolesPerMinute => this.As(MolarFlowUnit.MolePerMinute);
+        public QuantityValue MolesPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.MolePerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.MolePerSecond"/>
         /// </summary>
-        public QuantityValue MolesPerSecond => this.As(MolarFlowUnit.MolePerSecond);
+        public QuantityValue MolesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.MolePerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.PoundMolePerHour"/>
         /// </summary>
-        public QuantityValue PoundMolesPerHour => this.As(MolarFlowUnit.PoundMolePerHour);
+        public QuantityValue PoundMolesPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.PoundMolePerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.PoundMolePerMinute"/>
         /// </summary>
-        public QuantityValue PoundMolesPerMinute => this.As(MolarFlowUnit.PoundMolePerMinute);
+        public QuantityValue PoundMolesPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.PoundMolePerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.PoundMolePerSecond"/>
         /// </summary>
-        public QuantityValue PoundMolesPerSecond => this.As(MolarFlowUnit.PoundMolePerSecond);
+        public QuantityValue PoundMolesPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarFlowUnit.PoundMolePerSecond);
+        }
 
         #endregion
 
@@ -301,10 +394,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MolarFlowUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -312,10 +404,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MolarFlowUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -324,74 +415,65 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.KilomolePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromKilomolesPerHour(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.KilomolePerHour);
-        }
+            => new(value, MolarFlowUnit.KilomolePerHour);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.KilomolePerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromKilomolesPerMinute(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.KilomolePerMinute);
-        }
+            => new(value, MolarFlowUnit.KilomolePerMinute);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.KilomolePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromKilomolesPerSecond(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.KilomolePerSecond);
-        }
+            => new(value, MolarFlowUnit.KilomolePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.MolePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromMolesPerHour(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.MolePerHour);
-        }
+            => new(value, MolarFlowUnit.MolePerHour);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.MolePerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromMolesPerMinute(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.MolePerMinute);
-        }
+            => new(value, MolarFlowUnit.MolePerMinute);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.MolePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromMolesPerSecond(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.MolePerSecond);
-        }
+            => new(value, MolarFlowUnit.MolePerSecond);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.PoundMolePerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromPoundMolesPerHour(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.PoundMolePerHour);
-        }
+            => new(value, MolarFlowUnit.PoundMolePerHour);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.PoundMolePerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromPoundMolesPerMinute(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.PoundMolePerMinute);
-        }
+            => new(value, MolarFlowUnit.PoundMolePerMinute);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.PoundMolePerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow FromPoundMolesPerSecond(QuantityValue value)
-        {
-            return new MolarFlow(value, MolarFlowUnit.PoundMolePerSecond);
-        }
+            => new(value, MolarFlowUnit.PoundMolePerSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="MolarFlowUnit" /> to <see cref="MolarFlow" />.
@@ -399,10 +481,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>MolarFlow unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow From(QuantityValue value, MolarFlowUnit fromUnit)
-        {
-            return new MolarFlow(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -430,10 +511,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -458,10 +538,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlow Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<MolarFlow, MolarFlowUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<MolarFlow, MolarFlowUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -471,10 +550,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out MolarFlow result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -486,10 +564,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out MolarFlow result)
-        {
-            return QuantityParser.Default.TryParse<MolarFlow, MolarFlowUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<MolarFlow, MolarFlowUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -500,10 +577,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarFlowUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -516,15 +592,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static MolarFlowUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.MolarFlowUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out MolarFlowUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -536,10 +609,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out MolarFlowUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -547,45 +619,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static MolarFlow operator -(MolarFlow right)
-        {
-            return new MolarFlow(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="MolarFlow"/> from adding two <see cref="MolarFlow"/>.</summary>
         public static MolarFlow operator +(MolarFlow left, MolarFlow right)
-        {
-            return new MolarFlow(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MolarFlow"/> from subtracting two <see cref="MolarFlow"/>.</summary>
         public static MolarFlow operator -(MolarFlow left, MolarFlow right)
-        {
-            return new MolarFlow(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MolarFlow"/> from multiplying value and <see cref="MolarFlow"/>.</summary>
         public static MolarFlow operator *(QuantityValue left, MolarFlow right)
-        {
-            return new MolarFlow(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="MolarFlow"/> from multiplying value and <see cref="MolarFlow"/>.</summary>
         public static MolarFlow operator *(MolarFlow left, QuantityValue right)
-        {
-            return new MolarFlow(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="MolarFlow"/> from dividing <see cref="MolarFlow"/> by value.</summary>
         public static MolarFlow operator /(MolarFlow left, QuantityValue right)
-        {
-            return new MolarFlow(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="MolarFlow"/> by <see cref="MolarFlow"/>.</summary>
         public static QuantityValue operator /(MolarFlow left, MolarFlow right)
-        {
-            return left.MolesPerSecond / right.MolesPerSecond;
-        }
+            => left.MolesPerSecond / right.MolesPerSecond;
 
         #endregion
 
@@ -593,27 +651,19 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="AmountOfSubstance"/> from <see cref="MolarFlow"/> * <see cref="Duration"/>.</summary>
         public static AmountOfSubstance operator *(MolarFlow molarFlow, Duration duration)
-        {
-            return AmountOfSubstance.FromMoles(molarFlow.MolesPerSecond * duration.Seconds);
-        }
+            => AmountOfSubstance.FromMoles(molarFlow.MolesPerSecond * duration.Seconds);
 
         /// <summary>Get <see cref="MassFlow"/> from <see cref="MolarFlow"/> * <see cref="MolarMass"/>.</summary>
         public static MassFlow operator *(MolarFlow molarFlow, MolarMass molarMass)
-        {
-            return MassFlow.FromKilogramsPerSecond(molarFlow.KilomolesPerSecond * molarMass.KilogramsPerKilomole);
-        }
+            => MassFlow.FromKilogramsPerSecond(molarFlow.KilomolesPerSecond * molarMass.KilogramsPerKilomole);
 
         /// <summary>Get <see cref="Molarity"/> from <see cref="MolarFlow"/> / <see cref="VolumeFlow"/>.</summary>
         public static Molarity operator /(MolarFlow molarFlow, VolumeFlow volumeFlow)
-        {
-            return Molarity.FromMolesPerCubicMeter(molarFlow.MolesPerSecond / volumeFlow.CubicMetersPerSecond);
-        }
+            => Molarity.FromMolesPerCubicMeter(molarFlow.MolesPerSecond / volumeFlow.CubicMetersPerSecond);
 
         /// <summary>Get <see cref="VolumeFlow"/> from <see cref="MolarFlow"/> / <see cref="Molarity"/>.</summary>
         public static VolumeFlow operator /(MolarFlow molarFlow, Molarity molarity)
-        {
-            return VolumeFlow.FromCubicMetersPerSecond(molarFlow.MolesPerSecond / molarity.MolesPerCubicMeter);
-        }
+            => VolumeFlow.FromCubicMetersPerSecond(molarFlow.MolesPerSecond / molarity.MolesPerCubicMeter);
 
         #endregion
 
@@ -621,27 +671,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(MolarFlow left, MolarFlow right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(MolarFlow left, MolarFlow right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(MolarFlow left, MolarFlow right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(MolarFlow left, MolarFlow right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="MolarFlow"/> instances are equal.
@@ -652,10 +694,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(MolarFlow)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(MolarFlow left, MolarFlow right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="MolarFlow"/> instances are not equal.
@@ -665,10 +706,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(MolarFlow)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(MolarFlow left, MolarFlow right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -681,12 +721,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not MolarFlow otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is MolarFlow otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -697,18 +732,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(MolarFlow other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current MolarFlow.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(MolarFlow), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(MolarFlow), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(MolarFlow)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -737,9 +768,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(MolarFlow other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -750,20 +779,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

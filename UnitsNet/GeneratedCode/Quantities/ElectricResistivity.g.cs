@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -85,9 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricResistivityInfo"/> class with the default settings.</returns>
             public static ElectricResistivityInfo CreateDefault()
-            {
-                return new ElectricResistivityInfo(nameof(ElectricResistivity), DefaultBaseUnit, GetDefaultMappings(), new ElectricResistivity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricResistivity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricResistivityInfo"/> class with the default settings for the ElectricResistivity quantity and a callback for customizing the default unit mappings.
@@ -99,19 +98,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricResistivityInfo"/> class with the default settings.
             /// </returns>
             public static ElectricResistivityInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricResistivityUnit>>, IEnumerable<IUnitDefinition<ElectricResistivityUnit>>> customizeUnits)
-            {
-                return new ElectricResistivityInfo(nameof(ElectricResistivity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricResistivity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricResistivity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricResistivity"/> is T^-3L^3MI^-2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(3, 1, -3, -2, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(3, 1, -3, -2, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricResistivity is OhmMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricResistivityUnit DefaultBaseUnit { get; } = ElectricResistivityUnit.OhmMeter;
+            public static ElectricResistivityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricResistivityUnit.OhmMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricResistivityUnit"/>.
@@ -198,7 +203,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricResistivity" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricResistivity, ElectricResistivityUnit> Info { get; }
@@ -206,53 +215,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricResistivity, which is OhmMeter. All conversions go via this value.
         /// </summary>
-        public static ElectricResistivityUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricResistivityUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricResistivity quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricResistivityUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricResistivityUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit OhmMeter.
         /// </summary>
-        public static ElectricResistivity Zero => Info.Zero;
+        public static ElectricResistivity Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricResistivityUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricResistivityUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricResistivity, ElectricResistivityUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricResistivity, ElectricResistivityUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricResistivity> IQuantityOfType<ElectricResistivity>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricResistivity> IQuantityOfType<ElectricResistivity>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricResistivityUnit> IQuantity<ElectricResistivityUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricResistivityUnit> IQuantity<ElectricResistivityUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -264,72 +321,128 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.KiloohmCentimeter"/>
         /// </summary>
-        public QuantityValue KiloohmsCentimeter => this.As(ElectricResistivityUnit.KiloohmCentimeter);
+        public QuantityValue KiloohmsCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.KiloohmCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.KiloohmMeter"/>
         /// </summary>
-        public QuantityValue KiloohmMeters => this.As(ElectricResistivityUnit.KiloohmMeter);
+        public QuantityValue KiloohmMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.KiloohmMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.MegaohmCentimeter"/>
         /// </summary>
-        public QuantityValue MegaohmsCentimeter => this.As(ElectricResistivityUnit.MegaohmCentimeter);
+        public QuantityValue MegaohmsCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.MegaohmCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.MegaohmMeter"/>
         /// </summary>
-        public QuantityValue MegaohmMeters => this.As(ElectricResistivityUnit.MegaohmMeter);
+        public QuantityValue MegaohmMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.MegaohmMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.MicroohmCentimeter"/>
         /// </summary>
-        public QuantityValue MicroohmsCentimeter => this.As(ElectricResistivityUnit.MicroohmCentimeter);
+        public QuantityValue MicroohmsCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.MicroohmCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.MicroohmMeter"/>
         /// </summary>
-        public QuantityValue MicroohmMeters => this.As(ElectricResistivityUnit.MicroohmMeter);
+        public QuantityValue MicroohmMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.MicroohmMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.MilliohmCentimeter"/>
         /// </summary>
-        public QuantityValue MilliohmsCentimeter => this.As(ElectricResistivityUnit.MilliohmCentimeter);
+        public QuantityValue MilliohmsCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.MilliohmCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.MilliohmMeter"/>
         /// </summary>
-        public QuantityValue MilliohmMeters => this.As(ElectricResistivityUnit.MilliohmMeter);
+        public QuantityValue MilliohmMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.MilliohmMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.NanoohmCentimeter"/>
         /// </summary>
-        public QuantityValue NanoohmsCentimeter => this.As(ElectricResistivityUnit.NanoohmCentimeter);
+        public QuantityValue NanoohmsCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.NanoohmCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.NanoohmMeter"/>
         /// </summary>
-        public QuantityValue NanoohmMeters => this.As(ElectricResistivityUnit.NanoohmMeter);
+        public QuantityValue NanoohmMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.NanoohmMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.OhmCentimeter"/>
         /// </summary>
-        public QuantityValue OhmsCentimeter => this.As(ElectricResistivityUnit.OhmCentimeter);
+        public QuantityValue OhmsCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.OhmCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.OhmMeter"/>
         /// </summary>
-        public QuantityValue OhmMeters => this.As(ElectricResistivityUnit.OhmMeter);
+        public QuantityValue OhmMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.OhmMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.PicoohmCentimeter"/>
         /// </summary>
-        public QuantityValue PicoohmsCentimeter => this.As(ElectricResistivityUnit.PicoohmCentimeter);
+        public QuantityValue PicoohmsCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.PicoohmCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistivityUnit.PicoohmMeter"/>
         /// </summary>
-        public QuantityValue PicoohmMeters => this.As(ElectricResistivityUnit.PicoohmMeter);
+        public QuantityValue PicoohmMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricResistivityUnit.PicoohmMeter);
+        }
 
         #endregion
 
@@ -340,10 +453,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricResistivityUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -351,10 +463,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricResistivityUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -363,114 +474,100 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.KiloohmCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromKiloohmsCentimeter(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.KiloohmCentimeter);
-        }
+            => new(value, ElectricResistivityUnit.KiloohmCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.KiloohmMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromKiloohmMeters(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.KiloohmMeter);
-        }
+            => new(value, ElectricResistivityUnit.KiloohmMeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.MegaohmCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromMegaohmsCentimeter(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.MegaohmCentimeter);
-        }
+            => new(value, ElectricResistivityUnit.MegaohmCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.MegaohmMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromMegaohmMeters(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.MegaohmMeter);
-        }
+            => new(value, ElectricResistivityUnit.MegaohmMeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.MicroohmCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromMicroohmsCentimeter(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.MicroohmCentimeter);
-        }
+            => new(value, ElectricResistivityUnit.MicroohmCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.MicroohmMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromMicroohmMeters(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.MicroohmMeter);
-        }
+            => new(value, ElectricResistivityUnit.MicroohmMeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.MilliohmCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromMilliohmsCentimeter(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.MilliohmCentimeter);
-        }
+            => new(value, ElectricResistivityUnit.MilliohmCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.MilliohmMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromMilliohmMeters(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.MilliohmMeter);
-        }
+            => new(value, ElectricResistivityUnit.MilliohmMeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.NanoohmCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromNanoohmsCentimeter(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.NanoohmCentimeter);
-        }
+            => new(value, ElectricResistivityUnit.NanoohmCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.NanoohmMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromNanoohmMeters(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.NanoohmMeter);
-        }
+            => new(value, ElectricResistivityUnit.NanoohmMeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.OhmCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromOhmsCentimeter(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.OhmCentimeter);
-        }
+            => new(value, ElectricResistivityUnit.OhmCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.OhmMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromOhmMeters(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.OhmMeter);
-        }
+            => new(value, ElectricResistivityUnit.OhmMeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.PicoohmCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromPicoohmsCentimeter(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.PicoohmCentimeter);
-        }
+            => new(value, ElectricResistivityUnit.PicoohmCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistivity"/> from <see cref="ElectricResistivityUnit.PicoohmMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity FromPicoohmMeters(QuantityValue value)
-        {
-            return new ElectricResistivity(value, ElectricResistivityUnit.PicoohmMeter);
-        }
+            => new(value, ElectricResistivityUnit.PicoohmMeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricResistivityUnit" /> to <see cref="ElectricResistivity" />.
@@ -478,10 +575,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricResistivity unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity From(QuantityValue value, ElectricResistivityUnit fromUnit)
-        {
-            return new ElectricResistivity(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -509,10 +605,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -537,10 +632,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivity Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricResistivity, ElectricResistivityUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricResistivity, ElectricResistivityUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -550,10 +644,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricResistivity result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -565,10 +658,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricResistivity result)
-        {
-            return QuantityParser.Default.TryParse<ElectricResistivity, ElectricResistivityUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricResistivity, ElectricResistivityUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -579,10 +671,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricResistivityUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -595,15 +686,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricResistivityUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricResistivityUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricResistivityUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -615,10 +703,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricResistivityUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -626,45 +713,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricResistivity operator -(ElectricResistivity right)
-        {
-            return new ElectricResistivity(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricResistivity"/> from adding two <see cref="ElectricResistivity"/>.</summary>
         public static ElectricResistivity operator +(ElectricResistivity left, ElectricResistivity right)
-        {
-            return new ElectricResistivity(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricResistivity"/> from subtracting two <see cref="ElectricResistivity"/>.</summary>
         public static ElectricResistivity operator -(ElectricResistivity left, ElectricResistivity right)
-        {
-            return new ElectricResistivity(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricResistivity"/> from multiplying value and <see cref="ElectricResistivity"/>.</summary>
         public static ElectricResistivity operator *(QuantityValue left, ElectricResistivity right)
-        {
-            return new ElectricResistivity(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricResistivity"/> from multiplying value and <see cref="ElectricResistivity"/>.</summary>
         public static ElectricResistivity operator *(ElectricResistivity left, QuantityValue right)
-        {
-            return new ElectricResistivity(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricResistivity"/> from dividing <see cref="ElectricResistivity"/> by value.</summary>
         public static ElectricResistivity operator /(ElectricResistivity left, QuantityValue right)
-        {
-            return new ElectricResistivity(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricResistivity"/> by <see cref="ElectricResistivity"/>.</summary>
         public static QuantityValue operator /(ElectricResistivity left, ElectricResistivity right)
-        {
-            return left.OhmMeters / right.OhmMeters;
-        }
+            => left.OhmMeters / right.OhmMeters;
 
         #endregion
 
@@ -673,9 +746,7 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="ElectricConductivity"/>.</returns>
         public ElectricConductivity Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricConductivity.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, ElectricConductivity.Info);
 
         #endregion
 
@@ -683,27 +754,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricResistivity left, ElectricResistivity right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricResistivity left, ElectricResistivity right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricResistivity left, ElectricResistivity right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricResistivity left, ElectricResistivity right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricResistivity"/> instances are equal.
@@ -714,10 +777,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricResistivity)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricResistivity left, ElectricResistivity right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricResistivity"/> instances are not equal.
@@ -727,10 +789,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricResistivity)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricResistivity left, ElectricResistivity right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -743,12 +804,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricResistivity otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricResistivity otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -759,18 +815,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricResistivity other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricResistivity.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricResistivity), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricResistivity), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricResistivity)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -799,9 +851,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricResistivity other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -812,20 +862,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

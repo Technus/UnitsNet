@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MolarEnergyInfo"/> class with the default settings.</returns>
             public static MolarEnergyInfo CreateDefault()
-            {
-                return new MolarEnergyInfo(nameof(MolarEnergy), DefaultBaseUnit, GetDefaultMappings(), new MolarEnergy(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MolarEnergy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MolarEnergyInfo"/> class with the default settings for the MolarEnergy quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MolarEnergyInfo"/> class with the default settings.
             /// </returns>
             public static MolarEnergyInfo CreateDefault(Func<IEnumerable<UnitDefinition<MolarEnergyUnit>>, IEnumerable<IUnitDefinition<MolarEnergyUnit>>> customizeUnits)
-            {
-                return new MolarEnergyInfo(nameof(MolarEnergy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new MolarEnergy(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MolarEnergy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MolarEnergy"/> is T^-2L^2MN^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -2, 0, 0, -1, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -2, 0, 0, -1, 0);
 
             /// <summary>
             ///     The default base unit of MolarEnergy is JoulePerMole. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static MolarEnergyUnit DefaultBaseUnit { get; } = MolarEnergyUnit.JoulePerMole;
+            public static MolarEnergyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MolarEnergyUnit.JoulePerMole;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="MolarEnergyUnit"/>.
@@ -163,7 +168,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="MolarEnergy" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<MolarEnergy, MolarEnergyUnit> Info { get; }
@@ -171,53 +180,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of MolarEnergy, which is JoulePerMole. All conversions go via this value.
         /// </summary>
-        public static MolarEnergyUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static MolarEnergyUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the MolarEnergy quantity.
         /// </summary>
-        public static IReadOnlyCollection<MolarEnergyUnit> Units => Info.Units;
+        public static IReadOnlyCollection<MolarEnergyUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit JoulePerMole.
         /// </summary>
-        public static MolarEnergy Zero => Info.Zero;
+        public static MolarEnergy Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public MolarEnergyUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public MolarEnergyUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<MolarEnergy, MolarEnergyUnit> QuantityInfo => Info;
+        public QuantityInfo<MolarEnergy, MolarEnergyUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<MolarEnergy> IQuantityOfType<MolarEnergy>.QuantityInfo => Info;
+        IQuantityInstanceInfo<MolarEnergy> IQuantityOfType<MolarEnergy>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<MolarEnergyUnit> IQuantity<MolarEnergyUnit>.QuantityInfo => Info;
+        QuantityInfo<MolarEnergyUnit> IQuantity<MolarEnergyUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -229,17 +286,29 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarEnergyUnit.JoulePerMole"/>
         /// </summary>
-        public QuantityValue JoulesPerMole => this.As(MolarEnergyUnit.JoulePerMole);
+        public QuantityValue JoulesPerMole
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarEnergyUnit.JoulePerMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarEnergyUnit.KilojoulePerMole"/>
         /// </summary>
-        public QuantityValue KilojoulesPerMole => this.As(MolarEnergyUnit.KilojoulePerMole);
+        public QuantityValue KilojoulesPerMole
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarEnergyUnit.KilojoulePerMole);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarEnergyUnit.MegajoulePerMole"/>
         /// </summary>
-        public QuantityValue MegajoulesPerMole => this.As(MolarEnergyUnit.MegajoulePerMole);
+        public QuantityValue MegajoulesPerMole
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MolarEnergyUnit.MegajoulePerMole);
+        }
 
         #endregion
 
@@ -250,10 +319,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MolarEnergyUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -261,10 +329,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MolarEnergyUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -273,26 +340,23 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="MolarEnergy"/> from <see cref="MolarEnergyUnit.JoulePerMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarEnergy FromJoulesPerMole(QuantityValue value)
-        {
-            return new MolarEnergy(value, MolarEnergyUnit.JoulePerMole);
-        }
+            => new(value, MolarEnergyUnit.JoulePerMole);
 
         /// <summary>
         ///     Creates a <see cref="MolarEnergy"/> from <see cref="MolarEnergyUnit.KilojoulePerMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarEnergy FromKilojoulesPerMole(QuantityValue value)
-        {
-            return new MolarEnergy(value, MolarEnergyUnit.KilojoulePerMole);
-        }
+            => new(value, MolarEnergyUnit.KilojoulePerMole);
 
         /// <summary>
         ///     Creates a <see cref="MolarEnergy"/> from <see cref="MolarEnergyUnit.MegajoulePerMole"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarEnergy FromMegajoulesPerMole(QuantityValue value)
-        {
-            return new MolarEnergy(value, MolarEnergyUnit.MegajoulePerMole);
-        }
+            => new(value, MolarEnergyUnit.MegajoulePerMole);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="MolarEnergyUnit" /> to <see cref="MolarEnergy" />.
@@ -300,10 +364,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>MolarEnergy unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarEnergy From(QuantityValue value, MolarEnergyUnit fromUnit)
-        {
-            return new MolarEnergy(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -331,10 +394,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarEnergy Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -359,10 +421,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarEnergy Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<MolarEnergy, MolarEnergyUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<MolarEnergy, MolarEnergyUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -372,10 +433,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out MolarEnergy result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -387,10 +447,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out MolarEnergy result)
-        {
-            return QuantityParser.Default.TryParse<MolarEnergy, MolarEnergyUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<MolarEnergy, MolarEnergyUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -401,10 +460,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MolarEnergyUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -417,15 +475,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static MolarEnergyUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.MolarEnergyUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out MolarEnergyUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -437,10 +492,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out MolarEnergyUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -448,45 +502,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static MolarEnergy operator -(MolarEnergy right)
-        {
-            return new MolarEnergy(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="MolarEnergy"/> from adding two <see cref="MolarEnergy"/>.</summary>
         public static MolarEnergy operator +(MolarEnergy left, MolarEnergy right)
-        {
-            return new MolarEnergy(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MolarEnergy"/> from subtracting two <see cref="MolarEnergy"/>.</summary>
         public static MolarEnergy operator -(MolarEnergy left, MolarEnergy right)
-        {
-            return new MolarEnergy(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MolarEnergy"/> from multiplying value and <see cref="MolarEnergy"/>.</summary>
         public static MolarEnergy operator *(QuantityValue left, MolarEnergy right)
-        {
-            return new MolarEnergy(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="MolarEnergy"/> from multiplying value and <see cref="MolarEnergy"/>.</summary>
         public static MolarEnergy operator *(MolarEnergy left, QuantityValue right)
-        {
-            return new MolarEnergy(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="MolarEnergy"/> from dividing <see cref="MolarEnergy"/> by value.</summary>
         public static MolarEnergy operator /(MolarEnergy left, QuantityValue right)
-        {
-            return new MolarEnergy(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="MolarEnergy"/> by <see cref="MolarEnergy"/>.</summary>
         public static QuantityValue operator /(MolarEnergy left, MolarEnergy right)
-        {
-            return left.JoulesPerMole / right.JoulesPerMole;
-        }
+            => left.JoulesPerMole / right.JoulesPerMole;
 
         #endregion
 
@@ -494,9 +534,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Energy"/> from <see cref="MolarEnergy"/> * <see cref="AmountOfSubstance"/>.</summary>
         public static Energy operator *(MolarEnergy molarEnergy, AmountOfSubstance amountOfSubstance)
-        {
-            return Energy.FromJoules(molarEnergy.JoulesPerMole * amountOfSubstance.Moles);
-        }
+            => Energy.FromJoules(molarEnergy.JoulesPerMole * amountOfSubstance.Moles);
 
         #endregion
 
@@ -504,27 +542,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(MolarEnergy left, MolarEnergy right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(MolarEnergy left, MolarEnergy right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(MolarEnergy left, MolarEnergy right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(MolarEnergy left, MolarEnergy right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="MolarEnergy"/> instances are equal.
@@ -535,10 +565,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(MolarEnergy)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(MolarEnergy left, MolarEnergy right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="MolarEnergy"/> instances are not equal.
@@ -548,10 +577,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(MolarEnergy)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(MolarEnergy left, MolarEnergy right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -564,12 +592,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not MolarEnergy otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is MolarEnergy otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -580,18 +603,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(MolarEnergy other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current MolarEnergy.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(MolarEnergy), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(MolarEnergy), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(MolarEnergy)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -620,9 +639,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(MolarEnergy other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -633,20 +650,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

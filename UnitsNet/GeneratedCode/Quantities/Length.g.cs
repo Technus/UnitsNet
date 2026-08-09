@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -106,9 +107,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LengthInfo"/> class with the default settings.</returns>
             public static LengthInfo CreateDefault()
-            {
-                return new LengthInfo(nameof(Length), DefaultBaseUnit, GetDefaultMappings(), new Length(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Length), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LengthInfo"/> class with the default settings for the Length quantity and a callback for customizing the default unit mappings.
@@ -120,19 +119,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LengthInfo"/> class with the default settings.
             /// </returns>
             public static LengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<LengthUnit>>, IEnumerable<IUnitDefinition<LengthUnit>>> customizeUnits)
-            {
-                return new LengthInfo(nameof(Length), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Length(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Length), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Length"/> is L.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, 0, 0, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, 0, 0, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Length is Meter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static LengthUnit DefaultBaseUnit { get; } = LengthUnit.Meter;
+            public static LengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LengthUnit.Meter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="LengthUnit"/>.
@@ -303,7 +308,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Length" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Length, LengthUnit> Info { get; }
@@ -311,53 +320,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Length, which is Meter. All conversions go via this value.
         /// </summary>
-        public static LengthUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static LengthUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Length quantity.
         /// </summary>
-        public static IReadOnlyCollection<LengthUnit> Units => Info.Units;
+        public static IReadOnlyCollection<LengthUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Meter.
         /// </summary>
-        public static Length Zero => Info.Zero;
+        public static Length Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public LengthUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public LengthUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Length, LengthUnit> QuantityInfo => Info;
+        public QuantityInfo<Length, LengthUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Length> IQuantityOfType<Length>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Length> IQuantityOfType<Length>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<LengthUnit> IQuantity<LengthUnit>.QuantityInfo => Info;
+        QuantityInfo<LengthUnit> IQuantity<LengthUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -369,212 +426,380 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Angstrom"/>
         /// </summary>
-        public QuantityValue Angstroms => this.As(LengthUnit.Angstrom);
+        public QuantityValue Angstroms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Angstrom);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.AstronomicalUnit"/>
         /// </summary>
-        public QuantityValue AstronomicalUnits => this.As(LengthUnit.AstronomicalUnit);
+        public QuantityValue AstronomicalUnits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.AstronomicalUnit);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Centimeter"/>
         /// </summary>
-        public QuantityValue Centimeters => this.As(LengthUnit.Centimeter);
+        public QuantityValue Centimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Centimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Chain"/>
         /// </summary>
-        public QuantityValue Chains => this.As(LengthUnit.Chain);
+        public QuantityValue Chains
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Chain);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.DataMile"/>
         /// </summary>
-        public QuantityValue DataMiles => this.As(LengthUnit.DataMile);
+        public QuantityValue DataMiles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.DataMile);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Decameter"/>
         /// </summary>
-        public QuantityValue Decameters => this.As(LengthUnit.Decameter);
+        public QuantityValue Decameters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Decameter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Decimeter"/>
         /// </summary>
-        public QuantityValue Decimeters => this.As(LengthUnit.Decimeter);
+        public QuantityValue Decimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Decimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.DtpPica"/>
         /// </summary>
-        public QuantityValue DtpPicas => this.As(LengthUnit.DtpPica);
+        public QuantityValue DtpPicas
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.DtpPica);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.DtpPoint"/>
         /// </summary>
-        public QuantityValue DtpPoints => this.As(LengthUnit.DtpPoint);
+        public QuantityValue DtpPoints
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.DtpPoint);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Fathom"/>
         /// </summary>
-        public QuantityValue Fathoms => this.As(LengthUnit.Fathom);
+        public QuantityValue Fathoms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Fathom);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Femtometer"/>
         /// </summary>
-        public QuantityValue Femtometers => this.As(LengthUnit.Femtometer);
+        public QuantityValue Femtometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Femtometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Foot"/>
         /// </summary>
-        public QuantityValue Feet => this.As(LengthUnit.Foot);
+        public QuantityValue Feet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Foot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Gigameter"/>
         /// </summary>
-        public QuantityValue Gigameters => this.As(LengthUnit.Gigameter);
+        public QuantityValue Gigameters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Gigameter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Hand"/>
         /// </summary>
-        public QuantityValue Hands => this.As(LengthUnit.Hand);
+        public QuantityValue Hands
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Hand);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Hectometer"/>
         /// </summary>
-        public QuantityValue Hectometers => this.As(LengthUnit.Hectometer);
+        public QuantityValue Hectometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Hectometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Inch"/>
         /// </summary>
-        public QuantityValue Inches => this.As(LengthUnit.Inch);
+        public QuantityValue Inches
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Inch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Kilofoot"/>
         /// </summary>
-        public QuantityValue Kilofeet => this.As(LengthUnit.Kilofoot);
+        public QuantityValue Kilofeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Kilofoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.KilolightYear"/>
         /// </summary>
-        public QuantityValue KilolightYears => this.As(LengthUnit.KilolightYear);
+        public QuantityValue KilolightYears
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.KilolightYear);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Kilometer"/>
         /// </summary>
-        public QuantityValue Kilometers => this.As(LengthUnit.Kilometer);
+        public QuantityValue Kilometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Kilometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Kiloparsec"/>
         /// </summary>
-        public QuantityValue Kiloparsecs => this.As(LengthUnit.Kiloparsec);
+        public QuantityValue Kiloparsecs
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Kiloparsec);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Kiloyard"/>
         /// </summary>
-        public QuantityValue Kiloyards => this.As(LengthUnit.Kiloyard);
+        public QuantityValue Kiloyards
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Kiloyard);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.LightYear"/>
         /// </summary>
-        public QuantityValue LightYears => this.As(LengthUnit.LightYear);
+        public QuantityValue LightYears
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.LightYear);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.MegalightYear"/>
         /// </summary>
-        public QuantityValue MegalightYears => this.As(LengthUnit.MegalightYear);
+        public QuantityValue MegalightYears
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.MegalightYear);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Megameter"/>
         /// </summary>
-        public QuantityValue Megameters => this.As(LengthUnit.Megameter);
+        public QuantityValue Megameters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Megameter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Megaparsec"/>
         /// </summary>
-        public QuantityValue Megaparsecs => this.As(LengthUnit.Megaparsec);
+        public QuantityValue Megaparsecs
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Megaparsec);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Meter"/>
         /// </summary>
-        public QuantityValue Meters => this.As(LengthUnit.Meter);
+        public QuantityValue Meters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Meter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Microinch"/>
         /// </summary>
-        public QuantityValue Microinches => this.As(LengthUnit.Microinch);
+        public QuantityValue Microinches
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Microinch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Micrometer"/>
         /// </summary>
-        public QuantityValue Micrometers => this.As(LengthUnit.Micrometer);
+        public QuantityValue Micrometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Micrometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Mil"/>
         /// </summary>
-        public QuantityValue Mils => this.As(LengthUnit.Mil);
+        public QuantityValue Mils
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Mil);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Mile"/>
         /// </summary>
-        public QuantityValue Miles => this.As(LengthUnit.Mile);
+        public QuantityValue Miles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Mile);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Millimeter"/>
         /// </summary>
-        public QuantityValue Millimeters => this.As(LengthUnit.Millimeter);
+        public QuantityValue Millimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Millimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Nanometer"/>
         /// </summary>
-        public QuantityValue Nanometers => this.As(LengthUnit.Nanometer);
+        public QuantityValue Nanometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Nanometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.NauticalMile"/>
         /// </summary>
-        public QuantityValue NauticalMiles => this.As(LengthUnit.NauticalMile);
+        public QuantityValue NauticalMiles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.NauticalMile);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Parsec"/>
         /// </summary>
-        public QuantityValue Parsecs => this.As(LengthUnit.Parsec);
+        public QuantityValue Parsecs
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Parsec);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Picometer"/>
         /// </summary>
-        public QuantityValue Picometers => this.As(LengthUnit.Picometer);
+        public QuantityValue Picometers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Picometer);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.PrinterPica"/>
         /// </summary>
-        public QuantityValue PrinterPicas => this.As(LengthUnit.PrinterPica);
+        public QuantityValue PrinterPicas
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.PrinterPica);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.PrinterPoint"/>
         /// </summary>
-        public QuantityValue PrinterPoints => this.As(LengthUnit.PrinterPoint);
+        public QuantityValue PrinterPoints
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.PrinterPoint);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Shackle"/>
         /// </summary>
-        public QuantityValue Shackles => this.As(LengthUnit.Shackle);
+        public QuantityValue Shackles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Shackle);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.SolarRadius"/>
         /// </summary>
-        public QuantityValue SolarRadiuses => this.As(LengthUnit.SolarRadius);
+        public QuantityValue SolarRadiuses
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.SolarRadius);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Twip"/>
         /// </summary>
-        public QuantityValue Twips => this.As(LengthUnit.Twip);
+        public QuantityValue Twips
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Twip);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.UsSurveyFoot"/>
         /// </summary>
-        public QuantityValue UsSurveyFeet => this.As(LengthUnit.UsSurveyFoot);
+        public QuantityValue UsSurveyFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.UsSurveyFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Yard"/>
         /// </summary>
-        public QuantityValue Yards => this.As(LengthUnit.Yard);
+        public QuantityValue Yards
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LengthUnit.Yard);
+        }
 
         #endregion
 
@@ -585,10 +810,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LengthUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -596,10 +820,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LengthUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -608,338 +831,296 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Angstrom"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromAngstroms(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Angstrom);
-        }
+            => new(value, LengthUnit.Angstrom);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.AstronomicalUnit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromAstronomicalUnits(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.AstronomicalUnit);
-        }
+            => new(value, LengthUnit.AstronomicalUnit);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Centimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromCentimeters(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Centimeter);
-        }
+            => new(value, LengthUnit.Centimeter);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Chain"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromChains(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Chain);
-        }
+            => new(value, LengthUnit.Chain);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.DataMile"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromDataMiles(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.DataMile);
-        }
+            => new(value, LengthUnit.DataMile);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Decameter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromDecameters(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Decameter);
-        }
+            => new(value, LengthUnit.Decameter);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Decimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromDecimeters(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Decimeter);
-        }
+            => new(value, LengthUnit.Decimeter);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.DtpPica"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromDtpPicas(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.DtpPica);
-        }
+            => new(value, LengthUnit.DtpPica);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.DtpPoint"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromDtpPoints(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.DtpPoint);
-        }
+            => new(value, LengthUnit.DtpPoint);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Fathom"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromFathoms(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Fathom);
-        }
+            => new(value, LengthUnit.Fathom);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Femtometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromFemtometers(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Femtometer);
-        }
+            => new(value, LengthUnit.Femtometer);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Foot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromFeet(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Foot);
-        }
+            => new(value, LengthUnit.Foot);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Gigameter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromGigameters(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Gigameter);
-        }
+            => new(value, LengthUnit.Gigameter);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Hand"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromHands(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Hand);
-        }
+            => new(value, LengthUnit.Hand);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Hectometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromHectometers(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Hectometer);
-        }
+            => new(value, LengthUnit.Hectometer);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Inch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromInches(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Inch);
-        }
+            => new(value, LengthUnit.Inch);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Kilofoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromKilofeet(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Kilofoot);
-        }
+            => new(value, LengthUnit.Kilofoot);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.KilolightYear"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromKilolightYears(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.KilolightYear);
-        }
+            => new(value, LengthUnit.KilolightYear);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Kilometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromKilometers(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Kilometer);
-        }
+            => new(value, LengthUnit.Kilometer);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Kiloparsec"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromKiloparsecs(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Kiloparsec);
-        }
+            => new(value, LengthUnit.Kiloparsec);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Kiloyard"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromKiloyards(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Kiloyard);
-        }
+            => new(value, LengthUnit.Kiloyard);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.LightYear"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromLightYears(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.LightYear);
-        }
+            => new(value, LengthUnit.LightYear);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.MegalightYear"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMegalightYears(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.MegalightYear);
-        }
+            => new(value, LengthUnit.MegalightYear);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Megameter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMegameters(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Megameter);
-        }
+            => new(value, LengthUnit.Megameter);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Megaparsec"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMegaparsecs(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Megaparsec);
-        }
+            => new(value, LengthUnit.Megaparsec);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Meter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMeters(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Meter);
-        }
+            => new(value, LengthUnit.Meter);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Microinch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMicroinches(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Microinch);
-        }
+            => new(value, LengthUnit.Microinch);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Micrometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMicrometers(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Micrometer);
-        }
+            => new(value, LengthUnit.Micrometer);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Mil"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMils(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Mil);
-        }
+            => new(value, LengthUnit.Mil);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Mile"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMiles(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Mile);
-        }
+            => new(value, LengthUnit.Mile);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Millimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromMillimeters(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Millimeter);
-        }
+            => new(value, LengthUnit.Millimeter);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Nanometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromNanometers(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Nanometer);
-        }
+            => new(value, LengthUnit.Nanometer);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.NauticalMile"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromNauticalMiles(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.NauticalMile);
-        }
+            => new(value, LengthUnit.NauticalMile);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Parsec"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromParsecs(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Parsec);
-        }
+            => new(value, LengthUnit.Parsec);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Picometer"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromPicometers(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Picometer);
-        }
+            => new(value, LengthUnit.Picometer);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.PrinterPica"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromPrinterPicas(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.PrinterPica);
-        }
+            => new(value, LengthUnit.PrinterPica);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.PrinterPoint"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromPrinterPoints(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.PrinterPoint);
-        }
+            => new(value, LengthUnit.PrinterPoint);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Shackle"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromShackles(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Shackle);
-        }
+            => new(value, LengthUnit.Shackle);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.SolarRadius"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromSolarRadiuses(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.SolarRadius);
-        }
+            => new(value, LengthUnit.SolarRadius);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Twip"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromTwips(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Twip);
-        }
+            => new(value, LengthUnit.Twip);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.UsSurveyFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromUsSurveyFeet(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.UsSurveyFoot);
-        }
+            => new(value, LengthUnit.UsSurveyFoot);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Yard"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length FromYards(QuantityValue value)
-        {
-            return new Length(value, LengthUnit.Yard);
-        }
+            => new(value, LengthUnit.Yard);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="LengthUnit" /> to <see cref="Length" />.
@@ -947,10 +1128,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Length unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length From(QuantityValue value, LengthUnit fromUnit)
-        {
-            return new Length(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -978,10 +1158,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1006,10 +1185,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Length Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Length, LengthUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Length, LengthUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1019,10 +1197,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Length result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -1034,10 +1211,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Length result)
-        {
-            return QuantityParser.Default.TryParse<Length, LengthUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Length, LengthUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1048,10 +1224,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LengthUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1064,15 +1239,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static LengthUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.LengthUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out LengthUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -1084,10 +1256,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out LengthUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -1095,45 +1266,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Length operator -(Length right)
-        {
-            return new Length(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Length"/> from adding two <see cref="Length"/>.</summary>
         public static Length operator +(Length left, Length right)
-        {
-            return new Length(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Length"/> from subtracting two <see cref="Length"/>.</summary>
         public static Length operator -(Length left, Length right)
-        {
-            return new Length(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Length"/> from multiplying value and <see cref="Length"/>.</summary>
         public static Length operator *(QuantityValue left, Length right)
-        {
-            return new Length(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Length"/> from multiplying value and <see cref="Length"/>.</summary>
         public static Length operator *(Length left, QuantityValue right)
-        {
-            return new Length(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Length"/> from dividing <see cref="Length"/> by value.</summary>
         public static Length operator /(Length left, QuantityValue right)
-        {
-            return new Length(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Length"/> by <see cref="Length"/>.</summary>
         public static QuantityValue operator /(Length left, Length right)
-        {
-            return left.Meters / right.Meters;
-        }
+            => left.Meters / right.Meters;
 
         #endregion
 
@@ -1142,153 +1299,103 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="ReciprocalLength"/>.</returns>
         public ReciprocalLength Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, ReciprocalLength.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, ReciprocalLength.Info);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Length"/> * <see cref="AreaPerLength"/>.</summary>
         public static Area operator *(Length length, AreaPerLength areaPerLength)
-        {
-            return Area.FromSquareMeters(length.Meters * areaPerLength.SquareMetersPerMeter);
-        }
+            => Area.FromSquareMeters(length.Meters * areaPerLength.SquareMetersPerMeter);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Length"/> * <see cref="Length"/>.</summary>
         public static Area operator *(Length left, Length right)
-        {
-            return Area.FromSquareMeters(left.Meters * right.Meters);
-        }
+            => Area.FromSquareMeters(left.Meters * right.Meters);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Length"/> / <see cref="ReciprocalLength"/>.</summary>
         public static Area operator /(Length length, ReciprocalLength reciprocalLength)
-        {
-            return Area.FromSquareMeters(length.Meters / reciprocalLength.InverseMeters);
-        }
+            => Area.FromSquareMeters(length.Meters / reciprocalLength.InverseMeters);
 
         /// <summary>Get <see cref="AreaDensity"/> from <see cref="Length"/> * <see cref="Density"/>.</summary>
         public static AreaDensity operator *(Length length, Density density)
-        {
-            return AreaDensity.FromKilogramsPerSquareMeter(length.Meters * density.KilogramsPerCubicMeter);
-        }
+            => AreaDensity.FromKilogramsPerSquareMeter(length.Meters * density.KilogramsPerCubicMeter);
 
         /// <summary>Get <see cref="AreaMomentOfInertia"/> from <see cref="Length"/> * <see cref="Volume"/>.</summary>
         public static AreaMomentOfInertia operator *(Length length, Volume volume)
-        {
-            return AreaMomentOfInertia.FromMetersToTheFourth(length.Meters * volume.CubicMeters);
-        }
+            => AreaMomentOfInertia.FromMetersToTheFourth(length.Meters * volume.CubicMeters);
 
         /// <summary>Get <see cref="Duration"/> from <see cref="Length"/> / <see cref="Speed"/>.</summary>
         public static Duration operator /(Length length, Speed speed)
-        {
-            return Duration.FromSeconds(length.Meters / speed.MetersPerSecond);
-        }
+            => Duration.FromSeconds(length.Meters / speed.MetersPerSecond);
 
         /// <summary>Get <see cref="ElectricPotential"/> from <see cref="Length"/> * <see cref="ElectricField"/>.</summary>
         public static ElectricPotential operator *(Length length, ElectricField electricField)
-        {
-            return ElectricPotential.FromVolts(length.Meters * electricField.VoltsPerMeter);
-        }
+            => ElectricPotential.FromVolts(length.Meters * electricField.VoltsPerMeter);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Length"/> * <see cref="ForcePerLength"/>.</summary>
         public static Force operator *(Length length, ForcePerLength forcePerLength)
-        {
-            return Force.FromNewtons(length.Meters * forcePerLength.NewtonsPerMeter);
-        }
+            => Force.FromNewtons(length.Meters * forcePerLength.NewtonsPerMeter);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="Length"/> * <see cref="Pressure"/>.</summary>
         public static ForcePerLength operator *(Length length, Pressure pressure)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(length.Meters * pressure.NewtonsPerSquareMeter);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(length.Meters * pressure.NewtonsPerSquareMeter);
 
         /// <summary>Get <see cref="KinematicViscosity"/> from <see cref="Length"/> * <see cref="Speed"/>.</summary>
         public static KinematicViscosity operator *(Length length, Speed speed)
-        {
-            return KinematicViscosity.FromSquareMetersPerSecond(length.Meters * speed.MetersPerSecond);
-        }
+            => KinematicViscosity.FromSquareMetersPerSecond(length.Meters * speed.MetersPerSecond);
 
         /// <summary>Get <see cref="LinearDensity"/> from <see cref="Length"/> * <see cref="AreaDensity"/>.</summary>
         public static LinearDensity operator *(Length length, AreaDensity areaDensity)
-        {
-            return LinearDensity.FromKilogramsPerMeter(length.Meters * areaDensity.KilogramsPerSquareMeter);
-        }
+            => LinearDensity.FromKilogramsPerMeter(length.Meters * areaDensity.KilogramsPerSquareMeter);
 
         /// <summary>Get <see cref="Mass"/> from <see cref="Length"/> * <see cref="LinearDensity"/>.</summary>
         public static Mass operator *(Length length, LinearDensity linearDensity)
-        {
-            return Mass.FromKilograms(length.Meters * linearDensity.KilogramsPerMeter);
-        }
+            => Mass.FromKilograms(length.Meters * linearDensity.KilogramsPerMeter);
 
         /// <summary>Get <see cref="Power"/> from <see cref="Length"/> * <see cref="LinearPowerDensity"/>.</summary>
         public static Power operator *(Length length, LinearPowerDensity linearPowerDensity)
-        {
-            return Power.FromWatts(length.Meters * linearPowerDensity.WattsPerMeter);
-        }
+            => Power.FromWatts(length.Meters * linearPowerDensity.WattsPerMeter);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="Length"/> * <see cref="SpecificWeight"/>.</summary>
         public static Pressure operator *(Length length, SpecificWeight specificWeight)
-        {
-            return Pressure.FromPascals(length.Meters * specificWeight.NewtonsPerCubicMeter);
-        }
+            => Pressure.FromPascals(length.Meters * specificWeight.NewtonsPerCubicMeter);
 
         /// <summary>Get <see cref="ReciprocalArea"/> from <see cref="Length"/> / <see cref="Volume"/>.</summary>
         public static ReciprocalArea operator /(Length length, Volume volume)
-        {
-            return ReciprocalArea.FromInverseSquareMeters(length.Meters / volume.CubicMeters);
-        }
+            => ReciprocalArea.FromInverseSquareMeters(length.Meters / volume.CubicMeters);
 
         /// <summary>Get <see cref="ReciprocalLength"/> from <see cref="Length"/> * <see cref="ReciprocalArea"/>.</summary>
         public static ReciprocalLength operator *(Length length, ReciprocalArea reciprocalArea)
-        {
-            return ReciprocalLength.FromInverseMeters(length.Meters * reciprocalArea.InverseSquareMeters);
-        }
+            => ReciprocalLength.FromInverseMeters(length.Meters * reciprocalArea.InverseSquareMeters);
 
         /// <summary>Get <see cref="ReciprocalLength"/> from <see cref="Length"/> / <see cref="Area"/>.</summary>
         public static ReciprocalLength operator /(Length length, Area area)
-        {
-            return ReciprocalLength.FromInverseMeters(length.Meters / area.SquareMeters);
-        }
+            => ReciprocalLength.FromInverseMeters(length.Meters / area.SquareMeters);
 
         /// <summary>Get <see cref="RotationalStiffness"/> from <see cref="Length"/> * <see cref="RotationalStiffnessPerLength"/>.</summary>
         public static RotationalStiffness operator *(Length length, RotationalStiffnessPerLength rotationalStiffnessPerLength)
-        {
-            return RotationalStiffness.FromNewtonMetersPerRadian(length.Meters * rotationalStiffnessPerLength.NewtonMetersPerRadianPerMeter);
-        }
+            => RotationalStiffness.FromNewtonMetersPerRadian(length.Meters * rotationalStiffnessPerLength.NewtonMetersPerRadianPerMeter);
 
         /// <summary>Get <see cref="Speed"/> from <see cref="Length"/> / <see cref="Duration"/>.</summary>
         public static Speed operator /(Length length, Duration duration)
-        {
-            return Speed.FromMetersPerSecond(length.Meters / duration.Seconds);
-        }
+            => Speed.FromMetersPerSecond(length.Meters / duration.Seconds);
 
         /// <summary>Get <see cref="TemperatureDelta"/> from <see cref="Length"/> * <see cref="TemperatureGradient"/>.</summary>
         public static TemperatureDelta operator *(Length length, TemperatureGradient temperatureGradient)
-        {
-            return TemperatureDelta.FromDegreesCelsius(length.Kilometers * temperatureGradient.DegreesCelsiusPerKilometer);
-        }
+            => TemperatureDelta.FromDegreesCelsius(length.Kilometers * temperatureGradient.DegreesCelsiusPerKilometer);
 
         /// <summary>Get <see cref="Torque"/> from <see cref="Length"/> * <see cref="Force"/>.</summary>
         public static Torque operator *(Length length, Force force)
-        {
-            return Torque.FromNewtonMeters(length.Meters * force.Newtons);
-        }
+            => Torque.FromNewtonMeters(length.Meters * force.Newtons);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="Length"/> * <see cref="Area"/>.</summary>
         public static Volume operator *(Length length, Area area)
-        {
-            return Volume.FromCubicMeters(length.Meters * area.SquareMeters);
-        }
+            => Volume.FromCubicMeters(length.Meters * area.SquareMeters);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="Length"/> * <see cref="VolumePerLength"/>.</summary>
         public static Volume operator *(Length length, VolumePerLength volumePerLength)
-        {
-            return Volume.FromCubicMeters(length.Meters * volumePerLength.CubicMetersPerMeter);
-        }
+            => Volume.FromCubicMeters(length.Meters * volumePerLength.CubicMetersPerMeter);
 
         /// <summary>Get <see cref="Volume"/> from <see cref="Length"/> / <see cref="ReciprocalArea"/>.</summary>
         public static Volume operator /(Length length, ReciprocalArea reciprocalArea)
-        {
-            return Volume.FromCubicMeters(length.Meters / reciprocalArea.InverseSquareMeters);
-        }
+            => Volume.FromCubicMeters(length.Meters / reciprocalArea.InverseSquareMeters);
 
         #endregion
 
@@ -1296,27 +1403,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Length left, Length right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Length left, Length right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Length left, Length right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Length left, Length right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Length"/> instances are equal.
@@ -1327,10 +1426,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Length)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Length left, Length right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Length"/> instances are not equal.
@@ -1340,10 +1438,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Length)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Length left, Length right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -1356,12 +1453,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Length otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Length otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1372,18 +1464,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Length other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Length.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Length), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Length), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Length)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1412,9 +1500,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Length other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1425,20 +1511,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -89,9 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TorqueInfo"/> class with the default settings.</returns>
             public static TorqueInfo CreateDefault()
-            {
-                return new TorqueInfo(nameof(Torque), DefaultBaseUnit, GetDefaultMappings(), new Torque(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Torque), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TorqueInfo"/> class with the default settings for the Torque quantity and a callback for customizing the default unit mappings.
@@ -103,19 +102,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TorqueInfo"/> class with the default settings.
             /// </returns>
             public static TorqueInfo CreateDefault(Func<IEnumerable<UnitDefinition<TorqueUnit>>, IEnumerable<IUnitDefinition<TorqueUnit>>> customizeUnits)
-            {
-                return new TorqueInfo(nameof(Torque), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Torque(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Torque), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Torque"/> is T^-2L^2M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Torque is NewtonMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static TorqueUnit DefaultBaseUnit { get; } = TorqueUnit.NewtonMeter;
+            public static TorqueUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TorqueUnit.NewtonMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="TorqueUnit"/>.
@@ -241,7 +246,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Torque" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Torque, TorqueUnit> Info { get; }
@@ -249,53 +258,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Torque, which is NewtonMeter. All conversions go via this value.
         /// </summary>
-        public static TorqueUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static TorqueUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Torque quantity.
         /// </summary>
-        public static IReadOnlyCollection<TorqueUnit> Units => Info.Units;
+        public static IReadOnlyCollection<TorqueUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit NewtonMeter.
         /// </summary>
-        public static Torque Zero => Info.Zero;
+        public static Torque Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public TorqueUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public TorqueUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Torque, TorqueUnit> QuantityInfo => Info;
+        public QuantityInfo<Torque, TorqueUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Torque> IQuantityOfType<Torque>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Torque> IQuantityOfType<Torque>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<TorqueUnit> IQuantity<TorqueUnit>.QuantityInfo => Info;
+        QuantityInfo<TorqueUnit> IQuantity<TorqueUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -307,137 +364,245 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.GramForceCentimeter"/>
         /// </summary>
-        public QuantityValue GramForceCentimeters => this.As(TorqueUnit.GramForceCentimeter);
+        public QuantityValue GramForceCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.GramForceCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.GramForceMeter"/>
         /// </summary>
-        public QuantityValue GramForceMeters => this.As(TorqueUnit.GramForceMeter);
+        public QuantityValue GramForceMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.GramForceMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.GramForceMillimeter"/>
         /// </summary>
-        public QuantityValue GramForceMillimeters => this.As(TorqueUnit.GramForceMillimeter);
+        public QuantityValue GramForceMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.GramForceMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilogramForceCentimeter"/>
         /// </summary>
-        public QuantityValue KilogramForceCentimeters => this.As(TorqueUnit.KilogramForceCentimeter);
+        public QuantityValue KilogramForceCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilogramForceCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilogramForceMeter"/>
         /// </summary>
-        public QuantityValue KilogramForceMeters => this.As(TorqueUnit.KilogramForceMeter);
+        public QuantityValue KilogramForceMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilogramForceMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilogramForceMillimeter"/>
         /// </summary>
-        public QuantityValue KilogramForceMillimeters => this.As(TorqueUnit.KilogramForceMillimeter);
+        public QuantityValue KilogramForceMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilogramForceMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilonewtonCentimeter"/>
         /// </summary>
-        public QuantityValue KilonewtonCentimeters => this.As(TorqueUnit.KilonewtonCentimeter);
+        public QuantityValue KilonewtonCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilonewtonCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilonewtonMeter"/>
         /// </summary>
-        public QuantityValue KilonewtonMeters => this.As(TorqueUnit.KilonewtonMeter);
+        public QuantityValue KilonewtonMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilonewtonMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilonewtonMillimeter"/>
         /// </summary>
-        public QuantityValue KilonewtonMillimeters => this.As(TorqueUnit.KilonewtonMillimeter);
+        public QuantityValue KilonewtonMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilonewtonMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilopoundForceFoot"/>
         /// </summary>
-        public QuantityValue KilopoundForceFeet => this.As(TorqueUnit.KilopoundForceFoot);
+        public QuantityValue KilopoundForceFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilopoundForceFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.KilopoundForceInch"/>
         /// </summary>
-        public QuantityValue KilopoundForceInches => this.As(TorqueUnit.KilopoundForceInch);
+        public QuantityValue KilopoundForceInches
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.KilopoundForceInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.MeganewtonCentimeter"/>
         /// </summary>
-        public QuantityValue MeganewtonCentimeters => this.As(TorqueUnit.MeganewtonCentimeter);
+        public QuantityValue MeganewtonCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.MeganewtonCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.MeganewtonMeter"/>
         /// </summary>
-        public QuantityValue MeganewtonMeters => this.As(TorqueUnit.MeganewtonMeter);
+        public QuantityValue MeganewtonMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.MeganewtonMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.MeganewtonMillimeter"/>
         /// </summary>
-        public QuantityValue MeganewtonMillimeters => this.As(TorqueUnit.MeganewtonMillimeter);
+        public QuantityValue MeganewtonMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.MeganewtonMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.MegapoundForceFoot"/>
         /// </summary>
-        public QuantityValue MegapoundForceFeet => this.As(TorqueUnit.MegapoundForceFoot);
+        public QuantityValue MegapoundForceFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.MegapoundForceFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.MegapoundForceInch"/>
         /// </summary>
-        public QuantityValue MegapoundForceInches => this.As(TorqueUnit.MegapoundForceInch);
+        public QuantityValue MegapoundForceInches
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.MegapoundForceInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.NewtonCentimeter"/>
         /// </summary>
-        public QuantityValue NewtonCentimeters => this.As(TorqueUnit.NewtonCentimeter);
+        public QuantityValue NewtonCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.NewtonCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.NewtonMeter"/>
         /// </summary>
-        public QuantityValue NewtonMeters => this.As(TorqueUnit.NewtonMeter);
+        public QuantityValue NewtonMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.NewtonMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.NewtonMillimeter"/>
         /// </summary>
-        public QuantityValue NewtonMillimeters => this.As(TorqueUnit.NewtonMillimeter);
+        public QuantityValue NewtonMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.NewtonMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.OunceForceFoot"/>
         /// </summary>
-        public QuantityValue OunceForceFeet => this.As(TorqueUnit.OunceForceFoot);
+        public QuantityValue OunceForceFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.OunceForceFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.OunceForceInch"/>
         /// </summary>
-        public QuantityValue OunceForceInches => this.As(TorqueUnit.OunceForceInch);
+        public QuantityValue OunceForceInches
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.OunceForceInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.PoundalFoot"/>
         /// </summary>
-        public QuantityValue PoundalFeet => this.As(TorqueUnit.PoundalFoot);
+        public QuantityValue PoundalFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.PoundalFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.PoundForceFoot"/>
         /// </summary>
-        public QuantityValue PoundForceFeet => this.As(TorqueUnit.PoundForceFoot);
+        public QuantityValue PoundForceFeet
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.PoundForceFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.PoundForceInch"/>
         /// </summary>
-        public QuantityValue PoundForceInches => this.As(TorqueUnit.PoundForceInch);
+        public QuantityValue PoundForceInches
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.PoundForceInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.TonneForceCentimeter"/>
         /// </summary>
-        public QuantityValue TonneForceCentimeters => this.As(TorqueUnit.TonneForceCentimeter);
+        public QuantityValue TonneForceCentimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.TonneForceCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.TonneForceMeter"/>
         /// </summary>
-        public QuantityValue TonneForceMeters => this.As(TorqueUnit.TonneForceMeter);
+        public QuantityValue TonneForceMeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.TonneForceMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.TonneForceMillimeter"/>
         /// </summary>
-        public QuantityValue TonneForceMillimeters => this.As(TorqueUnit.TonneForceMillimeter);
+        public QuantityValue TonneForceMillimeters
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(TorqueUnit.TonneForceMillimeter);
+        }
 
         #endregion
 
@@ -448,10 +613,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TorqueUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -459,10 +623,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(TorqueUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -471,218 +634,191 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.GramForceCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromGramForceCentimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.GramForceCentimeter);
-        }
+            => new(value, TorqueUnit.GramForceCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.GramForceMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromGramForceMeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.GramForceMeter);
-        }
+            => new(value, TorqueUnit.GramForceMeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.GramForceMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromGramForceMillimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.GramForceMillimeter);
-        }
+            => new(value, TorqueUnit.GramForceMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilogramForceCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilogramForceCentimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilogramForceCentimeter);
-        }
+            => new(value, TorqueUnit.KilogramForceCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilogramForceMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilogramForceMeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilogramForceMeter);
-        }
+            => new(value, TorqueUnit.KilogramForceMeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilogramForceMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilogramForceMillimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilogramForceMillimeter);
-        }
+            => new(value, TorqueUnit.KilogramForceMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilonewtonCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilonewtonCentimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilonewtonCentimeter);
-        }
+            => new(value, TorqueUnit.KilonewtonCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilonewtonMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilonewtonMeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilonewtonMeter);
-        }
+            => new(value, TorqueUnit.KilonewtonMeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilonewtonMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilonewtonMillimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilonewtonMillimeter);
-        }
+            => new(value, TorqueUnit.KilonewtonMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilopoundForceFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilopoundForceFeet(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilopoundForceFoot);
-        }
+            => new(value, TorqueUnit.KilopoundForceFoot);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.KilopoundForceInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromKilopoundForceInches(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.KilopoundForceInch);
-        }
+            => new(value, TorqueUnit.KilopoundForceInch);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.MeganewtonCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromMeganewtonCentimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.MeganewtonCentimeter);
-        }
+            => new(value, TorqueUnit.MeganewtonCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.MeganewtonMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromMeganewtonMeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.MeganewtonMeter);
-        }
+            => new(value, TorqueUnit.MeganewtonMeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.MeganewtonMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromMeganewtonMillimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.MeganewtonMillimeter);
-        }
+            => new(value, TorqueUnit.MeganewtonMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.MegapoundForceFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromMegapoundForceFeet(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.MegapoundForceFoot);
-        }
+            => new(value, TorqueUnit.MegapoundForceFoot);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.MegapoundForceInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromMegapoundForceInches(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.MegapoundForceInch);
-        }
+            => new(value, TorqueUnit.MegapoundForceInch);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.NewtonCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromNewtonCentimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.NewtonCentimeter);
-        }
+            => new(value, TorqueUnit.NewtonCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.NewtonMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromNewtonMeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.NewtonMeter);
-        }
+            => new(value, TorqueUnit.NewtonMeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.NewtonMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromNewtonMillimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.NewtonMillimeter);
-        }
+            => new(value, TorqueUnit.NewtonMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.OunceForceFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromOunceForceFeet(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.OunceForceFoot);
-        }
+            => new(value, TorqueUnit.OunceForceFoot);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.OunceForceInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromOunceForceInches(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.OunceForceInch);
-        }
+            => new(value, TorqueUnit.OunceForceInch);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.PoundalFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromPoundalFeet(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.PoundalFoot);
-        }
+            => new(value, TorqueUnit.PoundalFoot);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.PoundForceFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromPoundForceFeet(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.PoundForceFoot);
-        }
+            => new(value, TorqueUnit.PoundForceFoot);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.PoundForceInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromPoundForceInches(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.PoundForceInch);
-        }
+            => new(value, TorqueUnit.PoundForceInch);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.TonneForceCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromTonneForceCentimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.TonneForceCentimeter);
-        }
+            => new(value, TorqueUnit.TonneForceCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.TonneForceMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromTonneForceMeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.TonneForceMeter);
-        }
+            => new(value, TorqueUnit.TonneForceMeter);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.TonneForceMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque FromTonneForceMillimeters(QuantityValue value)
-        {
-            return new Torque(value, TorqueUnit.TonneForceMillimeter);
-        }
+            => new(value, TorqueUnit.TonneForceMillimeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="TorqueUnit" /> to <see cref="Torque" />.
@@ -690,10 +826,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Torque unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque From(QuantityValue value, TorqueUnit fromUnit)
-        {
-            return new Torque(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -721,10 +856,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -749,10 +883,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Torque Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Torque, TorqueUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Torque, TorqueUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -762,10 +895,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Torque result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -777,10 +909,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Torque result)
-        {
-            return QuantityParser.Default.TryParse<Torque, TorqueUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Torque, TorqueUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -791,10 +922,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TorqueUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -807,15 +937,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static TorqueUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.TorqueUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out TorqueUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -827,10 +954,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out TorqueUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -838,45 +964,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Torque operator -(Torque right)
-        {
-            return new Torque(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Torque"/> from adding two <see cref="Torque"/>.</summary>
         public static Torque operator +(Torque left, Torque right)
-        {
-            return new Torque(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Torque"/> from subtracting two <see cref="Torque"/>.</summary>
         public static Torque operator -(Torque left, Torque right)
-        {
-            return new Torque(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Torque"/> from multiplying value and <see cref="Torque"/>.</summary>
         public static Torque operator *(QuantityValue left, Torque right)
-        {
-            return new Torque(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Torque"/> from multiplying value and <see cref="Torque"/>.</summary>
         public static Torque operator *(Torque left, QuantityValue right)
-        {
-            return new Torque(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Torque"/> from dividing <see cref="Torque"/> by value.</summary>
         public static Torque operator /(Torque left, QuantityValue right)
-        {
-            return new Torque(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Torque"/> by <see cref="Torque"/>.</summary>
         public static QuantityValue operator /(Torque left, Torque right)
-        {
-            return left.NewtonMeters / right.NewtonMeters;
-        }
+            => left.NewtonMeters / right.NewtonMeters;
 
         #endregion
 
@@ -884,45 +996,31 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Angle"/> from <see cref="Torque"/> / <see cref="RotationalStiffness"/>.</summary>
         public static Angle operator /(Torque torque, RotationalStiffness rotationalStiffness)
-        {
-            return Angle.FromRadians(torque.NewtonMeters / rotationalStiffness.NewtonMetersPerRadian);
-        }
+            => Angle.FromRadians(torque.NewtonMeters / rotationalStiffness.NewtonMetersPerRadian);
 
         /// <summary>Get <see cref="Area"/> from <see cref="Torque"/> / <see cref="ForcePerLength"/>.</summary>
         public static Area operator /(Torque torque, ForcePerLength forcePerLength)
-        {
-            return Area.FromSquareMeters(torque.NewtonMeters / forcePerLength.NewtonsPerMeter);
-        }
+            => Area.FromSquareMeters(torque.NewtonMeters / forcePerLength.NewtonsPerMeter);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Torque"/> / <see cref="Length"/>.</summary>
         public static Force operator /(Torque torque, Length length)
-        {
-            return Force.FromNewtons(torque.NewtonMeters / length.Meters);
-        }
+            => Force.FromNewtons(torque.NewtonMeters / length.Meters);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="Torque"/> / <see cref="Area"/>.</summary>
         public static ForcePerLength operator /(Torque torque, Area area)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(torque.NewtonMeters / area.SquareMeters);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(torque.NewtonMeters / area.SquareMeters);
 
         /// <summary>Get <see cref="Length"/> from <see cref="Torque"/> / <see cref="Force"/>.</summary>
         public static Length operator /(Torque torque, Force force)
-        {
-            return Length.FromMeters(torque.NewtonMeters / force.Newtons);
-        }
+            => Length.FromMeters(torque.NewtonMeters / force.Newtons);
 
         /// <summary>Get <see cref="Power"/> from <see cref="Torque"/> * <see cref="RotationalSpeed"/>.</summary>
         public static Power operator *(Torque torque, RotationalSpeed rotationalSpeed)
-        {
-            return Power.FromWatts(torque.NewtonMeters * rotationalSpeed.RadiansPerSecond);
-        }
+            => Power.FromWatts(torque.NewtonMeters * rotationalSpeed.RadiansPerSecond);
 
         /// <summary>Get <see cref="RotationalStiffness"/> from <see cref="Torque"/> / <see cref="Angle"/>.</summary>
         public static RotationalStiffness operator /(Torque torque, Angle angle)
-        {
-            return RotationalStiffness.FromNewtonMetersPerRadian(torque.NewtonMeters / angle.Radians);
-        }
+            => RotationalStiffness.FromNewtonMetersPerRadian(torque.NewtonMeters / angle.Radians);
 
         #endregion
 
@@ -930,27 +1028,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Torque left, Torque right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Torque left, Torque right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Torque left, Torque right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Torque left, Torque right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Torque"/> instances are equal.
@@ -961,10 +1051,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Torque)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Torque left, Torque right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Torque"/> instances are not equal.
@@ -974,10 +1063,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Torque)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Torque left, Torque right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -990,12 +1078,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Torque otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Torque otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -1006,18 +1089,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Torque other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Torque.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Torque), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Torque), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Torque)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -1046,9 +1125,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Torque other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -1059,20 +1136,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

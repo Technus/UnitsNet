@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -85,9 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LuminosityInfo"/> class with the default settings.</returns>
             public static LuminosityInfo CreateDefault()
-            {
-                return new LuminosityInfo(nameof(Luminosity), DefaultBaseUnit, GetDefaultMappings(), new Luminosity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Luminosity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LuminosityInfo"/> class with the default settings for the Luminosity quantity and a callback for customizing the default unit mappings.
@@ -99,19 +98,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LuminosityInfo"/> class with the default settings.
             /// </returns>
             public static LuminosityInfo CreateDefault(Func<IEnumerable<UnitDefinition<LuminosityUnit>>, IEnumerable<IUnitDefinition<LuminosityUnit>>> customizeUnits)
-            {
-                return new LuminosityInfo(nameof(Luminosity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Luminosity(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Luminosity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Luminosity"/> is T^-3L^2M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -3, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -3, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Luminosity is Watt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static LuminosityUnit DefaultBaseUnit { get; } = LuminosityUnit.Watt;
+            public static LuminosityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LuminosityUnit.Watt;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="LuminosityUnit"/>.
@@ -198,7 +203,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Luminosity" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Luminosity, LuminosityUnit> Info { get; }
@@ -206,53 +215,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Luminosity, which is Watt. All conversions go via this value.
         /// </summary>
-        public static LuminosityUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static LuminosityUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Luminosity quantity.
         /// </summary>
-        public static IReadOnlyCollection<LuminosityUnit> Units => Info.Units;
+        public static IReadOnlyCollection<LuminosityUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Watt.
         /// </summary>
-        public static Luminosity Zero => Info.Zero;
+        public static Luminosity Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public LuminosityUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public LuminosityUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Luminosity, LuminosityUnit> QuantityInfo => Info;
+        public QuantityInfo<Luminosity, LuminosityUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Luminosity> IQuantityOfType<Luminosity>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Luminosity> IQuantityOfType<Luminosity>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<LuminosityUnit> IQuantity<LuminosityUnit>.QuantityInfo => Info;
+        QuantityInfo<LuminosityUnit> IQuantity<LuminosityUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -264,72 +321,128 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Decawatt"/>
         /// </summary>
-        public QuantityValue Decawatts => this.As(LuminosityUnit.Decawatt);
+        public QuantityValue Decawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Decawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Deciwatt"/>
         /// </summary>
-        public QuantityValue Deciwatts => this.As(LuminosityUnit.Deciwatt);
+        public QuantityValue Deciwatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Deciwatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Femtowatt"/>
         /// </summary>
-        public QuantityValue Femtowatts => this.As(LuminosityUnit.Femtowatt);
+        public QuantityValue Femtowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Femtowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Gigawatt"/>
         /// </summary>
-        public QuantityValue Gigawatts => this.As(LuminosityUnit.Gigawatt);
+        public QuantityValue Gigawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Gigawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Kilowatt"/>
         /// </summary>
-        public QuantityValue Kilowatts => this.As(LuminosityUnit.Kilowatt);
+        public QuantityValue Kilowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Kilowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Megawatt"/>
         /// </summary>
-        public QuantityValue Megawatts => this.As(LuminosityUnit.Megawatt);
+        public QuantityValue Megawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Megawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Microwatt"/>
         /// </summary>
-        public QuantityValue Microwatts => this.As(LuminosityUnit.Microwatt);
+        public QuantityValue Microwatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Microwatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Milliwatt"/>
         /// </summary>
-        public QuantityValue Milliwatts => this.As(LuminosityUnit.Milliwatt);
+        public QuantityValue Milliwatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Milliwatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Nanowatt"/>
         /// </summary>
-        public QuantityValue Nanowatts => this.As(LuminosityUnit.Nanowatt);
+        public QuantityValue Nanowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Nanowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Petawatt"/>
         /// </summary>
-        public QuantityValue Petawatts => this.As(LuminosityUnit.Petawatt);
+        public QuantityValue Petawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Petawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Picowatt"/>
         /// </summary>
-        public QuantityValue Picowatts => this.As(LuminosityUnit.Picowatt);
+        public QuantityValue Picowatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Picowatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.SolarLuminosity"/>
         /// </summary>
-        public QuantityValue SolarLuminosities => this.As(LuminosityUnit.SolarLuminosity);
+        public QuantityValue SolarLuminosities
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.SolarLuminosity);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Terawatt"/>
         /// </summary>
-        public QuantityValue Terawatts => this.As(LuminosityUnit.Terawatt);
+        public QuantityValue Terawatts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Terawatt);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Watt"/>
         /// </summary>
-        public QuantityValue Watts => this.As(LuminosityUnit.Watt);
+        public QuantityValue Watts
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminosityUnit.Watt);
+        }
 
         #endregion
 
@@ -340,10 +453,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LuminosityUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -351,10 +463,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LuminosityUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -363,114 +474,100 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Decawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromDecawatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Decawatt);
-        }
+            => new(value, LuminosityUnit.Decawatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Deciwatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromDeciwatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Deciwatt);
-        }
+            => new(value, LuminosityUnit.Deciwatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Femtowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromFemtowatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Femtowatt);
-        }
+            => new(value, LuminosityUnit.Femtowatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Gigawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromGigawatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Gigawatt);
-        }
+            => new(value, LuminosityUnit.Gigawatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Kilowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromKilowatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Kilowatt);
-        }
+            => new(value, LuminosityUnit.Kilowatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Megawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromMegawatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Megawatt);
-        }
+            => new(value, LuminosityUnit.Megawatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Microwatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromMicrowatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Microwatt);
-        }
+            => new(value, LuminosityUnit.Microwatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Milliwatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromMilliwatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Milliwatt);
-        }
+            => new(value, LuminosityUnit.Milliwatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Nanowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromNanowatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Nanowatt);
-        }
+            => new(value, LuminosityUnit.Nanowatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Petawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromPetawatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Petawatt);
-        }
+            => new(value, LuminosityUnit.Petawatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Picowatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromPicowatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Picowatt);
-        }
+            => new(value, LuminosityUnit.Picowatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.SolarLuminosity"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromSolarLuminosities(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.SolarLuminosity);
-        }
+            => new(value, LuminosityUnit.SolarLuminosity);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Terawatt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromTerawatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Terawatt);
-        }
+            => new(value, LuminosityUnit.Terawatt);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Watt"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity FromWatts(QuantityValue value)
-        {
-            return new Luminosity(value, LuminosityUnit.Watt);
-        }
+            => new(value, LuminosityUnit.Watt);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="LuminosityUnit" /> to <see cref="Luminosity" />.
@@ -478,10 +575,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Luminosity unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity From(QuantityValue value, LuminosityUnit fromUnit)
-        {
-            return new Luminosity(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -509,10 +605,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -537,10 +632,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Luminosity Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Luminosity, LuminosityUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Luminosity, LuminosityUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -550,10 +644,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Luminosity result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -565,10 +658,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Luminosity result)
-        {
-            return QuantityParser.Default.TryParse<Luminosity, LuminosityUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Luminosity, LuminosityUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -579,10 +671,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LuminosityUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -595,15 +686,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static LuminosityUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.LuminosityUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out LuminosityUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -615,10 +703,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out LuminosityUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -626,45 +713,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Luminosity operator -(Luminosity right)
-        {
-            return new Luminosity(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Luminosity"/> from adding two <see cref="Luminosity"/>.</summary>
         public static Luminosity operator +(Luminosity left, Luminosity right)
-        {
-            return new Luminosity(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Luminosity"/> from subtracting two <see cref="Luminosity"/>.</summary>
         public static Luminosity operator -(Luminosity left, Luminosity right)
-        {
-            return new Luminosity(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Luminosity"/> from multiplying value and <see cref="Luminosity"/>.</summary>
         public static Luminosity operator *(QuantityValue left, Luminosity right)
-        {
-            return new Luminosity(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Luminosity"/> from multiplying value and <see cref="Luminosity"/>.</summary>
         public static Luminosity operator *(Luminosity left, QuantityValue right)
-        {
-            return new Luminosity(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Luminosity"/> from dividing <see cref="Luminosity"/> by value.</summary>
         public static Luminosity operator /(Luminosity left, QuantityValue right)
-        {
-            return new Luminosity(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Luminosity"/> by <see cref="Luminosity"/>.</summary>
         public static QuantityValue operator /(Luminosity left, Luminosity right)
-        {
-            return left.Watts / right.Watts;
-        }
+            => left.Watts / right.Watts;
 
         #endregion
 
@@ -672,27 +745,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Luminosity left, Luminosity right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Luminosity left, Luminosity right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Luminosity left, Luminosity right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Luminosity left, Luminosity right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Luminosity"/> instances are equal.
@@ -703,10 +768,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Luminosity)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Luminosity left, Luminosity right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Luminosity"/> instances are not equal.
@@ -716,10 +780,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Luminosity)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Luminosity left, Luminosity right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -732,12 +795,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Luminosity otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Luminosity otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -748,18 +806,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Luminosity other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Luminosity.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Luminosity), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Luminosity), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Luminosity)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -788,9 +842,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Luminosity other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -801,20 +853,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AreaPerLengthInfo"/> class with the default settings.</returns>
             public static AreaPerLengthInfo CreateDefault()
-            {
-                return new AreaPerLengthInfo(nameof(AreaPerLength), DefaultBaseUnit, GetDefaultMappings(), new AreaPerLength(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(AreaPerLength), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AreaPerLengthInfo"/> class with the default settings for the AreaPerLength quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AreaPerLengthInfo"/> class with the default settings.
             /// </returns>
             public static AreaPerLengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<AreaPerLengthUnit>>, IEnumerable<IUnitDefinition<AreaPerLengthUnit>>> customizeUnits)
-            {
-                return new AreaPerLengthInfo(nameof(AreaPerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new AreaPerLength(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(AreaPerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AreaPerLength"/> is L.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, 0, 0, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, 0, 0, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of AreaPerLength is SquareMeterPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static AreaPerLengthUnit DefaultBaseUnit { get; } = AreaPerLengthUnit.SquareMeterPerMeter;
+            public static AreaPerLengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AreaPerLengthUnit.SquareMeterPerMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="AreaPerLengthUnit"/>.
@@ -172,7 +177,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="AreaPerLength" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<AreaPerLength, AreaPerLengthUnit> Info { get; }
@@ -180,53 +189,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of AreaPerLength, which is SquareMeterPerMeter. All conversions go via this value.
         /// </summary>
-        public static AreaPerLengthUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static AreaPerLengthUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the AreaPerLength quantity.
         /// </summary>
-        public static IReadOnlyCollection<AreaPerLengthUnit> Units => Info.Units;
+        public static IReadOnlyCollection<AreaPerLengthUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit SquareMeterPerMeter.
         /// </summary>
-        public static AreaPerLength Zero => Info.Zero;
+        public static AreaPerLength Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public AreaPerLengthUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public AreaPerLengthUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<AreaPerLength, AreaPerLengthUnit> QuantityInfo => Info;
+        public QuantityInfo<AreaPerLength, AreaPerLengthUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<AreaPerLength> IQuantityOfType<AreaPerLength>.QuantityInfo => Info;
+        IQuantityInstanceInfo<AreaPerLength> IQuantityOfType<AreaPerLength>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<AreaPerLengthUnit> IQuantity<AreaPerLengthUnit>.QuantityInfo => Info;
+        QuantityInfo<AreaPerLengthUnit> IQuantity<AreaPerLengthUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -238,32 +295,56 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaPerLengthUnit.SquareCentimeterPerMeter"/>
         /// </summary>
-        public QuantityValue SquareCentimetersPerMeter => this.As(AreaPerLengthUnit.SquareCentimeterPerMeter);
+        public QuantityValue SquareCentimetersPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AreaPerLengthUnit.SquareCentimeterPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaPerLengthUnit.SquareFootPerFoot"/>
         /// </summary>
-        public QuantityValue SquareFeetPerFoot => this.As(AreaPerLengthUnit.SquareFootPerFoot);
+        public QuantityValue SquareFeetPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AreaPerLengthUnit.SquareFootPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaPerLengthUnit.SquareInchPerFoot"/>
         /// </summary>
-        public QuantityValue SquareInchesPerFoot => this.As(AreaPerLengthUnit.SquareInchPerFoot);
+        public QuantityValue SquareInchesPerFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AreaPerLengthUnit.SquareInchPerFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaPerLengthUnit.SquareInchPerInch"/>
         /// </summary>
-        public QuantityValue SquareInchesPerInch => this.As(AreaPerLengthUnit.SquareInchPerInch);
+        public QuantityValue SquareInchesPerInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AreaPerLengthUnit.SquareInchPerInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaPerLengthUnit.SquareMeterPerMeter"/>
         /// </summary>
-        public QuantityValue SquareMetersPerMeter => this.As(AreaPerLengthUnit.SquareMeterPerMeter);
+        public QuantityValue SquareMetersPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AreaPerLengthUnit.SquareMeterPerMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaPerLengthUnit.SquareMillimeterPerMeter"/>
         /// </summary>
-        public QuantityValue SquareMillimetersPerMeter => this.As(AreaPerLengthUnit.SquareMillimeterPerMeter);
+        public QuantityValue SquareMillimetersPerMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(AreaPerLengthUnit.SquareMillimeterPerMeter);
+        }
 
         #endregion
 
@@ -274,10 +355,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AreaPerLengthUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -285,10 +365,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(AreaPerLengthUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -297,50 +376,44 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="AreaPerLength"/> from <see cref="AreaPerLengthUnit.SquareCentimeterPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength FromSquareCentimetersPerMeter(QuantityValue value)
-        {
-            return new AreaPerLength(value, AreaPerLengthUnit.SquareCentimeterPerMeter);
-        }
+            => new(value, AreaPerLengthUnit.SquareCentimeterPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="AreaPerLength"/> from <see cref="AreaPerLengthUnit.SquareFootPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength FromSquareFeetPerFoot(QuantityValue value)
-        {
-            return new AreaPerLength(value, AreaPerLengthUnit.SquareFootPerFoot);
-        }
+            => new(value, AreaPerLengthUnit.SquareFootPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="AreaPerLength"/> from <see cref="AreaPerLengthUnit.SquareInchPerFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength FromSquareInchesPerFoot(QuantityValue value)
-        {
-            return new AreaPerLength(value, AreaPerLengthUnit.SquareInchPerFoot);
-        }
+            => new(value, AreaPerLengthUnit.SquareInchPerFoot);
 
         /// <summary>
         ///     Creates a <see cref="AreaPerLength"/> from <see cref="AreaPerLengthUnit.SquareInchPerInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength FromSquareInchesPerInch(QuantityValue value)
-        {
-            return new AreaPerLength(value, AreaPerLengthUnit.SquareInchPerInch);
-        }
+            => new(value, AreaPerLengthUnit.SquareInchPerInch);
 
         /// <summary>
         ///     Creates a <see cref="AreaPerLength"/> from <see cref="AreaPerLengthUnit.SquareMeterPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength FromSquareMetersPerMeter(QuantityValue value)
-        {
-            return new AreaPerLength(value, AreaPerLengthUnit.SquareMeterPerMeter);
-        }
+            => new(value, AreaPerLengthUnit.SquareMeterPerMeter);
 
         /// <summary>
         ///     Creates a <see cref="AreaPerLength"/> from <see cref="AreaPerLengthUnit.SquareMillimeterPerMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength FromSquareMillimetersPerMeter(QuantityValue value)
-        {
-            return new AreaPerLength(value, AreaPerLengthUnit.SquareMillimeterPerMeter);
-        }
+            => new(value, AreaPerLengthUnit.SquareMillimeterPerMeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="AreaPerLengthUnit" /> to <see cref="AreaPerLength" />.
@@ -348,10 +421,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>AreaPerLength unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength From(QuantityValue value, AreaPerLengthUnit fromUnit)
-        {
-            return new AreaPerLength(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -379,10 +451,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -407,10 +478,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLength Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<AreaPerLength, AreaPerLengthUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<AreaPerLength, AreaPerLengthUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -420,10 +490,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out AreaPerLength result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -435,10 +504,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out AreaPerLength result)
-        {
-            return QuantityParser.Default.TryParse<AreaPerLength, AreaPerLengthUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<AreaPerLength, AreaPerLengthUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -449,10 +517,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaPerLengthUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -465,15 +532,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static AreaPerLengthUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.AreaPerLengthUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out AreaPerLengthUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -485,10 +549,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out AreaPerLengthUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -496,45 +559,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static AreaPerLength operator -(AreaPerLength right)
-        {
-            return new AreaPerLength(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="AreaPerLength"/> from adding two <see cref="AreaPerLength"/>.</summary>
         public static AreaPerLength operator +(AreaPerLength left, AreaPerLength right)
-        {
-            return new AreaPerLength(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="AreaPerLength"/> from subtracting two <see cref="AreaPerLength"/>.</summary>
         public static AreaPerLength operator -(AreaPerLength left, AreaPerLength right)
-        {
-            return new AreaPerLength(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="AreaPerLength"/> from multiplying value and <see cref="AreaPerLength"/>.</summary>
         public static AreaPerLength operator *(QuantityValue left, AreaPerLength right)
-        {
-            return new AreaPerLength(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="AreaPerLength"/> from multiplying value and <see cref="AreaPerLength"/>.</summary>
         public static AreaPerLength operator *(AreaPerLength left, QuantityValue right)
-        {
-            return new AreaPerLength(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="AreaPerLength"/> from dividing <see cref="AreaPerLength"/> by value.</summary>
         public static AreaPerLength operator /(AreaPerLength left, QuantityValue right)
-        {
-            return new AreaPerLength(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="AreaPerLength"/> by <see cref="AreaPerLength"/>.</summary>
         public static QuantityValue operator /(AreaPerLength left, AreaPerLength right)
-        {
-            return left.SquareMetersPerMeter / right.SquareMetersPerMeter;
-        }
+            => left.SquareMetersPerMeter / right.SquareMetersPerMeter;
 
         #endregion
 
@@ -542,9 +591,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Area"/> from <see cref="AreaPerLength"/> * <see cref="Length"/>.</summary>
         public static Area operator *(AreaPerLength areaPerLength, Length length)
-        {
-            return Area.FromSquareMeters(areaPerLength.SquareMetersPerMeter * length.Meters);
-        }
+            => Area.FromSquareMeters(areaPerLength.SquareMetersPerMeter * length.Meters);
 
         #endregion
 
@@ -552,27 +599,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(AreaPerLength left, AreaPerLength right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(AreaPerLength left, AreaPerLength right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(AreaPerLength left, AreaPerLength right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(AreaPerLength left, AreaPerLength right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="AreaPerLength"/> instances are equal.
@@ -583,10 +622,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(AreaPerLength)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(AreaPerLength left, AreaPerLength right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="AreaPerLength"/> instances are not equal.
@@ -596,10 +634,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(AreaPerLength)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(AreaPerLength left, AreaPerLength right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -612,12 +649,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not AreaPerLength otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is AreaPerLength otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -628,18 +660,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(AreaPerLength other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current AreaPerLength.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(AreaPerLength), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(AreaPerLength), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(AreaPerLength)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -668,9 +696,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(AreaPerLength other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -681,20 +707,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

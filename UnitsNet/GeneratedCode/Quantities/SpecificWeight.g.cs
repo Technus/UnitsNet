@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -90,9 +91,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="SpecificWeightInfo"/> class with the default settings.</returns>
             public static SpecificWeightInfo CreateDefault()
-            {
-                return new SpecificWeightInfo(nameof(SpecificWeight), DefaultBaseUnit, GetDefaultMappings(), new SpecificWeight(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(SpecificWeight), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="SpecificWeightInfo"/> class with the default settings for the SpecificWeight quantity and a callback for customizing the default unit mappings.
@@ -104,19 +103,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="SpecificWeightInfo"/> class with the default settings.
             /// </returns>
             public static SpecificWeightInfo CreateDefault(Func<IEnumerable<UnitDefinition<SpecificWeightUnit>>, IEnumerable<IUnitDefinition<SpecificWeightUnit>>> customizeUnits)
-            {
-                return new SpecificWeightInfo(nameof(SpecificWeight), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new SpecificWeight(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(SpecificWeight), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="SpecificWeight"/> is T^-2L^-2M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-2, 1, -2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-2, 1, -2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of SpecificWeight is NewtonPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static SpecificWeightUnit DefaultBaseUnit { get; } = SpecificWeightUnit.NewtonPerCubicMeter;
+            public static SpecificWeightUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = SpecificWeightUnit.NewtonPerCubicMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="SpecificWeightUnit"/>.
@@ -212,7 +217,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="SpecificWeight" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<SpecificWeight, SpecificWeightUnit> Info { get; }
@@ -220,53 +229,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of SpecificWeight, which is NewtonPerCubicMeter. All conversions go via this value.
         /// </summary>
-        public static SpecificWeightUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static SpecificWeightUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the SpecificWeight quantity.
         /// </summary>
-        public static IReadOnlyCollection<SpecificWeightUnit> Units => Info.Units;
+        public static IReadOnlyCollection<SpecificWeightUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit NewtonPerCubicMeter.
         /// </summary>
-        public static SpecificWeight Zero => Info.Zero;
+        public static SpecificWeight Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public SpecificWeightUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public SpecificWeightUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<SpecificWeight, SpecificWeightUnit> QuantityInfo => Info;
+        public QuantityInfo<SpecificWeight, SpecificWeightUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<SpecificWeight> IQuantityOfType<SpecificWeight>.QuantityInfo => Info;
+        IQuantityInstanceInfo<SpecificWeight> IQuantityOfType<SpecificWeight>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<SpecificWeightUnit> IQuantity<SpecificWeightUnit>.QuantityInfo => Info;
+        QuantityInfo<SpecificWeightUnit> IQuantity<SpecificWeightUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -278,87 +335,155 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilogramForcePerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue KilogramsForcePerCubicCentimeter => this.As(SpecificWeightUnit.KilogramForcePerCubicCentimeter);
+        public QuantityValue KilogramsForcePerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilogramForcePerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilogramForcePerCubicMeter"/>
         /// </summary>
-        public QuantityValue KilogramsForcePerCubicMeter => this.As(SpecificWeightUnit.KilogramForcePerCubicMeter);
+        public QuantityValue KilogramsForcePerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilogramForcePerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilogramForcePerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue KilogramsForcePerCubicMillimeter => this.As(SpecificWeightUnit.KilogramForcePerCubicMillimeter);
+        public QuantityValue KilogramsForcePerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilogramForcePerCubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilonewtonPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue KilonewtonsPerCubicCentimeter => this.As(SpecificWeightUnit.KilonewtonPerCubicCentimeter);
+        public QuantityValue KilonewtonsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilonewtonPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilonewtonPerCubicMeter"/>
         /// </summary>
-        public QuantityValue KilonewtonsPerCubicMeter => this.As(SpecificWeightUnit.KilonewtonPerCubicMeter);
+        public QuantityValue KilonewtonsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilonewtonPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilonewtonPerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue KilonewtonsPerCubicMillimeter => this.As(SpecificWeightUnit.KilonewtonPerCubicMillimeter);
+        public QuantityValue KilonewtonsPerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilonewtonPerCubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilopoundForcePerCubicFoot"/>
         /// </summary>
-        public QuantityValue KilopoundsForcePerCubicFoot => this.As(SpecificWeightUnit.KilopoundForcePerCubicFoot);
+        public QuantityValue KilopoundsForcePerCubicFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilopoundForcePerCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.KilopoundForcePerCubicInch"/>
         /// </summary>
-        public QuantityValue KilopoundsForcePerCubicInch => this.As(SpecificWeightUnit.KilopoundForcePerCubicInch);
+        public QuantityValue KilopoundsForcePerCubicInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.KilopoundForcePerCubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.MeganewtonPerCubicMeter"/>
         /// </summary>
-        public QuantityValue MeganewtonsPerCubicMeter => this.As(SpecificWeightUnit.MeganewtonPerCubicMeter);
+        public QuantityValue MeganewtonsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.MeganewtonPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.NewtonPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue NewtonsPerCubicCentimeter => this.As(SpecificWeightUnit.NewtonPerCubicCentimeter);
+        public QuantityValue NewtonsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.NewtonPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.NewtonPerCubicMeter"/>
         /// </summary>
-        public QuantityValue NewtonsPerCubicMeter => this.As(SpecificWeightUnit.NewtonPerCubicMeter);
+        public QuantityValue NewtonsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.NewtonPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.NewtonPerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue NewtonsPerCubicMillimeter => this.As(SpecificWeightUnit.NewtonPerCubicMillimeter);
+        public QuantityValue NewtonsPerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.NewtonPerCubicMillimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.PoundForcePerCubicFoot"/>
         /// </summary>
-        public QuantityValue PoundsForcePerCubicFoot => this.As(SpecificWeightUnit.PoundForcePerCubicFoot);
+        public QuantityValue PoundsForcePerCubicFoot
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.PoundForcePerCubicFoot);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.PoundForcePerCubicInch"/>
         /// </summary>
-        public QuantityValue PoundsForcePerCubicInch => this.As(SpecificWeightUnit.PoundForcePerCubicInch);
+        public QuantityValue PoundsForcePerCubicInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.PoundForcePerCubicInch);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.TonneForcePerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue TonnesForcePerCubicCentimeter => this.As(SpecificWeightUnit.TonneForcePerCubicCentimeter);
+        public QuantityValue TonnesForcePerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.TonneForcePerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.TonneForcePerCubicMeter"/>
         /// </summary>
-        public QuantityValue TonnesForcePerCubicMeter => this.As(SpecificWeightUnit.TonneForcePerCubicMeter);
+        public QuantityValue TonnesForcePerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.TonneForcePerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificWeightUnit.TonneForcePerCubicMillimeter"/>
         /// </summary>
-        public QuantityValue TonnesForcePerCubicMillimeter => this.As(SpecificWeightUnit.TonneForcePerCubicMillimeter);
+        public QuantityValue TonnesForcePerCubicMillimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificWeightUnit.TonneForcePerCubicMillimeter);
+        }
 
         #endregion
 
@@ -369,10 +494,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(SpecificWeightUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -380,10 +504,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(SpecificWeightUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -392,138 +515,121 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilogramForcePerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilogramsForcePerCubicCentimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilogramForcePerCubicCentimeter);
-        }
+            => new(value, SpecificWeightUnit.KilogramForcePerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilogramForcePerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilogramsForcePerCubicMeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilogramForcePerCubicMeter);
-        }
+            => new(value, SpecificWeightUnit.KilogramForcePerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilogramForcePerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilogramsForcePerCubicMillimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilogramForcePerCubicMillimeter);
-        }
+            => new(value, SpecificWeightUnit.KilogramForcePerCubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilonewtonPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilonewtonsPerCubicCentimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilonewtonPerCubicCentimeter);
-        }
+            => new(value, SpecificWeightUnit.KilonewtonPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilonewtonPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilonewtonsPerCubicMeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilonewtonPerCubicMeter);
-        }
+            => new(value, SpecificWeightUnit.KilonewtonPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilonewtonPerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilonewtonsPerCubicMillimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilonewtonPerCubicMillimeter);
-        }
+            => new(value, SpecificWeightUnit.KilonewtonPerCubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilopoundForcePerCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilopoundsForcePerCubicFoot(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilopoundForcePerCubicFoot);
-        }
+            => new(value, SpecificWeightUnit.KilopoundForcePerCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.KilopoundForcePerCubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromKilopoundsForcePerCubicInch(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.KilopoundForcePerCubicInch);
-        }
+            => new(value, SpecificWeightUnit.KilopoundForcePerCubicInch);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.MeganewtonPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromMeganewtonsPerCubicMeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.MeganewtonPerCubicMeter);
-        }
+            => new(value, SpecificWeightUnit.MeganewtonPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.NewtonPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromNewtonsPerCubicCentimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.NewtonPerCubicCentimeter);
-        }
+            => new(value, SpecificWeightUnit.NewtonPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.NewtonPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromNewtonsPerCubicMeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.NewtonPerCubicMeter);
-        }
+            => new(value, SpecificWeightUnit.NewtonPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.NewtonPerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromNewtonsPerCubicMillimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.NewtonPerCubicMillimeter);
-        }
+            => new(value, SpecificWeightUnit.NewtonPerCubicMillimeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.PoundForcePerCubicFoot"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromPoundsForcePerCubicFoot(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.PoundForcePerCubicFoot);
-        }
+            => new(value, SpecificWeightUnit.PoundForcePerCubicFoot);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.PoundForcePerCubicInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromPoundsForcePerCubicInch(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.PoundForcePerCubicInch);
-        }
+            => new(value, SpecificWeightUnit.PoundForcePerCubicInch);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.TonneForcePerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromTonnesForcePerCubicCentimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.TonneForcePerCubicCentimeter);
-        }
+            => new(value, SpecificWeightUnit.TonneForcePerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.TonneForcePerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromTonnesForcePerCubicMeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.TonneForcePerCubicMeter);
-        }
+            => new(value, SpecificWeightUnit.TonneForcePerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="SpecificWeight"/> from <see cref="SpecificWeightUnit.TonneForcePerCubicMillimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight FromTonnesForcePerCubicMillimeter(QuantityValue value)
-        {
-            return new SpecificWeight(value, SpecificWeightUnit.TonneForcePerCubicMillimeter);
-        }
+            => new(value, SpecificWeightUnit.TonneForcePerCubicMillimeter);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="SpecificWeightUnit" /> to <see cref="SpecificWeight" />.
@@ -531,10 +637,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>SpecificWeight unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight From(QuantityValue value, SpecificWeightUnit fromUnit)
-        {
-            return new SpecificWeight(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -562,10 +667,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -590,10 +694,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeight Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<SpecificWeight, SpecificWeightUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<SpecificWeight, SpecificWeightUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -603,10 +706,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out SpecificWeight result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -618,10 +720,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out SpecificWeight result)
-        {
-            return QuantityParser.Default.TryParse<SpecificWeight, SpecificWeightUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<SpecificWeight, SpecificWeightUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -632,10 +733,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificWeightUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -648,15 +748,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static SpecificWeightUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.SpecificWeightUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out SpecificWeightUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -668,10 +765,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out SpecificWeightUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -679,45 +775,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static SpecificWeight operator -(SpecificWeight right)
-        {
-            return new SpecificWeight(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="SpecificWeight"/> from adding two <see cref="SpecificWeight"/>.</summary>
         public static SpecificWeight operator +(SpecificWeight left, SpecificWeight right)
-        {
-            return new SpecificWeight(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="SpecificWeight"/> from subtracting two <see cref="SpecificWeight"/>.</summary>
         public static SpecificWeight operator -(SpecificWeight left, SpecificWeight right)
-        {
-            return new SpecificWeight(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="SpecificWeight"/> from multiplying value and <see cref="SpecificWeight"/>.</summary>
         public static SpecificWeight operator *(QuantityValue left, SpecificWeight right)
-        {
-            return new SpecificWeight(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="SpecificWeight"/> from multiplying value and <see cref="SpecificWeight"/>.</summary>
         public static SpecificWeight operator *(SpecificWeight left, QuantityValue right)
-        {
-            return new SpecificWeight(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="SpecificWeight"/> from dividing <see cref="SpecificWeight"/> by value.</summary>
         public static SpecificWeight operator /(SpecificWeight left, QuantityValue right)
-        {
-            return new SpecificWeight(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="SpecificWeight"/> by <see cref="SpecificWeight"/>.</summary>
         public static QuantityValue operator /(SpecificWeight left, SpecificWeight right)
-        {
-            return left.NewtonsPerCubicMeter / right.NewtonsPerCubicMeter;
-        }
+            => left.NewtonsPerCubicMeter / right.NewtonsPerCubicMeter;
 
         #endregion
 
@@ -725,33 +807,23 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Acceleration"/> from <see cref="SpecificWeight"/> / <see cref="Density"/>.</summary>
         public static Acceleration operator /(SpecificWeight specificWeight, Density density)
-        {
-            return Acceleration.FromMetersPerSecondSquared(specificWeight.NewtonsPerCubicMeter / density.KilogramsPerCubicMeter);
-        }
+            => Acceleration.FromMetersPerSecondSquared(specificWeight.NewtonsPerCubicMeter / density.KilogramsPerCubicMeter);
 
         /// <summary>Get <see cref="Density"/> from <see cref="SpecificWeight"/> / <see cref="Acceleration"/>.</summary>
         public static Density operator /(SpecificWeight specificWeight, Acceleration acceleration)
-        {
-            return Density.FromKilogramsPerCubicMeter(specificWeight.NewtonsPerCubicMeter / acceleration.MetersPerSecondSquared);
-        }
+            => Density.FromKilogramsPerCubicMeter(specificWeight.NewtonsPerCubicMeter / acceleration.MetersPerSecondSquared);
 
         /// <summary>Get <see cref="Force"/> from <see cref="SpecificWeight"/> * <see cref="Volume"/>.</summary>
         public static Force operator *(SpecificWeight specificWeight, Volume volume)
-        {
-            return Force.FromNewtons(specificWeight.NewtonsPerCubicMeter * volume.CubicMeters);
-        }
+            => Force.FromNewtons(specificWeight.NewtonsPerCubicMeter * volume.CubicMeters);
 
         /// <summary>Get <see cref="ForcePerLength"/> from <see cref="SpecificWeight"/> * <see cref="Area"/>.</summary>
         public static ForcePerLength operator *(SpecificWeight specificWeight, Area area)
-        {
-            return ForcePerLength.FromNewtonsPerMeter(specificWeight.NewtonsPerCubicMeter * area.SquareMeters);
-        }
+            => ForcePerLength.FromNewtonsPerMeter(specificWeight.NewtonsPerCubicMeter * area.SquareMeters);
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="SpecificWeight"/> * <see cref="Length"/>.</summary>
         public static Pressure operator *(SpecificWeight specificWeight, Length length)
-        {
-            return Pressure.FromPascals(specificWeight.NewtonsPerCubicMeter * length.Meters);
-        }
+            => Pressure.FromPascals(specificWeight.NewtonsPerCubicMeter * length.Meters);
 
         #endregion
 
@@ -759,27 +831,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(SpecificWeight left, SpecificWeight right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(SpecificWeight left, SpecificWeight right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(SpecificWeight left, SpecificWeight right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(SpecificWeight left, SpecificWeight right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="SpecificWeight"/> instances are equal.
@@ -790,10 +854,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(SpecificWeight)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(SpecificWeight left, SpecificWeight right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="SpecificWeight"/> instances are not equal.
@@ -803,10 +866,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(SpecificWeight)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(SpecificWeight left, SpecificWeight right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -819,12 +881,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not SpecificWeight otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is SpecificWeight otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -835,18 +892,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(SpecificWeight other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current SpecificWeight.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(SpecificWeight), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(SpecificWeight), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(SpecificWeight)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -875,9 +928,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(SpecificWeight other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -888,20 +939,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

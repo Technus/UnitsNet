@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -85,9 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricReactanceInfo"/> class with the default settings.</returns>
             public static ElectricReactanceInfo CreateDefault()
-            {
-                return new ElectricReactanceInfo(nameof(ElectricReactance), DefaultBaseUnit, GetDefaultMappings(), new ElectricReactance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricReactance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricReactanceInfo"/> class with the default settings for the ElectricReactance quantity and a callback for customizing the default unit mappings.
@@ -99,19 +98,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricReactanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricReactanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricReactanceUnit>>, IEnumerable<IUnitDefinition<ElectricReactanceUnit>>> customizeUnits)
-            {
-                return new ElectricReactanceInfo(nameof(ElectricReactance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricReactance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricReactance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricReactance"/> is T^-3L^2MI^-2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -3, -2, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -3, -2, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricReactance is Ohm. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricReactanceUnit DefaultBaseUnit { get; } = ElectricReactanceUnit.Ohm;
+            public static ElectricReactanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricReactanceUnit.Ohm;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricReactanceUnit"/>.
@@ -180,7 +185,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricReactance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricReactance, ElectricReactanceUnit> Info { get; }
@@ -188,53 +197,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricReactance, which is Ohm. All conversions go via this value.
         /// </summary>
-        public static ElectricReactanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricReactanceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricReactance quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricReactanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricReactanceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Ohm.
         /// </summary>
-        public static ElectricReactance Zero => Info.Zero;
+        public static ElectricReactance Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricReactanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricReactanceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricReactance, ElectricReactanceUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricReactance, ElectricReactanceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricReactance> IQuantityOfType<ElectricReactance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricReactance> IQuantityOfType<ElectricReactance>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricReactanceUnit> IQuantity<ElectricReactanceUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricReactanceUnit> IQuantity<ElectricReactanceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -246,42 +303,74 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Gigaohm"/>
         /// </summary>
-        public QuantityValue Gigaohms => this.As(ElectricReactanceUnit.Gigaohm);
+        public QuantityValue Gigaohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Gigaohm);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Kiloohm"/>
         /// </summary>
-        public QuantityValue Kiloohms => this.As(ElectricReactanceUnit.Kiloohm);
+        public QuantityValue Kiloohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Kiloohm);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Megaohm"/>
         /// </summary>
-        public QuantityValue Megaohms => this.As(ElectricReactanceUnit.Megaohm);
+        public QuantityValue Megaohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Megaohm);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Microohm"/>
         /// </summary>
-        public QuantityValue Microohms => this.As(ElectricReactanceUnit.Microohm);
+        public QuantityValue Microohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Microohm);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Milliohm"/>
         /// </summary>
-        public QuantityValue Milliohms => this.As(ElectricReactanceUnit.Milliohm);
+        public QuantityValue Milliohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Milliohm);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Nanoohm"/>
         /// </summary>
-        public QuantityValue Nanoohms => this.As(ElectricReactanceUnit.Nanoohm);
+        public QuantityValue Nanoohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Nanoohm);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Ohm"/>
         /// </summary>
-        public QuantityValue Ohms => this.As(ElectricReactanceUnit.Ohm);
+        public QuantityValue Ohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Ohm);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Teraohm"/>
         /// </summary>
-        public QuantityValue Teraohms => this.As(ElectricReactanceUnit.Teraohm);
+        public QuantityValue Teraohms
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactanceUnit.Teraohm);
+        }
 
         #endregion
 
@@ -292,10 +381,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricReactanceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -303,10 +391,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricReactanceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -315,66 +402,58 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Gigaohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromGigaohms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Gigaohm);
-        }
+            => new(value, ElectricReactanceUnit.Gigaohm);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Kiloohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromKiloohms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Kiloohm);
-        }
+            => new(value, ElectricReactanceUnit.Kiloohm);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Megaohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromMegaohms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Megaohm);
-        }
+            => new(value, ElectricReactanceUnit.Megaohm);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Microohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromMicroohms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Microohm);
-        }
+            => new(value, ElectricReactanceUnit.Microohm);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Milliohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromMilliohms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Milliohm);
-        }
+            => new(value, ElectricReactanceUnit.Milliohm);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Nanoohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromNanoohms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Nanoohm);
-        }
+            => new(value, ElectricReactanceUnit.Nanoohm);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Ohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromOhms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Ohm);
-        }
+            => new(value, ElectricReactanceUnit.Ohm);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Teraohm"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance FromTeraohms(QuantityValue value)
-        {
-            return new ElectricReactance(value, ElectricReactanceUnit.Teraohm);
-        }
+            => new(value, ElectricReactanceUnit.Teraohm);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricReactanceUnit" /> to <see cref="ElectricReactance" />.
@@ -382,10 +461,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricReactance unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance From(QuantityValue value, ElectricReactanceUnit fromUnit)
-        {
-            return new ElectricReactance(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -413,10 +491,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -441,10 +518,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactance Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricReactance, ElectricReactanceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricReactance, ElectricReactanceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -454,10 +530,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricReactance result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -469,10 +544,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricReactance result)
-        {
-            return QuantityParser.Default.TryParse<ElectricReactance, ElectricReactanceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricReactance, ElectricReactanceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -483,10 +557,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactanceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -499,15 +572,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricReactanceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricReactanceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricReactanceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -519,10 +589,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricReactanceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -530,45 +599,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricReactance operator -(ElectricReactance right)
-        {
-            return new ElectricReactance(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricReactance"/> from adding two <see cref="ElectricReactance"/>.</summary>
         public static ElectricReactance operator +(ElectricReactance left, ElectricReactance right)
-        {
-            return new ElectricReactance(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricReactance"/> from subtracting two <see cref="ElectricReactance"/>.</summary>
         public static ElectricReactance operator -(ElectricReactance left, ElectricReactance right)
-        {
-            return new ElectricReactance(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricReactance"/> from multiplying value and <see cref="ElectricReactance"/>.</summary>
         public static ElectricReactance operator *(QuantityValue left, ElectricReactance right)
-        {
-            return new ElectricReactance(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricReactance"/> from multiplying value and <see cref="ElectricReactance"/>.</summary>
         public static ElectricReactance operator *(ElectricReactance left, QuantityValue right)
-        {
-            return new ElectricReactance(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricReactance"/> from dividing <see cref="ElectricReactance"/> by value.</summary>
         public static ElectricReactance operator /(ElectricReactance left, QuantityValue right)
-        {
-            return new ElectricReactance(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricReactance"/> by <see cref="ElectricReactance"/>.</summary>
         public static QuantityValue operator /(ElectricReactance left, ElectricReactance right)
-        {
-            return left.Ohms / right.Ohms;
-        }
+            => left.Ohms / right.Ohms;
 
         #endregion
 
@@ -577,9 +632,7 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="ElectricSusceptance"/>.</returns>
         public ElectricSusceptance Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricSusceptance.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, ElectricSusceptance.Info);
 
         #endregion
 
@@ -587,27 +640,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricReactance left, ElectricReactance right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricReactance left, ElectricReactance right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricReactance left, ElectricReactance right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricReactance left, ElectricReactance right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricReactance"/> instances are equal.
@@ -618,10 +663,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricReactance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricReactance left, ElectricReactance right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricReactance"/> instances are not equal.
@@ -631,10 +675,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricReactance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricReactance left, ElectricReactance right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -647,12 +690,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricReactance otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricReactance otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -663,18 +701,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricReactance other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricReactance.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricReactance), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricReactance), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricReactance)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -703,9 +737,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricReactance other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -716,20 +748,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

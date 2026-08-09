@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -85,9 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricSusceptanceInfo"/> class with the default settings.</returns>
             public static ElectricSusceptanceInfo CreateDefault()
-            {
-                return new ElectricSusceptanceInfo(nameof(ElectricSusceptance), DefaultBaseUnit, GetDefaultMappings(), new ElectricSusceptance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricSusceptance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricSusceptanceInfo"/> class with the default settings for the ElectricSusceptance quantity and a callback for customizing the default unit mappings.
@@ -99,19 +98,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricSusceptanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricSusceptanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricSusceptanceUnit>>, IEnumerable<IUnitDefinition<ElectricSusceptanceUnit>>> customizeUnits)
-            {
-                return new ElectricSusceptanceInfo(nameof(ElectricSusceptance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricSusceptance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricSusceptance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricSusceptance"/> is T^3L^-2M^-1I^2.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-2, -1, 3, 2, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-2, -1, 3, 2, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricSusceptance is Siemens. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricSusceptanceUnit DefaultBaseUnit { get; } = ElectricSusceptanceUnit.Siemens;
+            public static ElectricSusceptanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricSusceptanceUnit.Siemens;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricSusceptanceUnit"/>.
@@ -204,7 +209,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricSusceptance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricSusceptance, ElectricSusceptanceUnit> Info { get; }
@@ -212,53 +221,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricSusceptance, which is Siemens. All conversions go via this value.
         /// </summary>
-        public static ElectricSusceptanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricSusceptanceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricSusceptance quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricSusceptanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricSusceptanceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Siemens.
         /// </summary>
-        public static ElectricSusceptance Zero => Info.Zero;
+        public static ElectricSusceptance Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricSusceptanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricSusceptanceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricSusceptance, ElectricSusceptanceUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricSusceptance, ElectricSusceptanceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricSusceptance> IQuantityOfType<ElectricSusceptance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricSusceptance> IQuantityOfType<ElectricSusceptance>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricSusceptanceUnit> IQuantity<ElectricSusceptanceUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricSusceptanceUnit> IQuantity<ElectricSusceptanceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -270,82 +327,146 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Gigamho"/>
         /// </summary>
-        public QuantityValue Gigamhos => this.As(ElectricSusceptanceUnit.Gigamho);
+        public QuantityValue Gigamhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Gigamho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Gigasiemens"/>
         /// </summary>
-        public QuantityValue Gigasiemens => this.As(ElectricSusceptanceUnit.Gigasiemens);
+        public QuantityValue Gigasiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Gigasiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Kilomho"/>
         /// </summary>
-        public QuantityValue Kilomhos => this.As(ElectricSusceptanceUnit.Kilomho);
+        public QuantityValue Kilomhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Kilomho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Kilosiemens"/>
         /// </summary>
-        public QuantityValue Kilosiemens => this.As(ElectricSusceptanceUnit.Kilosiemens);
+        public QuantityValue Kilosiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Kilosiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Megamho"/>
         /// </summary>
-        public QuantityValue Megamhos => this.As(ElectricSusceptanceUnit.Megamho);
+        public QuantityValue Megamhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Megamho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Megasiemens"/>
         /// </summary>
-        public QuantityValue Megasiemens => this.As(ElectricSusceptanceUnit.Megasiemens);
+        public QuantityValue Megasiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Megasiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Mho"/>
         /// </summary>
-        public QuantityValue Mhos => this.As(ElectricSusceptanceUnit.Mho);
+        public QuantityValue Mhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Mho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Micromho"/>
         /// </summary>
-        public QuantityValue Micromhos => this.As(ElectricSusceptanceUnit.Micromho);
+        public QuantityValue Micromhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Micromho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Microsiemens"/>
         /// </summary>
-        public QuantityValue Microsiemens => this.As(ElectricSusceptanceUnit.Microsiemens);
+        public QuantityValue Microsiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Microsiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Millimho"/>
         /// </summary>
-        public QuantityValue Millimhos => this.As(ElectricSusceptanceUnit.Millimho);
+        public QuantityValue Millimhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Millimho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Millisiemens"/>
         /// </summary>
-        public QuantityValue Millisiemens => this.As(ElectricSusceptanceUnit.Millisiemens);
+        public QuantityValue Millisiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Millisiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Nanomho"/>
         /// </summary>
-        public QuantityValue Nanomhos => this.As(ElectricSusceptanceUnit.Nanomho);
+        public QuantityValue Nanomhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Nanomho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Nanosiemens"/>
         /// </summary>
-        public QuantityValue Nanosiemens => this.As(ElectricSusceptanceUnit.Nanosiemens);
+        public QuantityValue Nanosiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Nanosiemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Siemens"/>
         /// </summary>
-        public QuantityValue Siemens => this.As(ElectricSusceptanceUnit.Siemens);
+        public QuantityValue Siemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Siemens);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Teramho"/>
         /// </summary>
-        public QuantityValue Teramhos => this.As(ElectricSusceptanceUnit.Teramho);
+        public QuantityValue Teramhos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Teramho);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Terasiemens"/>
         /// </summary>
-        public QuantityValue Terasiemens => this.As(ElectricSusceptanceUnit.Terasiemens);
+        public QuantityValue Terasiemens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricSusceptanceUnit.Terasiemens);
+        }
 
         #endregion
 
@@ -356,10 +477,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricSusceptanceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -367,10 +487,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricSusceptanceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -379,130 +498,114 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Gigamho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromGigamhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Gigamho);
-        }
+            => new(value, ElectricSusceptanceUnit.Gigamho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Gigasiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromGigasiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Gigasiemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Gigasiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Kilomho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromKilomhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Kilomho);
-        }
+            => new(value, ElectricSusceptanceUnit.Kilomho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Kilosiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromKilosiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Kilosiemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Kilosiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Megamho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromMegamhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Megamho);
-        }
+            => new(value, ElectricSusceptanceUnit.Megamho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Megasiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromMegasiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Megasiemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Megasiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Mho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromMhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Mho);
-        }
+            => new(value, ElectricSusceptanceUnit.Mho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Micromho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromMicromhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Micromho);
-        }
+            => new(value, ElectricSusceptanceUnit.Micromho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Microsiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromMicrosiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Microsiemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Microsiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Millimho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromMillimhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Millimho);
-        }
+            => new(value, ElectricSusceptanceUnit.Millimho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Millisiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromMillisiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Millisiemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Millisiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Nanomho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromNanomhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Nanomho);
-        }
+            => new(value, ElectricSusceptanceUnit.Nanomho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Nanosiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromNanosiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Nanosiemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Nanosiemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Siemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromSiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Siemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Siemens);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Teramho"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromTeramhos(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Teramho);
-        }
+            => new(value, ElectricSusceptanceUnit.Teramho);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Terasiemens"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance FromTerasiemens(QuantityValue value)
-        {
-            return new ElectricSusceptance(value, ElectricSusceptanceUnit.Terasiemens);
-        }
+            => new(value, ElectricSusceptanceUnit.Terasiemens);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricSusceptanceUnit" /> to <see cref="ElectricSusceptance" />.
@@ -510,10 +613,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricSusceptance unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance From(QuantityValue value, ElectricSusceptanceUnit fromUnit)
-        {
-            return new ElectricSusceptance(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -541,10 +643,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -569,10 +670,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptance Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricSusceptance, ElectricSusceptanceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricSusceptance, ElectricSusceptanceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -582,10 +682,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricSusceptance result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -597,10 +696,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricSusceptance result)
-        {
-            return QuantityParser.Default.TryParse<ElectricSusceptance, ElectricSusceptanceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricSusceptance, ElectricSusceptanceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -611,10 +709,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricSusceptanceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -627,15 +724,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricSusceptanceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricSusceptanceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricSusceptanceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -647,10 +741,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricSusceptanceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -658,45 +751,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricSusceptance operator -(ElectricSusceptance right)
-        {
-            return new ElectricSusceptance(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricSusceptance"/> from adding two <see cref="ElectricSusceptance"/>.</summary>
         public static ElectricSusceptance operator +(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return new ElectricSusceptance(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricSusceptance"/> from subtracting two <see cref="ElectricSusceptance"/>.</summary>
         public static ElectricSusceptance operator -(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return new ElectricSusceptance(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricSusceptance"/> from multiplying value and <see cref="ElectricSusceptance"/>.</summary>
         public static ElectricSusceptance operator *(QuantityValue left, ElectricSusceptance right)
-        {
-            return new ElectricSusceptance(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricSusceptance"/> from multiplying value and <see cref="ElectricSusceptance"/>.</summary>
         public static ElectricSusceptance operator *(ElectricSusceptance left, QuantityValue right)
-        {
-            return new ElectricSusceptance(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricSusceptance"/> from dividing <see cref="ElectricSusceptance"/> by value.</summary>
         public static ElectricSusceptance operator /(ElectricSusceptance left, QuantityValue right)
-        {
-            return new ElectricSusceptance(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricSusceptance"/> by <see cref="ElectricSusceptance"/>.</summary>
         public static QuantityValue operator /(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return left.Siemens / right.Siemens;
-        }
+            => left.Siemens / right.Siemens;
 
         #endregion
 
@@ -705,9 +784,7 @@ namespace UnitsNet
         /// <summary>Calculates the inverse of this quantity.</summary>
         /// <returns>The corresponding inverse quantity, <see cref="ElectricReactance"/>.</returns>
         public ElectricReactance Inverse()
-        {
-            return UnitConverter.Default.ConvertTo(Value, Unit, ElectricReactance.Info);
-        }
+            => UnitConverter.Default.ConvertTo(Value, Unit, ElectricReactance.Info);
 
         #endregion
 
@@ -715,27 +792,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricSusceptance"/> instances are equal.
@@ -746,10 +815,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricSusceptance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricSusceptance"/> instances are not equal.
@@ -759,10 +827,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricSusceptance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricSusceptance left, ElectricSusceptance right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -775,12 +842,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricSusceptance otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricSusceptance otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -791,18 +853,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricSusceptance other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricSusceptance.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricSusceptance), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricSusceptance), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricSusceptance)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -831,9 +889,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricSusceptance other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -844,20 +900,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -89,9 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LuminousFluxInfo"/> class with the default settings.</returns>
             public static LuminousFluxInfo CreateDefault()
-            {
-                return new LuminousFluxInfo(nameof(LuminousFlux), DefaultBaseUnit, GetDefaultMappings(), new LuminousFlux(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(LuminousFlux), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LuminousFluxInfo"/> class with the default settings for the LuminousFlux quantity and a callback for customizing the default unit mappings.
@@ -103,19 +102,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LuminousFluxInfo"/> class with the default settings.
             /// </returns>
             public static LuminousFluxInfo CreateDefault(Func<IEnumerable<UnitDefinition<LuminousFluxUnit>>, IEnumerable<IUnitDefinition<LuminousFluxUnit>>> customizeUnits)
-            {
-                return new LuminousFluxInfo(nameof(LuminousFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new LuminousFlux(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(LuminousFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="LuminousFlux"/> is J.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 0, 0, 0, 0, 0, 1);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 0, 0, 0, 0, 0, 1);
 
             /// <summary>
             ///     The default base unit of LuminousFlux is Lumen. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static LuminousFluxUnit DefaultBaseUnit { get; } = LuminousFluxUnit.Lumen;
+            public static LuminousFluxUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LuminousFluxUnit.Lumen;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="LuminousFluxUnit"/>.
@@ -163,7 +168,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="LuminousFlux" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<LuminousFlux, LuminousFluxUnit> Info { get; }
@@ -171,53 +180,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of LuminousFlux, which is Lumen. All conversions go via this value.
         /// </summary>
-        public static LuminousFluxUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static LuminousFluxUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the LuminousFlux quantity.
         /// </summary>
-        public static IReadOnlyCollection<LuminousFluxUnit> Units => Info.Units;
+        public static IReadOnlyCollection<LuminousFluxUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Lumen.
         /// </summary>
-        public static LuminousFlux Zero => Info.Zero;
+        public static LuminousFlux Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public LuminousFluxUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public LuminousFluxUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<LuminousFlux, LuminousFluxUnit> QuantityInfo => Info;
+        public QuantityInfo<LuminousFlux, LuminousFluxUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<LuminousFlux> IQuantityOfType<LuminousFlux>.QuantityInfo => Info;
+        IQuantityInstanceInfo<LuminousFlux> IQuantityOfType<LuminousFlux>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<LuminousFluxUnit> IQuantity<LuminousFluxUnit>.QuantityInfo => Info;
+        QuantityInfo<LuminousFluxUnit> IQuantity<LuminousFluxUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -229,7 +286,11 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminousFluxUnit.Lumen"/>
         /// </summary>
-        public QuantityValue Lumens => this.As(LuminousFluxUnit.Lumen);
+        public QuantityValue Lumens
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(LuminousFluxUnit.Lumen);
+        }
 
         #endregion
 
@@ -240,10 +301,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LuminousFluxUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -251,10 +311,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(LuminousFluxUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -263,10 +322,9 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="LuminousFlux"/> from <see cref="LuminousFluxUnit.Lumen"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LuminousFlux FromLumens(QuantityValue value)
-        {
-            return new LuminousFlux(value, LuminousFluxUnit.Lumen);
-        }
+            => new(value, LuminousFluxUnit.Lumen);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="LuminousFluxUnit" /> to <see cref="LuminousFlux" />.
@@ -274,10 +332,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>LuminousFlux unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LuminousFlux From(QuantityValue value, LuminousFluxUnit fromUnit)
-        {
-            return new LuminousFlux(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -305,10 +362,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LuminousFlux Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -333,10 +389,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LuminousFlux Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<LuminousFlux, LuminousFluxUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<LuminousFlux, LuminousFluxUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -346,10 +401,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out LuminousFlux result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -361,10 +415,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out LuminousFlux result)
-        {
-            return QuantityParser.Default.TryParse<LuminousFlux, LuminousFluxUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<LuminousFlux, LuminousFluxUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -375,10 +428,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LuminousFluxUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -391,15 +443,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static LuminousFluxUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.LuminousFluxUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out LuminousFluxUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -411,10 +460,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out LuminousFluxUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -422,45 +470,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static LuminousFlux operator -(LuminousFlux right)
-        {
-            return new LuminousFlux(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="LuminousFlux"/> from adding two <see cref="LuminousFlux"/>.</summary>
         public static LuminousFlux operator +(LuminousFlux left, LuminousFlux right)
-        {
-            return new LuminousFlux(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="LuminousFlux"/> from subtracting two <see cref="LuminousFlux"/>.</summary>
         public static LuminousFlux operator -(LuminousFlux left, LuminousFlux right)
-        {
-            return new LuminousFlux(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="LuminousFlux"/> from multiplying value and <see cref="LuminousFlux"/>.</summary>
         public static LuminousFlux operator *(QuantityValue left, LuminousFlux right)
-        {
-            return new LuminousFlux(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="LuminousFlux"/> from multiplying value and <see cref="LuminousFlux"/>.</summary>
         public static LuminousFlux operator *(LuminousFlux left, QuantityValue right)
-        {
-            return new LuminousFlux(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="LuminousFlux"/> from dividing <see cref="LuminousFlux"/> by value.</summary>
         public static LuminousFlux operator /(LuminousFlux left, QuantityValue right)
-        {
-            return new LuminousFlux(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="LuminousFlux"/> by <see cref="LuminousFlux"/>.</summary>
         public static QuantityValue operator /(LuminousFlux left, LuminousFlux right)
-        {
-            return left.Lumens / right.Lumens;
-        }
+            => left.Lumens / right.Lumens;
 
         #endregion
 
@@ -468,27 +502,19 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Area"/> from <see cref="LuminousFlux"/> / <see cref="Illuminance"/>.</summary>
         public static Area operator /(LuminousFlux luminousFlux, Illuminance illuminance)
-        {
-            return Area.FromSquareMeters(luminousFlux.Lumens / illuminance.Lux);
-        }
+            => Area.FromSquareMeters(luminousFlux.Lumens / illuminance.Lux);
 
         /// <summary>Get <see cref="Illuminance"/> from <see cref="LuminousFlux"/> / <see cref="Area"/>.</summary>
         public static Illuminance operator /(LuminousFlux luminousFlux, Area area)
-        {
-            return Illuminance.FromLux(luminousFlux.Lumens / area.SquareMeters);
-        }
+            => Illuminance.FromLux(luminousFlux.Lumens / area.SquareMeters);
 
         /// <summary>Get <see cref="LuminousIntensity"/> from <see cref="LuminousFlux"/> / <see cref="SolidAngle"/>.</summary>
         public static LuminousIntensity operator /(LuminousFlux luminousFlux, SolidAngle solidAngle)
-        {
-            return LuminousIntensity.FromCandela(luminousFlux.Lumens / solidAngle.Steradians);
-        }
+            => LuminousIntensity.FromCandela(luminousFlux.Lumens / solidAngle.Steradians);
 
         /// <summary>Get <see cref="SolidAngle"/> from <see cref="LuminousFlux"/> / <see cref="LuminousIntensity"/>.</summary>
         public static SolidAngle operator /(LuminousFlux luminousFlux, LuminousIntensity luminousIntensity)
-        {
-            return SolidAngle.FromSteradians(luminousFlux.Lumens / luminousIntensity.Candela);
-        }
+            => SolidAngle.FromSteradians(luminousFlux.Lumens / luminousIntensity.Candela);
 
         #endregion
 
@@ -496,27 +522,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(LuminousFlux left, LuminousFlux right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(LuminousFlux left, LuminousFlux right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(LuminousFlux left, LuminousFlux right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(LuminousFlux left, LuminousFlux right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="LuminousFlux"/> instances are equal.
@@ -527,10 +545,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(LuminousFlux)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(LuminousFlux left, LuminousFlux right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="LuminousFlux"/> instances are not equal.
@@ -540,10 +557,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(LuminousFlux)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(LuminousFlux left, LuminousFlux right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -556,12 +572,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not LuminousFlux otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is LuminousFlux otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -572,18 +583,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(LuminousFlux other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current LuminousFlux.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(LuminousFlux), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(LuminousFlux), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(LuminousFlux)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -612,9 +619,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(LuminousFlux other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -625,20 +630,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

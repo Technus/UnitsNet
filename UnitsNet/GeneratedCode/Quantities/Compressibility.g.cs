@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="CompressibilityInfo"/> class with the default settings.</returns>
             public static CompressibilityInfo CreateDefault()
-            {
-                return new CompressibilityInfo(nameof(Compressibility), DefaultBaseUnit, GetDefaultMappings(), new Compressibility(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Compressibility), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="CompressibilityInfo"/> class with the default settings for the Compressibility quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="CompressibilityInfo"/> class with the default settings.
             /// </returns>
             public static CompressibilityInfo CreateDefault(Func<IEnumerable<UnitDefinition<CompressibilityUnit>>, IEnumerable<IUnitDefinition<CompressibilityUnit>>> customizeUnits)
-            {
-                return new CompressibilityInfo(nameof(Compressibility), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new Compressibility(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(Compressibility), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Compressibility"/> is T^2LM^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(1, -1, 2, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(1, -1, 2, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of Compressibility is InversePascal. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static CompressibilityUnit DefaultBaseUnit { get; } = CompressibilityUnit.InversePascal;
+            public static CompressibilityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = CompressibilityUnit.InversePascal;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="CompressibilityUnit"/>.
@@ -175,7 +180,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="Compressibility" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<Compressibility, CompressibilityUnit> Info { get; }
@@ -183,53 +192,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of Compressibility, which is InversePascal. All conversions go via this value.
         /// </summary>
-        public static CompressibilityUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static CompressibilityUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the Compressibility quantity.
         /// </summary>
-        public static IReadOnlyCollection<CompressibilityUnit> Units => Info.Units;
+        public static IReadOnlyCollection<CompressibilityUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit InversePascal.
         /// </summary>
-        public static Compressibility Zero => Info.Zero;
+        public static Compressibility Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public CompressibilityUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public CompressibilityUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<Compressibility, CompressibilityUnit> QuantityInfo => Info;
+        public QuantityInfo<Compressibility, CompressibilityUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<Compressibility> IQuantityOfType<Compressibility>.QuantityInfo => Info;
+        IQuantityInstanceInfo<Compressibility> IQuantityOfType<Compressibility>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<CompressibilityUnit> IQuantity<CompressibilityUnit>.QuantityInfo => Info;
+        QuantityInfo<CompressibilityUnit> IQuantity<CompressibilityUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -241,37 +298,65 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InverseAtmosphere"/>
         /// </summary>
-        public QuantityValue InverseAtmospheres => this.As(CompressibilityUnit.InverseAtmosphere);
+        public QuantityValue InverseAtmospheres
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(CompressibilityUnit.InverseAtmosphere);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InverseBar"/>
         /// </summary>
-        public QuantityValue InverseBars => this.As(CompressibilityUnit.InverseBar);
+        public QuantityValue InverseBars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(CompressibilityUnit.InverseBar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InverseKilopascal"/>
         /// </summary>
-        public QuantityValue InverseKilopascals => this.As(CompressibilityUnit.InverseKilopascal);
+        public QuantityValue InverseKilopascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(CompressibilityUnit.InverseKilopascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InverseMegapascal"/>
         /// </summary>
-        public QuantityValue InverseMegapascals => this.As(CompressibilityUnit.InverseMegapascal);
+        public QuantityValue InverseMegapascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(CompressibilityUnit.InverseMegapascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InverseMillibar"/>
         /// </summary>
-        public QuantityValue InverseMillibars => this.As(CompressibilityUnit.InverseMillibar);
+        public QuantityValue InverseMillibars
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(CompressibilityUnit.InverseMillibar);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InversePascal"/>
         /// </summary>
-        public QuantityValue InversePascals => this.As(CompressibilityUnit.InversePascal);
+        public QuantityValue InversePascals
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(CompressibilityUnit.InversePascal);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InversePoundForcePerSquareInch"/>
         /// </summary>
-        public QuantityValue InversePoundsForcePerSquareInch => this.As(CompressibilityUnit.InversePoundForcePerSquareInch);
+        public QuantityValue InversePoundsForcePerSquareInch
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(CompressibilityUnit.InversePoundForcePerSquareInch);
+        }
 
         #endregion
 
@@ -282,10 +367,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(CompressibilityUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -293,10 +377,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(CompressibilityUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -305,58 +388,51 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InverseAtmosphere"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility FromInverseAtmospheres(QuantityValue value)
-        {
-            return new Compressibility(value, CompressibilityUnit.InverseAtmosphere);
-        }
+            => new(value, CompressibilityUnit.InverseAtmosphere);
 
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InverseBar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility FromInverseBars(QuantityValue value)
-        {
-            return new Compressibility(value, CompressibilityUnit.InverseBar);
-        }
+            => new(value, CompressibilityUnit.InverseBar);
 
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InverseKilopascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility FromInverseKilopascals(QuantityValue value)
-        {
-            return new Compressibility(value, CompressibilityUnit.InverseKilopascal);
-        }
+            => new(value, CompressibilityUnit.InverseKilopascal);
 
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InverseMegapascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility FromInverseMegapascals(QuantityValue value)
-        {
-            return new Compressibility(value, CompressibilityUnit.InverseMegapascal);
-        }
+            => new(value, CompressibilityUnit.InverseMegapascal);
 
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InverseMillibar"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility FromInverseMillibars(QuantityValue value)
-        {
-            return new Compressibility(value, CompressibilityUnit.InverseMillibar);
-        }
+            => new(value, CompressibilityUnit.InverseMillibar);
 
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InversePascal"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility FromInversePascals(QuantityValue value)
-        {
-            return new Compressibility(value, CompressibilityUnit.InversePascal);
-        }
+            => new(value, CompressibilityUnit.InversePascal);
 
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InversePoundForcePerSquareInch"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility FromInversePoundsForcePerSquareInch(QuantityValue value)
-        {
-            return new Compressibility(value, CompressibilityUnit.InversePoundForcePerSquareInch);
-        }
+            => new(value, CompressibilityUnit.InversePoundForcePerSquareInch);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="CompressibilityUnit" /> to <see cref="Compressibility" />.
@@ -364,10 +440,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>Compressibility unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility From(QuantityValue value, CompressibilityUnit fromUnit)
-        {
-            return new Compressibility(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -395,10 +470,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -423,10 +497,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Compressibility Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<Compressibility, CompressibilityUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<Compressibility, CompressibilityUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -436,10 +509,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out Compressibility result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -451,10 +523,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out Compressibility result)
-        {
-            return QuantityParser.Default.TryParse<Compressibility, CompressibilityUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<Compressibility, CompressibilityUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -465,10 +536,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CompressibilityUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -481,15 +551,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static CompressibilityUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.CompressibilityUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out CompressibilityUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -501,10 +568,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out CompressibilityUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -512,45 +578,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static Compressibility operator -(Compressibility right)
-        {
-            return new Compressibility(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="Compressibility"/> from adding two <see cref="Compressibility"/>.</summary>
         public static Compressibility operator +(Compressibility left, Compressibility right)
-        {
-            return new Compressibility(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Compressibility"/> from subtracting two <see cref="Compressibility"/>.</summary>
         public static Compressibility operator -(Compressibility left, Compressibility right)
-        {
-            return new Compressibility(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="Compressibility"/> from multiplying value and <see cref="Compressibility"/>.</summary>
         public static Compressibility operator *(QuantityValue left, Compressibility right)
-        {
-            return new Compressibility(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="Compressibility"/> from multiplying value and <see cref="Compressibility"/>.</summary>
         public static Compressibility operator *(Compressibility left, QuantityValue right)
-        {
-            return new Compressibility(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="Compressibility"/> from dividing <see cref="Compressibility"/> by value.</summary>
         public static Compressibility operator /(Compressibility left, QuantityValue right)
-        {
-            return new Compressibility(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="Compressibility"/> by <see cref="Compressibility"/>.</summary>
         public static QuantityValue operator /(Compressibility left, Compressibility right)
-        {
-            return left.InversePascals / right.InversePascals;
-        }
+            => left.InversePascals / right.InversePascals;
 
         #endregion
 
@@ -558,9 +610,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Ratio"/> from <see cref="Compressibility"/> * <see cref="Pressure"/>.</summary>
         public static Ratio operator *(Compressibility compressibility, Pressure pressure)
-        {
-            return Ratio.FromDecimalFractions(compressibility.InversePascals * pressure.Pascals);
-        }
+            => Ratio.FromDecimalFractions(compressibility.InversePascals * pressure.Pascals);
 
         #endregion
 
@@ -568,27 +618,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(Compressibility left, Compressibility right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(Compressibility left, Compressibility right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(Compressibility left, Compressibility right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(Compressibility left, Compressibility right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="Compressibility"/> instances are equal.
@@ -599,10 +641,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(Compressibility)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(Compressibility left, Compressibility right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="Compressibility"/> instances are not equal.
@@ -612,10 +653,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(Compressibility)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(Compressibility left, Compressibility right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -628,12 +668,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not Compressibility otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is Compressibility otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -644,18 +679,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(Compressibility other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current Compressibility.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(Compressibility), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(Compressibility), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(Compressibility)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -684,9 +715,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(Compressibility other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -697,20 +726,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

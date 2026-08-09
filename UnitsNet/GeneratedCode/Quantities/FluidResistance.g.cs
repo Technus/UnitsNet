@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -86,9 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="FluidResistanceInfo"/> class with the default settings.</returns>
             public static FluidResistanceInfo CreateDefault()
-            {
-                return new FluidResistanceInfo(nameof(FluidResistance), DefaultBaseUnit, GetDefaultMappings(), new FluidResistance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(FluidResistance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="FluidResistanceInfo"/> class with the default settings for the FluidResistance quantity and a callback for customizing the default unit mappings.
@@ -100,19 +99,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="FluidResistanceInfo"/> class with the default settings.
             /// </returns>
             public static FluidResistanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<FluidResistanceUnit>>, IEnumerable<IUnitDefinition<FluidResistanceUnit>>> customizeUnits)
-            {
-                return new FluidResistanceInfo(nameof(FluidResistance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new FluidResistance(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(FluidResistance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="FluidResistance"/> is T^-1L^-4M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(-4, 1, -1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(-4, 1, -1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of FluidResistance is PascalSecondPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static FluidResistanceUnit DefaultBaseUnit { get; } = FluidResistanceUnit.PascalSecondPerCubicMeter;
+            public static FluidResistanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = FluidResistanceUnit.PascalSecondPerCubicMeter;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="FluidResistanceUnit"/>.
@@ -214,7 +219,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="FluidResistance" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<FluidResistance, FluidResistanceUnit> Info { get; }
@@ -222,53 +231,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of FluidResistance, which is PascalSecondPerCubicMeter. All conversions go via this value.
         /// </summary>
-        public static FluidResistanceUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static FluidResistanceUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the FluidResistance quantity.
         /// </summary>
-        public static IReadOnlyCollection<FluidResistanceUnit> Units => Info.Units;
+        public static IReadOnlyCollection<FluidResistanceUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit PascalSecondPerCubicMeter.
         /// </summary>
-        public static FluidResistance Zero => Info.Zero;
+        public static FluidResistance Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public FluidResistanceUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public FluidResistanceUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<FluidResistance, FluidResistanceUnit> QuantityInfo => Info;
+        public QuantityInfo<FluidResistance, FluidResistanceUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<FluidResistance> IQuantityOfType<FluidResistance>.QuantityInfo => Info;
+        IQuantityInstanceInfo<FluidResistance> IQuantityOfType<FluidResistance>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<FluidResistanceUnit> IQuantity<FluidResistanceUnit>.QuantityInfo => Info;
+        QuantityInfo<FluidResistanceUnit> IQuantity<FluidResistanceUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -280,97 +337,173 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth"/>
         /// </summary>
-        public QuantityValue DyneSecondsPerCentimeterToTheFifth => this.As(FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth);
+        public QuantityValue DyneSecondsPerCentimeterToTheFifth
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MegapascalSecondPerCubicMeter"/>
         /// </summary>
-        public QuantityValue MegapascalSecondsPerCubicMeter => this.As(FluidResistanceUnit.MegapascalSecondPerCubicMeter);
+        public QuantityValue MegapascalSecondsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MegapascalSecondPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue MillimeterMercuryMinutesPerCubicCentimeter => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerCubicCentimeter);
+        public QuantityValue MillimeterMercuryMinutesPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerCubicMeter"/>
         /// </summary>
-        public QuantityValue MillimeterMercuryMinutesPerCubicMeter => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerCubicMeter);
+        public QuantityValue MillimeterMercuryMinutesPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerLiter"/>
         /// </summary>
-        public QuantityValue MillimeterMercuryMinutesPerLiter => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerLiter);
+        public QuantityValue MillimeterMercuryMinutesPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerMilliliter"/>
         /// </summary>
-        public QuantityValue MillimeterMercuryMinutesPerMilliliter => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerMilliliter);
+        public QuantityValue MillimeterMercuryMinutesPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercuryMinutePerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercurySecondPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue MillimeterMercurySecondsPerCubicCentimeter => this.As(FluidResistanceUnit.MillimeterMercurySecondPerCubicCentimeter);
+        public QuantityValue MillimeterMercurySecondsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercurySecondPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercurySecondPerCubicMeter"/>
         /// </summary>
-        public QuantityValue MillimeterMercurySecondsPerCubicMeter => this.As(FluidResistanceUnit.MillimeterMercurySecondPerCubicMeter);
+        public QuantityValue MillimeterMercurySecondsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercurySecondPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercurySecondPerLiter"/>
         /// </summary>
-        public QuantityValue MillimeterMercurySecondsPerLiter => this.As(FluidResistanceUnit.MillimeterMercurySecondPerLiter);
+        public QuantityValue MillimeterMercurySecondsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercurySecondPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.MillimeterMercurySecondPerMilliliter"/>
         /// </summary>
-        public QuantityValue MillimeterMercurySecondsPerMilliliter => this.As(FluidResistanceUnit.MillimeterMercurySecondPerMilliliter);
+        public QuantityValue MillimeterMercurySecondsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.MillimeterMercurySecondPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalMinutePerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue PascalMinutesPerCubicCentimeter => this.As(FluidResistanceUnit.PascalMinutePerCubicCentimeter);
+        public QuantityValue PascalMinutesPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalMinutePerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalMinutePerCubicMeter"/>
         /// </summary>
-        public QuantityValue PascalMinutesPerCubicMeter => this.As(FluidResistanceUnit.PascalMinutePerCubicMeter);
+        public QuantityValue PascalMinutesPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalMinutePerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalMinutePerLiter"/>
         /// </summary>
-        public QuantityValue PascalMinutesPerLiter => this.As(FluidResistanceUnit.PascalMinutePerLiter);
+        public QuantityValue PascalMinutesPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalMinutePerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalMinutePerMilliliter"/>
         /// </summary>
-        public QuantityValue PascalMinutesPerMilliliter => this.As(FluidResistanceUnit.PascalMinutePerMilliliter);
+        public QuantityValue PascalMinutesPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalMinutePerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalSecondPerCubicCentimeter"/>
         /// </summary>
-        public QuantityValue PascalSecondsPerCubicCentimeter => this.As(FluidResistanceUnit.PascalSecondPerCubicCentimeter);
+        public QuantityValue PascalSecondsPerCubicCentimeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalSecondPerCubicCentimeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalSecondPerCubicMeter"/>
         /// </summary>
-        public QuantityValue PascalSecondsPerCubicMeter => this.As(FluidResistanceUnit.PascalSecondPerCubicMeter);
+        public QuantityValue PascalSecondsPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalSecondPerCubicMeter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalSecondPerLiter"/>
         /// </summary>
-        public QuantityValue PascalSecondsPerLiter => this.As(FluidResistanceUnit.PascalSecondPerLiter);
+        public QuantityValue PascalSecondsPerLiter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalSecondPerLiter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.PascalSecondPerMilliliter"/>
         /// </summary>
-        public QuantityValue PascalSecondsPerMilliliter => this.As(FluidResistanceUnit.PascalSecondPerMilliliter);
+        public QuantityValue PascalSecondsPerMilliliter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.PascalSecondPerMilliliter);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.WoodUnit"/>
         /// </summary>
-        public QuantityValue WoodUnits => this.As(FluidResistanceUnit.WoodUnit);
+        public QuantityValue WoodUnits
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FluidResistanceUnit.WoodUnit);
+        }
 
         #endregion
 
@@ -381,10 +514,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(FluidResistanceUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -392,10 +524,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(FluidResistanceUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -404,154 +535,135 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromDyneSecondsPerCentimeterToTheFifth(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth);
-        }
+            => new(value, FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MegapascalSecondPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMegapascalSecondsPerCubicMeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MegapascalSecondPerCubicMeter);
-        }
+            => new(value, FluidResistanceUnit.MegapascalSecondPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercuryMinutesPerCubicCentimeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercuryMinutePerCubicCentimeter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercuryMinutePerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercuryMinutesPerCubicMeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercuryMinutePerCubicMeter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercuryMinutePerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercuryMinutesPerLiter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercuryMinutePerLiter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercuryMinutePerLiter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercuryMinutePerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercuryMinutesPerMilliliter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercuryMinutePerMilliliter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercuryMinutePerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercurySecondPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercurySecondsPerCubicCentimeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercurySecondPerCubicCentimeter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercurySecondPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercurySecondPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercurySecondsPerCubicMeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercurySecondPerCubicMeter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercurySecondPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercurySecondPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercurySecondsPerLiter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercurySecondPerLiter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercurySecondPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.MillimeterMercurySecondPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromMillimeterMercurySecondsPerMilliliter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.MillimeterMercurySecondPerMilliliter);
-        }
+            => new(value, FluidResistanceUnit.MillimeterMercurySecondPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalMinutePerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalMinutesPerCubicCentimeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalMinutePerCubicCentimeter);
-        }
+            => new(value, FluidResistanceUnit.PascalMinutePerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalMinutePerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalMinutesPerCubicMeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalMinutePerCubicMeter);
-        }
+            => new(value, FluidResistanceUnit.PascalMinutePerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalMinutePerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalMinutesPerLiter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalMinutePerLiter);
-        }
+            => new(value, FluidResistanceUnit.PascalMinutePerLiter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalMinutePerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalMinutesPerMilliliter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalMinutePerMilliliter);
-        }
+            => new(value, FluidResistanceUnit.PascalMinutePerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalSecondPerCubicCentimeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalSecondsPerCubicCentimeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalSecondPerCubicCentimeter);
-        }
+            => new(value, FluidResistanceUnit.PascalSecondPerCubicCentimeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalSecondPerCubicMeter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalSecondsPerCubicMeter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalSecondPerCubicMeter);
-        }
+            => new(value, FluidResistanceUnit.PascalSecondPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalSecondPerLiter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalSecondsPerLiter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalSecondPerLiter);
-        }
+            => new(value, FluidResistanceUnit.PascalSecondPerLiter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.PascalSecondPerMilliliter"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromPascalSecondsPerMilliliter(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.PascalSecondPerMilliliter);
-        }
+            => new(value, FluidResistanceUnit.PascalSecondPerMilliliter);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.WoodUnit"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance FromWoodUnits(QuantityValue value)
-        {
-            return new FluidResistance(value, FluidResistanceUnit.WoodUnit);
-        }
+            => new(value, FluidResistanceUnit.WoodUnit);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="FluidResistanceUnit" /> to <see cref="FluidResistance" />.
@@ -559,10 +671,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>FluidResistance unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance From(QuantityValue value, FluidResistanceUnit fromUnit)
-        {
-            return new FluidResistance(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -590,10 +701,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -618,10 +728,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistance Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<FluidResistance, FluidResistanceUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<FluidResistance, FluidResistanceUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -631,10 +740,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out FluidResistance result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -646,10 +754,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out FluidResistance result)
-        {
-            return QuantityParser.Default.TryParse<FluidResistance, FluidResistanceUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<FluidResistance, FluidResistanceUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -660,10 +767,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FluidResistanceUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -676,15 +782,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static FluidResistanceUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.FluidResistanceUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out FluidResistanceUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -696,10 +799,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out FluidResistanceUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -707,45 +809,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static FluidResistance operator -(FluidResistance right)
-        {
-            return new FluidResistance(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="FluidResistance"/> from adding two <see cref="FluidResistance"/>.</summary>
         public static FluidResistance operator +(FluidResistance left, FluidResistance right)
-        {
-            return new FluidResistance(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="FluidResistance"/> from subtracting two <see cref="FluidResistance"/>.</summary>
         public static FluidResistance operator -(FluidResistance left, FluidResistance right)
-        {
-            return new FluidResistance(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="FluidResistance"/> from multiplying value and <see cref="FluidResistance"/>.</summary>
         public static FluidResistance operator *(QuantityValue left, FluidResistance right)
-        {
-            return new FluidResistance(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="FluidResistance"/> from multiplying value and <see cref="FluidResistance"/>.</summary>
         public static FluidResistance operator *(FluidResistance left, QuantityValue right)
-        {
-            return new FluidResistance(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="FluidResistance"/> from dividing <see cref="FluidResistance"/> by value.</summary>
         public static FluidResistance operator /(FluidResistance left, QuantityValue right)
-        {
-            return new FluidResistance(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="FluidResistance"/> by <see cref="FluidResistance"/>.</summary>
         public static QuantityValue operator /(FluidResistance left, FluidResistance right)
-        {
-            return left.PascalSecondsPerCubicMeter / right.PascalSecondsPerCubicMeter;
-        }
+            => left.PascalSecondsPerCubicMeter / right.PascalSecondsPerCubicMeter;
 
         #endregion
 
@@ -753,9 +841,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Pressure"/> from <see cref="FluidResistance"/> * <see cref="VolumeFlow"/>.</summary>
         public static Pressure operator *(FluidResistance fluidResistance, VolumeFlow volumeFlow)
-        {
-            return Pressure.FromPascals(fluidResistance.PascalSecondsPerCubicMeter * volumeFlow.CubicMetersPerSecond);
-        }
+            => Pressure.FromPascals(fluidResistance.PascalSecondsPerCubicMeter * volumeFlow.CubicMetersPerSecond);
 
         #endregion
 
@@ -763,27 +849,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(FluidResistance left, FluidResistance right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(FluidResistance left, FluidResistance right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(FluidResistance left, FluidResistance right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(FluidResistance left, FluidResistance right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="FluidResistance"/> instances are equal.
@@ -794,10 +872,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(FluidResistance)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(FluidResistance left, FluidResistance right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="FluidResistance"/> instances are not equal.
@@ -807,10 +884,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(FluidResistance)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(FluidResistance left, FluidResistance right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -823,12 +899,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not FluidResistance otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is FluidResistance otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -839,18 +910,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(FluidResistance other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current FluidResistance.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(FluidResistance), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(FluidResistance), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(FluidResistance)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -879,9 +946,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(FluidResistance other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -892,20 +957,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

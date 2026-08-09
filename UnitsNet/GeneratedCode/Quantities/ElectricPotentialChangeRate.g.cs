@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -83,9 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricPotentialChangeRateInfo"/> class with the default settings.</returns>
             public static ElectricPotentialChangeRateInfo CreateDefault()
-            {
-                return new ElectricPotentialChangeRateInfo(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, GetDefaultMappings(), new ElectricPotentialChangeRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricPotentialChangeRateInfo"/> class with the default settings for the ElectricPotentialChangeRate quantity and a callback for customizing the default unit mappings.
@@ -97,19 +96,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricPotentialChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static ElectricPotentialChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricPotentialChangeRateUnit>>, IEnumerable<IUnitDefinition<ElectricPotentialChangeRateUnit>>> customizeUnits)
-            {
-                return new ElectricPotentialChangeRateInfo(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new ElectricPotentialChangeRate(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricPotentialChangeRate"/> is T^-4L^2MI^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -4, -1, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -4, -1, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of ElectricPotentialChangeRate is VoltPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static ElectricPotentialChangeRateUnit DefaultBaseUnit { get; } = ElectricPotentialChangeRateUnit.VoltPerSecond;
+            public static ElectricPotentialChangeRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricPotentialChangeRateUnit.VoltPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricPotentialChangeRateUnit"/>.
@@ -214,7 +219,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="ElectricPotentialChangeRate" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit> Info { get; }
@@ -222,53 +231,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of ElectricPotentialChangeRate, which is VoltPerSecond. All conversions go via this value.
         /// </summary>
-        public static ElectricPotentialChangeRateUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static ElectricPotentialChangeRateUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the ElectricPotentialChangeRate quantity.
         /// </summary>
-        public static IReadOnlyCollection<ElectricPotentialChangeRateUnit> Units => Info.Units;
+        public static IReadOnlyCollection<ElectricPotentialChangeRateUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit VoltPerSecond.
         /// </summary>
-        public static ElectricPotentialChangeRate Zero => Info.Zero;
+        public static ElectricPotentialChangeRate Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public ElectricPotentialChangeRateUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public ElectricPotentialChangeRateUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit> QuantityInfo => Info;
+        public QuantityInfo<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<ElectricPotentialChangeRate> IQuantityOfType<ElectricPotentialChangeRate>.QuantityInfo => Info;
+        IQuantityInstanceInfo<ElectricPotentialChangeRate> IQuantityOfType<ElectricPotentialChangeRate>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<ElectricPotentialChangeRateUnit> IQuantity<ElectricPotentialChangeRateUnit>.QuantityInfo => Info;
+        QuantityInfo<ElectricPotentialChangeRateUnit> IQuantity<ElectricPotentialChangeRateUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -280,102 +337,182 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.KilovoltPerHour"/>
         /// </summary>
-        public QuantityValue KilovoltsPerHour => this.As(ElectricPotentialChangeRateUnit.KilovoltPerHour);
+        public QuantityValue KilovoltsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.KilovoltPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.KilovoltPerMicrosecond"/>
         /// </summary>
-        public QuantityValue KilovoltsPerMicrosecond => this.As(ElectricPotentialChangeRateUnit.KilovoltPerMicrosecond);
+        public QuantityValue KilovoltsPerMicrosecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.KilovoltPerMicrosecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.KilovoltPerMinute"/>
         /// </summary>
-        public QuantityValue KilovoltsPerMinute => this.As(ElectricPotentialChangeRateUnit.KilovoltPerMinute);
+        public QuantityValue KilovoltsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.KilovoltPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.KilovoltPerSecond"/>
         /// </summary>
-        public QuantityValue KilovoltsPerSecond => this.As(ElectricPotentialChangeRateUnit.KilovoltPerSecond);
+        public QuantityValue KilovoltsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.KilovoltPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MegavoltPerHour"/>
         /// </summary>
-        public QuantityValue MegavoltsPerHour => this.As(ElectricPotentialChangeRateUnit.MegavoltPerHour);
+        public QuantityValue MegavoltsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MegavoltPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MegavoltPerMicrosecond"/>
         /// </summary>
-        public QuantityValue MegavoltsPerMicrosecond => this.As(ElectricPotentialChangeRateUnit.MegavoltPerMicrosecond);
+        public QuantityValue MegavoltsPerMicrosecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MegavoltPerMicrosecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MegavoltPerMinute"/>
         /// </summary>
-        public QuantityValue MegavoltsPerMinute => this.As(ElectricPotentialChangeRateUnit.MegavoltPerMinute);
+        public QuantityValue MegavoltsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MegavoltPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MegavoltPerSecond"/>
         /// </summary>
-        public QuantityValue MegavoltsPerSecond => this.As(ElectricPotentialChangeRateUnit.MegavoltPerSecond);
+        public QuantityValue MegavoltsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MegavoltPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerHour"/>
         /// </summary>
-        public QuantityValue MicrovoltsPerHour => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerHour);
+        public QuantityValue MicrovoltsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerMicrosecond"/>
         /// </summary>
-        public QuantityValue MicrovoltsPerMicrosecond => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerMicrosecond);
+        public QuantityValue MicrovoltsPerMicrosecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerMicrosecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerMinute"/>
         /// </summary>
-        public QuantityValue MicrovoltsPerMinute => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerMinute);
+        public QuantityValue MicrovoltsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerSecond"/>
         /// </summary>
-        public QuantityValue MicrovoltsPerSecond => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerSecond);
+        public QuantityValue MicrovoltsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MicrovoltPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MillivoltPerHour"/>
         /// </summary>
-        public QuantityValue MillivoltsPerHour => this.As(ElectricPotentialChangeRateUnit.MillivoltPerHour);
+        public QuantityValue MillivoltsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MillivoltPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MillivoltPerMicrosecond"/>
         /// </summary>
-        public QuantityValue MillivoltsPerMicrosecond => this.As(ElectricPotentialChangeRateUnit.MillivoltPerMicrosecond);
+        public QuantityValue MillivoltsPerMicrosecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MillivoltPerMicrosecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MillivoltPerMinute"/>
         /// </summary>
-        public QuantityValue MillivoltsPerMinute => this.As(ElectricPotentialChangeRateUnit.MillivoltPerMinute);
+        public QuantityValue MillivoltsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MillivoltPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.MillivoltPerSecond"/>
         /// </summary>
-        public QuantityValue MillivoltsPerSecond => this.As(ElectricPotentialChangeRateUnit.MillivoltPerSecond);
+        public QuantityValue MillivoltsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.MillivoltPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.VoltPerHour"/>
         /// </summary>
-        public QuantityValue VoltsPerHour => this.As(ElectricPotentialChangeRateUnit.VoltPerHour);
+        public QuantityValue VoltsPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.VoltPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.VoltPerMicrosecond"/>
         /// </summary>
-        public QuantityValue VoltsPerMicrosecond => this.As(ElectricPotentialChangeRateUnit.VoltPerMicrosecond);
+        public QuantityValue VoltsPerMicrosecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.VoltPerMicrosecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.VoltPerMinute"/>
         /// </summary>
-        public QuantityValue VoltsPerMinute => this.As(ElectricPotentialChangeRateUnit.VoltPerMinute);
+        public QuantityValue VoltsPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.VoltPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.VoltPerSecond"/>
         /// </summary>
-        public QuantityValue VoltsPerSecond => this.As(ElectricPotentialChangeRateUnit.VoltPerSecond);
+        public QuantityValue VoltsPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricPotentialChangeRateUnit.VoltPerSecond);
+        }
 
         #endregion
 
@@ -386,10 +523,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricPotentialChangeRateUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -397,10 +533,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(ElectricPotentialChangeRateUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -409,162 +544,142 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.KilovoltPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromKilovoltsPerHour(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.KilovoltPerHour);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.KilovoltPerHour);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.KilovoltPerMicrosecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromKilovoltsPerMicrosecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.KilovoltPerMicrosecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.KilovoltPerMicrosecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.KilovoltPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromKilovoltsPerMinute(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.KilovoltPerMinute);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.KilovoltPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.KilovoltPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromKilovoltsPerSecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.KilovoltPerSecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.KilovoltPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MegavoltPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMegavoltsPerHour(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MegavoltPerHour);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MegavoltPerHour);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MegavoltPerMicrosecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMegavoltsPerMicrosecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MegavoltPerMicrosecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MegavoltPerMicrosecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MegavoltPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMegavoltsPerMinute(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MegavoltPerMinute);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MegavoltPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MegavoltPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMegavoltsPerSecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MegavoltPerSecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MegavoltPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMicrovoltsPerHour(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MicrovoltPerHour);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MicrovoltPerHour);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerMicrosecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMicrovoltsPerMicrosecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MicrovoltPerMicrosecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MicrovoltPerMicrosecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMicrovoltsPerMinute(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MicrovoltPerMinute);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MicrovoltPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MicrovoltPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMicrovoltsPerSecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MicrovoltPerSecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MicrovoltPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MillivoltPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMillivoltsPerHour(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MillivoltPerHour);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MillivoltPerHour);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MillivoltPerMicrosecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMillivoltsPerMicrosecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MillivoltPerMicrosecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MillivoltPerMicrosecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MillivoltPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMillivoltsPerMinute(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MillivoltPerMinute);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MillivoltPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.MillivoltPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromMillivoltsPerSecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.MillivoltPerSecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.MillivoltPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.VoltPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromVoltsPerHour(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.VoltPerHour);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.VoltPerHour);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.VoltPerMicrosecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromVoltsPerMicrosecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.VoltPerMicrosecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.VoltPerMicrosecond);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.VoltPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromVoltsPerMinute(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.VoltPerMinute);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.VoltPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.VoltPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate FromVoltsPerSecond(QuantityValue value)
-        {
-            return new ElectricPotentialChangeRate(value, ElectricPotentialChangeRateUnit.VoltPerSecond);
-        }
+            => new(value, ElectricPotentialChangeRateUnit.VoltPerSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricPotentialChangeRateUnit" /> to <see cref="ElectricPotentialChangeRate" />.
@@ -572,10 +687,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>ElectricPotentialChangeRate unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate From(QuantityValue value, ElectricPotentialChangeRateUnit fromUnit)
-        {
-            return new ElectricPotentialChangeRate(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -603,10 +717,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -631,10 +744,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRate Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -644,10 +756,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out ElectricPotentialChangeRate result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -659,10 +770,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricPotentialChangeRate result)
-        {
-            return QuantityParser.Default.TryParse<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -673,10 +783,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricPotentialChangeRateUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -689,15 +798,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static ElectricPotentialChangeRateUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.ElectricPotentialChangeRateUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out ElectricPotentialChangeRateUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -709,10 +815,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out ElectricPotentialChangeRateUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -720,45 +825,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static ElectricPotentialChangeRate operator -(ElectricPotentialChangeRate right)
-        {
-            return new ElectricPotentialChangeRate(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricPotentialChangeRate"/> from adding two <see cref="ElectricPotentialChangeRate"/>.</summary>
         public static ElectricPotentialChangeRate operator +(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return new ElectricPotentialChangeRate(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricPotentialChangeRate"/> from subtracting two <see cref="ElectricPotentialChangeRate"/>.</summary>
         public static ElectricPotentialChangeRate operator -(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return new ElectricPotentialChangeRate(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="ElectricPotentialChangeRate"/> from multiplying value and <see cref="ElectricPotentialChangeRate"/>.</summary>
         public static ElectricPotentialChangeRate operator *(QuantityValue left, ElectricPotentialChangeRate right)
-        {
-            return new ElectricPotentialChangeRate(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="ElectricPotentialChangeRate"/> from multiplying value and <see cref="ElectricPotentialChangeRate"/>.</summary>
         public static ElectricPotentialChangeRate operator *(ElectricPotentialChangeRate left, QuantityValue right)
-        {
-            return new ElectricPotentialChangeRate(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="ElectricPotentialChangeRate"/> from dividing <see cref="ElectricPotentialChangeRate"/> by value.</summary>
         public static ElectricPotentialChangeRate operator /(ElectricPotentialChangeRate left, QuantityValue right)
-        {
-            return new ElectricPotentialChangeRate(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="ElectricPotentialChangeRate"/> by <see cref="ElectricPotentialChangeRate"/>.</summary>
         public static QuantityValue operator /(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return left.VoltsPerSecond / right.VoltsPerSecond;
-        }
+            => left.VoltsPerSecond / right.VoltsPerSecond;
 
         #endregion
 
@@ -766,9 +857,7 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="ElectricPotential"/> from <see cref="ElectricPotentialChangeRate"/> * <see cref="Duration"/>.</summary>
         public static ElectricPotential operator *(ElectricPotentialChangeRate electricPotentialChangeRate, Duration duration)
-        {
-            return ElectricPotential.FromVolts(electricPotentialChangeRate.VoltsPerSecond * duration.Seconds);
-        }
+            => ElectricPotential.FromVolts(electricPotentialChangeRate.VoltsPerSecond * duration.Seconds);
 
         #endregion
 
@@ -776,27 +865,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricPotentialChangeRate"/> instances are equal.
@@ -807,10 +888,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(ElectricPotentialChangeRate)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="ElectricPotentialChangeRate"/> instances are not equal.
@@ -820,10 +900,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(ElectricPotentialChangeRate)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ElectricPotentialChangeRate left, ElectricPotentialChangeRate right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -836,12 +915,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not ElectricPotentialChangeRate otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is ElectricPotentialChangeRate otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -852,18 +926,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(ElectricPotentialChangeRate other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current ElectricPotentialChangeRate.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(ElectricPotentialChangeRate), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(ElectricPotentialChangeRate), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(ElectricPotentialChangeRate)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -892,9 +962,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(ElectricPotentialChangeRate other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -905,20 +973,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

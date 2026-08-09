@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -87,9 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MagneticFluxInfo"/> class with the default settings.</returns>
             public static MagneticFluxInfo CreateDefault()
-            {
-                return new MagneticFluxInfo(nameof(MagneticFlux), DefaultBaseUnit, GetDefaultMappings(), new MagneticFlux(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MagneticFlux), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MagneticFluxInfo"/> class with the default settings for the MagneticFlux quantity and a callback for customizing the default unit mappings.
@@ -101,19 +100,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MagneticFluxInfo"/> class with the default settings.
             /// </returns>
             public static MagneticFluxInfo CreateDefault(Func<IEnumerable<UnitDefinition<MagneticFluxUnit>>, IEnumerable<IUnitDefinition<MagneticFluxUnit>>> customizeUnits)
-            {
-                return new MagneticFluxInfo(nameof(MagneticFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new MagneticFlux(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(MagneticFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MagneticFlux"/> is T^-2L^2MI^-1.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(2, 1, -2, -1, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(2, 1, -2, -1, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of MagneticFlux is Weber. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static MagneticFluxUnit DefaultBaseUnit { get; } = MagneticFluxUnit.Weber;
+            public static MagneticFluxUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MagneticFluxUnit.Weber;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="MagneticFluxUnit"/>.
@@ -161,7 +166,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="MagneticFlux" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<MagneticFlux, MagneticFluxUnit> Info { get; }
@@ -169,53 +178,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of MagneticFlux, which is Weber. All conversions go via this value.
         /// </summary>
-        public static MagneticFluxUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static MagneticFluxUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the MagneticFlux quantity.
         /// </summary>
-        public static IReadOnlyCollection<MagneticFluxUnit> Units => Info.Units;
+        public static IReadOnlyCollection<MagneticFluxUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Weber.
         /// </summary>
-        public static MagneticFlux Zero => Info.Zero;
+        public static MagneticFlux Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public MagneticFluxUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public MagneticFluxUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<MagneticFlux, MagneticFluxUnit> QuantityInfo => Info;
+        public QuantityInfo<MagneticFlux, MagneticFluxUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<MagneticFlux> IQuantityOfType<MagneticFlux>.QuantityInfo => Info;
+        IQuantityInstanceInfo<MagneticFlux> IQuantityOfType<MagneticFlux>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<MagneticFluxUnit> IQuantity<MagneticFluxUnit>.QuantityInfo => Info;
+        QuantityInfo<MagneticFluxUnit> IQuantity<MagneticFluxUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -227,7 +284,11 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFluxUnit.Weber"/>
         /// </summary>
-        public QuantityValue Webers => this.As(MagneticFluxUnit.Weber);
+        public QuantityValue Webers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(MagneticFluxUnit.Weber);
+        }
 
         #endregion
 
@@ -238,10 +299,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MagneticFluxUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -249,10 +309,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(MagneticFluxUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -261,10 +320,9 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="MagneticFlux"/> from <see cref="MagneticFluxUnit.Weber"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticFlux FromWebers(QuantityValue value)
-        {
-            return new MagneticFlux(value, MagneticFluxUnit.Weber);
-        }
+            => new(value, MagneticFluxUnit.Weber);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="MagneticFluxUnit" /> to <see cref="MagneticFlux" />.
@@ -272,10 +330,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>MagneticFlux unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticFlux From(QuantityValue value, MagneticFluxUnit fromUnit)
-        {
-            return new MagneticFlux(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -303,10 +360,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticFlux Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -331,10 +387,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticFlux Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<MagneticFlux, MagneticFluxUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<MagneticFlux, MagneticFluxUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -344,10 +399,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out MagneticFlux result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -359,10 +413,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out MagneticFlux result)
-        {
-            return QuantityParser.Default.TryParse<MagneticFlux, MagneticFluxUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<MagneticFlux, MagneticFluxUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -373,10 +426,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MagneticFluxUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -389,15 +441,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static MagneticFluxUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.MagneticFluxUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out MagneticFluxUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -409,10 +458,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out MagneticFluxUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -420,45 +468,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static MagneticFlux operator -(MagneticFlux right)
-        {
-            return new MagneticFlux(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="MagneticFlux"/> from adding two <see cref="MagneticFlux"/>.</summary>
         public static MagneticFlux operator +(MagneticFlux left, MagneticFlux right)
-        {
-            return new MagneticFlux(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MagneticFlux"/> from subtracting two <see cref="MagneticFlux"/>.</summary>
         public static MagneticFlux operator -(MagneticFlux left, MagneticFlux right)
-        {
-            return new MagneticFlux(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="MagneticFlux"/> from multiplying value and <see cref="MagneticFlux"/>.</summary>
         public static MagneticFlux operator *(QuantityValue left, MagneticFlux right)
-        {
-            return new MagneticFlux(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="MagneticFlux"/> from multiplying value and <see cref="MagneticFlux"/>.</summary>
         public static MagneticFlux operator *(MagneticFlux left, QuantityValue right)
-        {
-            return new MagneticFlux(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="MagneticFlux"/> from dividing <see cref="MagneticFlux"/> by value.</summary>
         public static MagneticFlux operator /(MagneticFlux left, QuantityValue right)
-        {
-            return new MagneticFlux(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="MagneticFlux"/> by <see cref="MagneticFlux"/>.</summary>
         public static QuantityValue operator /(MagneticFlux left, MagneticFlux right)
-        {
-            return left.Webers / right.Webers;
-        }
+            => left.Webers / right.Webers;
 
         #endregion
 
@@ -466,15 +500,11 @@ namespace UnitsNet
 
         /// <summary>Get <see cref="Area"/> from <see cref="MagneticFlux"/> / <see cref="MagneticField"/>.</summary>
         public static Area operator /(MagneticFlux magneticFlux, MagneticField magneticField)
-        {
-            return Area.FromSquareMeters(magneticFlux.Webers / magneticField.Teslas);
-        }
+            => Area.FromSquareMeters(magneticFlux.Webers / magneticField.Teslas);
 
         /// <summary>Get <see cref="MagneticField"/> from <see cref="MagneticFlux"/> / <see cref="Area"/>.</summary>
         public static MagneticField operator /(MagneticFlux magneticFlux, Area area)
-        {
-            return MagneticField.FromTeslas(magneticFlux.Webers / area.SquareMeters);
-        }
+            => MagneticField.FromTeslas(magneticFlux.Webers / area.SquareMeters);
 
         #endregion
 
@@ -482,27 +512,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(MagneticFlux left, MagneticFlux right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(MagneticFlux left, MagneticFlux right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(MagneticFlux left, MagneticFlux right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(MagneticFlux left, MagneticFlux right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="MagneticFlux"/> instances are equal.
@@ -513,10 +535,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(MagneticFlux)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(MagneticFlux left, MagneticFlux right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="MagneticFlux"/> instances are not equal.
@@ -526,10 +547,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(MagneticFlux)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(MagneticFlux left, MagneticFlux right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -542,12 +562,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not MagneticFlux otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is MagneticFlux otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -558,18 +573,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(MagneticFlux other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current MagneticFlux.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(MagneticFlux), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(MagneticFlux), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(MagneticFlux)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -598,9 +609,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(MagneticFlux other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -611,20 +620,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 

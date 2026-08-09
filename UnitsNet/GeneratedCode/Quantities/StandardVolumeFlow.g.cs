@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.Serialization;
 using UnitsNet.Debug;
+using System.Runtime.CompilerServices;
 
 #nullable enable
 
@@ -82,9 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="StandardVolumeFlowInfo"/> class with the default settings.</returns>
             public static StandardVolumeFlowInfo CreateDefault()
-            {
-                return new StandardVolumeFlowInfo(nameof(StandardVolumeFlow), DefaultBaseUnit, GetDefaultMappings(), new StandardVolumeFlow(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(StandardVolumeFlow), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="StandardVolumeFlowInfo"/> class with the default settings for the StandardVolumeFlow quantity and a callback for customizing the default unit mappings.
@@ -96,19 +95,25 @@ namespace UnitsNet
             ///     A new instance of the <see cref="StandardVolumeFlowInfo"/> class with the default settings.
             /// </returns>
             public static StandardVolumeFlowInfo CreateDefault(Func<IEnumerable<UnitDefinition<StandardVolumeFlowUnit>>, IEnumerable<IUnitDefinition<StandardVolumeFlowUnit>>> customizeUnits)
-            {
-                return new StandardVolumeFlowInfo(nameof(StandardVolumeFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new StandardVolumeFlow(0, DefaultBaseUnit), DefaultBaseDimensions);
-            }
+                => new(nameof(StandardVolumeFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="StandardVolumeFlow"/> is T^-1M.
             /// </summary>
-            public static BaseDimensions DefaultBaseDimensions { get; } = new BaseDimensions(0, 1, -1, 0, 0, 0, 0);
+            public static BaseDimensions DefaultBaseDimensions
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = new BaseDimensions(0, 1, -1, 0, 0, 0, 0);
 
             /// <summary>
             ///     The default base unit of StandardVolumeFlow is StandardCubicMeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
-            public static StandardVolumeFlowUnit DefaultBaseUnit { get; } = StandardVolumeFlowUnit.StandardCubicMeterPerSecond;
+            public static StandardVolumeFlowUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = StandardVolumeFlowUnit.StandardCubicMeterPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="StandardVolumeFlowUnit"/>.
@@ -180,7 +185,11 @@ namespace UnitsNet
         ///     The <see cref="UnitConverter" /> containing the default generated conversion functions for <see cref="StandardVolumeFlow" /> instances.
         /// </summary>
         [Obsolete("Replaced by UnitConverter.Default")]
-        public static UnitConverter DefaultConversionFunctions => UnitConverter.Default;
+        public static UnitConverter DefaultConversionFunctions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitConverter.Default;
+        }
 
         /// <inheritdoc cref="IQuantity.QuantityInfo"/>
         public static QuantityInfo<StandardVolumeFlow, StandardVolumeFlowUnit> Info { get; }
@@ -188,53 +197,101 @@ namespace UnitsNet
         /// <summary>
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
-        public static BaseDimensions BaseDimensions => Info.BaseDimensions;
+        public static BaseDimensions BaseDimensions
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseDimensions;
+        }
 
         /// <summary>
         ///     The base unit of StandardVolumeFlow, which is StandardCubicMeterPerSecond. All conversions go via this value.
         /// </summary>
-        public static StandardVolumeFlowUnit BaseUnit => Info.BaseUnitInfo.Value;
+        public static StandardVolumeFlowUnit BaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.BaseUnitInfo.Value;
+        }
 
         /// <summary>
         ///     All units of measurement for the StandardVolumeFlow quantity.
         /// </summary>
-        public static IReadOnlyCollection<StandardVolumeFlowUnit> Units => Info.Units;
+        public static IReadOnlyCollection<StandardVolumeFlowUnit> Units
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Units;
+        }
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit StandardCubicMeterPerSecond.
         /// </summary>
-        public static StandardVolumeFlow Zero => Info.Zero;
+        public static StandardVolumeFlow Zero
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info.Zero;
+        }
 
         #endregion
 
         #region Properties
 
         /// <inheritdoc />
-        public QuantityValue Value => _value;
+        public QuantityValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value;
+        }
 
         /// <inheritdoc />
-        public StandardVolumeFlowUnit Unit => _unit.GetValueOrDefault(BaseUnit);
+        public StandardVolumeFlowUnit Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _unit.GetValueOrDefault(BaseUnit);
+        }
 
         /// <inheritdoc />
-        public QuantityInfo<StandardVolumeFlow, StandardVolumeFlowUnit> QuantityInfo => Info;
+        public QuantityInfo<StandardVolumeFlow, StandardVolumeFlowUnit> QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         #region Explicit implementations
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UnitKey IQuantity.UnitKey => UnitKey.ForUnit(Unit);
+        UnitKey IQuantity.UnitKey
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitKey.ForUnit(Unit);
+        }
 
 #if NETSTANDARD2_0
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IQuantityInstanceInfo<StandardVolumeFlow> IQuantityOfType<StandardVolumeFlow>.QuantityInfo => Info;
+        IQuantityInstanceInfo<StandardVolumeFlow> IQuantityOfType<StandardVolumeFlow>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo<StandardVolumeFlowUnit> IQuantity<StandardVolumeFlowUnit>.QuantityInfo => Info;
+        QuantityInfo<StandardVolumeFlowUnit> IQuantity<StandardVolumeFlowUnit>.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        QuantityInfo IQuantity.QuantityInfo => Info;
+        QuantityInfo IQuantity.QuantityInfo
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Info;
+        }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Enum IQuantity.Unit => Unit;
+        Enum IQuantity.Unit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Unit;
+        }
 #endif
 
         #endregion
@@ -246,47 +303,83 @@ namespace UnitsNet
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute"/>
         /// </summary>
-        public QuantityValue StandardCubicCentimetersPerMinute => this.As(StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute);
+        public QuantityValue StandardCubicCentimetersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicFootPerHour"/>
         /// </summary>
-        public QuantityValue StandardCubicFeetPerHour => this.As(StandardVolumeFlowUnit.StandardCubicFootPerHour);
+        public QuantityValue StandardCubicFeetPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicFootPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicFootPerMinute"/>
         /// </summary>
-        public QuantityValue StandardCubicFeetPerMinute => this.As(StandardVolumeFlowUnit.StandardCubicFootPerMinute);
+        public QuantityValue StandardCubicFeetPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicFootPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicFootPerSecond"/>
         /// </summary>
-        public QuantityValue StandardCubicFeetPerSecond => this.As(StandardVolumeFlowUnit.StandardCubicFootPerSecond);
+        public QuantityValue StandardCubicFeetPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicFootPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerDay"/>
         /// </summary>
-        public QuantityValue StandardCubicMetersPerDay => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerDay);
+        public QuantityValue StandardCubicMetersPerDay
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerDay);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerHour"/>
         /// </summary>
-        public QuantityValue StandardCubicMetersPerHour => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerHour);
+        public QuantityValue StandardCubicMetersPerHour
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerHour);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerMinute"/>
         /// </summary>
-        public QuantityValue StandardCubicMetersPerMinute => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerMinute);
+        public QuantityValue StandardCubicMetersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerMinute);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerSecond"/>
         /// </summary>
-        public QuantityValue StandardCubicMetersPerSecond => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerSecond);
+        public QuantityValue StandardCubicMetersPerSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardCubicMeterPerSecond);
+        }
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardLiterPerMinute"/>
         /// </summary>
-        public QuantityValue StandardLitersPerMinute => this.As(StandardVolumeFlowUnit.StandardLiterPerMinute);
+        public QuantityValue StandardLitersPerMinute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(StandardVolumeFlowUnit.StandardLiterPerMinute);
+        }
 
         #endregion
 
@@ -297,10 +390,9 @@ namespace UnitsNet
         /// </summary>
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(StandardVolumeFlowUnit unit)
-        {
-            return GetAbbreviation(unit, null);
-        }
+            => GetAbbreviation(unit, null);
 
         /// <summary>
         ///     Get unit abbreviation string.
@@ -308,10 +400,9 @@ namespace UnitsNet
         /// <param name="unit">Unit to get abbreviation for.</param>
         /// <returns>Unit abbreviation string.</returns>
         /// <param name="provider">Format to use for localization. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAbbreviation(StandardVolumeFlowUnit unit, IFormatProvider? provider)
-        {
-            return UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
-        }
+            => UnitsNetSetup.Default.UnitAbbreviations.GetDefaultAbbreviation(unit, provider);
 
         #endregion
 
@@ -320,74 +411,65 @@ namespace UnitsNet
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicCentimetersPerMinute(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicFootPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicFeetPerHour(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicFootPerHour);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicFootPerHour);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicFootPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicFeetPerMinute(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicFootPerMinute);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicFootPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicFootPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicFeetPerSecond(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicFootPerSecond);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicFootPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerDay"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicMetersPerDay(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicMeterPerDay);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicMeterPerDay);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerHour"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicMetersPerHour(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicMeterPerHour);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicMeterPerHour);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicMetersPerMinute(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicMeterPerMinute);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicMeterPerMinute);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicMeterPerSecond"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardCubicMetersPerSecond(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardCubicMeterPerSecond);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardCubicMeterPerSecond);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardLiterPerMinute"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow FromStandardLitersPerMinute(QuantityValue value)
-        {
-            return new StandardVolumeFlow(value, StandardVolumeFlowUnit.StandardLiterPerMinute);
-        }
+            => new(value, StandardVolumeFlowUnit.StandardLiterPerMinute);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="StandardVolumeFlowUnit" /> to <see cref="StandardVolumeFlow" />.
@@ -395,10 +477,9 @@ namespace UnitsNet
         /// <param name="value">Value to convert from.</param>
         /// <param name="fromUnit">Unit to convert from.</param>
         /// <returns>StandardVolumeFlow unit value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow From(QuantityValue value, StandardVolumeFlowUnit fromUnit)
-        {
-            return new StandardVolumeFlow(value, fromUnit);
-        }
+            => new(value, fromUnit);
 
         #endregion
 
@@ -426,10 +507,9 @@ namespace UnitsNet
         ///     We wrap exceptions in <see cref="UnitsNetException" /> to allow you to distinguish
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow Parse(string str)
-        {
-            return Parse(str, null);
-        }
+            => Parse(str, null);
 
         /// <summary>
         ///     Parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -454,10 +534,9 @@ namespace UnitsNet
         ///     Units.NET exceptions from other exceptions.
         /// </exception>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlow Parse(string str, IFormatProvider? provider)
-        {
-            return QuantityParser.Default.Parse<StandardVolumeFlow, StandardVolumeFlowUnit>(str, provider, From);
-        }
+            => QuantityParser.Default.Parse<StandardVolumeFlow, StandardVolumeFlowUnit>(str, provider, From);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -467,10 +546,9 @@ namespace UnitsNet
         /// <example>
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, out StandardVolumeFlow result)
-        {
-            return TryParse(str, null, out result);
-        }
+            => TryParse(str, null, out result);
 
         /// <summary>
         ///     Try to parse a string with one or two quantities of the format "&lt;quantity&gt; &lt;unit&gt;".
@@ -482,10 +560,9 @@ namespace UnitsNet
         ///     Length.Parse("5.5 m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing number and unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse([NotNullWhen(true)]string? str, IFormatProvider? provider, out StandardVolumeFlow result)
-        {
-            return QuantityParser.Default.TryParse<StandardVolumeFlow, StandardVolumeFlowUnit>(str, provider, From, out result);
-        }
+            => QuantityParser.Default.TryParse<StandardVolumeFlow, StandardVolumeFlowUnit>(str, provider, From, out result);
 
         /// <summary>
         ///     Parse a unit string.
@@ -496,10 +573,9 @@ namespace UnitsNet
         /// </example>
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StandardVolumeFlowUnit ParseUnit(string str)
-        {
-            return ParseUnit(str, null);
-        }
+            => ParseUnit(str, null);
 
         /// <summary>
         ///     Parse a unit string.
@@ -512,15 +588,12 @@ namespace UnitsNet
         /// <exception cref="ArgumentNullException">The value of 'str' cannot be null. </exception>
         /// <exception cref="UnitsNetException">Error parsing string.</exception>
         public static StandardVolumeFlowUnit ParseUnit(string str, IFormatProvider? provider)
-        {
-            return UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
-        }
+            => UnitParser.Default.Parse(str, Info.UnitInfos, provider).Value;
 
         /// <inheritdoc cref="TryParseUnit(string,IFormatProvider?,out UnitsNet.Units.StandardVolumeFlowUnit)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, out StandardVolumeFlowUnit unit)
-        {
-            return TryParseUnit(str, null, out unit);
-        }
+            => TryParseUnit(str, null, out unit);
 
         /// <summary>
         ///     Parse a unit string.
@@ -532,10 +605,9 @@ namespace UnitsNet
         ///     Length.TryParseUnit("m", CultureInfo.GetCultureInfo("en-US"));
         /// </example>
         /// <param name="provider">Format to use when parsing the unit. Defaults to <see cref="CultureInfo.CurrentCulture" /> if null.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUnit([NotNullWhen(true)]string? str, IFormatProvider? provider, out StandardVolumeFlowUnit unit)
-        {
-            return UnitParser.Default.TryParse(str, Info, provider, out unit);
-        }
+            => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
 
@@ -543,45 +615,31 @@ namespace UnitsNet
 
         /// <summary>Negate the value.</summary>
         public static StandardVolumeFlow operator -(StandardVolumeFlow right)
-        {
-            return new StandardVolumeFlow(-right.Value, right.Unit);
-        }
+            => new(-right.Value, right.Unit);
 
         /// <summary>Get <see cref="StandardVolumeFlow"/> from adding two <see cref="StandardVolumeFlow"/>.</summary>
         public static StandardVolumeFlow operator +(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return new StandardVolumeFlow(left.Value + right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value + right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="StandardVolumeFlow"/> from subtracting two <see cref="StandardVolumeFlow"/>.</summary>
         public static StandardVolumeFlow operator -(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return new StandardVolumeFlow(left.Value - right.As(left.Unit), left.Unit);
-        }
+            => new(left.Value - right.As(left.Unit), left.Unit);
 
         /// <summary>Get <see cref="StandardVolumeFlow"/> from multiplying value and <see cref="StandardVolumeFlow"/>.</summary>
         public static StandardVolumeFlow operator *(QuantityValue left, StandardVolumeFlow right)
-        {
-            return new StandardVolumeFlow(left * right.Value, right.Unit);
-        }
+            => new(left * right.Value, right.Unit);
 
         /// <summary>Get <see cref="StandardVolumeFlow"/> from multiplying value and <see cref="StandardVolumeFlow"/>.</summary>
         public static StandardVolumeFlow operator *(StandardVolumeFlow left, QuantityValue right)
-        {
-            return new StandardVolumeFlow(left.Value * right, left.Unit);
-        }
+            => new(left.Value * right, left.Unit);
 
         /// <summary>Get <see cref="StandardVolumeFlow"/> from dividing <see cref="StandardVolumeFlow"/> by value.</summary>
         public static StandardVolumeFlow operator /(StandardVolumeFlow left, QuantityValue right)
-        {
-            return new StandardVolumeFlow(left.Value / right, left.Unit);
-        }
+            => new(left.Value / right, left.Unit);
 
         /// <summary>Get ratio value from dividing <see cref="StandardVolumeFlow"/> by <see cref="StandardVolumeFlow"/>.</summary>
         public static QuantityValue operator /(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return left.StandardCubicMetersPerSecond / right.StandardCubicMetersPerSecond;
-        }
+            => left.StandardCubicMetersPerSecond / right.StandardCubicMetersPerSecond;
 
         #endregion
 
@@ -589,27 +647,19 @@ namespace UnitsNet
 
         /// <summary>Returns true if less or equal to.</summary>
         public static bool operator <=(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return left.Value <= right.As(left.Unit);
-        }
+            => left.Value <= right.As(left.Unit);
 
         /// <summary>Returns true if greater than or equal to.</summary>
         public static bool operator >=(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return left.Value >= right.As(left.Unit);
-        }
+            => left.Value >= right.As(left.Unit);
 
         /// <summary>Returns true if less than.</summary>
         public static bool operator <(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return left.Value < right.As(left.Unit);
-        }
+            => left.Value < right.As(left.Unit);
 
         /// <summary>Returns true if greater than.</summary>
         public static bool operator >(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return left.Value > right.As(left.Unit);
-        }
+            => left.Value > right.As(left.Unit);
 
         /// <summary>
         ///     Determines whether two <see cref="StandardVolumeFlow"/> instances are equal.
@@ -620,10 +670,9 @@ namespace UnitsNet
         ///     This means two quantities with numerically equal values but different units will be considered equal.
         ///     The operator delegates to <see cref="Equals(StandardVolumeFlow)"/>, which implements this conversion-and-compare logic.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <summary>
         ///     Determines whether two <see cref="StandardVolumeFlow"/> instances are not equal.
@@ -633,10 +682,9 @@ namespace UnitsNet
         ///     See that operator (and <see cref="Equals(StandardVolumeFlow)"/>) for details on how equality is evaluated
         ///     (i.e., by converting one operand to the other's unit and comparing their numeric values).
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(StandardVolumeFlow left, StandardVolumeFlow right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
 
         /// <inheritdoc />
         /// <summary>
@@ -649,12 +697,7 @@ namespace UnitsNet
         ///     instance to this instance's unit before comparing numeric values.
         /// </remarks>
         public override bool Equals(object? obj)
-        {
-            if (obj is not StandardVolumeFlow otherQuantity)
-                return false;
-
-            return Equals(otherQuantity);
-        }
+            => obj is StandardVolumeFlow otherQuantity && Equals(otherQuantity);
 
         /// <inheritdoc />
         /// <summary>
@@ -665,18 +708,14 @@ namespace UnitsNet
         ///     This makes two quantities equal even when their units differ, provided the converted numeric values are equal.
         /// </remarks>
         public bool Equals(StandardVolumeFlow other)
-        {
-            return _value.Equals(other.As(this.Unit));
-        }
+            => _value.Equals(other.As(Unit));
 
         /// <summary>
         ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current StandardVolumeFlow.</returns>
         public override int GetHashCode()
-        {
-            return Comparison.GetHashCode(typeof(StandardVolumeFlow), this.As(BaseUnit));
-        }
+            => Comparison.GetHashCode(typeof(StandardVolumeFlow), this.As(BaseUnit));
 
         /// <inheritdoc  cref="CompareTo(StandardVolumeFlow)" />
         /// <param name="obj">An object to compare with this instance.</param>
@@ -705,9 +744,7 @@ namespace UnitsNet
         ///     </list>
         /// </returns>
         public int CompareTo(StandardVolumeFlow other)
-        {
-            return _value.CompareTo(other.As(this.Unit));
-        }
+            => _value.CompareTo(other.As(Unit));
 
         #endregion
 
@@ -718,20 +755,17 @@ namespace UnitsNet
         /// </summary>
         /// <returns>String representation.</returns>
         public override string ToString()
-        {
-            return ToString(null, null);
-        }
+            => ToString(null, null);
 
         /// <inheritdoc cref="QuantityFormatter.Format{TQuantity}(TQuantity, string, IFormatProvider)"/>
         /// <summary>
         /// Gets the string representation of this instance in the specified format string using the specified format provider, or <see cref="CultureInfo.CurrentCulture" /> if null.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ToString(
             [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
             IFormatProvider? provider)
-        {
-            return QuantityFormatter.Default.Format(this, format, provider);
-        }
+            => QuantityFormatter.Default.Format(this, format, provider);
 
         #endregion
 
