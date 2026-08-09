@@ -9,15 +9,10 @@ namespace UnitsNet
     {
         /// <summary>Get <see cref="Force"/> from <see cref="Pressure"/> divided by <see cref="Area"/>.</summary>
         public static Force FromPressureByArea(Pressure p, Area area)
-        {
-            QuantityValue newtons = p.Pascals * area.SquareMeters;
-            return new Force(newtons, ForceUnit.Newton);
-        }
+            => new(p.Pascals * area.SquareMeters, ForceUnit.Newton);
 
         /// <summary>Get <see cref="Force"/> from <see cref="Mass"/> times <see cref="Acceleration"/>.</summary>
         public static Force FromMassByAcceleration(Mass mass, Acceleration acceleration)
-        {
-            return new Force(mass.Kilograms * acceleration.MetersPerSecondSquared, ForceUnit.Newton);
-        }
+            => new(mass.Kilograms * acceleration.MetersPerSecondSquared, ForceUnit.Newton);
     }
 }

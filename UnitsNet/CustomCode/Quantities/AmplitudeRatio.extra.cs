@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System;
+using System.Runtime.CompilerServices;
 using UnitsNet.Units;
 
 namespace UnitsNet
@@ -79,10 +80,9 @@ namespace UnitsNet
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///     Thrown when the number of significant digits is less than 1 or greater than 17.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmplitudeRatio FromElectricPotential(ElectricPotential voltage, byte significantDigits = 15)
-        {
-            return new AmplitudeRatio(voltage, significantDigits);
-        }
+            => new(voltage, significantDigits);
 
         #endregion
     }

@@ -5,6 +5,8 @@
 using System.Linq;
 #endif
 
+using System.Runtime.CompilerServices;
+
 namespace UnitsNet.InternalHelpers;
 
 /// <summary>
@@ -15,6 +17,7 @@ internal static class EnumHelper
     /// <summary>Retrieves an array of the values of the constants in a specified enumeration type.</summary>
     /// <typeparam name="TEnum">The type of the enumeration.</typeparam>
     /// <returns>An array that contains the values of the constants in <typeparamref name="TEnum"/>.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TEnum[] GetValues<TEnum>() where TEnum : struct, Enum
     {
 #if NET7_0_OR_GREATER

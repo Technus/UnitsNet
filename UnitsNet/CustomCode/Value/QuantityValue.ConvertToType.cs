@@ -1,156 +1,91 @@
 // Licensed under MIT No Attribution, see LICENSE file at the root.
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
+using System.Runtime.CompilerServices;
+
 namespace UnitsNet;
 
 public partial struct QuantityValue
 {
     #region Implementation of IConvertible
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     TypeCode IConvertible.GetTypeCode()
-    {
-        return TypeCode.Object;
-    }
+        => TypeCode.Object;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     bool IConvertible.ToBoolean(IFormatProvider? provider)
-    {
-        throw ExceptionHelper.CreateInvalidCastException<QuantityValue, char>();
-    }
+        => throw ExceptionHelper.CreateInvalidCastException<QuantityValue, char>();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     byte IConvertible.ToByte(IFormatProvider? provider)
-    {
-        return (byte)this;
-    }
+        => (byte)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     char IConvertible.ToChar(IFormatProvider? provider)
-    {
-        throw ExceptionHelper.CreateInvalidCastException<QuantityValue, char>();
-    }
+        => throw ExceptionHelper.CreateInvalidCastException<QuantityValue, char>();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     DateTime IConvertible.ToDateTime(IFormatProvider? provider)
-    {
-        throw ExceptionHelper.CreateInvalidCastException<QuantityValue, DateTime>();
-    }
+        => throw ExceptionHelper.CreateInvalidCastException<QuantityValue, DateTime>();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     decimal IConvertible.ToDecimal(IFormatProvider? provider)
-    {
-        return ToDecimal();
-    }
+        => ToDecimal();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     double IConvertible.ToDouble(IFormatProvider? provider)
-    {
-        return ToDouble();
-    }
+        => ToDouble();
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     short IConvertible.ToInt16(IFormatProvider? provider)
-    {
-        return (short)this;
-    }
+        => (short)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     int IConvertible.ToInt32(IFormatProvider? provider)
-    {
-        return (int)this;
-    }
+        => (int)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     long IConvertible.ToInt64(IFormatProvider? provider)
-    {
-        return (long)this;
-    }
+        => (long)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     sbyte IConvertible.ToSByte(IFormatProvider? provider)
-    {
-        return (sbyte)this;
-    }
+        => (sbyte)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     float IConvertible.ToSingle(IFormatProvider? provider)
-    {
-        return (float)this;
-    }
+        => (float)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     ushort IConvertible.ToUInt16(IFormatProvider? provider)
-    {
-        return (ushort)this;
-    }
+        => (ushort)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     uint IConvertible.ToUInt32(IFormatProvider? provider)
-    {
-        return (uint)this;
-    }
+        => (uint)this;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     ulong IConvertible.ToUInt64(IFormatProvider? provider)
+        => (ulong)this;
+
+    object IConvertible.ToType(Type conversionType, IFormatProvider? provider) => conversionType switch
     {
-        return (ulong)this;
-    }
-
-    object IConvertible.ToType(Type conversionType, IFormatProvider? provider)
-    {
-        if (conversionType == null)
-        {
-            throw new ArgumentNullException(nameof(conversionType));
-        }
-
-        if (conversionType == typeof(string))
-        {
-            return ToString(provider);
-        }
-
-        if (conversionType == typeof(double))
-        {
-            return ToDouble();
-        }
-
-        if (conversionType == typeof(decimal))
-        {
-            return ToDecimal();
-        }
-
-        if (conversionType == typeof(float))
-        {
-            return (float)this;
-        }
-
-        if (conversionType == typeof(long))
-        {
-            return (long)this;
-        }
-
-        if (conversionType == typeof(ulong))
-        {
-            return (ulong)this;
-        }
-
-        if (conversionType == typeof(int))
-        {
-            return (int)this;
-        }
-
-        if (conversionType == typeof(uint))
-        {
-            return (uint)this;
-        }
-
-        if (conversionType == typeof(short))
-        {
-            return (short)this;
-        }
-
-        if (conversionType == typeof(ushort))
-        {
-            return (ushort)this;
-        }
-
-        if (conversionType == typeof(byte))
-        {
-            return (byte)this;
-        }
-
-        if (conversionType == typeof(sbyte))
-        {
-            return (sbyte)this;
-        }
-
-        throw ExceptionHelper.CreateInvalidCastException<QuantityValue>(conversionType);
-    }
+        null => throw new ArgumentNullException(nameof(conversionType)),
+        _ when conversionType == typeof(string) => ToString(provider),
+        _ when conversionType == typeof(double) => ToDouble(),
+        _ when conversionType == typeof(decimal) => ToDecimal(),
+        _ when conversionType == typeof(float) => (float)this,
+        _ when conversionType == typeof(long) => (long)this,
+        _ when conversionType == typeof(ulong) => (ulong)this,
+        _ when conversionType == typeof(int) => (int)this,
+        _ when conversionType == typeof(uint) => (uint)this,
+        _ when conversionType == typeof(short) => (short)this,
+        _ when conversionType == typeof(ushort) => (ushort)this,
+        _ when conversionType == typeof(byte) => (byte)this,
+        _ when conversionType == typeof(sbyte) => (sbyte)this,
+        _ => throw ExceptionHelper.CreateInvalidCastException<QuantityValue>(conversionType),
+    };
 
     #endregion
 }

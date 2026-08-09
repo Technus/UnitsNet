@@ -43,15 +43,11 @@ public readonly partial struct QuantityValue
     internal static BigInteger PowerOfTen(int exponent)
     {
         if (exponent < PowersOfTen.Length)
-        {
             return PowersOfTen[exponent];
-        }
 
         var maxExponent = PowersOfTen.Length - 1;
         if (exponent > 3 * maxExponent)
-        {
             return BigInteger.Pow(Ten, exponent); // the exponent is > 54
-        }
 
         var maxPowerOfTen = PowersOfTen[maxExponent];
         var result = maxPowerOfTen;
@@ -63,9 +59,7 @@ public readonly partial struct QuantityValue
         }
 
         if (exponent == maxExponent)
-        {
             return result * maxPowerOfTen;
-        }
 
         return result * PowersOfTen[exponent];
     }
@@ -122,24 +116,16 @@ public readonly partial struct QuantityValue
     public static QuantityValue Sqrt(QuantityValue x, int accuracy = 30)
     {
         if (accuracy <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(accuracy), "The accuracy must be a positive integer.");
-        }
+            throw new ArgumentOutOfRangeException(nameof(accuracy), accuracy, "The accuracy must be a positive integer.");
 
         if (IsNaN(x) || IsNegative(x))
-        {
             return NaN;
-        }
 
         if (x.Numerator.IsZero || x.Denominator.IsZero) // IsZero || IsInfinity)
-        {
             return x;
-        }
 
         if (x.Numerator == x.Denominator)
-        {
             return One;
-        }
 
         // BigInteger square root implementation based on https://github.com/SunsetQuest/NewtonPlus-Fast-BigInteger-and-BigFloat-Square-Root
         return GetSqrtWithPrecision(Reduce(x), accuracy * 4);
@@ -233,9 +219,7 @@ public readonly partial struct QuantityValue
             var tempSqrt1 = Math.Sqrt(tempX);
             var valLong = (ulong)BitConverter.DoubleToInt64Bits(tempSqrt1) & 0x1fffffffffffffL;
             if (valLong == 0)
-            {
                 valLong = 1UL << 53;
-            }
 
             ////////  Classic Newton Iterations ////////
             var val = ((BigInteger)valLong << 52) + (x >> (xLenMod - 3 * 53)) / valLong;
@@ -292,21 +276,15 @@ public readonly partial struct QuantityValue
     internal static QuantityValue Pow(QuantityValue number, QuantityValue power, int accuracy = 30)
     {
         if (power == One)
-        {
             return number;
-        }
 
         if (number == One)
-        {
             return number;
-        }
 
         power = Reduce(power);
         var denominator = power.Denominator;
         if (denominator.IsOne)
-        {
             return Round(Pow(number, (int)power), accuracy);
-        }
 
         var numeratorRaised = Pow(number, (int)power.Numerator);
         return RootN(numeratorRaised, (int)denominator, accuracy);
@@ -323,34 +301,22 @@ public readonly partial struct QuantityValue
     internal static QuantityValue RootN(QuantityValue number, int n, int accuracy = 15)
     {
         if (accuracy <= 0)
-        {
             throw new ArgumentOutOfRangeException(nameof(accuracy), accuracy, "The accuracy must be positive");
-        }
 
         if (n == 0)
-        {
             return NaN;
-        }
 
         if (n == 1)
-        {
             return Round(number, accuracy);
-        }
 
         if (number == One || IsNaN(number))
-        {
             return number;
-        }
 
         if (IsZero(number))
-        {
             return n < 0 ? PositiveInfinity : number;
-        }
 
         if (IsPositiveInfinity(number))
-        {
             return n < 0 ? Zero : PositiveInfinity;
-        }
 
         if (IsNegativeInfinity(number))
         {
@@ -365,28 +331,20 @@ public readonly partial struct QuantityValue
         if (n > 0)
         {
             if (IsPositive(number))
-            {
                 return Root(number, n, accuracy);
-            }
 
             if ((n & 1) == 0) // is even integer
-            {
                 return NaN;
-            }
 
             return -Root(-number, n, accuracy);
         }
 
         // n < 0
         if (IsPositive(number))
-        {
             return Root(Inverse(number), -n, accuracy);
-        }
 
         if ((n & 1) == 0) // is even integer
-        {
             return NaN;
-        }
 
         return -Root(-Inverse(number), -n, accuracy);
 

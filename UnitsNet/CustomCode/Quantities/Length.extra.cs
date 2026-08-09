@@ -30,9 +30,7 @@ namespace UnitsNet
         ///     Get length from combination of feet and inches.
         /// </summary>
         public static Length FromFeetInches(QuantityValue feet, QuantityValue inches)
-        {
-            return FromInches(InchesInOneFoot*feet + inches);
-        }
+            => FromInches(InchesInOneFoot * feet + inches);
 
         /// <summary>
         /// Special parsing of feet/inches strings, commonly used.
@@ -138,9 +136,7 @@ namespace UnitsNet
 
         /// <inheritdoc cref="ToString(IFormatProvider)"/>
         public override string ToString()
-        {
-            return ToString(null);
-        }
+            => ToString(null);
 
         /// <summary>
         ///     Outputs feet and inches on the format: {feetValue} {feetUnit} {inchesValue} {inchesUnit}

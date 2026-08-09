@@ -3,6 +3,7 @@
 
 // ReSharper disable once CheckNamespace
 
+using System.Runtime.CompilerServices;
 using UnitsNet.Units;
 
 namespace UnitsNet
@@ -29,14 +30,11 @@ namespace UnitsNet
         /// </summary>
         /// <returns>The number of particles (atoms or molecules) in this amount of substance.</returns>
         public QuantityValue NumberOfParticles()
-        {
-            return AvogadroConstant * this.As(AmountOfSubstanceUnit.Mole);
-        }
+            => AvogadroConstant * this.As(AmountOfSubstanceUnit.Mole);
 
         /// <summary>Get <see cref="AmountOfSubstance" /> from <see cref="Mass" /> and a given <see cref="MolarMass" />.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AmountOfSubstance FromMass(Mass mass, MolarMass molarMass)
-        {
-            return mass / molarMass;
-        }
+            => mass / molarMass;
     }
 }

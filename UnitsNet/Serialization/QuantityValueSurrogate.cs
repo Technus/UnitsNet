@@ -7,7 +7,7 @@ namespace UnitsNet;
 ///     Represents a surrogate for serializing and deserializing quantity values.
 /// </summary>
 [DataContract]
-internal class QuantityValueSurrogate
+internal sealed class QuantityValueSurrogate
 {
     /// <summary>
     ///     Gets or sets the numerator part of the quantity value.

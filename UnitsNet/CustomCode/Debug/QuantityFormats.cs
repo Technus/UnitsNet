@@ -98,9 +98,7 @@ public readonly struct QuantityFormats
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return _quantityProxy.ToString();
-    }
+        => _quantityProxy.ToString();
 
     /// <summary>
     ///     The default format specifier used for general formatting of quantities.

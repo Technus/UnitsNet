@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -55,6 +56,7 @@ public sealed class QuantityConverterBuildOptions
 
     internal IReadOnlyDictionary<Type, ConversionCacheOptions> CustomQuantityOptions
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _customQuantityOptions;
     }
 

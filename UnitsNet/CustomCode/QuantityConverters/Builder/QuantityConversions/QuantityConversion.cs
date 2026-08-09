@@ -35,10 +35,8 @@ internal readonly record struct QuantityConversion
     public QuantityInfo RightQuantity { get; }
 
     public bool Equals(QuantityConversion other)
-    {
-        return (LeftQuantity.Equals(other.LeftQuantity) && RightQuantity.Equals(other.RightQuantity)) ||
-               (LeftQuantity.Equals(other.RightQuantity) && RightQuantity.Equals(other.LeftQuantity));
-    }
+        => (LeftQuantity.Equals(other.LeftQuantity) && RightQuantity.Equals(other.RightQuantity)) ||
+           (LeftQuantity.Equals(other.RightQuantity) && RightQuantity.Equals(other.LeftQuantity));
 
     public override int GetHashCode()
     {

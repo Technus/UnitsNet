@@ -1,6 +1,8 @@
 // Licensed under MIT No Attribution, see LICENSE file at the root.
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
+using System.Runtime.CompilerServices;
+
 namespace UnitsNet
 {
     public partial struct ElectricPotential
@@ -14,9 +16,8 @@ namespace UnitsNet
         ///         <c>var voltageRatio = voltage.ToAmplitudeRatio();</c>
         ///     </example>
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AmplitudeRatio ToAmplitudeRatio()
-        {
-            return AmplitudeRatio.FromElectricPotential(this);
-        }
+            => AmplitudeRatio.FromElectricPotential(this);
     }
 }

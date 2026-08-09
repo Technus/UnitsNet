@@ -41,7 +41,5 @@ internal readonly record struct UnitConversionMapping
     public static UnitConversionMapping Create<TSourceUnit, TTargetUnit>(TSourceUnit fromUnit, TTargetUnit toUnit)
         where TSourceUnit : struct, Enum
         where TTargetUnit : struct, Enum
-    {
-        return new UnitConversionMapping(UnitKey.ForUnit(fromUnit), UnitKey.ForUnit(toUnit));
-    }
+        => new(UnitKey.ForUnit(fromUnit), UnitKey.ForUnit(toUnit));
 }

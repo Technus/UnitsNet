@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -26,10 +27,7 @@ public abstract class UnitInfo : IUnitDefinition
     /// <exception cref="ArgumentNullException">Thrown when the <paramref name="mapping" /> is <c>null</c>.</exception>
     protected internal UnitInfo(IUnitDefinition mapping)
     {
-        if (mapping == null)
-        {
-            throw new ArgumentNullException(nameof(mapping));
-        }
+        if (mapping == null) throw new ArgumentNullException(nameof(mapping));
 
         Name = mapping.Name;
         PluralName = mapping.PluralName;
@@ -39,10 +37,7 @@ public abstract class UnitInfo : IUnitDefinition
     }
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        return Name;
-    }
+    public override string ToString() => Name;
 
     /// <summary>
     ///     Filters a collection of unit information based on the specified base units.
@@ -55,10 +50,7 @@ public abstract class UnitInfo : IUnitDefinition
     internal static IEnumerable<TUnitInfo> GetUnitsWithBase<TUnitInfo>(IEnumerable<TUnitInfo> unitInfos, BaseUnits baseUnits)
         where TUnitInfo : UnitInfo
     {
-        if (baseUnits is null)
-        {
-            throw new ArgumentNullException(nameof(baseUnits));
-        }
+        if (baseUnits is null) throw new ArgumentNullException(nameof(baseUnits));
 
         return unitInfos.Where(unitInfo => unitInfo.BaseUnits.IsSubsetOf(baseUnits));
     }
@@ -89,15 +81,11 @@ public abstract class UnitInfo : IUnitDefinition
         using IEnumerator<TUnitInfo> enumerator = GetUnitsWithBase(unitInfos, baseUnits).GetEnumerator();
 
         if (!enumerator.MoveNext())
-        {
             throw new InvalidOperationException($"No unit was found that is a subset of {nameof(baseUnits)}");
-        }
 
         TUnitInfo firstUnitInfo = enumerator.Current!;
         if (enumerator.MoveNext())
-        {
             throw new InvalidOperationException($"More than one unit was found that is a subset of {nameof(baseUnits)}");
-        }
 
         return firstUnitInfo;
     }
@@ -129,6 +117,7 @@ public abstract class UnitInfo : IUnitDefinition
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public Enum Value
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetUnitValue();
     }
 
@@ -146,6 +135,7 @@ public abstract class UnitInfo : IUnitDefinition
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public QuantityInfo QuantityInfo
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetGenericInfo();
     }
 
@@ -168,6 +158,7 @@ public abstract class UnitInfo : IUnitDefinition
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public string QuantityName
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => QuantityInfo.Name;
     }
 
@@ -179,10 +170,8 @@ public abstract class UnitInfo : IUnitDefinition
     /// <remarks>
     ///     This method utilizes the <see cref="QuantityInfo" /> associated with this unit to create the quantity.
     /// </remarks>
-    public IQuantity From(QuantityValue value)
-    {
-        return CreateGenericQuantity(value);
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public IQuantity From(QuantityValue value) => CreateGenericQuantity(value);
 
     /// <inheritdoc cref="From" />
     protected internal abstract IQuantity CreateGenericQuantity(QuantityValue value);
@@ -261,22 +250,18 @@ public abstract class UnitInfoBase<TQuantityInfo, TQuantity, TUnit> : UnitInfo<T
     #region Overrides of UnitInfo
 
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected internal sealed override IQuantity CreateGenericQuantity(QuantityValue value)
-    {
-        return From(value);
-    }
+        => From(value);
 
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected internal sealed override QuantityInfo GetGenericInfo()
-    {
-        return QuantityInfo;
-    }
+        => QuantityInfo;
 
     /// <inheritdoc />
     protected override Enum GetUnitValue()
-    {
-        return Value;
-    }
+        => Value;
 
     #endregion
 }
@@ -294,7 +279,5 @@ public sealed class UnitInfo<TQuantity, TUnit> : UnitInfoBase<QuantityInfo<TQuan
 
     /// <inheritdoc cref="UnitInfoBase{TQuantityInfo,TQuantity,TUnit}.From" />
     public override TQuantity From(QuantityValue value)
-    {
-        return QuantityInfo.From(value, Value);
-    }
+        => QuantityInfo.From(value, Value);
 }

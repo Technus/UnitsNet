@@ -63,7 +63,7 @@ namespace UnitsNet
             => obj is BaseUnits other && (ReferenceEquals(this,other) || EqualsCore(other));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool EqualsCore(BaseUnits other) => Length == other.Length &&
+        internal bool EqualsCore(BaseUnits other) => Length == other.Length &&
                                                     Mass == other.Mass &&
                                                     Time == other.Time &&
                                                     Current == other.Current &&

@@ -16,9 +16,7 @@ namespace UnitsNet
     {
         /// <summary>Get <see cref="Mass"/> from <see cref="Force"/> of gravity.</summary>
         public static Mass FromGravitationalForce(Force f)
-        {
-            return new Mass(f.KilogramsForce, MassUnit.Kilogram);
-        }
+            => new(f.KilogramsForce, MassUnit.Kilogram);
 
         /// <summary>
         ///     StonePounds related code makes it easier to work with Stone/Pound combination, which are customarily used in the UK
@@ -49,9 +47,7 @@ namespace UnitsNet
         ///     Get Mass from combination of stone and pounds.
         /// </summary>
         public static Mass FromStonePounds(QuantityValue stone, QuantityValue pounds)
-        {
-            return FromPounds(StonesInOnePound*stone + pounds);
-        }
+            => FromPounds(StonesInOnePound * stone + pounds);
     }
 
     /// <summary>
@@ -81,9 +77,7 @@ namespace UnitsNet
 
         /// <inheritdoc cref="ToString(IFormatProvider)"/>
         public override string ToString()
-        {
-            return ToString(null);
-        }
+            => ToString(null);
 
         /// <summary>
         ///     Outputs stone and pounds on the format: {stoneValue} {stoneUnit} {poundsValue} {poundsUnit}
@@ -96,9 +90,7 @@ namespace UnitsNet
         public string ToString(IFormatProvider? cultureInfo)
         {
             if (cultureInfo is not CultureInfo unitLocalizationCulture)
-            {
                 cultureInfo = unitLocalizationCulture = CultureInfo.CurrentCulture;
-            }
 
             var stoneUnit = Mass.GetAbbreviation(MassUnit.Stone, unitLocalizationCulture);
             var poundUnit = Mass.GetAbbreviation(MassUnit.Pound, unitLocalizationCulture);

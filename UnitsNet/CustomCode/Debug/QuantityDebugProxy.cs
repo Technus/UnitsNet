@@ -31,7 +31,10 @@ public readonly struct QuantityDebugProxy: IFormattable
     }
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    internal UnitsNetSetup Configuration => GetConfiguration(QuantityInfo);
+    internal UnitsNetSetup Configuration
+    {
+        get => GetConfiguration(QuantityInfo);
+    }
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     internal QuantityInfo QuantityInfo
@@ -48,19 +51,13 @@ public readonly struct QuantityDebugProxy: IFormattable
     }
 
     internal QuantityDebugProxy ConvertTo(UnitInfo unit)
-    {
-        return new QuantityDebugProxy(ConvertToUnit(unit));
-    }
-    
+        => new(ConvertToUnit(unit));
+
     internal IQuantity ConvertToUnit(UnitInfo unit)
-    {
-        return Configuration.UnitConverter.ConvertTo(_quantity, unit.UnitKey);
-    }
-    
+        => Configuration.UnitConverter.ConvertTo(_quantity, unit.UnitKey);
+
     internal IQuantity ConvertToQuantity(QuantityInfo targetQuantity)
-    {
-        return Configuration.UnitConverter.ConvertTo(_quantity.Value, _quantity.UnitKey, targetQuantity);
-    }
+        => Configuration.UnitConverter.ConvertTo(_quantity.Value, _quantity.UnitKey, targetQuantity);
 
     /// <summary>
     ///     Gets the quantity information, which includes details about the quantity's definition
@@ -123,7 +120,10 @@ public readonly struct QuantityDebugProxy: IFormattable
     ///     This property provides access to various string formats that can be used to represent
     ///     the value of the quantity in different ways, depending on the configuration and context.
     /// </remarks>
-    public QuantityFormats ValueFormats => new(this);
+    public QuantityFormats ValueFormats
+    {
+        get => new(this);
+    }
 
     /// <summary>
     ///     Returns a string representation of the quantity using the configured formatter.
@@ -137,9 +137,7 @@ public readonly struct QuantityDebugProxy: IFormattable
     ///     A string representation of the quantity.
     /// </returns>
     public override string ToString()
-    {
-        return ToString(DefaultFormatSpecifier);
-    }
+        => ToString(DefaultFormatSpecifier);
 
     /// <summary>
     ///     Returns a string representation of the quantity debug proxy, formatted according to the specified format string.
@@ -156,9 +154,7 @@ public readonly struct QuantityDebugProxy: IFormattable
     ///     purposes.
     /// </remarks>
     public string ToString(string format)
-    {
-        return ToString(format, DefaultFormatProvider);
-    }
+        => ToString(format, DefaultFormatProvider);
 
     /// <summary>
     ///     Converts the quantity to its string representation using the specified format and format provider.
@@ -178,9 +174,7 @@ public readonly struct QuantityDebugProxy: IFormattable
     ///     The resulting string typically includes the quantity's value and its unit abbreviation.
     /// </remarks>
     public string ToString(string? format, IFormatProvider? formatProvider)
-    {
-        return Configuration.Formatter.Format(_quantity, format, formatProvider);
-    }
+        => Configuration.Formatter.Format(_quantity, format, formatProvider);
 
     /// <summary>
     ///     The default display format string used for debugging quantities.

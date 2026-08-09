@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -42,14 +43,12 @@ internal sealed class QuantityInfoBuilder<TQuantity, TUnit> : IQuantityInfoBuild
         _quantityInfo = new Lazy<QuantityInfo<TQuantity, TUnit>>(factory);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     QuantityInfo IQuantityInfoBuilder.Build()
-    {
-        return Build();
-    }
+        => Build();
 
     /// <inheritdoc cref="IQuantityInfoBuilder.Build"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public QuantityInfo<TQuantity, TUnit> Build()
-    {
-        return _quantityInfo.Value;
-    }
+        => _quantityInfo.Value;
 }

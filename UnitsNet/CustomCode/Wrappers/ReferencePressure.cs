@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System;
+using System.Runtime.CompilerServices;
 using UnitsNet.CustomCode.Units;
 using UnitsNet.InternalHelpers;
 using UnitsNet.Units;
@@ -98,19 +99,31 @@ namespace UnitsNet.Wrappers
         ///     Get Gauge <see cref="UnitsNet.Pressure" />.
         ///     It references pressure level above Atmospheric pressure.
         /// </summary>
-        public readonly Pressure Gauge => As(PressureReference.Gauge);
+        public readonly Pressure Gauge
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => As(PressureReference.Gauge);
+        }
 
         /// <summary>
         ///     Get Absolute <see cref="UnitsNet.Pressure" />.
         ///     It is zero-referenced pressure to the perfect vacuum.
         /// </summary>
-        public readonly Pressure Absolute => As(PressureReference.Absolute);
+        public readonly Pressure Absolute
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => As(PressureReference.Absolute);
+        }
 
         /// <summary>
         ///     Get Vacuum <see cref="UnitsNet.Pressure" />.
         ///     It is a negative Gauge pressure when Absolute pressure is below Atmospheric pressure.
         /// </summary>
-        public readonly Pressure Vacuum => As(PressureReference.Vacuum);
+        public readonly Pressure Vacuum
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => As(PressureReference.Vacuum);
+        }
 
         /// <summary>
         ///     Converts <see cref="ReferencePressure" /> to <see cref="UnitsNet.Pressure" /> at <see cref="PressureReference" />
@@ -134,9 +147,7 @@ namespace UnitsNet.Wrappers
             var baseReferenceValue = AsBaseReference();
 
             if (Reference == reference)
-            {
                 return Pressure.Value;
-            }
 
             var negatingValue = Reference == PressureReference.Vacuum ? -1 : 1;
 
@@ -161,27 +172,21 @@ namespace UnitsNet.Wrappers
                 case PressureReference.Absolute:
                 {
                     if (Pressure.Value < 0)
-                    {
                         throw new ArgumentOutOfRangeException(nameof(Pressure), "Absolute pressure cannot be less than zero.");
-                    }
 
                     return Pressure.Value;
                 }
                 case PressureReference.Gauge:
                 {
                     if (Pressure.Value * -1 > AtmosphericPressure.ToUnit(Pressure.Unit).Value)
-                    {
                         throw new ArgumentOutOfRangeException(nameof(Pressure), "Absolute pressure cannot be less than zero.");
-                    }
 
                     return AtmosphericPressure.ToUnit(Pressure.Unit).Value + Pressure.Value;
                 }
                 case PressureReference.Vacuum:
                 {
                     if (Pressure.Value > AtmosphericPressure.ToUnit(Pressure.Unit).Value)
-                    {
                         throw new ArgumentOutOfRangeException(nameof(Pressure), "Absolute pressure cannot be less than zero.");
-                    }
 
                     return AtmosphericPressure.ToUnit(Pressure.Unit).Value - Pressure.Value;
                 }

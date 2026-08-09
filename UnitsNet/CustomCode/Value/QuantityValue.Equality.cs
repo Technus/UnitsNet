@@ -28,27 +28,18 @@ public partial struct QuantityValue
         }
 
         if (denominator1.IsZero || denominator2.IsZero)
-        {
-            // either x or y is NaN or infinity.
-            return false;
-        }
+            return false; // either x or y is NaN or infinity.
 
         if (numerator1.IsZero)
-        {
             return numerator2.IsZero; // if TRUE, both values are 0
-        }
 
         if (numerator2.IsZero)
-        {
             return false;
-        }
 
         var firstNumeratorSign = numerator1.Sign;
         var secondNumeratorSign = numerator2.Sign;
         if (firstNumeratorSign != secondNumeratorSign)
-        {
             return false; // different signs
-        }
 
         // both values are non-zero fractions with different denominators
         if (denominator1 < denominator2)
@@ -66,9 +57,7 @@ public partial struct QuantityValue
             // After the swap, [numerator1 > numerator2 > 0] is expected if both fractions were equal.
             // example: {10/10} and {1/1} or {10/100} and {1/10}
             if (numerator1 <= numerator2)
-            {
                 return false;
-            }
 
             if (numerator2.IsOne)
             {
@@ -84,9 +73,7 @@ public partial struct QuantityValue
             // After the swap, [numerator1 < numerator2 < 0] is expected if both fractions were equal.
             // example: {-10/10} and {-1/1} or {-10/100} and {-1/10}
             if (numerator1 >= numerator2)
-            {
                 return false;
-            }
 
             if (numerator2 == BigInteger.MinusOne)
             {
@@ -97,9 +84,7 @@ public partial struct QuantityValue
         }
 
         if (denominator2.IsOne)
-        {
             return numerator1 == numerator2 * denominator1; // if equal, then {(b*a)/a} == {b/1}
-        }
 
         /*
          * The following algorithm checks whether both fractions have the same ratio between numerator and denominator.
@@ -124,20 +109,14 @@ public partial struct QuantityValue
 
         // If the fractions are equal: numeratorQuotient should be equal to denominatorQuotient.
         if (numeratorQuotient != denominatorQuotient)
-        {
             return false;
-        }
 
         // if the fractions are equal: {remainderNumerators / numerator2} should be equal to {remainderDenominators / denominator2}
         if (remainderDenominators.IsZero)
-        {
             return remainderNumerators.IsZero; // if equal, then both values must be 0 
-        }
 
         if (remainderNumerators.IsZero)
-        {
             return false; // if equal, then both values must be 0 
-        }
 
         /*
          * Since the decimal places disappear when dividing integer data types, the formula must be converted into a multiplication:
@@ -150,9 +129,7 @@ public partial struct QuantityValue
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void Swap(ref BigInteger a, ref BigInteger b)
-    {
-        (a, b) = (b, a);
-    }
+        => (a, b) = (b, a);
 
     /// <summary>
     ///     Determines whether this QuantityValue instance is equal to another object.
@@ -160,9 +137,7 @@ public partial struct QuantityValue
     /// <param name="obj">The object to compare with this instance.</param>
     /// <returns>True if the object is a QuantityValue instance and is equal to this instance, false otherwise.</returns>
     public override bool Equals(object? obj)
-    {
-        return obj is QuantityValue other && Equals(other);
-    }
+        => obj is QuantityValue other && Equals(other);
 
     /// <summary>
     ///     Returns the hash code for this QuantityValue instance.
@@ -183,9 +158,7 @@ public partial struct QuantityValue
     /// <param name="b">The second QuantityValue.</param>
     /// <returns>True if the two QuantityValue instances are equal, false otherwise.</returns>
     public static bool operator ==(QuantityValue a, QuantityValue b)
-    {
-        return a.Equals(b) && !IsNaN(a) && !IsNaN(b);
-    }
+        => a.Equals(b) && !IsNaN(a) && !IsNaN(b);
 
     /// <summary>
     ///     Compares two QuantityValue instances for inequality.
@@ -193,8 +166,7 @@ public partial struct QuantityValue
     /// <param name="a">The first QuantityValue.</param>
     /// <param name="b">The second QuantityValue.</param>
     /// <returns>True if the two QuantityValue instances are not equal, false otherwise.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator !=(QuantityValue a, QuantityValue b)
-    {
-        return !a.Equals(b) || IsNaN(a) || IsNaN(b);
-    }
+        => !(a == b);
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -33,24 +34,22 @@ public class QuantityFormatter
 
     /// <inheritdoc cref="Format{TUnitType}(UnitsNet.IQuantity{TUnitType},string,IFormatProvider)" />
     [Obsolete("Consider switching to one of the more performant instance methods available on QuantityFormatter.Default.")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format<TUnitType>(
         IQuantity<TUnitType> quantity,
         [StringSyntax(StringSyntaxAttribute.NumericFormat)] string format)
         where TUnitType : struct, Enum
-    {
-        return Format(quantity, format, CultureInfo.CurrentCulture);
-    }
+        => Format(quantity, format, CultureInfo.CurrentCulture);
 
     /// <inheritdoc cref="Format{TQuantity}(TQuantity,string,IFormatProvider)" />
     [Obsolete("Consider switching to one of the more performant instance methods available on QuantityFormatter.Default.")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format<TUnitType>(
         IQuantity<TUnitType> quantity,
         [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
         IFormatProvider? formatProvider)
         where TUnitType : struct, Enum
-    {
-        return Default.Format(quantity, format, formatProvider);
-    }
+        => Default.Format(quantity, format, formatProvider);
 
     /// <summary>
     ///     Formats a quantity using the given format string and format provider.

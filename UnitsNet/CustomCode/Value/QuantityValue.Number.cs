@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -53,30 +54,25 @@ public readonly partial struct QuantityValue
     static QuantityValue IAdditiveIdentity<QuantityValue, QuantityValue>.AdditiveIdentity => Zero;
     static QuantityValue IMultiplicativeIdentity<QuantityValue, QuantityValue>.MultiplicativeIdentity => One;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static bool INumberBase<QuantityValue>.IsNormal(QuantityValue value)
-    {
-        return IsFinite(value);
-    }
+        => IsFinite(value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static bool INumberBase<QuantityValue>.IsRealNumber(QuantityValue value)
-    {
-        return !IsNaN(value);
-    }
+        => !IsNaN(value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static bool INumberBase<QuantityValue>.IsComplexNumber(QuantityValue value)
-    {
-        return false;
-    }
+        => false;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static bool INumberBase<QuantityValue>.IsImaginaryNumber(QuantityValue value)
-    {
-        return false;
-    }
+        => false;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static bool INumberBase<QuantityValue>.IsSubnormal(QuantityValue value)
-    {
-        return false;
-    }
+        => false;
 
 #endif
 
@@ -93,19 +89,13 @@ public readonly partial struct QuantityValue
     {
         var (numerator, denominator) = value;
         if (denominator.IsOne)
-        {
             return true;
-        }
 
         if (numerator.IsZero)
-        {
             return denominator.IsZero; // if we want to consider NaN as "canonical"
-        }
 
         if (denominator.IsZero)
-        {
             return numerator.IsOne || numerator == BigInteger.MinusOne;
-        }
 
         return BigInteger.GreatestCommonDivisor(numerator, denominator).IsOne;
     }
@@ -143,14 +133,10 @@ public readonly partial struct QuantityValue
     public static bool HasNonDecimalFactors(BigInteger denominator)
     {
         if (denominator.IsOne)
-        {
             return true;
-        }
 
         if (denominator.IsZero)
-        {
             return false;
-        }
 
         BigInteger divisor = Ten;
         while (true)
@@ -159,9 +145,7 @@ public readonly partial struct QuantityValue
             if (remainder.IsZero)
             {
                 if (quotient.IsOne)
-                {
                     return true;
-                }
 
                 denominator = quotient;
             }
@@ -178,9 +162,7 @@ public readonly partial struct QuantityValue
             if (remainder.IsZero)
             {
                 if (quotient.IsOne)
-                {
                     return true;
-                }
 
                 denominator = quotient;
             }
@@ -197,9 +179,7 @@ public readonly partial struct QuantityValue
             if (remainder.IsZero)
             {
                 if (quotient.IsOne)
-                {
                     return true;
-                }
 
                 denominator = quotient;
             }
@@ -221,14 +201,10 @@ public readonly partial struct QuantityValue
     {
         var (numerator, denominator) = value;
         if (denominator.IsOne)
-        {
             return numerator.IsEven;
-        }
 
         if (denominator.IsZero)
-        {
             return false;
-        }
 
         // TODO see about first checking the magnitudes
         var quotient = BigInteger.DivRem(numerator, denominator, out var remainder);
@@ -240,10 +216,9 @@ public readonly partial struct QuantityValue
     /// <returns>
     ///     <see langword="true" /> if <paramref name="value" /> is finite; otherwise, <see langword="false" />.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsFinite(QuantityValue value)
-    {
-        return !value.Denominator.IsZero;
-    }
+        => !value.Denominator.IsZero;
 
     /// <summary>Determines if a value is infinite.</summary>
     /// <param name="value">The value to be checked.</param>
@@ -251,9 +226,7 @@ public readonly partial struct QuantityValue
     ///     <see langword="true" /> if <paramref name="value" /> is infinite; otherwise, <see langword="false" />.
     /// </returns>
     public static bool IsInfinity(QuantityValue value)
-    {
-        return value.Denominator.IsZero && !value.Numerator.IsZero;
-    }
+        => value.Denominator.IsZero && !value.Numerator.IsZero;
 
     /// <summary>Determines if a value represents an integral number.</summary>
     /// <param name="value">The value to be checked.</param>
@@ -264,20 +237,14 @@ public readonly partial struct QuantityValue
     {
         var denominator = value.Denominator;
         if (denominator.IsOne)
-        {
             return true;
-        }
 
         if (denominator.IsZero)
-        {
             return false;
-        }
 
         var numerator = BigInteger.Abs(value.Numerator);
         if (numerator.IsZero)
-        {
             return true;
-        }
 
         return numerator >= denominator && (numerator % denominator).IsZero;
     }
@@ -288,9 +255,7 @@ public readonly partial struct QuantityValue
     ///     <see langword="true" /> if <paramref name="value" /> is NaN; otherwise, <see langword="false" />.
     /// </returns>
     public static bool IsNaN(QuantityValue value)
-    {
-        return value.Denominator.IsZero && value.Numerator.IsZero;
-    }
+        => value.Denominator.IsZero && value.Numerator.IsZero;
 
     /// <summary>Determines if a value represents a negative real number.</summary>
     /// <param name="value">The value to be checked.</param>
@@ -298,10 +263,9 @@ public readonly partial struct QuantityValue
     ///     <see langword="true" /> if <paramref name="value" /> represents negative zero or a negative real number; otherwise,
     ///     <see langword="false" />.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsNegative(QuantityValue value)
-    {
-        return value.Numerator.Sign < 0;
-    }
+        => value.Numerator.Sign < 0;
 
     /// <summary>Determines if a value is negative infinity.</summary>
     /// <param name="value">The value to be checked.</param>
@@ -309,9 +273,7 @@ public readonly partial struct QuantityValue
     ///     <see langword="true" /> if <paramref name="value" /> is negative infinity; otherwise, <see langword="false" />.
     /// </returns>
     public static bool IsNegativeInfinity(QuantityValue value)
-    {
-        return value.Denominator.IsZero && value.Numerator.Sign < 0;
-    }
+        => value.Denominator.IsZero && value.Numerator.Sign < 0;
 
     /// <summary>Determines if a value represents an odd integral number.</summary>
     /// <param name="value">The value to be checked.</param>
@@ -322,14 +284,10 @@ public readonly partial struct QuantityValue
     {
         var (numerator, denominator) = value;
         if (denominator.IsOne)
-        {
             return !numerator.IsEven;
-        }
 
         if (denominator.IsZero)
-        {
             return false;
-        }
 
         // TODO see about first checking the magnitudes
         var quotient = BigInteger.DivRem(numerator, denominator, out var remainder);
@@ -342,10 +300,9 @@ public readonly partial struct QuantityValue
     ///     <see langword="true" /> if <paramref name="value" /> represents (positive) zero or a positive real number;
     ///     otherwise, <see langword="false" />.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsPositive(QuantityValue value)
-    {
-        return value.Numerator.Sign > 0;
-    }
+        => value.Numerator.Sign > 0;
 
     /// <summary>Determines if a value is positive infinity.</summary>
     /// <param name="value">The value to be checked.</param>
@@ -353,9 +310,7 @@ public readonly partial struct QuantityValue
     ///     <see langword="true" /> if <paramref name="value" /> is positive infinity; otherwise, <see langword="false" />.
     /// </returns>
     public static bool IsPositiveInfinity(QuantityValue value)
-    {
-        return value.Denominator.IsZero && value.Numerator.Sign > 0;
-    }
+        => value.Denominator.IsZero && value.Numerator.Sign > 0;
 
     /// <summary>Determines if a value is zero.</summary>
     /// <param name="value">The value to be checked.</param>
@@ -363,9 +318,7 @@ public readonly partial struct QuantityValue
     ///     <see langword="true" /> if <paramref name="value" /> is zero; otherwise, <see langword="false" />.
     /// </returns>
     public static bool IsZero(QuantityValue value)
-    {
-        return value.Numerator.IsZero && !value.Denominator.IsZero;
-    }
+        => value.Numerator.IsZero && !value.Denominator.IsZero;
 
     /// <summary>
     ///     Returns the absolute value of a specified <see cref="QuantityValue" />.
@@ -373,7 +326,5 @@ public readonly partial struct QuantityValue
     /// <param name="value">A <see cref="QuantityValue" />.</param>
     /// <returns>The absolute value of <paramref name="value" />.</returns>
     public static QuantityValue Abs(QuantityValue value)
-    {
-        return new QuantityValue(BigInteger.Abs(value.Numerator), value.Denominator);
-    }
+        => new(BigInteger.Abs(value.Numerator), value.Denominator);
 }

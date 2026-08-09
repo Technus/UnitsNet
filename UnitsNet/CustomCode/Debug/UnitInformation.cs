@@ -52,9 +52,7 @@ public readonly struct UnitInformation
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return Definition.ToString();
-    }
+        => Definition.ToString();
 }
 
 /// <summary>
@@ -100,7 +98,5 @@ public readonly struct UnitConversion
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return TargetUnit.ToString();
-    }
+        => TargetUnit.ToString();
 }

@@ -11,33 +11,25 @@ public partial struct QuantityValue
     ///     Greater-than operator
     /// </summary>
     public static bool operator >(QuantityValue a, QuantityValue b)
-    {
-        return a.CompareTo(b) > 0 && !IsNaN(a) && !IsNaN(b);
-    }
+        => a.CompareTo(b) > 0 && !IsNaN(a) && !IsNaN(b);
 
     /// <summary>
     ///     Less-than operator
     /// </summary>
     public static bool operator <(QuantityValue a, QuantityValue b)
-    {
-        return a.CompareTo(b) < 0 && !IsNaN(a) && !IsNaN(b);
-    }
+        => a.CompareTo(b) < 0 && !IsNaN(a) && !IsNaN(b);
 
     /// <summary>
     ///     Greater-than-or-equal operator
     /// </summary>
     public static bool operator >=(QuantityValue a, QuantityValue b)
-    {
-        return a.CompareTo(b) >= 0 && !IsNaN(a) && !IsNaN(b);
-    }
+        => a.CompareTo(b) >= 0 && !IsNaN(a) && !IsNaN(b);
 
     /// <summary>
     ///     Less-than-or-equal operator
     /// </summary>
     public static bool operator <=(QuantityValue a, QuantityValue b)
-    {
-        return a.CompareTo(b) <= 0 && !IsNaN(a) && !IsNaN(b);
-    }
+        => a.CompareTo(b) <= 0 && !IsNaN(a) && !IsNaN(b);
 
     /// <summary>
     ///     Compares this QuantityValue instance to another QuantityValue instance.
@@ -59,19 +51,13 @@ public partial struct QuantityValue
         if (denominator1 == denominator2)
         {
             if (!denominator1.IsZero)
-            {
                 return numerator1.CompareTo(numerator2); // finite numbers: {-1/2} < {1/2}
-            }
 
             if (numerator1.IsZero)
-            {
                 return numerator2.IsZero ? 0 : -1; // NaN and anything else
-            }
 
             if (numerator2.IsZero)
-            {
                 return 1; // other is NaN
-            }
 
             // comparing infinities
             return numerator1.Sign.CompareTo(numerator2.Sign);
@@ -99,14 +85,10 @@ public partial struct QuantityValue
         var secondNumeratorSign = numerator2.Sign;
 
         if (firstNumeratorSign != secondNumeratorSign)
-        {
             return firstNumeratorSign.CompareTo(secondNumeratorSign);
-        }
 
         if (firstNumeratorSign == 0)
-        {
             return 0; // both fractions are zeros
-        }
 
         // both values are non-zero fractions with different denominators
         if (denominator1 < denominator2)
@@ -127,9 +109,7 @@ public partial struct QuantityValue
 
             // example: {10/10} and {1/1} or {10/100} and {1/10}
             if (numerator1 <= numerator2)
-            {
                 return -1; // expecting: 0 < numerator2 < numerator1
-            }
 
             if (numerator2.IsOne)
             {
@@ -176,9 +156,7 @@ public partial struct QuantityValue
             // if the fractions are equal: numeratorQuotient should be equal to denominatorQuotient
             var quotientComparison = numeratorQuotient.CompareTo(denominatorQuotient);
             if (quotientComparison != 0)
-            {
                 return quotientComparison;
-            }
 
             // if the fractions are equal: {remainderNumerators / numerator2} should be equal to {remainderDenominators / denominator2}
             if (remainderNumerators.IsZero)
@@ -201,19 +179,13 @@ public partial struct QuantityValue
 
             // example: {-10/10} and {-1/1} or {-10/100} and {-1/10}
             if (numerator1 >= numerator2)
-            {
                 return 1; // expecting: numerator1 < numerator2 < 0
-            }
 
             if (numerator2 == BigInteger.MinusOne)
-            {
                 return denominator2.IsOne ? numerator1.CompareTo(-denominator1) : denominator1.CompareTo(numerator1 * -denominator2);
-            }
 
             if (denominator2.IsOne)
-            {
                 return numerator1.CompareTo(numerator2 * denominator1);
-            }
 
             /* Comparing the negative term ratios, example:
              * {-9/7} / {-4/3} = {(-1 + -2/7) / (-1 + -1/3)} = {27/28}
@@ -235,15 +207,11 @@ public partial struct QuantityValue
             // if the fractions are equal: numeratorQuotient should be equal to denominatorQuotient
             var quotientComparison = numeratorQuotient.CompareTo(denominatorQuotient);
             if (quotientComparison != 0)
-            {
                 return -quotientComparison;
-            }
 
             // if the fractions are equal: {remainderNumerators / numerator2} should be equal to {remainderDenominators / denominator2}
             if (remainderNumerators.IsZero)
-            {
                 return 1; // when both values are 0 the fractions are equal
-            }
 
             return (remainderNumerators * denominator2).CompareTo(remainderDenominators * numerator2);
         }
@@ -259,15 +227,12 @@ public partial struct QuantityValue
     ///     Zero: This instance is equal to the other instance.
     ///     Greater than zero: This instance is greater than the other instance.
     /// </returns>
-    public int CompareTo(object? obj)
+    public int CompareTo(object? obj) => obj switch
     {
-        return obj switch
-        {
-            null => 1,
-            QuantityValue other => CompareTo(other),
-            _ => throw new ArgumentException($"Object must be of type {nameof(QuantityValue)}")
-        };
-    }
+        null => 1,
+        QuantityValue other => CompareTo(other),
+        _ => throw new ArgumentException($"Object must be of type {nameof(QuantityValue)}")
+    };
 
     /// <summary>
     ///     Returns the <see cref="QuantityValue" /> with the maximum magnitude from the two provided values.
@@ -278,14 +243,10 @@ public partial struct QuantityValue
     public static QuantityValue MaxMagnitude(QuantityValue x, QuantityValue y)
     {
         if (IsNaN(x))
-        {
             return x;
-        }
 
         if (IsNaN(y))
-        {
             return y;
-        }
 
         // note: unlike the <= operator, CompareTo with NaN returns NaN
         var comparison = Abs(x).CompareTo(Abs(y));
@@ -309,14 +270,10 @@ public partial struct QuantityValue
     public static QuantityValue MaxMagnitudeNumber(QuantityValue x, QuantityValue y)
     {
         if (IsNaN(x))
-        {
             return y;
-        }
 
         if (IsNaN(y))
-        {
             return x;
-        }
 
         var comparison = Abs(x).CompareTo(Abs(y));
         return comparison switch
@@ -354,7 +311,5 @@ public partial struct QuantityValue
     ///     <paramref name="x" /> if it is less than <paramref name="y" />; otherwise, <paramref name="y" />.
     /// </returns>
     public static QuantityValue MinMagnitudeNumber(QuantityValue x, QuantityValue y)
-    {
-        return IsNaN(x) ? y : IsNaN(y) ? x : MinMagnitude(x, y);
-    }
+        => IsNaN(x) ? y : IsNaN(y) ? x : MinMagnitude(x, y);
 }

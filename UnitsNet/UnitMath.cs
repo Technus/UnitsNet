@@ -12,9 +12,7 @@ public static class UnitMath
     /// <returns>Parameter <paramref name="val1" /> or <paramref name="val2" />, whichever is smaller.</returns>
     public static TQuantity Min<TQuantity>(TQuantity val1, TQuantity val2)
         where TQuantity : IQuantity, IComparable<TQuantity>
-    {
-        return val1.CompareTo(val2) == 1 ? val2 : val1;
-    }
+        => val1.CompareTo(val2) == 1 ? val2 : val1;
 
     /// <summary>Returns the larger of two <typeparamref name="TQuantity" /> values.</summary>
     /// <typeparam name="TQuantity">The type of quantities to compare.</typeparam>
@@ -23,9 +21,7 @@ public static class UnitMath
     /// <returns>Parameter <paramref name="val1" /> or <paramref name="val2" />, whichever is larger.</returns>
     public static TQuantity Max<TQuantity>(TQuantity val1, TQuantity val2)
         where TQuantity : IQuantity, IComparable<TQuantity>
-    {
-        return val1.CompareTo(val2) == -1 ? val2 : val1;
-    }
+        => val1.CompareTo(val2) == -1 ? val2 : val1;
 
     /// <summary>
     ///     Clamps the specified <paramref name="value" /> to the inclusive range defined by <paramref name="min" /> and
@@ -72,19 +68,13 @@ public static class UnitMath
         TQuantity maxValue = UnitConverter.Default.ConvertToUnit(max, unitKey);
 
         if (minValue.CompareTo(maxValue) > 0)
-        {
             throw new ArgumentException($"min ({min}) cannot be greater than max ({max})", nameof(min));
-        }
 
         if (value.CompareTo(minValue) < 0)
-        {
             return minValue;
-        }
 
         if (value.CompareTo(maxValue) > 0)
-        {
             return maxValue;
-        }
 
         return value;
     }

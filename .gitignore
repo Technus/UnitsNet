@@ -273,3 +273,4 @@ Artifacts/*
 !Artifacts/Nugets/
 Artifacts/Nugets/*
 !Artifacts/Nugets/.gitkeep
+.cr/

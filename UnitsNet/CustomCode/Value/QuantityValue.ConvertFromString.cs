@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -20,15 +21,14 @@ public partial struct QuantityValue
     ///     valueString.
     /// </param>
     /// <returns>A QuantityValue object that represents the parsed string.</returns>
-    /// <exception cref="System.ArgumentNullException">Thrown when the provided string argument is null.</exception>
-    /// <exception cref="System.FormatException">
+    /// <exception cref="ArgumentNullException">Thrown when the provided string argument is null.</exception>
+    /// <exception cref="FormatException">
     ///     Thrown when the format of the provided string argument is invalid and cannot
     ///     be successfully parsed into a QuantityValue.
     /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue Parse(string s, IFormatProvider? provider)
-    {
-        return Parse(s, DefaultNumberStyles, provider);
-    }
+        => Parse(s, DefaultNumberStyles, provider);
 
     /// <summary>
     ///     Parses a string representation of a quantity value into a QuantityValue object.
@@ -51,9 +51,7 @@ public partial struct QuantityValue
     public static QuantityValue Parse(string s, NumberStyles style, IFormatProvider? provider)
     {
         if (TryParse(s, style, provider, out var valueParsed))
-        {
             return valueParsed;
-        }
 
         throw new FormatException(
             $"The format of the provided string argument '{s}' is invalid and cannot be successfully parsed into a QuantityValue.");
@@ -72,41 +70,34 @@ public partial struct QuantityValue
     ///     will be overwritten.
     /// </param>
     /// <returns>true if s was converted successfully; otherwise, false.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryParse(string? s, IFormatProvider? provider, out QuantityValue result)
-    {
-        return TryParse(s, DefaultNumberStyles, provider, out result);
-    }
+        => TryParse(s, DefaultNumberStyles, provider, out result);
 
 #if NET
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
-    {
-        return Parse(s, DefaultNumberStyles, provider);
-    }
+        => Parse(s, DefaultNumberStyles, provider);
 
     /// <inheritdoc />
     public static QuantityValue Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider)
     {
         if (TryParse(s, style, provider, out var quantityValue))
-        {
             return quantityValue;
-        }
 
         throw new FormatException(
             $"The format of the provided string argument '{s}' is invalid and cannot be successfully parsed into a QuantityValue.");
     }
 
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out QuantityValue result)
-    {
-        return TryParse(s, DefaultNumberStyles, provider, out result);
-    }
-    
+        => TryParse(s, DefaultNumberStyles, provider, out result);
+
     /// <inheritdoc />
     public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out QuantityValue result)
-    {
-        return TryParse(s.AsSpan(), style, provider, out result);
-    }
+        => TryParse(s.AsSpan(), style, provider, out result);
 
     /// <summary>
     ///     Attempts to parse a ReadOnlySpan of characters into a QuantityValue.
@@ -171,9 +162,7 @@ public partial struct QuantityValue
     public static bool TryParse(ReadOnlySpan<char> value, NumberStyles numberStyles, IFormatProvider? formatProvider, out QuantityValue quantityValue)
     {
         if (value.IsEmpty)
-        {
             return CannotParse(out quantityValue);
-        }
         
         var numberFormatInfo = NumberFormatInfo.GetInstance(formatProvider);
 
@@ -287,16 +276,12 @@ public partial struct QuantityValue
         {
             var character = value[startIndex];
             if (char.IsDigit(character))
-            {
                 break;
-            }
 
             if (char.IsWhiteSpace(character))
             {
                 if ((numberStyles & NumberStyles.AllowLeadingWhite) == 0)
-                {
                     return CannotParse(out quantityValue);
-                }
 
                 startIndex++;
                 continue;
@@ -305,14 +290,10 @@ public partial struct QuantityValue
             if (character == '(')
             {
                 if ((numberStyles & NumberStyles.AllowParentheses) == 0)
-                {
                     return CannotParse(out quantityValue); // not allowed
-                }
 
                 if (startIndex == endIndex - 1)
-                {
                     return CannotParse(out quantityValue); // not enough characters
-                }
 
                 startIndex++; // consume the current character
                 isNegative = true; // the closing parenthesis will be validated in the backwards iteration
@@ -434,9 +415,7 @@ public partial struct QuantityValue
             }
 
             if (decimalsAllowed && value[startIndex..].StartsWith(decimalSeparator))
-            {
                 break; // decimal string with no leading zeros
-            }
 
             // this is either an expected hex string or an invalid format
             return (numberStyles & NumberStyles.AllowHexSpecifier) != 0
@@ -446,9 +425,7 @@ public partial struct QuantityValue
         } while (startIndex < endIndex);
 
         if (startIndex >= endIndex)
-        {
             return CannotParse(out quantityValue);
-        }
 
         if (isNegative)
         {
@@ -467,16 +444,12 @@ public partial struct QuantityValue
         {
             var character = value[endIndex - 1];
             if (char.IsDigit(character))
-            {
                 break;
-            }
 
             if (char.IsWhiteSpace(character))
             {
                 if ((numberStyles & NumberStyles.AllowTrailingWhite) == 0)
-                {
                     return CannotParse(out quantityValue);
-                }
 
                 endIndex--;
                 continue;
@@ -485,9 +458,7 @@ public partial struct QuantityValue
             if (character == ')')
             {
                 if ((numberStyles & NumberStyles.AllowParentheses) == 0)
-                {
                     return CannotParse(out quantityValue); // not allowed
-                }
 
                 numberStyles &= ~(NumberStyles.AllowParentheses | NumberStyles.AllowCurrencySymbol);
                 endIndex--;
@@ -523,9 +494,7 @@ public partial struct QuantityValue
             }
 
             if (decimalsAllowed && value[..endIndex].EndsWith(decimalSeparator))
-            {
                 break;
-            }
 
             // this is either an expected hex string or an invalid format
             return (numberStyles & NumberStyles.AllowHexSpecifier) != 0
@@ -535,14 +504,10 @@ public partial struct QuantityValue
         } while (startIndex < endIndex);
 
         if (startIndex >= endIndex)
-        {
             return CannotParse(out quantityValue); // not enough characters
-        }
 
         if (isNegative && (numberStyles & NumberStyles.AllowParentheses) != 0)
-        {
             return CannotParse(out quantityValue); // failed to find a closing parentheses
-        }
 
         numberStyles &= ~(NumberStyles.AllowTrailingWhite |
                           NumberStyles.AllowTrailingSign |
@@ -557,9 +522,7 @@ public partial struct QuantityValue
         }
 
         if ((numberStyles & NumberStyles.AllowExponent) != 0)
-        {
             return TryParseWithExponent(unsignedValue, numberStyles, numberFormatInfo, isNegative, out quantityValue);
-        }
 
         return decimalsAllowed
             ? TryParseDecimalNumber(unsignedValue, numberStyles, numberFormatInfo, isNegative, out quantityValue)
@@ -582,24 +545,18 @@ public partial struct QuantityValue
         // 2. try to parse the exponent (w.r.t. the scientific notation format)
         if (!int.TryParse(exponentSpan, NumberStyles.AllowLeadingSign | NumberStyles.Integer, numberFormatInfo,
                 out var exponent))
-        {
             return CannotParse(out quantityValue);
-        }
 
         // 3. try to parse the coefficient (w.r.t. the decimal separator allowance)
         if (coefficientSpan.Length == 1 || (parseNumberStyles & NumberStyles.AllowDecimalPoint) == 0)
         {
             if (!TryParseInteger(coefficientSpan, parseNumberStyles, numberFormatInfo, isNegative, out quantityValue))
-            {
                 return false;
-            }
         }
         else
         {
             if (!TryParseDecimalNumber(coefficientSpan, parseNumberStyles, numberFormatInfo, isNegative, out quantityValue))
-            {
                 return false;
-            }
         }
 
         // 4. multiply the coefficient by 10 to the power of the exponent
@@ -612,9 +569,7 @@ public partial struct QuantityValue
     {
         // 1. try to find the decimal separator (extracting the left and right sides)
         if (!TrySplit(value, numberFormatInfo.NumberDecimalSeparator, out ReadOnlySpan<char> integerSpan, out ReadOnlySpan<char> fractionalSpan))
-        {
             return TryParseInteger(value, parseNumberStyles, numberFormatInfo, isNegative, out quantityValue);
-        }
         
         // 2. validate the format of the string after the radix
         if (fractionalSpan.IsEmpty)
@@ -626,17 +581,13 @@ public partial struct QuantityValue
         if ((parseNumberStyles & NumberStyles.AllowThousands) != 0)
         {
             if (fractionalSpan.Contains(numberFormatInfo.NumberGroupSeparator, StringComparison.Ordinal))
-            {
                 return CannotParse(out quantityValue); // number group separator detected in the fractional part (e.g. "1.2 34")
-            }
         }
 
         // 3. extract the value of the string corresponding to the number without the decimal separator: "0.123 " should return "0123"
         var integerString = string.Concat(integerSpan, fractionalSpan);
         if (!BigInteger.TryParse(integerString, parseNumberStyles, numberFormatInfo, out var numerator))
-        {
             return CannotParse(out quantityValue);
-        }
 
         if (numerator.IsZero)
         {
@@ -645,9 +596,7 @@ public partial struct QuantityValue
         }
 
         if (isNegative)
-        {
             numerator = -numerator;
-        }
 
         // 4. construct the fractional part using the corresponding decimal power for the denominator
         var nbDecimals = fractionalSpan.Length;
@@ -660,9 +609,7 @@ public partial struct QuantityValue
         IFormatProvider? formatProvider, bool isNegative, out QuantityValue quantityValue)
     {
         if (!BigInteger.TryParse(value, parseNumberStyles, formatProvider, out var bigInteger))
-        {
             return CannotParse(out quantityValue);
-        }
 
         quantityValue = isNegative ? -bigInteger : bigInteger;
         return true;
@@ -756,9 +703,7 @@ public partial struct QuantityValue
     public static bool TryParse(string? value, NumberStyles numberStyles, IFormatProvider? formatProvider, out QuantityValue quantityValue)
     {
         if (string.IsNullOrEmpty(value))
-        {
             return CannotParse(out quantityValue);
-        }
         
         var numberFormatInfo = NumberFormatInfo.GetInstance(formatProvider);
 
@@ -864,16 +809,12 @@ public partial struct QuantityValue
         {
             var character = value[startIndex];
             if (char.IsDigit(character))
-            {
                 break;
-            }
 
             if (char.IsWhiteSpace(character))
             {
                 if ((numberStyles & NumberStyles.AllowLeadingWhite) == 0)
-                {
                     return CannotParse(out quantityValue);
-                }
 
                 startIndex++;
                 continue;
@@ -882,14 +823,10 @@ public partial struct QuantityValue
             if (character == '(')
             {
                 if ((numberStyles & NumberStyles.AllowParentheses) == 0)
-                {
                     return CannotParse(out quantityValue); // not allowed
-                }
 
                 if (startIndex == endIndex - 1)
-                {
                     return CannotParse(out quantityValue); // not enough characters
-                }
 
                 startIndex++; // consume the current character
                 isNegative = true; // the closing parenthesis will be validated in the backwards iteration
@@ -1013,9 +950,7 @@ public partial struct QuantityValue
             }
 
             if (decimalsAllowed && StartsWith(value, decimalSeparator, startIndex))
-            {
                 break; // decimal string with no leading zeros
-            }
 
             // this is either an expected hex string or an invalid format
             return (numberStyles & NumberStyles.AllowHexSpecifier) != 0
@@ -1025,9 +960,7 @@ public partial struct QuantityValue
         } while (startIndex < endIndex);
 
         if (startIndex >= endIndex)
-        {
             return CannotParse(out quantityValue);
-        }
 
         if (isNegative)
         {
@@ -1046,16 +979,12 @@ public partial struct QuantityValue
         {
             var character = value[endIndex - 1];
             if (char.IsDigit(character))
-            {
                 break;
-            }
 
             if (char.IsWhiteSpace(character))
             {
                 if ((numberStyles & NumberStyles.AllowTrailingWhite) == 0)
-                {
                     return CannotParse(out quantityValue);
-                }
 
                 endIndex--;
                 continue;
@@ -1064,9 +993,7 @@ public partial struct QuantityValue
             if (character == ')')
             {
                 if ((numberStyles & NumberStyles.AllowParentheses) == 0)
-                {
                     return CannotParse(out quantityValue); // not allowed
-                }
 
                 numberStyles &= ~(NumberStyles.AllowParentheses | NumberStyles.AllowCurrencySymbol);
                 endIndex--;
@@ -1104,9 +1031,7 @@ public partial struct QuantityValue
             }
 
             if (decimalsAllowed && EndsWith(value, decimalSeparator, endIndex))
-            {
                 break;
-            }
 
             // this is either an expected hex string or an invalid format
             return (numberStyles & NumberStyles.AllowHexSpecifier) != 0
@@ -1116,14 +1041,10 @@ public partial struct QuantityValue
         } while (startIndex < endIndex);
 
         if (startIndex >= endIndex)
-        {
             return CannotParse(out quantityValue); // not enough characters
-        }
 
         if (isNegative && (numberStyles & NumberStyles.AllowParentheses) != 0)
-        {
             return CannotParse(out quantityValue); // failed to find a closing parentheses
-        }
 
         numberStyles &= ~(NumberStyles.AllowTrailingWhite |
                           NumberStyles.AllowTrailingSign |
@@ -1137,9 +1058,7 @@ public partial struct QuantityValue
         }
 
         if ((numberStyles & NumberStyles.AllowExponent) != 0)
-        {
             return TryParseWithExponent(value, numberStyles, numberFormatInfo, startIndex, endIndex, isNegative, out quantityValue);
-        }
 
         return decimalsAllowed
             ? TryParseDecimalNumber(value, numberStyles, numberFormatInfo, startIndex, endIndex, isNegative, out quantityValue)
@@ -1149,25 +1068,19 @@ public partial struct QuantityValue
         {
             var stringLength = testString.Length;
             if (fractionString.Length - startIndex < stringLength)
-            {
                 return false;
-            }
 
             for (var i = 0; i < stringLength; i++)
             {
                 if (testString[i] != fractionString[startIndex + i])
-                {
                     return false;
-                }
             }
 
             return true;
         }
 
         static bool EndsWith(string fractionString, string testString, int endIndex)
-        {
-            return endIndex >= testString.Length && StartsWith(fractionString, testString, endIndex - testString.Length);
-        }
+            => endIndex >= testString.Length && StartsWith(fractionString, testString, endIndex - testString.Length);
     }
 
     private static bool TryParseWithExponent(string valueString, NumberStyles parseNumberStyles,
@@ -1191,25 +1104,19 @@ public partial struct QuantityValue
         var exponentString = valueString.Substring(exponentIndex + 1, endIndex - exponentIndex - 1);
         if (!int.TryParse(exponentString, NumberStyles.AllowLeadingSign | NumberStyles.Integer, numberFormatInfo,
                 out var exponent))
-        {
             return CannotParse(out quantityValue);
-        }
 
         // 3. try to parse the coefficient (w.r.t. the decimal separator allowance)
         if (startIndex == endIndex - 1 || (parseNumberStyles & NumberStyles.AllowDecimalPoint) == 0)
         {
             if (!TryParseInteger(valueString, parseNumberStyles, numberFormatInfo, startIndex, exponentIndex,
                     isNegative, out quantityValue))
-            {
                 return false;
-            }
         }
         else
         {
             if (!TryParseDecimalNumber(valueString, parseNumberStyles, numberFormatInfo, startIndex, exponentIndex, isNegative, out quantityValue))
-            {
                 return false;
-            }
         }
 
         // 4. multiply the coefficient by 10 to the power of the exponent
@@ -1224,10 +1131,7 @@ public partial struct QuantityValue
         var decimalSeparatorIndex = valueString.IndexOf(numberFormatInfo.NumberDecimalSeparator, startIndex,
             endIndex - startIndex, StringComparison.Ordinal);
         if (decimalSeparatorIndex == -1)
-        {
-            return TryParseInteger(valueString, parseNumberStyles, numberFormatInfo, startIndex, endIndex, isNegative,
-                out fraction);
-        }
+            return TryParseInteger(valueString, parseNumberStyles, numberFormatInfo, startIndex, endIndex, isNegative, out fraction);
 
         // 2. validate the format of the string after the radix
         var decimalSeparatorLength = numberFormatInfo.NumberDecimalSeparator.Length;
@@ -1241,9 +1145,7 @@ public partial struct QuantityValue
         {
             if (valueString.IndexOf(numberFormatInfo.NumberGroupSeparator,
                     decimalSeparatorIndex + decimalSeparatorLength, StringComparison.Ordinal) != -1)
-            {
                 return CannotParse(out fraction);
-            }
         }
 
         // 3. extract the value of the string corresponding to the number without the decimal separator: " 0.123 " should return "0123"
@@ -1253,9 +1155,7 @@ public partial struct QuantityValue
                 endIndex - decimalSeparatorIndex - decimalSeparatorLength));
 
         if (!BigInteger.TryParse(integerString, parseNumberStyles, numberFormatInfo, out var numerator))
-        {
             return CannotParse(out fraction);
-        }
 
         if (numerator.IsZero)
         {
@@ -1264,9 +1164,7 @@ public partial struct QuantityValue
         }
 
         if (isNegative)
-        {
             numerator = -numerator;
-        }
 
         var nbDecimals = endIndex - decimalSeparatorIndex - decimalSeparatorLength;
         if (nbDecimals == 0)
@@ -1287,9 +1185,7 @@ public partial struct QuantityValue
     {
         if (!BigInteger.TryParse(valueString.Substring(startIndex, endIndex - startIndex), parseNumberStyles,
                 formatProvider, out var bigInteger))
-        {
             return CannotParse(out fraction);
-        }
 
         fraction = new QuantityValue(isNegative ? -bigInteger : bigInteger);
         return true;

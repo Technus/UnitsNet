@@ -71,9 +71,7 @@ public readonly struct QuantityInformation
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return Definition.Name;
-    }
+        => Definition.Name;
 }
 
 /// <summary>
@@ -145,9 +143,7 @@ public readonly struct ConvertedQuantity
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return Converted.ToString();
-    }
+        => Converted.ToString();
 }
 
 /// <summary>
@@ -191,7 +187,5 @@ public readonly struct QuantityConversion
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return _targetQuantity.ToString();
-    }
+        => _targetQuantity.ToString();
 }

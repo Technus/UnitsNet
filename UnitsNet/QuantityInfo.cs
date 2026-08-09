@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Resources;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -36,6 +37,7 @@ public abstract class QuantityInfo : IQuantityInfo
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public Type ValueType
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => QuantityType;
     }
 
@@ -58,6 +60,7 @@ public abstract class QuantityInfo : IQuantityInfo
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public IQuantity Zero
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetGenericZero();
     }
 
@@ -65,6 +68,7 @@ public abstract class QuantityInfo : IQuantityInfo
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public UnitInfo BaseUnitInfo
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetGenericBaseUnitInfo();
     }
 
@@ -72,6 +76,7 @@ public abstract class QuantityInfo : IQuantityInfo
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public IReadOnlyList<UnitInfo> UnitInfos
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetGenericUnitInfos();
     }
 
@@ -79,16 +84,14 @@ public abstract class QuantityInfo : IQuantityInfo
     public abstract UnitInfo this[UnitKey unit] { get; }
 
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public UnitInfo GetUnitInfoFor(BaseUnits baseUnits)
-    {
-        return UnitInfo.GetUnitWithBase(UnitInfos, baseUnits);
-    }
+        => UnitInfo.GetUnitWithBase(UnitInfos, baseUnits);
 
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IEnumerable<UnitInfo> GetUnitInfosFor(BaseUnits baseUnits)
-    {
-        return UnitInfo.GetUnitsWithBase(UnitInfos, baseUnits);
-    }
+        => UnitInfo.GetUnitsWithBase(UnitInfos, baseUnits);
 
     /// <inheritdoc cref="Zero" />
     protected internal abstract IQuantity GetGenericZero();
@@ -111,9 +114,7 @@ public abstract class QuantityInfo : IQuantityInfo
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return Name;
-    }
+        => Name;
 }
 
 /// <inheritdoc cref="QuantityInfo" />
@@ -137,6 +138,7 @@ public abstract class QuantityInfo<TUnit> : QuantityInfo
     /// <inheritdoc cref="QuantityInfo.BaseUnitInfo" />
     public new UnitInfo<TUnit> BaseUnitInfo
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetBaseUnitInfo();
     }
 
@@ -147,6 +149,7 @@ public abstract class QuantityInfo<TUnit> : QuantityInfo
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public new IQuantity<TUnit> Zero
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetZero();
     }
 
@@ -157,6 +160,7 @@ public abstract class QuantityInfo<TUnit> : QuantityInfo
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public new IReadOnlyList<UnitInfo<TUnit>> UnitInfos
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetUnitInfos();
     }
 
@@ -166,6 +170,7 @@ public abstract class QuantityInfo<TUnit> : QuantityInfo
     /// <inheritdoc cref="GetUnitInfo" />
     public UnitInfo<TUnit> this[TUnit unit]
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => GetUnitInfo(unit);
     }
 
@@ -178,24 +183,21 @@ public abstract class QuantityInfo<TUnit> : QuantityInfo
     protected internal abstract UnitInfo<TUnit> GetUnitInfo(TUnit unit);
 
     /// <inheritdoc cref="QuantityInfo.GetUnitInfoFor" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public new UnitInfo<TUnit> GetUnitInfoFor(BaseUnits baseUnits)
-    {
-        return UnitInfo.GetUnitWithBase(UnitInfos, baseUnits);
-    }
+        => UnitInfo.GetUnitWithBase(UnitInfos, baseUnits);
 
     /// <inheritdoc cref="QuantityInfo.GetUnitInfosFor" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public new IEnumerable<UnitInfo<TUnit>> GetUnitInfosFor(BaseUnits baseUnits)
-    {
-        return UnitInfo.GetUnitsWithBase(UnitInfos, baseUnits);
-    }
+        => UnitInfo.GetUnitsWithBase(UnitInfos, baseUnits);
 
     /// <inheritdoc cref="QuantityInfo.From" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IQuantity<TUnit> From(QuantityValue value, TUnit unit)
-    {
-        return CreateGenericQuantity(value, unit);
-    }
+        => CreateGenericQuantity(value, unit);
 
-    /// <inheritdoc cref="From(UnitsNet.QuantityValue,TUnit)" />
+    /// <inheritdoc cref="From(QuantityValue,TUnit)" />
     protected internal abstract IQuantity<TUnit> CreateGenericQuantity(QuantityValue value, TUnit unit);
 
     #endregion
@@ -209,22 +211,19 @@ public abstract class QuantityInfo<TUnit> : QuantityInfo
     }
 
     /// <inheritdoc />
-    protected internal override IQuantity GetGenericZero()
-    {
-        return Zero;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected sealed internal override IQuantity GetGenericZero()
+        => Zero;
 
     /// <inheritdoc />
-    protected internal override UnitInfo GetGenericBaseUnitInfo()
-    {
-        return BaseUnitInfo;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected sealed internal override UnitInfo GetGenericBaseUnitInfo()
+        => BaseUnitInfo;
 
     /// <inheritdoc />
-    protected internal override IReadOnlyList<UnitInfo> GetGenericUnitInfos()
-    {
-        return UnitInfos;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected sealed internal override IReadOnlyList<UnitInfo> GetGenericUnitInfos()
+        => UnitInfos;
 
     /// <inheritdoc />
     public override UnitInfo this[UnitKey unit]
@@ -233,10 +232,9 @@ public abstract class QuantityInfo<TUnit> : QuantityInfo
     }
 
     /// <inheritdoc />
-    internal override IQuantity From(QuantityValue value, UnitKey unitKey)
-    {
-        return From(value, unitKey.ToUnit<TUnit>());
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal sealed override IQuantity From(QuantityValue value, UnitKey unitKey)
+        => From(value, unitKey.ToUnit<TUnit>());
 
     #endregion
 }
@@ -286,16 +284,14 @@ public abstract class QuantityInfoBase<TQuantity, TUnit, TUnitInfo> : QuantityIn
     public abstract bool TryGetUnitInfo(TUnit unit, [NotNullWhen(true)] out TUnitInfo? unitInfo);
 
     /// <inheritdoc cref="IQuantityInfo.GetUnitInfosFor" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public new IEnumerable<TUnitInfo> GetUnitInfosFor(BaseUnits baseUnits)
-    {
-        return UnitInfo.GetUnitsWithBase(UnitInfos, baseUnits);
-    }
+        => UnitInfo.GetUnitsWithBase(UnitInfos, baseUnits);
 
     /// <inheritdoc cref="IQuantityInfo.GetUnitInfoFor" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public new TUnitInfo GetUnitInfoFor(BaseUnits baseUnits)
-    {
-        return UnitInfo.GetUnitWithBase(UnitInfos, baseUnits);
-    }
+        => UnitInfo.GetUnitWithBase(UnitInfos, baseUnits);
 
     /// <summary>
     ///     Creates an instance of the quantity from the specified value and unit.
@@ -303,50 +299,43 @@ public abstract class QuantityInfoBase<TQuantity, TUnit, TUnitInfo> : QuantityIn
     /// <param name="value">The numerical value of the quantity.</param>
     /// <param name="unit">The unit of the quantity.</param>
     /// <returns>An instance of <typeparamref name="TQuantity" /> representing the specified value and unit.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public new TQuantity From(QuantityValue value, TUnit unit)
-    {
-        return FromDelegate(value, unit);
-    }
+        => FromDelegate(value, unit);
 
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     TQuantity IQuantityInstanceInfo<TQuantity>.Create(QuantityValue value, UnitKey unitKey)
-    {
-        return From(value, unitKey.ToUnit<TUnit>());
-    }
+        => From(value, unitKey.ToUnit<TUnit>());
 
     #endregion
 
     #region Overrides of QuantityInfo<TUnit>
 
     /// <inheritdoc />
-    protected internal override IQuantity<TUnit> GetZero()
-    {
-        return Zero;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected internal sealed override IQuantity<TUnit> GetZero()
+        => Zero;
 
     /// <inheritdoc />
-    protected internal override UnitInfo<TUnit> GetBaseUnitInfo()
-    {
-        return BaseUnitInfo;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected internal sealed override UnitInfo<TUnit> GetBaseUnitInfo()
+        => BaseUnitInfo;
 
     /// <inheritdoc />
-    protected internal override IReadOnlyList<UnitInfo<TUnit>> GetUnitInfos()
-    {
-        return UnitInfos;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected internal sealed override IReadOnlyList<UnitInfo<TUnit>> GetUnitInfos()
+        => UnitInfos;
 
     /// <inheritdoc />
-    protected internal override UnitInfo<TUnit> GetUnitInfo(TUnit unit)
-    {
-        return this[unit];
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected internal sealed override UnitInfo<TUnit> GetUnitInfo(TUnit unit)
+        => this[unit];
 
     /// <inheritdoc />
-    protected internal override IQuantity<TUnit> CreateGenericQuantity(QuantityValue value, TUnit unit)
-    {
-        return From(value, unit);
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected internal sealed override IQuantity<TUnit> CreateGenericQuantity(QuantityValue value, TUnit unit)
+        => From(value, unit);
 
     #endregion
 }
@@ -468,10 +457,7 @@ public class QuantityInfo<TQuantity, TUnit> : QuantityInfoBase<TQuantity, TUnit,
         QuantityFromDelegate<TQuantity, TUnit> fromDelegate, ResourceManager? unitAbbreviations = null)
         : base(name, zero, baseDimensions, fromDelegate, unitAbbreviations)
     {
-        if (unitMappings == null)
-        {
-            throw new ArgumentNullException(nameof(unitMappings));
-        }
+        if (unitMappings == null) throw new ArgumentNullException(nameof(unitMappings));
 #if NET
         _unitInfos = unitMappings.Select(unit => new UnitInfo<TQuantity, TUnit>(this, unit)).ToArray();
         _unitMappings = _unitInfos.ToDictionary(info => info.Value);
@@ -495,6 +481,7 @@ public class QuantityInfo<TQuantity, TUnit> : QuantityInfoBase<TQuantity, TUnit,
     /// </value>
     public IReadOnlyCollection<TUnit> Units
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _unitMappings.Keys;
     }
 
@@ -512,14 +499,13 @@ public class QuantityInfo<TQuantity, TUnit> : QuantityInfoBase<TQuantity, TUnit,
 
     /// <inheritdoc />
     public override bool TryGetUnitInfo(TUnit unit, [NotNullWhen(true)] out UnitInfo<TQuantity, TUnit>? unitInfo)
-    {
-        return _unitMappings.TryGetValue(unit, out unitInfo);
-    }
+        => _unitMappings.TryGetValue(unit, out unitInfo);
 
     /// <inheritdoc cref="QuantityInfo{TQuantity,TUnit}.UnitInfos" />
     [DebuggerBrowsable(DebuggerBrowsableState.Collapsed)]
     public sealed override IReadOnlyList<UnitInfo<TQuantity, TUnit>> UnitInfos
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _unitInfos;
     }
 

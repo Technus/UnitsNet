@@ -31,6 +31,7 @@ internal readonly record struct UnitConversionKey
     /// </value>
     public bool HasSameUnits
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => FromUnitKey.UnitEnumValue == ToUnitValue;
     }
 
@@ -49,9 +50,7 @@ internal readonly record struct UnitConversionKey
     /// </returns>
     public static UnitConversionKey Create<TUnit>(TUnit fromUnit, TUnit toUnit)
         where TUnit : struct, Enum
-    {
-        return new UnitConversionKey(UnitKey.ForUnit(fromUnit), Unsafe.As<TUnit, int>(ref toUnit));
-    }
+        => new(UnitKey.ForUnit(fromUnit), Unsafe.As<TUnit, int>(ref toUnit));
 
     /// <summary>
     ///     Creates a new instance of <see cref="UnitConversionKey" /> using the specified units.
@@ -63,8 +62,7 @@ internal readonly record struct UnitConversionKey
     ///     <paramref name="fromUnitKey" /> to
     ///     <paramref name="toUnitKey" />.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UnitConversionKey Create(UnitKey fromUnitKey, UnitKey toUnitKey)
-    {
-        return new UnitConversionKey(fromUnitKey, toUnitKey.UnitEnumValue);
-    }
+        => new(fromUnitKey, toUnitKey.UnitEnumValue);
 }

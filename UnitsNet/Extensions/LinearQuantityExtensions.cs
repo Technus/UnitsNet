@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -16,17 +17,13 @@ public static class LinearQuantityExtensions
         where TQuantity : ILinearQuantity<TQuantity>
         where TOther : IQuantityOfType<TQuantity>
         where TTolerance : IQuantityOfType<TQuantity>
-    {
-        return other != null && quantity.EqualsAbsolute(other, tolerance);
-    }
+        => other != null && quantity.EqualsAbsolute(other, tolerance);
 
     /// <inheritdoc cref="EqualsAbsolute{TQuantity,TOther,TTolerance}" />
     public static bool Equals<TQuantity, TTolerance>(this TQuantity quantity, IQuantity? other, TTolerance tolerance)
         where TQuantity : ILinearQuantity<TQuantity>
         where TTolerance : IQuantityOfType<TQuantity>
-    {
-        return other is TQuantity otherInstance && quantity.EqualsAbsolute(otherInstance, tolerance);
-    }
+        => other is TQuantity otherInstance && quantity.EqualsAbsolute(otherInstance, tolerance);
 
     /// <summary>
     ///     <para>
@@ -107,7 +104,7 @@ public static class LinearQuantityExtensions
         return firstQuantity.QuantityInfo.Create(sumOfValues, resultUnit);
 #endif
     }
-    
+
     /// <summary>
     ///     Computes the sum of a sequence of quantities by applying a specified selector function to each element of the
     ///     sequence.
@@ -121,11 +118,10 @@ public static class LinearQuantityExtensions
     ///     returns the sum in the unit of the first element.
     /// </returns>
     /// <exception cref="ArgumentNullException">Thrown if the source or selector is null.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Sum<TSource, TQuantity>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector)
         where TQuantity : ILinearQuantity<TQuantity>
-    {
-        return source.Select(selector).Sum();
-    }
+        => source.Select(selector).Sum();
 
     /// <summary>
     ///     Sums a sequence of linear quantities, such as Mass and Length.
@@ -181,12 +177,11 @@ public static class LinearQuantityExtensions
     /// <param name="targetUnit">The desired unit type for the resulting quantity</param>
     /// <returns>The sum of the projected quantities in the specified unit.</returns>
     /// <exception cref="ArgumentNullException">Thrown if the source or selector is null.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Sum<TSource, TQuantity, TUnit>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, TUnit targetUnit)
         where TQuantity : ILinearQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return source.Select(selector).Sum(targetUnit);
-    }
+        => source.Select(selector).Sum(targetUnit);
 
     /// <summary>
     ///     Calculates the arithmetic average of a sequence of linear quantities, such as Mass and Length.
@@ -196,11 +191,10 @@ public static class LinearQuantityExtensions
     /// <returns>The average of the linear quantities, using the unit of the first element in the sequence.</returns>
     /// <exception cref="ArgumentNullException">Thrown when the sequence is null.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the sequence is empty.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Average<TQuantity>(this IEnumerable<TQuantity> quantities)
         where TQuantity : ILinearQuantity<TQuantity>
-    {
-        return quantities.ArithmeticMean();
-    }
+        => quantities.ArithmeticMean();
 
     /// <summary>
     ///     Computes the arithmetic average of a sequence of quantities, such as Mass and Length, by applying a specified
@@ -214,11 +208,10 @@ public static class LinearQuantityExtensions
     /// <returns>The average of the projected quantities in the unit of the first element in the sequence.</returns>
     /// <exception cref="ArgumentNullException">Thrown when the sequence is null.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the sequence is empty.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Average<TSource, TQuantity>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector)
         where TQuantity : ILinearQuantity<TQuantity>
-    {
-        return source.Select(selector).Average();
-    }
+        => source.Select(selector).Average();
 
     /// <summary>
     ///     Calculates the average of a sequence of linear quantities, such as Mass and Length.
@@ -234,12 +227,11 @@ public static class LinearQuantityExtensions
     ///     <see cref="Average{TQuantity}(IEnumerable{TQuantity})" />
     ///     when most of the quantities in the sequence are expected to be in the target unit.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Average<TQuantity, TUnit>(this IEnumerable<TQuantity> quantities, TUnit targetUnit)
         where TQuantity : ILinearQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return quantities.ArithmeticMean(targetUnit);
-    }
+        => quantities.ArithmeticMean(targetUnit);
 
     /// <summary>
     ///     Computes the average of the sequence of <typeparamref name="TQuantity" /> values, such as Mass and Length, that are
@@ -253,12 +245,11 @@ public static class LinearQuantityExtensions
     /// <param name="targetUnit">The desired unit type for the resulting quantity.</param>
     /// <returns>The average of the projected quantities in the specified unit.</returns>
     /// <exception cref="InvalidOperationException">Thrown when the sequence is empty.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Average<TSource, TQuantity, TUnit>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, TUnit targetUnit)
         where TQuantity : ILinearQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return source.Select(selector).Average(targetUnit);
-    }
+        => source.Select(selector).Average(targetUnit);
 
     /// <summary>
     ///     Returns the absolute value of the specified quantity.

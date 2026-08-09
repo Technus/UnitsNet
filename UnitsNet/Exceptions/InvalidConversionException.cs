@@ -27,22 +27,14 @@ public class InvalidConversionException : UnitsNetException
     }
 
     internal static InvalidConversionException CreateImplicitConversionException(QuantityInfo sourceQuantity, QuantityInfo targetQuantity)
-    {
-        return new InvalidConversionException($"No implicit conversion exists for the quantities: source = '{sourceQuantity}', target = '{targetQuantity}'");
-    }
+        => new($"No implicit conversion exists for the quantities: source = '{sourceQuantity}', target = '{targetQuantity}'");
 
     internal static InvalidConversionException CreateIncompatibleDimensionsException(BaseDimensions sourceDimensions, BaseDimensions targetDimensions)
-    {
-        return new InvalidConversionException($"The conversion expression cannot be determined from the base dimensions: source = '{sourceDimensions}', target = '{targetDimensions}'");
-    }
+        => new($"The conversion expression cannot be determined from the base dimensions: source = '{sourceDimensions}', target = '{targetDimensions}'");
 
     internal static InvalidConversionException CreateIncompatibleDimensionsException(QuantityInfo sourceQuantityInfo, QuantityInfo targetQuantityInfo)
-    {
-        return new InvalidConversionException($"The dimensions of the source quantity '{sourceQuantityInfo}' are not compatible with the dimensions of the target quantity '{targetQuantityInfo}'.");
-    }
+        => new($"The dimensions of the source quantity '{sourceQuantityInfo}' are not compatible with the dimensions of the target quantity '{targetQuantityInfo}'.");
 
     internal static InvalidConversionException CreateIncompatibleUnitsException(UnitInfo sourceUnitInfo, QuantityInfo targetQuantityInfo)
-    {
-        return new InvalidConversionException($"No compatible base units found for the conversion from '{sourceUnitInfo}' to '{targetQuantityInfo}'");
-    }
+        => new($"No compatible base units found for the conversion from '{sourceUnitInfo}' to '{targetQuantityInfo}'");
 }

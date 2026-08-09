@@ -25,16 +25,12 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     }
 
     public override bool TryConvertValue<TUnit>(QuantityValue value, TUnit fromUnit, TUnit toUnit, out QuantityValue convertedValue)
-    {
-        return TryConvertValue(value, UnitConversionKey.Create(fromUnit, toUnit), out convertedValue);
-    }
+        => TryConvertValue(value, UnitConversionKey.Create(fromUnit, toUnit), out convertedValue);
 
     public override bool TryConvertValue(QuantityValue value, UnitKey fromUnitKey, UnitKey toUnitKey, out QuantityValue convertedValue)
-    {
-        return fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
+        => fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
             ? TryConvertValue(value, UnitConversionKey.Create(fromUnitKey, toUnitKey), out convertedValue)
             : TryConvertValueFromOneQuantityToAnother(value, fromUnitKey, toUnitKey, out convertedValue);
-    }
 
     private bool TryConvertValue(QuantityValue value, UnitConversionKey conversionKey, out QuantityValue convertedValue)
     {
@@ -66,15 +62,11 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     {
         var defaultConversionKey = new QuantityConversionKey(fromUnitKey, toUnitKey.UnitEnumType);
         if (_quantityConversions.TryGetValue(defaultConversionKey, out QuantityConversionFunction conversionFunction))
-        {
             return TryConvertValue(conversionFunction.Convert(value), new UnitConversionKey(conversionFunction.TargetUnit, toUnitKey.UnitEnumValue),
                 out convertedValue);
-        }
 
         if (TryGetUnitInfo(fromUnitKey, out UnitInfo? fromUnitInfo) && TryGetUnitInfo(toUnitKey, out UnitInfo? toUnitInfo))
-        {
             return TryConvertValueFromOneQuantityToAnother(value, fromUnitInfo, toUnitInfo, out convertedValue);
-        }
 
         convertedValue = default;
         return false;
@@ -125,23 +117,17 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     }
 
     public override QuantityValue ConvertValue<TUnit>(QuantityValue value, TUnit fromUnit, TUnit toUnit)
-    {
-        return ConvertValue(value, UnitConversionKey.Create(fromUnit, toUnit));
-    }
+        => ConvertValue(value, UnitConversionKey.Create(fromUnit, toUnit));
 
     public override QuantityValue ConvertValue(QuantityValue value, UnitKey fromUnitKey, UnitKey toUnitKey)
-    {
-        return fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
+        => fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
             ? ConvertValue(value, UnitConversionKey.Create(fromUnitKey, toUnitKey))
             : ConvertValueFromOneQuantityToAnother(value, fromUnitKey, toUnitKey);
-    }
 
     private QuantityValue ConvertValue(QuantityValue value, UnitConversionKey conversionKey)
     {
         if (conversionKey.HasSameUnits)
-        {
             return value;
-        }
         
         ConvertValueDelegate conversion = _unitConversions.GetOrAdd(conversionKey, _unitConversionExpressionFactory);
         return conversion(value);
@@ -151,11 +137,9 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     {
         var defaultConversionKey = new QuantityConversionKey(fromUnitKey, toUnitKey.UnitEnumType);
         if (_quantityConversions.TryGetValue(defaultConversionKey, out QuantityConversionFunction defaultConversion))
-        {
             return defaultConversion.TargetUnit.UnitEnumValue == toUnitKey.UnitEnumValue
                 ? defaultConversion.Convert(value)
                 : ConvertValue(defaultConversion.Convert(value), UnitConversionKey.Create(defaultConversion.TargetUnit, toUnitKey));
-        }
 
         UnitInfo fromUnitInfo = GetUnitInfo(fromUnitKey);
         UnitInfo toUnitInfo = GetUnitInfo(toUnitKey);
@@ -169,9 +153,7 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     protected override QuantityValue ConvertValueInternal(QuantityValue value, UnitInfo fromUnitInfo, UnitInfo toUnitInfo)
     {
         if (fromUnitInfo == toUnitInfo)
-        {
             return value;
-        }
 
         UnitKey fromUnitKey = fromUnitInfo.UnitKey;
         UnitKey toUnitKey = toUnitInfo.UnitKey;
@@ -194,34 +176,24 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     public override ConvertValueDelegate GetConversionFunction(UnitKey fromUnitKey, UnitKey toUnitKey)
     {
         if (fromUnitKey == toUnitKey)
-        {
             return value => value;
-        }
         
         if (fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType)
-        {
             return _unitConversions.GetOrAdd(UnitConversionKey.Create(fromUnitKey, toUnitKey), _unitConversionExpressionFactory);
-        }
 
         UnitInfo fromUnitInfo = GetUnitInfo(fromUnitKey);
         UnitInfo toUnitInfo = GetUnitInfo(toUnitKey);
         var defaultConversionKey = new QuantityConversionKey(fromUnitKey, toUnitInfo.QuantityInfo.UnitType);
         if (!_quantityConversions.TryGetValue(defaultConversionKey, out QuantityConversionFunction defaultConversion))
-        {
             return GetConversionFromOneQuantityToAnother(fromUnitInfo, toUnitInfo);
-        }
 
         if (defaultConversion.TargetUnit == toUnitKey)
-        {
             return defaultConversion.Convert;
-        }
 
         // TODO should we be caching the result? (GetOrAddConversionTo)
         // TODO the resulting expression might not be fully reduced if _reduceConstants is false
         if(!_unitConversions.TryGetValue(UnitConversionKey.Create(defaultConversion.TargetUnit, toUnitKey), out ConvertValueDelegate? conversionToTarget))
-        {
             conversionToTarget = GetUnitInfo(defaultConversion.TargetUnit).GetUnitConversionExpressionTo(toUnitInfo);
-        }
         
         return value => conversionToTarget(defaultConversion.Convert(value));
     }
@@ -360,11 +332,9 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     private ConvertValueDelegate GetOrAdd(UnitConversionKey conversionKey, UnitInfo fromUnitInfo, UnitInfo toUnitInfo)
     {
 #if NET
-        return _unitConversions.GetOrAdd(conversionKey, CreateConversionExpressionForUnits, (fromUnitInfo, toUnitInfo, _reduceConstants));    
+        return _unitConversions.GetOrAdd(conversionKey, CreateConversionExpressionForUnits, (fromUnitInfo, toUnitInfo, _reduceConstants));
         static ConvertValueDelegate CreateConversionExpressionForUnits(UnitConversionKey key, ValueTuple<UnitInfo, UnitInfo, bool> conversion)
-        {
-            return conversion.Item1.GetUnitConversionExpressionTo(conversion.Item2, conversion.Item3);
-        }
+            => conversion.Item1.GetUnitConversionExpressionTo(conversion.Item2, conversion.Item3);
 #else
         // intentionally not using the factory overload here, as it causes an extra allocation for the Func
         return _unitConversions.TryGetValue(conversionKey, out ConvertValueDelegate? conversionFunction)
@@ -399,7 +369,7 @@ internal sealed class DynamicQuantityConverter : UnitConverter
     private QuantityConversionFunction GetOrAdd(QuantityConversionKey conversionKey, UnitInfo fromUnitInfo, UnitInfo toUnitInfo)
     {
 #if NET
-        return _quantityConversions.GetOrAdd(conversionKey, CreateConversionExpressionForUnits, (fromUnitInfo, toUnitInfo, this));    
+        return _quantityConversions.GetOrAdd(conversionKey, CreateConversionExpressionForUnits, (fromUnitInfo, toUnitInfo, this));
         static QuantityConversionFunction CreateConversionExpressionForUnits(QuantityConversionKey key, ValueTuple<UnitInfo, UnitInfo, DynamicQuantityConverter> conversion)
         {
             UnitInfo fromUnitInfo = conversion.Item1;

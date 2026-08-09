@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -10,10 +11,9 @@ public readonly partial struct QuantityValue
     /// <param name="x">The QuantityValue to be rounded.</param>
     /// <param name="nbDigits">The number of decimal places in the return value.</param>
     /// <returns>A new QuantityValue that is the nearest number with the specified number of digits.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue Round(QuantityValue x, int nbDigits)
-    {
-        return Round(x, nbDigits, MidpointRounding.ToEven);
-    }
+        => Round(x, nbDigits, MidpointRounding.ToEven);
 
     /// <summary>
     ///     Rounds the given QuantityValue to the specified precision using the specified rounding strategy.
@@ -33,9 +33,7 @@ public readonly partial struct QuantityValue
         ArgumentOutOfRangeException.ThrowIfNegative(decimals);
 #else
         if (decimals < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(decimals));
-        }
+            throw new ArgumentOutOfRangeException(nameof(decimals), decimals, "Can not be less than 0");
 #endif
         return Round(x.Numerator, x.Denominator, decimals, mode);
     }
@@ -43,14 +41,10 @@ public readonly partial struct QuantityValue
     internal static QuantityValue Round(BigInteger numerator, BigInteger denominator, int decimals, MidpointRounding mode)
     {
         if (numerator.IsZero)
-        {
             return new QuantityValue(numerator, denominator);
-        }
 
         if (denominator.IsOne || denominator.IsZero)
-        {
             return new QuantityValue(numerator, denominator);
-        }
 
         var factor = PowerOfTen(decimals);
         var roundedNumerator = RoundToBigInteger(numerator * factor, denominator, mode);
@@ -67,10 +61,9 @@ public readonly partial struct QuantityValue
     ///     <paramref name="mode" /> rounding strategy.
     /// </returns>
     /// <exception cref="OverflowException">Thrown when the input is <see cref="NaN"/>, <see cref="PositiveInfinity"/> or <see cref="NegativeInfinity"/>.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static BigInteger Round(QuantityValue fraction, MidpointRounding mode)
-    {
-        return RoundToBigInteger(fraction.Numerator, fraction.Denominator, mode);
-    }
+        => RoundToBigInteger(fraction.Numerator, fraction.Denominator, mode);
 
     /// <summary>
     ///     Rounds the given QuantityValue to the specified precision using the specified rounding strategy.
@@ -83,14 +76,10 @@ public readonly partial struct QuantityValue
     private static BigInteger RoundToBigInteger(BigInteger numerator, BigInteger denominator, MidpointRounding mode)
     {
         if (denominator.IsZero)
-        {
             throw new OverflowException();
-        }
 
         if (numerator.IsZero || denominator.IsOne)
-        {
             return numerator;
-        }
 
         return mode switch
         {
@@ -116,9 +105,7 @@ public readonly partial struct QuantityValue
         {
             var quotient = BigInteger.DivRem(numerator, denominator, out var remainder);
             if (remainder.IsZero)
-            {
                 return quotient;
-            }
 
             if (numerator.Sign == 1)
             {

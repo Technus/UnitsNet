@@ -14,21 +14,10 @@ namespace UnitsNet
         /// <summary>
         /// Represents a dimensionless (unitless) quantity.
         /// </summary>
-        public static BaseDimensions Dimensionless { get; } = new(0, 0, 0, 0, 0, 0, 0);
-
-#if NET
-        /// <summary>Creates an instance of <see cref="BaseDimensions"/>.</summary>
-        public BaseDimensions()
-        {
-            //Ctor for Object initialization block
-        }
-#endif
+        public static BaseDimensions Dimensionless { get; } = new();
 
         /// <summary>Creates an instance of <see cref="BaseDimensions"/>.</summary>
-#if NET
-        [SetsRequiredMembers]
-#endif
-        public BaseDimensions(int length, int mass, int time, int current, int temperature, int amount, int luminousIntensity)
+        public BaseDimensions(int length = default, int mass = default, int time = default, int current = default, int temperature = default, int amount = default, int luminousIntensity = default)
         {
             Length = length;
             Mass = mass;
@@ -152,7 +141,7 @@ namespace UnitsNet
             => obj is BaseDimensions other && (ReferenceEquals(this, other) || EqualsCore(other));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool EqualsCore(BaseDimensions other) =>
+        internal bool EqualsCore(BaseDimensions other) =>
             Length == other.Length &&
             Mass == other.Mass &&
             Time == other.Time &&
@@ -237,7 +226,7 @@ namespace UnitsNet
         /// <param name="left">Left.</param>
         /// <param name="right">Right.</param>
         /// <returns>Resulting dimensions.</returns>
-        public static BaseDimensions operator *(BaseDimensions left, BaseDimensions right)
+        public static BaseDimensions operator *(BaseDimensions? left, BaseDimensions? right)
         {
             if (left is null) throw new ArgumentNullException(nameof(left));
             if (right is null) throw new ArgumentNullException(nameof(right));
@@ -251,7 +240,7 @@ namespace UnitsNet
         /// <param name="left">Left.</param>
         /// <param name="right">Right.</param>
         /// <returns>Resulting dimensions.</returns>
-        public static BaseDimensions operator /(BaseDimensions left, BaseDimensions right)
+        public static BaseDimensions operator /(BaseDimensions? left, BaseDimensions? right)
         {
             if (left is null) throw new ArgumentNullException(nameof(left));
             if (right is null) throw new ArgumentNullException(nameof(right));
@@ -293,37 +282,37 @@ namespace UnitsNet
         /// <summary>
         /// Gets the length dimensions (L).
         /// </summary>
-        public required int Length { get; init; }
+        public int Length { get; init; }
 
         /// <summary>
         /// Gets the mass dimensions (M).
         /// </summary>
-        public required int Mass { get; init; }
+        public int Mass { get; init; }
 
         /// <summary>
         /// Gets the time dimensions (T).
         /// </summary>
-        public required int Time { get; init; }
+        public int Time { get; init; }
 
         /// <summary>
         /// Gets the electric current dimensions (I).
         /// </summary>
-        public required int Current { get; init; }
+        public int Current { get; init; }
 
         /// <summary>
         /// Gets the temperature dimensions (Θ).
         /// </summary>
-        public required int Temperature { get; init; }
+        public int Temperature { get; init; }
 
         /// <summary>
         /// Gets the amount of substance dimensions (N).
         /// </summary>
-        public required int Amount { get; init; }
+        public int Amount { get; init; }
 
         /// <summary>
         /// Gets the luminous intensity dimensions (J).
         /// </summary>
-        public required int LuminousIntensity { get; init; }
+        public int LuminousIntensity { get; init; }
 #else
         /// <summary>
         /// Gets the length dimensions (L).

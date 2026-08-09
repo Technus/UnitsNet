@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Runtime.CompilerServices;
+
 #if NET8_0_OR_GREATER
 using System.Collections.Frozen;
 using QuantityByTypeLookupDictionary = System.Collections.Frozen.FrozenDictionary<System.Type, UnitsNet.QuantityInfo>;
@@ -26,6 +28,7 @@ public class QuantityInfoLookup
     private readonly Lazy<QuantityByTypeLookupDictionary> _quantitiesByUnitType;
     private readonly Lazy<UnitByKeyLookupDictionary> _unitsByKey;
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private QuantityByNameLookupDictionary GroupQuantitiesByName()
     {
 #if NET8_0_OR_GREATER
@@ -35,6 +38,7 @@ public class QuantityInfoLookup
 #endif
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private QuantityByTypeLookupDictionary GroupQuantitiesByType()
     {
 #if NET8_0_OR_GREATER
@@ -44,6 +48,7 @@ public class QuantityInfoLookup
 #endif
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private QuantityByTypeLookupDictionary GroupQuantitiesByUnitType()
     {
 #if NET8_0_OR_GREATER
@@ -53,6 +58,7 @@ public class QuantityInfoLookup
 #endif
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private UnitByKeyLookupDictionary GroupUnitsByKey()
     {
 #if NET8_0_OR_GREATER
@@ -89,17 +95,29 @@ public class QuantityInfoLookup
     /// <summary>
     ///     All quantity names, such as "Length" and "Mass".
     /// </summary>
-    public IReadOnlyCollection<string> Names => _quantitiesByName.Value.Keys;
+    public IReadOnlyCollection<string> Names
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _quantitiesByName.Value.Keys;
+    }
 
     /// <summary>
     ///     A read-only dictionary that maps quantity names to their corresponding <see cref="QuantityInfo" />.
     /// </summary>
-    public IReadOnlyDictionary<string, QuantityInfo> ByName => _quantitiesByName.Value;
+    public IReadOnlyDictionary<string, QuantityInfo> ByName
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _quantitiesByName.Value;
+    }
 
     /// <summary>
     ///     All quantity information objects, such as <see cref="Length.Info" /> and <see cref="Mass.Info" />.
     /// </summary>
-    public IReadOnlyList<QuantityInfo> Infos => _quantities;
+    public IReadOnlyList<QuantityInfo> Infos
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _quantities;
+    }
 
     internal static QuantityInfoLookup Create(IEnumerable<QuantityInfo> defaultQuantities, Action<QuantitiesSelector> configureQuantities)
     {
@@ -147,10 +165,9 @@ public class QuantityInfoLookup
     /// <summary>
     ///     Try to get the <see cref="QuantityInfo" /> for a given quantity type.
     /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryGetQuantityInfo(Type quantityType, [NotNullWhen(true)] out QuantityInfo? quantityInfo)
-    {
-        return _quantitiesByType.Value.TryGetValue(quantityType, out quantityInfo);
-    }
+        => _quantitiesByType.Value.TryGetValue(quantityType, out quantityInfo);
 
     /// <summary>
     ///     Retrieves the <see cref="UnitInfo" /> for a specified <see cref="UnitKey" />.
@@ -174,10 +191,9 @@ public class QuantityInfoLookup
     /// <summary>
     ///     Try to get <see cref="UnitInfo" /> for a given unit enum value.
     /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryGetUnitInfo(UnitKey unitKey, [NotNullWhen(true)] out UnitInfo? unitInfo)
-    {
-        return _unitsByKey.Value.TryGetValue(unitKey, out unitInfo);
-    }
+        => _unitsByKey.Value.TryGetValue(unitKey, out unitInfo);
 
     /// <summary>
     ///     Dynamically construct a quantity.
@@ -186,10 +202,9 @@ public class QuantityInfoLookup
     /// <param name="unit">Unit enum value.</param>
     /// <returns>An <see cref="IQuantity" /> object.</returns>
     /// <exception cref="UnitNotFoundException">Unit value is not a know unit enum type.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IQuantity From(QuantityValue value, UnitKey unit)
-    {
-        return GetUnitInfo(unit).From(value);
-    }
+        => GetUnitInfo(unit).From(value);
 
     /// <summary>
     ///     Attempts to create a quantity from the specified value and unit.
@@ -253,10 +268,9 @@ public class QuantityInfoLookup
     /// <returns>
     ///     <c>true</c> if the quantity name was found; otherwise, <c>false</c>.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryGetQuantityByName(string quantityName, [NotNullWhen(true)] out QuantityInfo? quantityInfo)
-    {
-        return ByName.TryGetValue(quantityName, out quantityInfo);
-    }
+        => ByName.TryGetValue(quantityName, out quantityInfo);
 
     /// <summary>
     ///     Attempts to parse a unit information object based on its quantity and unit names.
@@ -321,10 +335,9 @@ public class QuantityInfoLookup
     ///     <c>true</c> if a <see cref="QuantityInfo" /> associated with the specified unit type was found; otherwise,
     ///     <c>false</c>.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryGetQuantityByUnitType(Type unitType, [NotNullWhen(true)] out QuantityInfo? quantityInfo)
-    {
-        return _quantitiesByUnitType.Value.TryGetValue(unitType, out quantityInfo);
-    }
+        => _quantitiesByUnitType.Value.TryGetValue(unitType, out quantityInfo);
 
     /// <summary>
     ///     Retrieves the <see cref="QuantityInfo" /> associated with the specified unit type.

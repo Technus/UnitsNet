@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System.Numerics;
+using System.Runtime.CompilerServices;
 #if NET7_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
@@ -16,10 +17,9 @@ public partial struct QuantityValue
     private static readonly BigInteger MinDouble = -MaxDouble;
 
     /// <summary>The implicit cast from <see cref="QuantityValue" /> to <see cref="double" /> is lossy.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator double(QuantityValue value)
-    {
-        return value.ToDouble();
-    }
+        => value.ToDouble();
 
     /// <summary>
     ///     Converts the quantity value to the closest double-precision floating point number.
@@ -43,14 +43,10 @@ public partial struct QuantityValue
         }
 
         if (numerator.IsZero)
-        {
             return 0;
-        }
 
         if (denominator.IsOne)
-        {
             return (double)numerator;
-        }
 
         var convertedNumerator = (double)numerator;
         if (double.IsPositiveInfinity(convertedNumerator))
@@ -69,9 +65,7 @@ public partial struct QuantityValue
 
             var withoutDecimalPlaces = (double)BigInteger.DivRem(numerator, denominator, out var remainder);
             if (double.IsPositiveInfinity(withoutDecimalPlaces))
-            {
                 return double.PositiveInfinity;
-            }
 
             return remainder.IsZero ? withoutDecimalPlaces : withoutDecimalPlaces + (double)remainder / (double)denominator;
         }
@@ -92,9 +86,7 @@ public partial struct QuantityValue
 
             var withoutDecimalPlaces = (double)BigInteger.DivRem(numerator, denominator, out var remainder);
             if (double.IsNegativeInfinity(withoutDecimalPlaces))
-            {
                 return double.NegativeInfinity;
-            }
 
             return remainder.IsZero ? withoutDecimalPlaces : withoutDecimalPlaces + (double)remainder / (double)denominator;
         }
@@ -107,9 +99,7 @@ public partial struct QuantityValue
             // we want to flip the operation: x = a/b -> 1/x = b/a
             var decimalPart = (double)BigInteger.DivRem(denominator, numerator, out var remainder);
             if (double.IsInfinity(decimalPart))
-            {
                 return 0;
-            }
 
             return remainder.IsZero ? 1 / decimalPart : 1 / (decimalPart + (double)remainder / (double)numerator);
         }
@@ -118,10 +108,9 @@ public partial struct QuantityValue
     }
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="decimal" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator decimal(QuantityValue value)
-    {
-        return value.ToDecimal();
-    }
+        => value.ToDecimal();
 
     /// <summary>
     ///     Converts the current <see cref="QuantityValue" /> to its <see cref="decimal" /> equivalent.
@@ -138,19 +127,13 @@ public partial struct QuantityValue
         var numerator = Numerator;
         var denominator = Denominator;
         if (denominator.IsZero)
-        {
             throw new OverflowException();
-        }
 
         if (numerator.IsZero)
-        {
             return decimal.Zero;
-        }
 
         if (denominator.IsOne)
-        {
             return (decimal)numerator;
-        }
 
         if (numerator > MaxDecimal)
         {
@@ -225,21 +208,15 @@ public partial struct QuantityValue
         }
         
         if (numerator.IsZero)
-        {
             return decimal.Zero;
-        }
 
         if (denominator.IsOne)
         {
             if (numerator > MaxDecimal)
-            {
                 return decimal.MaxValue;
-            }
 
             if (numerator < MinDecimal)
-            {
                 return decimal.MinValue;
-            }
 
             return (decimal)numerator;
         }
@@ -260,9 +237,7 @@ public partial struct QuantityValue
 
             var withoutDecimalPlaces = BigInteger.DivRem(numerator, denominator, out BigInteger remainder);
             if (withoutDecimalPlaces > MaxDecimal)
-            {
                 return decimal.MaxValue;
-            }
 
             return remainder.IsZero ? (decimal)withoutDecimalPlaces : (decimal)withoutDecimalPlaces + (decimal)remainder / (decimal)denominator;
         }
@@ -283,9 +258,7 @@ public partial struct QuantityValue
 
             var withoutDecimalPlaces = BigInteger.DivRem(numerator, denominator, out BigInteger remainder);
             if (withoutDecimalPlaces < MinDecimal)
-            {
                 return decimal.MinValue;
-            }
 
             return remainder.IsZero ? (decimal)withoutDecimalPlaces : (decimal)withoutDecimalPlaces + (decimal)remainder / (decimal)denominator;
         }
@@ -297,9 +270,7 @@ public partial struct QuantityValue
             // we want to flip the operation: x = a/b -> 1/x = b/a
             var decimalPart = BigInteger.DivRem(denominator, numerator, out BigInteger remainder);
             if (decimalPart < MinDecimal || decimalPart > MaxDecimal)
-            {
                 return decimal.Zero;
-            }
 
             return remainder.IsZero ? 1m / (decimal)decimalPart : 1m / ((decimal)decimalPart + (decimal)remainder / (decimal)numerator);
         }
@@ -308,10 +279,8 @@ public partial struct QuantityValue
     }
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="float" />.</summary>
-    public static explicit operator float(QuantityValue value)
-    {
-        return (float)(double)value;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static explicit operator float(QuantityValue value) => (float)(double)value;
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="BigInteger" />.</summary>
     public static explicit operator BigInteger(QuantityValue value)
@@ -319,57 +288,48 @@ public partial struct QuantityValue
         var numerator = value.Numerator;
         var denominator = value.Denominator;
         if (denominator.IsZero)
-        {
             throw new OverflowException("The big integer type cannot represent NaN or Infinity");
-        }
         
         return denominator.IsOne ? numerator : numerator / denominator;
     }
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="long" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator long(QuantityValue value)
-    {
-        return (long)(BigInteger)value;
-    }
+        => (long)(BigInteger)value;
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="ulong" />.</summary>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator ulong(QuantityValue value)
-    {
-        return (ulong)(BigInteger)value;
-    }
+        => (ulong)(BigInteger)value;
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="int" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator int(QuantityValue value)
-    {
-        return (int)(BigInteger)value;
-    }
+        => (int)(BigInteger)value;
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="uint" />.</summary>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator uint(QuantityValue value)
-    {
-        return (uint)(BigInteger)value;
-    }
+        => (uint)(BigInteger)value;
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="short" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator short(QuantityValue value)
-    {
-        return (short)(BigInteger)value;
-    }
+        => (short)(BigInteger)value;
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="ushort" />.</summary>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator ushort(QuantityValue value)
-    {
-        return (ushort)(BigInteger)value;
-    }
+        => (ushort)(BigInteger)value;
 
     /// <summary>Explicit cast from <see cref="QuantityValue" /> to <see cref="byte" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator byte(QuantityValue value)
-    {
-        return (byte)(BigInteger)value;
-    }
+        => (byte)(BigInteger)value;
 
 #if NET7_0_OR_GREATER
     /// <summary>
@@ -378,10 +338,9 @@ public partial struct QuantityValue
     /// <param name="value">The QuantityValue to convert.</param>
     /// <returns>The converted Half precision floating point number.</returns>
     /// <exception cref="OverflowException">Thrown when the QuantityValue is too large to fit in a Half.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator Half(QuantityValue value)
-    {
-        return (Half)value.ToDouble();
-    }
+        => (Half)value.ToDouble();
 
     /// <summary>
     ///     Converts the given QuantityValue to an Int128.
@@ -389,10 +348,9 @@ public partial struct QuantityValue
     /// <param name="value">The QuantityValue to convert.</param>
     /// <returns>The converted Int128.</returns>
     /// <exception cref="OverflowException">Thrown when the QuantityValue is too large to fit in an Int128.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator Int128(QuantityValue value)
-    {
-        return (Int128)(BigInteger)value;
-    }
+        => (Int128)(BigInteger)value;
 
     /// <summary>
     ///     Converts the given Fraction to an UInt128.
@@ -401,10 +359,9 @@ public partial struct QuantityValue
     /// <returns>The converted UInt128.</returns>
     /// <exception cref="OverflowException">Thrown when the Fraction is too large to fit in an UInt128.</exception>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator UInt128(QuantityValue value)
-    {
-        return (UInt128)(BigInteger)value;
-    }
+        => (UInt128)(BigInteger)value;
 
     static bool INumberBase<QuantityValue>.TryConvertToChecked<TOther>(QuantityValue value, [MaybeNullWhen(false)] out TOther result)
     {
@@ -590,80 +547,51 @@ public partial struct QuantityValue
             }
 
             if (value.Numerator.IsZero)
-            {
                 result = TOther.Zero;
-            }
             else
-            {
                 throw new OverflowException();
-            }
 
             return true;
         }
 
         if (typeof(TOther) == typeof(Int128))
-        {
             return ConvertFromBigInteger<Int128>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(UInt128))
-        {
             return ConvertFromBigInteger<UInt128>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(long))
-        {
             return ConvertFromBigInteger<long>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(ulong))
-        {
             return ConvertFromBigInteger<ulong>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(int))
-        {
             return ConvertFromBigInteger<int>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(uint))
-        {
             return ConvertFromBigInteger<uint>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(nint))
-        {
             return ConvertFromBigInteger<nint>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(UIntPtr))
-        {
             return ConvertFromBigInteger<UIntPtr>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(short))
-        {
             return ConvertFromBigInteger<short>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(ushort))
-        {
             return ConvertFromBigInteger<ushort>(value, out result);
-        }
         
-        if (typeof(TOther) == typeof(char)) {
+        if (typeof(TOther) == typeof(char))
             return ConvertFromBigInteger<char>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(byte))
-        {
             return ConvertFromBigInteger<byte>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(sbyte))
-        {
             return ConvertFromBigInteger<sbyte>(value, out result);
-        }
 
         result = default;
         return false;
@@ -728,84 +656,53 @@ public partial struct QuantityValue
         if (typeof(TOther) == typeof(BigInteger))
         {
             if (IsFinite(value))
-            {
                 result = (TOther)(object)(BigInteger)value;
-            }
             else if (value.Numerator.IsZero)
-            {
                 result = TOther.Zero;
-            }
             else
-            {
                 throw new OverflowException();
-            }
 
             return true;
         }
 
         if (typeof(TOther) == typeof(Int128))
-        {
             return ConvertFromBigInteger<Int128>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(UInt128))
-        {
             return ConvertFromBigInteger<UInt128>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(long))
-        {
             return ConvertFromBigInteger<long>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(ulong))
-        {
             return ConvertFromBigInteger<ulong>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(int))
-        {
             return ConvertFromBigInteger<int>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(uint))
-        {
             return ConvertFromBigInteger<uint>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(nint))
-        {
             return ConvertFromBigInteger<nint>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(UIntPtr))
-        {
             return ConvertFromBigInteger<UIntPtr>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(short))
-        {
             return ConvertFromBigInteger<short>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(ushort))
-        {
             return ConvertFromBigInteger<ushort>(value, out result);
-        }
         
-        if (typeof(TOther) == typeof(char)) {
+        if (typeof(TOther) == typeof(char))
             return ConvertFromBigInteger<char>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(byte))
-        {
             return ConvertFromBigInteger<byte>(value, out result);
-        }
 
         if (typeof(TOther) == typeof(sbyte))
-        {
             return ConvertFromBigInteger<sbyte>(value, out result);
-        }
 
         result = default;
         return false;

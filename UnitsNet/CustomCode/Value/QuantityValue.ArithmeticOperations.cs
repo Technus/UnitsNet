@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -29,9 +30,7 @@ public readonly partial struct QuantityValue
         {
             // `a` is (+/-) Infinity
             if (!b.Denominator.IsZero)
-            {
                 return a; // Inf + b = Inf
-            }
 
             // adding infinities
             return (a.Numerator.Sign + b.Numerator.Sign) switch
@@ -43,41 +42,27 @@ public readonly partial struct QuantityValue
         }
 
         if (b.Denominator.IsZero)
-        {
             return b; // (+/-) Infinity
-        }
 
         // both values are non-zero
         if (a.Denominator == b.Denominator)
-        {
             return new QuantityValue(a.Numerator + b.Numerator, a.Denominator);
-        }
 
         if (a.Denominator.IsOne)
-        {
             return new QuantityValue(a.Numerator * b.Denominator + b.Numerator, b.Denominator);
-        }
 
         if (b.Denominator.IsOne)
-        {
             return new QuantityValue(a.Numerator + b.Numerator * a.Denominator, a.Denominator);
-        }
 
         var gcd = BigInteger.GreatestCommonDivisor(a.Denominator, b.Denominator);
         if (gcd.IsOne)
-        {
             return new QuantityValue(a.Numerator * b.Denominator + b.Numerator * a.Denominator, a.Denominator * b.Denominator);
-        }
 
         if (gcd == a.Denominator)
-        {
             return new QuantityValue(b.Denominator / gcd * a.Numerator + b.Numerator, b.Denominator);
-        }
 
         if (gcd == b.Denominator)
-        {
             return new QuantityValue(a.Numerator + a.Denominator / gcd * b.Numerator, a.Denominator);
-        }
 
         return new QuantityValue(a.Numerator * (b.Denominator / gcd) + b.Numerator * (a.Denominator / gcd), a.Denominator / gcd * b.Denominator);
     }
@@ -87,10 +72,9 @@ public readonly partial struct QuantityValue
     /// </summary>
     /// <param name="value">The QuantityValue to be incremented.</param>
     /// <returns>A new QuantityValue that represents the original value incremented by one.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue operator ++(QuantityValue value)
-    {
-        return value + One;
-    }
+        => value + One;
 
     /// <summary>
     ///     Subtracts one QuantityValue from another.
@@ -99,19 +83,16 @@ public readonly partial struct QuantityValue
     /// <param name="b">The QuantityValue to subtract.</param>
     /// <returns>The difference between the two QuantityValue instances.</returns>
     public static QuantityValue operator -(QuantityValue a, QuantityValue b)
-    {
-        return a + -b;
-    }
+        => a + -b;
 
     /// <summary>
     ///     Returns the same value for the given QuantityValue. This unary plus operator doesn't change the value.
     /// </summary>
     /// <param name="value">The QuantityValue to return.</param>
     /// <returns>The same QuantityValue that was passed in.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue operator +(QuantityValue value)
-    {
-        return value;
-    }
+        => value;
 
     /// <summary>
     ///     Returns the negated value of the operand
@@ -119,19 +100,16 @@ public readonly partial struct QuantityValue
     /// <param name="v">Value to negate</param>
     /// <returns>-v</returns>
     public static QuantityValue operator -(QuantityValue v)
-    {
-        return new QuantityValue(-v.Numerator, v.Denominator);
-    }
+        => new(-v.Numerator, v.Denominator);
 
     /// <summary>
     ///     Decrements the value of the specified QuantityValue by one.
     /// </summary>
     /// <param name="value">The QuantityValue to decrement.</param>
     /// <returns>A new QuantityValue that is the value of the input QuantityValue minus one.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue operator --(QuantityValue value)
-    {
-        return value - One;
-    }
+        => value - One;
 
     /// <summary>
     ///     Multiplies two QuantityValue instances.
@@ -159,9 +137,7 @@ public readonly partial struct QuantityValue
         }
 
         if (numerator1.IsZero || numerator2.IsZero)
-        {
             return Zero;
-        }
 
         return new QuantityValue(MultiplyTerms(numerator1, numerator2), MultiplyTerms(denominator1, denominator2));
     }
@@ -169,9 +145,7 @@ public readonly partial struct QuantityValue
     private static BigInteger MultiplyTerms(BigInteger a, BigInteger b)
     {
         if (a.IsOne)
-        {
             return b;
-        }
 
         return b.IsOne ? a : a * b;
     }
@@ -209,14 +183,10 @@ public readonly partial struct QuantityValue
         }
 
         if (numerator1.IsZero)
-        {
             return numerator2.IsZero ? NaN : Zero;
-        }
 
         if (numerator2.IsZero)
-        {
             return new QuantityValue(numerator1.Sign, BigInteger.Zero);
-        }
 
         // adjust the signs such that the divisor is positive (prevent a negative sign in the resulting denominator)
         if (numerator2.Sign == -1)
@@ -301,9 +271,7 @@ public readonly partial struct QuantityValue
                 return new QuantityValue(numerator, denominator);
             }
             default:
-            {
                 return new QuantityValue(numerator1, numerator2);
-            }
         }
     }
 
@@ -321,16 +289,12 @@ public readonly partial struct QuantityValue
         var denominator2 = b.Denominator;
 
         if (numerator2.IsZero)
-        {
             return NaN; // x / 0 == NaN
-        }
 
         if (numerator1.IsZero)
-        {
             return denominator1.IsZero
                 ? NaN // 0 / NaN == NaN
                 : Zero; // 0 / x == 0 (where x != 0)
-        }
 
         if (denominator1.IsZero)
         {
@@ -345,9 +309,7 @@ public readonly partial struct QuantityValue
         }
 
         if (denominator1 == denominator2)
-        {
             return new QuantityValue(numerator1 % numerator2, denominator1);
-        }
 
         var gcd = BigInteger.GreatestCommonDivisor(denominator1, denominator2);
         if (gcd.IsOne)
@@ -358,14 +320,10 @@ public readonly partial struct QuantityValue
         }
 
         if (gcd == denominator1)
-        {
             return new QuantityValue(denominator2 / gcd * numerator1 % numerator2, denominator2);
-        }
 
         if (gcd == denominator2)
-        {
             return new QuantityValue(numerator1 % (denominator1 / gcd * numerator2), denominator1);
-        }
 
         var thisMultiplier = denominator1 / gcd;
         var otherMultiplier = denominator2 / gcd;

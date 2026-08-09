@@ -40,7 +40,5 @@ internal readonly record struct QuantityConversionKey
     public static QuantityConversionKey Create<TSourceUnit, TTargetUnit>(TSourceUnit fromUnit)
         where TSourceUnit : struct, Enum
         where TTargetUnit : struct, Enum
-    {
-        return new QuantityConversionKey(UnitKey.ForUnit(fromUnit), typeof(TTargetUnit));
-    }
+        => new(UnitKey.ForUnit(fromUnit), typeof(TTargetUnit));
 }

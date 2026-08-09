@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -6,8 +7,16 @@ public partial struct QuantityValue
 {
     internal readonly struct QuantityValueDebugView(QuantityValue value)
     {
-        public BigInteger A => value.Numerator;
-        public BigInteger B => value.Denominator;
+        public BigInteger A
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => value.Numerator;
+        }
+        public BigInteger B
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => value.Denominator;
+        }
         public bool IsReduced => A.IsZero || B.IsZero || BigInteger.GreatestCommonDivisor(A, B).IsOne;
 #if NET
         public long NbBits => A.GetBitLength() + B.GetBitLength();
@@ -15,8 +24,16 @@ public partial struct QuantityValue
         public long NbBits => (A.IsZero ? 0 : (int)BigInteger.Log(BigInteger.Abs(A), 2) + 1) +
                               (B.IsZero ? 0 : (int)(BigInteger.Log(B, 2) + 1));
 #endif
-        public StringFormatsView StringFormats => new(value);
-        public NumericFormatsView ValueFormats => new(value);
+        public StringFormatsView StringFormats
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => new(value);
+        }
+        public NumericFormatsView ValueFormats
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => new(value);
+        }
 
         [DebuggerDisplay("{ShortFormat}")]
         internal readonly struct StringFormatsView(QuantityValue value)
@@ -47,10 +64,26 @@ public partial struct QuantityValue
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private readonly QuantityValue _value = value;
 
-            public int Integer => (int)_value;
-            public long Long => (long)_value;
-            public decimal Decimal => _value.ToDecimal();
-            public double Double => _value.ToDouble();
+            public int Integer
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get => (int)_value;
+            }
+            public long Long
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get => (long)_value;
+            }
+            public decimal Decimal
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get => _value.ToDecimal();
+            }
+            public double Double
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get => _value.ToDouble();
+            }
         }
     }
 }

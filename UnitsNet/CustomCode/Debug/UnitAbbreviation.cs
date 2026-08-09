@@ -80,9 +80,7 @@ public readonly struct UnitAbbreviation
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return DefaultAbbreviation;
-    }
+        => DefaultAbbreviation;
 }
 
 /// <summary>
@@ -140,7 +138,5 @@ public readonly struct UnitAbbreviations
 
     /// <inheritdoc />
     public override string ToString()
-    {
-        return string.Join(", ", Abbreviations.Select(x => $"\"{x}\""));
-    }
+        => string.Join(", ", Abbreviations.Select(x => $"\"{x}\""));
 }

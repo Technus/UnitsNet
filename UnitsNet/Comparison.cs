@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -50,15 +51,12 @@ public static class Comparison
     /// <param name="comparisonType">Whether the tolerance is absolute or relative.</param>
     /// <returns>True if the two values are equal within the given tolerance, otherwise false.</returns>
     /// <exception cref="ArgumentOutOfRangeException"> Thrown when the <paramref name="tolerance"/> is negative.</exception>
-    public static bool Equals(QuantityValue referenceValue, QuantityValue otherValue, QuantityValue tolerance, ComparisonType comparisonType)
+    public static bool Equals(QuantityValue referenceValue, QuantityValue otherValue, QuantityValue tolerance, ComparisonType comparisonType) => comparisonType switch
     {
-        return comparisonType switch
-        {
-            ComparisonType.Relative => EqualsRelative(referenceValue, otherValue, tolerance),
-            ComparisonType.Absolute => EqualsAbsolute(referenceValue, otherValue, tolerance),
-            _ => throw new InvalidOperationException("The given ComparisonType is not supported.")
-        };
-    }
+        ComparisonType.Relative => EqualsRelative(referenceValue, otherValue, tolerance),
+        ComparisonType.Absolute => EqualsAbsolute(referenceValue, otherValue, tolerance),
+        _ => throw new InvalidOperationException("The given ComparisonType is not supported.")
+    };
 
     /// <summary>
     ///     Checks if two values are equal with a given relative tolerance.
@@ -85,10 +83,8 @@ public static class Comparison
     public static bool EqualsRelative(QuantityValue referenceValue, QuantityValue otherValue, QuantityValue tolerance)
     {
         if (QuantityValue.IsNegative(tolerance))
-        {
             throw ExceptionHelper.CreateArgumentOutOfRangeExceptionForNegativeTolerance(nameof(tolerance));
-        }
-        
+
         var maxVariation = QuantityValue.Abs(referenceValue) * tolerance;
         return QuantityValue.Abs(referenceValue - otherValue) <= maxVariation;
     }
@@ -116,18 +112,19 @@ public static class Comparison
     public static bool EqualsAbsolute(QuantityValue value1, QuantityValue value2, QuantityValue tolerance)
     {
         if (QuantityValue.IsNegative(tolerance))
-        {
             throw ExceptionHelper.CreateArgumentOutOfRangeExceptionForNegativeTolerance(nameof(tolerance));
-        }
 
         return QuantityValue.Abs(value1 - value2) <= tolerance;
     }
 
+#if NET7_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     internal static int GetHashCode(Type type, QuantityValue value)
     {
 #if NET7_0_OR_GREATER
         return HashCode.Combine(type, value);
-        #else
+#else
         unchecked
         {
             var hash = 17;

@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System;
+using System.Runtime.CompilerServices;
 using UnitsNet.Units;
 
 namespace UnitsNet
@@ -20,10 +21,8 @@ namespace UnitsNet
             : this()
         {
             if (!QuantityValue.IsPositive(power.Value))
-            {
                 throw new ArgumentOutOfRangeException(
-                    nameof(power), "The base-10 logarithm of a number ≤ 0 is undefined. Power must be greater than 0 W.");
-            }
+                    nameof(power), power, "The base-10 logarithm of a number ≤ 0 is undefined. Power must be greater than 0 W.");
 
             // P(dBW) = 10*log10(value(W)/reference(W))
             _value = power.Watts.ToLogSpace(LogarithmicScalingFactor, significantDigits);
@@ -69,10 +68,9 @@ namespace UnitsNet
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///     Thrown when the number of significant digits is less than 1 or greater than 17.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PowerRatio FromPower(Power power, byte significantDigits = 15)
-        {
-            return new PowerRatio(power, significantDigits);
-        }
+            => new(power, significantDigits);
 
         #endregion
     }

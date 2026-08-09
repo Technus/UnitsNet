@@ -1,9 +1,7 @@
 // Licensed under MIT No Attribution, see LICENSE file at the root.
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace UnitsNet
@@ -15,7 +13,7 @@ namespace UnitsNet
     public abstract class UnitAttributeBase : Attribute
     {
         /// <summary>
-        /// The unit to convert to, such as <see cref="UnitsNet.Units.LengthUnit" />. Defaults to the unit the quantity as constructed with.
+        /// The unit to convert to, such as <see cref="LengthUnit" />. Defaults to the unit the quantity as constructed with.
         /// </summary>
         public Enum? UnitType { get; set; }
 
@@ -134,8 +132,8 @@ namespace UnitsNet
         /// <summary>
         ///     Returns true if sourceType if of type <see cref="string"/>
         /// </summary>
-        /// <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
-        /// <param name="sourceType">A <see cref="System.Type"/> that represents the type you want to convert from.</param>
+        /// <param name="context">An <see cref="ITypeDescriptorContext"/> that provides a format context.</param>
+        /// <param name="sourceType">A <see cref="Type"/> that represents the type you want to convert from.</param>
         /// <returns>true if this converter can perform the conversion; otherwise, false.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {

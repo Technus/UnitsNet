@@ -4,6 +4,8 @@
 using System.Globalization;
 using System.Linq;
 using UnitsNet.InternalHelpers;
+using System.Runtime.CompilerServices;
+
 
 #if NET
 using System.Collections.Frozen;
@@ -58,6 +60,7 @@ public class UnitConverter
     /// </remarks>
     public QuantityInfoLookup Quantities
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => UnitParser.Quantities;
     }
 
@@ -67,7 +70,11 @@ public class UnitConverter
     /// <value>
     ///     The default <see cref="UnitConverter" /> instance configured by <see cref="UnitsNetSetup.Default" />.
     /// </value>
-    public static UnitConverter Default => UnitsNetSetup.Default.UnitConverter;
+    public static UnitConverter Default
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => UnitsNetSetup.Default.UnitConverter;
+    }
 
     /// <summary>
     ///     Creates a new instance of the <see cref="UnitConverter" /> class.
@@ -200,11 +207,10 @@ public class UnitConverter
     /// <returns>
     ///     <c>true</c> if the unit information was found; otherwise, <c>false</c>.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected bool TryGetUnitInfo(UnitKey unit, [NotNullWhen(true)] out UnitInfo? unitInfo)
-    {
-        return Quantities.TryGetUnitInfo(unit, out unitInfo);
-    }
-    
+        => Quantities.TryGetUnitInfo(unit, out unitInfo);
+
     /// <summary>
     ///     Determines whether a conversion is defined between the specified source and target quantities.
     /// </summary>
@@ -213,10 +219,9 @@ public class UnitConverter
     /// <returns>
     ///     <c>true</c> if a conversion is defined between the source and target quantities; otherwise, <c>false</c>.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected bool ConversionDefined(QuantityInfo sourceQuantity, QuantityInfo targetQuantity)
-    {
-        return _quantityConversions.Contains(new QuantityConversion(sourceQuantity, targetQuantity));
-    }
+        => _quantityConversions.Contains(new QuantityConversion(sourceQuantity, targetQuantity));
 
     /// <summary>
     ///     Gets the collection of quantity conversions available in this <see cref="UnitConverter" />.
@@ -225,7 +230,11 @@ public class UnitConverter
     ///     A quantity conversion defines the relationship between two quantities, enabling conversions
     ///     between them. This property provides access to all such conversions configured for this instance.
     /// </remarks>
-    internal IReadOnlyCollection<QuantityConversion> QuantityConversions => _quantityConversions;
+    internal IReadOnlyCollection<QuantityConversion> QuantityConversions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _quantityConversions;
+    }
 
     /// <summary>
     ///     Attempts to convert the specified quantity to a different unit.
@@ -241,12 +250,11 @@ public class UnitConverter
     /// <returns>
     ///     <c>true</c> if the conversion succeeded; otherwise, <c>false</c>.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryConvertValue<TQuantity, TUnit>(TQuantity quantity, TUnit toUnit, out QuantityValue convertedValue)
         where TQuantity : IQuantity<TUnit>
         where TUnit : struct, Enum
-    {
-        return TryConvertValue(quantity.Value, quantity.Unit, toUnit, out convertedValue);
-    }
+        => TryConvertValue(quantity.Value, quantity.Unit, toUnit, out convertedValue);
 
     /// <summary>
     ///     Attempts to convert a quantity value from one unit to another.
@@ -569,10 +577,9 @@ public class UnitConverter
     /// <returns>An <see cref="UnitInfo" /> object containing details about the specified unit.</returns>
     /// <exception cref="ArgumentNullException">Thrown when the <paramref name="unit" /> is null.</exception>
     /// <exception cref="UnitNotFoundException">Thrown when the <paramref name="unit" /> is not recognized.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected UnitInfo GetUnitInfo(UnitKey unit)
-    {
-        return Quantities.GetUnitInfo(unit);
-    }
+        => Quantities.GetUnitInfo(unit);
 
     /// <summary>
     ///     Converts the value of a quantity to a specified unit.
@@ -585,12 +592,11 @@ public class UnitConverter
     /// <exception cref="ArgumentNullException">Thrown when the <paramref name="quantity" /> is null.</exception>
     /// <exception cref="ArgumentException">Thrown when the conversion is not possible.</exception>
     /// <exception cref="UnitNotFoundException">Thrown when <paramref name="toUnit" /> is not found.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public QuantityValue ConvertValue<TQuantity, TUnit>(TQuantity quantity, TUnit toUnit)
         where TQuantity : IQuantity<TUnit>
         where TUnit : struct, Enum
-    {
-        return ConvertValue(quantity.Value, quantity.Unit, toUnit);
-    }
+        => ConvertValue(quantity.Value, quantity.Unit, toUnit);
 
     /// <summary>
     ///     Converts a quantity value from one unit to another using the specified quantity information.
@@ -985,7 +991,7 @@ public class UnitConverter
         result = default;
         return false;
     }
-    
+
     /// <summary>
     ///     Convert between any two quantity units by their abbreviations, such as converting a "Length" of N "m" to "cm".
     ///     This is particularly useful for creating things like a generated unit conversion UI,
@@ -1008,10 +1014,9 @@ public class UnitConverter
     /// </exception>
     /// <exception cref="UnitNotFoundException">No units match the abbreviation.</exception>
     /// <exception cref="AmbiguousUnitParseException">More than one unit matches the abbreviation.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public QuantityValue ConvertValueByAbbreviation(QuantityValue fromValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev)
-    {
-        return ConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, null);
-    }
+        => ConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, null);
 
     /// <summary>
     ///     Convert between any two quantity units by their abbreviations, such as converting a "Length" of N "m" to "cm".
@@ -1062,10 +1067,9 @@ public class UnitConverter
     /// <param name="result">Result if conversion was successful, 0 if not.</param>
     /// <example>double centimeters = ConvertByName(5, "Length", "m", "cm"); // 500</example>
     /// <returns>True if conversion was successful.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryConvertValueByAbbreviation(QuantityValue fromValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, out QuantityValue result)
-    {
-        return TryConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, null, out result);
-    }
+        => TryConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, null, out result);
 
     /// <summary>
     ///     Convert between any two quantity units by their abbreviations, such as converting a "Length" of N "m" to "cm".
@@ -1107,54 +1111,46 @@ public class UnitConverter
     }
 
     #region Static methods
-    
+
     /// <inheritdoc cref="ConvertValue"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue Convert(QuantityValue value, UnitKey fromUnitKey, UnitKey toUnitKey)
-    {
-        return Default.ConvertValue(value, fromUnitKey, toUnitKey);
-    }
+        => Default.ConvertValue(value, fromUnitKey, toUnitKey);
 
     /// <inheritdoc cref="TryConvertValue"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryConvert(QuantityValue value, UnitKey fromUnitKey, UnitKey toUnitKey, out QuantityValue result)
-    {
-        return Default.TryConvertValue(value, fromUnitKey, toUnitKey, out result);
-    }
+        => Default.TryConvertValue(value, fromUnitKey, toUnitKey, out result);
 
     /// <inheritdoc cref="ConvertValueByName"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue ConvertByName(QuantityValue inputValue, string quantityName, string fromUnitName, string toUnitName)
-    {
-        return Default.ConvertValueByName(inputValue, quantityName, fromUnitName, toUnitName);
-    }
+        => Default.ConvertValueByName(inputValue, quantityName, fromUnitName, toUnitName);
 
     /// <inheritdoc cref="TryConvertByName"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryConvertByName(QuantityValue inputValue, string quantityName, string fromUnitName, string toUnitName, out QuantityValue result)
-    {
-        return Default.TryConvertValueByName(inputValue, quantityName, fromUnitName, toUnitName, out result);
-    }
+        => Default.TryConvertValueByName(inputValue, quantityName, fromUnitName, toUnitName, out result);
 
-    /// <inheritdoc cref="ConvertValueByAbbreviation(UnitsNet.QuantityValue,string,string,string)"/>
+    /// <inheritdoc cref="ConvertValueByAbbreviation(QuantityValue,string,string,string)"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue ConvertByAbbreviation(QuantityValue inputValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev)
-    {
-        return Default.ConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev);
-    }
+        => Default.ConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev);
 
-    /// <inheritdoc cref="TryConvertValueByAbbreviation(UnitsNet.QuantityValue,string,string,string,out UnitsNet.QuantityValue)"/>
+    /// <inheritdoc cref="TryConvertValueByAbbreviation(QuantityValue,string,string,string,out QuantityValue)"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool TryConvertByAbbreviation(QuantityValue inputValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, out QuantityValue result)
-    {
-        return Default.TryConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev, out result);
-    }
+        => Default.TryConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev, out result);
 
-    /// <inheritdoc cref="ConvertValueByAbbreviation(UnitsNet.QuantityValue,string,string,string,CultureInfo?)"/>
+    /// <inheritdoc cref="ConvertValueByAbbreviation(QuantityValue,string,string,string,CultureInfo?)"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue ConvertByAbbreviation(QuantityValue fromValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, CultureInfo? culture)
-    {
-        return Default.ConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, culture);
-    }
+        => Default.ConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, culture);
 
-    /// <inheritdoc cref="TryConvertValueByAbbreviation(UnitsNet.QuantityValue,string,string,string,CultureInfo?,out UnitsNet.QuantityValue)"/>
-    public static bool TryConvertByAbbreviation(QuantityValue inputValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, CultureInfo? culture, out QuantityValue result) 
-    {
-        return Default.TryConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev, culture, out result);
-    }
+    /// <inheritdoc cref="TryConvertValueByAbbreviation(QuantityValue,string,string,string,CultureInfo?,out QuantityValue)"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryConvertByAbbreviation(QuantityValue inputValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, CultureInfo? culture, out QuantityValue result)
+        => Default.TryConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev, culture, out result);
 
     /// <summary>
     ///     Convert between any two quantity units by their abbreviations, such as converting a "Length" of N "m" to "cm".
@@ -1180,11 +1176,10 @@ public class UnitConverter
     /// <exception cref="UnitNotFoundException">No units match the abbreviation.</exception>
     /// <exception cref="AmbiguousUnitParseException">More than one unit matches the abbreviation.</exception>
     [Obsolete("Methods accepting a culture name are deprecated in favor of using an instance of CultureInfo.")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue ConvertByAbbreviation(QuantityValue fromValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, string? culture)
-    {
-        return Default.ConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, CultureHelper.GetCultureOrInvariant(culture));
-    }
-    
+        => Default.ConvertValueByAbbreviation(fromValue, quantityName, fromUnitAbbrev, toUnitAbbrev, CultureHelper.GetCultureOrInvariant(culture));
+
     /// <summary>
     ///     Convert between any two quantity units by their abbreviations, such as converting a "Length" of N "m" to "cm".
     ///     This is particularly useful for creating things like a generated unit conversion UI,
@@ -1205,10 +1200,9 @@ public class UnitConverter
     /// <example>double centimeters = ConvertByName(5, "Length", "m", "cm"); // 500</example>
     /// <returns>True if conversion was successful.</returns>
     [Obsolete("Methods accepting a culture name are deprecated in favor of using an instance of CultureInfo.")]
-    public static bool TryConvertByAbbreviation(QuantityValue inputValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, out QuantityValue result, string? culture) 
-    {
-        return Default.TryConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev, CultureHelper.GetCultureOrInvariant(culture), out result);
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryConvertByAbbreviation(QuantityValue inputValue, string quantityName, string fromUnitAbbrev, string toUnitAbbrev, out QuantityValue result, string? culture)
+        => Default.TryConvertValueByAbbreviation(inputValue, quantityName, fromUnitAbbrev, toUnitAbbrev, CultureHelper.GetCultureOrInvariant(culture), out result);
 
     #endregion
 }

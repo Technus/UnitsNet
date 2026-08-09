@@ -29,8 +29,6 @@ namespace UnitsNet
         ///     An <see cref = "Energy" /> that specifies the combustion energy of natural gas as consumed by the heating system.
         /// </returns>
         public static Energy CombustionEnergy(EnergyDensity energyDensity, Volume volume, Ratio conversionFactor)
-        {
-            return Energy.FromJoules((energyDensity * volume).As(EnergyUnit.Joule) * conversionFactor.DecimalFractions);
-        }
+            => Energy.FromJoules((energyDensity * volume).As(EnergyUnit.Joule) * conversionFactor.DecimalFractions);
     }
 }

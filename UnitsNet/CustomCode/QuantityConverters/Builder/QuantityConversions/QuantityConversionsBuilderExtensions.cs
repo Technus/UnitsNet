@@ -28,9 +28,7 @@ internal static class QuantityConversionsBuilderExtensions
         {
             if (quantities.TryGetQuantityInfo(conversionMapping.FirstQuantityType, out QuantityInfo? fromQuantity) &&
                 quantities.TryGetQuantityInfo(conversionMapping.SecondQuantityType, out QuantityInfo? toQuantity))
-            {
                 yield return new QuantityConversion(fromQuantity, toQuantity);
-            }
         }
     }
 
@@ -62,9 +60,7 @@ internal static class QuantityConversionsBuilderExtensions
             UnitConversionMapping unitConversionMapping = customConversion.Key;
             if (!quantities.TryGetUnitInfo(unitConversionMapping.FromUnitKey, out UnitInfo? fromUnitInfo) ||
                 !quantities.TryGetUnitInfo(unitConversionMapping.ToUnitKey, out UnitInfo? toUnitInfo))
-            {
                 continue;
-            }
 
             var conversionMapping = new QuantityConversion(fromUnitInfo.QuantityInfo, toUnitInfo.QuantityInfo);
             if (!conversionOptions.TryGetValue(conversionMapping, out QuantityConversionMappingOptions? conversionMappingOptions))
@@ -80,9 +76,7 @@ internal static class QuantityConversionsBuilderExtensions
         {
             if (!quantities.TryGetUnitInfo(unitConversionMapping.FromUnitKey, out UnitInfo? fromUnitInfo) ||
                 !quantities.TryGetUnitInfo(unitConversionMapping.ToUnitKey, out UnitInfo? toUnitInfo))
-            {
                 continue;
-            }
 
             var conversionMapping = new QuantityConversion(fromUnitInfo.QuantityInfo, toUnitInfo.QuantityInfo);
             if (!conversionOptions.TryGetValue(conversionMapping, out QuantityConversionMappingOptions? conversionMappingOptions))
@@ -112,16 +106,13 @@ internal static class QuantityConversionsBuilderExtensions
     /// </returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when an invalid caching mode is specified.</exception>
     public static IEnumerable<ConversionEntry> GetConversionFunctions(this IEnumerable<QuantityConversion> conversions,
-        ConversionCachingMode cachingMode, bool reduceConstants = true)
+        ConversionCachingMode cachingMode, bool reduceConstants = true) => cachingMode switch
     {
-        return cachingMode switch
-        {
-            ConversionCachingMode.None => [],
-            ConversionCachingMode.BaseOnly => conversions.SelectMany(conversion => conversion.GetConversionsWithBaseUnits()),
-            ConversionCachingMode.All => conversions.SelectMany(conversion => conversion.GetConversionsWithAllUnits(reduceConstants)),
-            _ => throw new ArgumentOutOfRangeException()
-        };
-    }
+        ConversionCachingMode.None => [],
+        ConversionCachingMode.BaseOnly => conversions.SelectMany(conversion => conversion.GetConversionsWithBaseUnits()),
+        ConversionCachingMode.All => conversions.SelectMany(conversion => conversion.GetConversionsWithAllUnits(reduceConstants)),
+        _ => throw new ArgumentOutOfRangeException(nameof(cachingMode), cachingMode, "Enum value out of range"),
+    };
 
     /// <summary>
     ///     Retrieves conversion expressions for a given set of quantity conversions, applying custom caching options if
@@ -138,11 +129,9 @@ internal static class QuantityConversionsBuilderExtensions
     public static IEnumerable<ConversionEntry> GetConversionFunctions(this IEnumerable<QuantityConversion> conversions,
         ConversionCachingMode defaultCachingMode, bool defaultConstantsReduction,
         IReadOnlyDictionary<Type, ConversionCacheOptions> customCachingOptions)
-    {
-        return customCachingOptions.Count == 0
+        => customCachingOptions.Count == 0
             ? conversions.GetConversionFunctions(defaultCachingMode, defaultConstantsReduction)
             : conversions.SelectMany(conversion => conversion.GetConversionFunctions(defaultCachingMode, defaultConstantsReduction, customCachingOptions));
-    }
 
     private static IEnumerable<ConversionEntry> GetConversionFunctions(this QuantityConversion conversion, ConversionCachingMode defaultCachingMode, bool defaultConstantsReduction,
         IReadOnlyDictionary<Type, ConversionCacheOptions> customCachingOptions)
@@ -192,9 +181,7 @@ internal static class QuantityConversionsBuilderExtensions
         IReadOnlyDictionary<Type, ConversionCacheOptions> customCachingOptions)
     {
         if (customUnitConversions.Count == 0)
-        {
             return conversions.GetConversionFunctions(defaultCachingMode, defaultConstantsReduction, customCachingOptions);
-        }
 
         return conversions.SelectMany(conversion => customUnitConversions.TryGetValue(conversion, out QuantityConversionMappingOptions? conversionMappingOptions)
             ? conversion.GetConversionFunctions(conversionMappingOptions, defaultCachingMode, defaultConstantsReduction, customCachingOptions)
@@ -232,27 +219,21 @@ internal static class QuantityConversionsBuilderExtensions
         }
     }
 
-    private static IEnumerable<ConversionEntry> GetQuantityConversions(this QuantityConversion conversion, ConversionCachingMode cachingMode, bool reduceConstants)
+    private static IEnumerable<ConversionEntry> GetQuantityConversions(this QuantityConversion conversion, ConversionCachingMode cachingMode, bool reduceConstants) => cachingMode switch
     {
-        return cachingMode switch
-        {
-            ConversionCachingMode.None => [],
-            ConversionCachingMode.BaseOnly => conversion.GetConversionsWithBaseUnits(),
-            ConversionCachingMode.All => conversion.GetConversionsWithAllUnits(reduceConstants),
-            _ => throw new ArgumentOutOfRangeException()
-        };
-    }
+        ConversionCachingMode.None => [],
+        ConversionCachingMode.BaseOnly => conversion.GetConversionsWithBaseUnits(),
+        ConversionCachingMode.All => conversion.GetConversionsWithAllUnits(reduceConstants),
+        _ => throw new ArgumentOutOfRangeException(nameof(cachingMode), cachingMode, "Enum value out of range"),
+    };
 
-    private static IEnumerable<ConversionEntry> GetConversionsTo(this QuantityInfo fromQuantity, QuantityInfo toQuantity, ConversionCachingMode cachingMode, bool reduceConstants)
+    private static IEnumerable<ConversionEntry> GetConversionsTo(this QuantityInfo fromQuantity, QuantityInfo toQuantity, ConversionCachingMode cachingMode, bool reduceConstants) => cachingMode switch
     {
-        return cachingMode switch
-        {
-            ConversionCachingMode.None => [],
-            ConversionCachingMode.BaseOnly => fromQuantity.GetConversionsWithBaseUnits(toQuantity),
-            ConversionCachingMode.All => fromQuantity.GetConversionsWithAllUnits(toQuantity, reduceConstants),
-            _ => throw new ArgumentOutOfRangeException()
-        };
-    }
+        ConversionCachingMode.None => [],
+        ConversionCachingMode.BaseOnly => fromQuantity.GetConversionsWithBaseUnits(toQuantity),
+        ConversionCachingMode.All => fromQuantity.GetConversionsWithAllUnits(toQuantity, reduceConstants),
+        _ => throw new ArgumentOutOfRangeException(nameof(cachingMode), cachingMode, "Enum value out of range"),
+    };
 
     private static IEnumerable<ConversionEntry> GetQuantityConversions(this QuantityConversion conversion, QuantityConversionMappingOptions customUnitConversions, ConversionCachingMode cachingMode, bool reduceConstants)
     {
@@ -271,16 +252,14 @@ internal static class QuantityConversionsBuilderExtensions
             .ToDictionary(x => x.Key.FromUnitKey, pair => pair.Value);
         // if there are any custom conversionExpressions we ignore the caching mode and calculate an expression for all units
         if (conversionExpressions.Count != 0)
-        {
             return fromQuantity.GetConversionsWithAllUnits(toQuantity, unitMappings, conversionExpressions, reduceConstants);
-        }
 
         return cachingMode switch
         {
             ConversionCachingMode.None => fromQuantity.GetConversionsWithCustomUnits(toQuantity, unitMappings, reduceConstants),
             ConversionCachingMode.BaseOnly => fromQuantity.GetConversionsWithBaseUnits(toQuantity, unitMappings, reduceConstants),
             ConversionCachingMode.All => fromQuantity.GetConversionsWithAllUnits(toQuantity, unitMappings, conversionExpressions, reduceConstants),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(cachingMode), cachingMode, "Enum value out of range"),
         };
     }
 
@@ -293,18 +272,14 @@ internal static class QuantityConversionsBuilderExtensions
     }
 
     private static IEnumerable<ConversionEntry> GetConversionsWithBaseUnits(this QuantityInfo fromQuantity, QuantityInfo toQuantity)
-    {
-        return fromQuantity.GetConversionsWithBaseUnits(toQuantity, fromQuantity.BaseDimensions.GetConversionDelegate(toQuantity.BaseDimensions));
-    }
+        => fromQuantity.GetConversionsWithBaseUnits(toQuantity, fromQuantity.BaseDimensions.GetConversionDelegate(toQuantity.BaseDimensions));
 
     private static IEnumerable<ConversionEntry> GetConversionsWithBaseUnits(this QuantityInfo fromQuantity, QuantityInfo toQuantity, ConvertValueDelegate conversionExpression)
     {
         foreach (UnitInfo fromUnit in fromQuantity.UnitInfos)
         {
             if (fromUnit.BaseUnits == BaseUnits.Undefined || !toQuantity.UnitInfos.TryGetUnitWithBase(fromUnit.BaseUnits, out UnitInfo? toUnit))
-            {
                 continue;
-            }
 
             var conversionKey = new QuantityConversionKey(fromUnit.UnitKey, toQuantity.UnitType);
             var conversionResult = new QuantityConversionFunction(conversionExpression, toUnit.UnitKey);
@@ -321,9 +296,7 @@ internal static class QuantityConversionsBuilderExtensions
     }
 
     private static IEnumerable<ConversionEntry> GetConversionsWithAllUnits(this QuantityInfo fromQuantity, QuantityInfo toQuantity, bool reduceConstants = true)
-    {
-        return fromQuantity.GetConversionsWithAllUnits(toQuantity, fromQuantity.BaseDimensions.GetConversionExpression(toQuantity.BaseDimensions), reduceConstants);
-    }
+        => fromQuantity.GetConversionsWithAllUnits(toQuantity, fromQuantity.BaseDimensions.GetConversionExpression(toQuantity.BaseDimensions), reduceConstants);
 
     private static IEnumerable<ConversionEntry> GetConversionsWithAllUnits(this QuantityInfo fromQuantity, QuantityInfo toQuantity, ConversionExpression conversionExpression,
         bool reduceConstants = true)
@@ -331,13 +304,9 @@ internal static class QuantityConversionsBuilderExtensions
         foreach (UnitInfo fromUnit in fromQuantity.UnitInfos)
         {
             if (toQuantity.TryGetConversionFrom(fromUnit, conversionExpression, reduceConstants, out QuantityConversionFunction conversionFunction))
-            {
                 yield return new ConversionEntry(new QuantityConversionKey(fromUnit.UnitKey, conversionFunction.TargetUnit.UnitEnumType), conversionFunction);
-            }
             else
-            {
                 throw InvalidConversionException.CreateIncompatibleUnitsException(fromUnit, toQuantity);
-            }
         }
     }
 
@@ -382,13 +351,9 @@ internal static class QuantityConversionsBuilderExtensions
             else if (fromUnit.BaseUnits != BaseUnits.Undefined)
             {
                 if (toQuantity.TryGetConversionFrom(fromUnit, conversionWithBaseUnits, reduceConstants, out QuantityConversionFunction conversionFunction))
-                {
                     yield return new ConversionEntry(conversionKey, conversionFunction);
-                }
                 else
-                {
                     throw InvalidConversionException.CreateIncompatibleUnitsException(fromUnit, toQuantity);
-                }
             }
         }
     }
@@ -469,14 +434,10 @@ internal static class QuantityConversionsBuilderExtensions
     private static ConversionExpression GetConversionExpression(this BaseDimensions fromDimensions, BaseDimensions toDimensions)
     {
         if (fromDimensions.IsInverseOf(toDimensions))
-        {
             return new ConversionExpression(coefficient: 1, exponent: -1);
-        }
 
         if (fromDimensions == toDimensions)
-        {
             return QuantityValue.One;
-        }
 
         // note: technically we could to attempt to work with the powers, but currently there aren't any such cases
         throw InvalidConversionException.CreateIncompatibleDimensionsException(fromDimensions, toDimensions);
@@ -504,14 +465,10 @@ internal static class QuantityConversionsBuilderExtensions
     private static ConvertValueDelegate GetConversionDelegate(this BaseDimensions fromDimensions, BaseDimensions toDimensions)
     {
         if (fromDimensions.IsInverseOf(toDimensions))
-        {
             return QuantityValue.Inverse;
-        }
 
         if (fromDimensions == toDimensions)
-        {
             return value => value;
-        }
 
         // note: technically we could to attempt to work with the powers, but currently there aren't any such cases
         throw InvalidConversionException.CreateIncompatibleDimensionsException(fromDimensions, toDimensions);
@@ -535,9 +492,7 @@ internal static class QuantityConversionsBuilderExtensions
         ConversionExpression conversionExpression = fromQuantityInfo.BaseDimensions.GetConversionExpression(toQuantity.BaseDimensions);
 
         if (toQuantity.TryGetConversionFrom(fromUnit, conversionExpression, reduceConstants, out QuantityConversionFunction conversionFunction))
-        {
             return conversionFunction;
-        }
 
         throw InvalidConversionException.CreateIncompatibleUnitsException(fromUnit, toQuantity);
     }
@@ -558,9 +513,7 @@ internal static class QuantityConversionsBuilderExtensions
         out QuantityConversionFunction conversionFunction)
     {
         if (fromUnit.QuantityInfo.BaseDimensions.TryGetConversionExpression(toQuantity.BaseDimensions, out ConversionExpression conversionExpression))
-        {
             return toQuantity.TryGetConversionFrom(fromUnit, conversionExpression, reduceConstants, out conversionFunction);
-        }
 
         conversionFunction = default;
         return false;
@@ -594,14 +547,10 @@ internal static class QuantityConversionsBuilderExtensions
         {
             UnitInfo sourceUnit = fromQuantityUnits[i];
             if (sourceUnit.BaseUnits == BaseUnits.Undefined || sourceUnit.BaseUnits == fromUnit.BaseUnits)
-            {
                 continue;
-            }
 
             if (!toQuantity.UnitInfos.TryGetUnitWithBase(sourceUnit.BaseUnits, out UnitInfo? matchingUnit))
-            {
                 continue;
-            }
 
             ConversionExpression conversionToUnit = fromUnit.GetUnitConversionExpressionTo(sourceUnit, false);
             ConversionExpression fromUnitToMatchingUnit = conversionWithBase.Evaluate(conversionToUnit, reduceConstants);
@@ -620,9 +569,7 @@ internal static class QuantityConversionsBuilderExtensions
         ConversionExpression conversionToSelectedUnit = conversionToBase;
         QuantityValue currentFactor = GetFactorMagnitude(conversionToBase.Coefficient);
         if (currentFactor == QuantityValue.One)
-        {
             return new QuantityConversionFunction(conversionToBase, baseUnit.UnitKey);
-        }
 
         IReadOnlyList<UnitInfo> unitInfos = quantity.UnitInfos;
         var nbUnits = unitInfos.Count;
@@ -630,25 +577,19 @@ internal static class QuantityConversionsBuilderExtensions
         {
             UnitInfo toUnitInfo = unitInfos[i];
             if (toUnitInfo == baseUnit)
-            {
                 continue;
-            }
 
             ConversionExpression fromBaseToUnitConversion = baseUnit.GetUnitConversionExpressionTo(toUnitInfo, false);
             ConversionExpression expressionToUnit = fromBaseToUnitConversion.Evaluate(conversionToBase, reduceConstants);
             QuantityValue expressionFactor = GetFactorMagnitude(expressionToUnit.Coefficient);
             if (expressionFactor >= currentFactor)
-            {
                 continue;
-            }
 
             currentlySelectedUnit = toUnitInfo;
             conversionToSelectedUnit = expressionToUnit;
             currentFactor = expressionFactor;
             if (currentFactor == QuantityValue.One)
-            {
                 break; // found the best possible option
-            }
         }
 
         return new QuantityConversionFunction(conversionToSelectedUnit, currentlySelectedUnit.UnitKey);
@@ -685,9 +626,7 @@ internal static class QuantityConversionsBuilderExtensions
         bool reduceConstants)
     {
         if (fromUnitInfo.BaseUnits != BaseUnits.Undefined && fromUnitInfo.BaseUnits == toUnitInfo.BaseUnits)
-        {
             return conversionWithBaseUnits;
-        }
 
         QuantityInfo fromQuantityInfo = fromUnitInfo.QuantityInfo;
         QuantityInfo toQuantityInfo = toUnitInfo.QuantityInfo;
@@ -704,9 +643,7 @@ internal static class QuantityConversionsBuilderExtensions
         {
             UnitInfo sourceUnit = fromQuantityUnits[i];
             if (sourceUnit.BaseUnits == BaseUnits.Undefined || !toQuantityInfo.UnitInfos.TryGetUnitWithBase(sourceUnit.BaseUnits, out UnitInfo? matchingUnit))
-            {
                 continue;
-            }
 
             ConversionExpression fromUnitToMatchingUnit = conversionWithBaseUnits.Evaluate(fromUnitInfo.GetUnitConversionExpressionTo(sourceUnit, false));
             ConversionExpression fromUnitToTargetUnit = matchingUnit.GetUnitConversionExpressionTo(toUnitInfo, false).Evaluate(fromUnitToMatchingUnit, true);
@@ -764,9 +701,7 @@ internal static class QuantityConversionsBuilderExtensions
         {
             UnitInfo sourceUnit = fromQuantityUnits[i];
             if (sourceUnit.BaseUnits == BaseUnits.Undefined || !toQuantityInfo.UnitInfos.TryGetUnitWithBase(sourceUnit.BaseUnits, out UnitInfo? matchingUnit))
-            {
                 continue;
-            }
 
             ConversionExpression fromUnitToMatchingUnit = quantityConversionExpression.Evaluate(fromUnitInfo.GetUnitConversionExpressionTo(sourceUnit, false));
             conversionExpression = matchingUnit.GetUnitConversionExpressionTo(toUnitInfo, false).Evaluate(fromUnitToMatchingUnit, true);

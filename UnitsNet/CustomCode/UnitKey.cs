@@ -40,7 +40,11 @@ public readonly record struct UnitKey
     ///     This property holds the <see cref="Type" /> of the unit enumeration associated with this key.
     ///     It is particularly useful for identifying the unit type in scenarios where multiple unit types are used.
     /// </remarks>
-    public Type UnitEnumType => _unitEnumType;
+    public Type UnitEnumType
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _unitEnumType;
+    }
 
     /// <summary>
     ///     Gets the integer value associated with the unit type.
@@ -49,7 +53,11 @@ public readonly record struct UnitKey
     ///     This property represents the unique value of the unit within its type, typically corresponding to the underlying
     ///     integer value of an enumeration.
     /// </remarks>
-    public int UnitEnumValue => _unitEnumValue;
+    public int UnitEnumValue
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _unitEnumValue;
+    }
 
     /// <summary>
     ///     Creates a new instance of the <see cref="UnitKey" /> struct for the specified unit.
@@ -59,9 +67,7 @@ public readonly record struct UnitKey
     /// <returns>A new instance of the <see cref="UnitKey" /> struct representing the specified unit.</returns>
     public static UnitKey ForUnit<TUnit>(TUnit unit)
         where TUnit : struct, Enum
-    {
-        return new UnitKey(typeof(TUnit), Unsafe.As<TUnit, int>(ref unit));
-    }
+        => new(typeof(TUnit), Unsafe.As<TUnit, int>(ref unit));
 
     /// <summary>
     ///     Creates a new instance of the <see cref="UnitKey" /> struct for a specified unit type and value.
@@ -69,11 +75,10 @@ public readonly record struct UnitKey
     /// <typeparam name="TUnit">The type of the unit, which must be an enumeration.</typeparam>
     /// <param name="unitValue">The integer value representing the unit.</param>
     /// <returns>A new <see cref="UnitKey" /> instance representing the specified unit type and value.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UnitKey Create<TUnit>(int unitValue)
         where TUnit : struct, Enum
-    {
-        return new UnitKey(typeof(TUnit), unitValue);
-    }
+        => new(typeof(TUnit), unitValue);
 
     /// <summary>
     ///     Creates a new instance of the <see cref="UnitKey" /> struct for the specified unit type and value.
@@ -129,10 +134,9 @@ public readonly record struct UnitKey
     ///     This explicit conversion is useful when you need to retrieve the original enumeration value from a
     ///     <see cref="UnitKey" />.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator Enum(UnitKey unitKey)
-    {
-        return (Enum)Enum.ToObject(unitKey._unitEnumType, unitKey._unitEnumValue);
-    }
+        => (Enum)Enum.ToObject(unitKey._unitEnumType, unitKey._unitEnumValue);
 
     /// <summary>
     ///     Converts the current <see cref="UnitKey" /> to its corresponding enumeration value of type
@@ -150,9 +154,7 @@ public readonly record struct UnitKey
     public TUnit ToUnit<TUnit>() where TUnit : struct, Enum
     {
         if (typeof(TUnit) != _unitEnumType)
-        {
             throw new InvalidOperationException($"Cannot convert UnitKey of type {_unitEnumType} to {typeof(TUnit)}.");
-        }
 
         var unitValue = _unitEnumValue;
         return Unsafe.As<int, TUnit>(ref unitValue);
@@ -200,9 +202,7 @@ public readonly record struct UnitKey
     {
         // implementing the Equality members on net48 is 5x faster than the default
         if (_unitEnumType == null)
-        {
             return _unitEnumValue;
-        }
 
         unchecked
         {

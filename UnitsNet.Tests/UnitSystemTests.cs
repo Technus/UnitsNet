@@ -47,7 +47,7 @@ namespace UnitsNet.Tests
         [Fact]
         public void ConstructorThrowsArgumentExceptionWithUndefinedUnits()
         {
-            Assert.Throws<ArgumentException>(() => new UnitSystem(BaseUnits.Undefined));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new UnitSystem(BaseUnits.Undefined));
         }
 
         [Fact]

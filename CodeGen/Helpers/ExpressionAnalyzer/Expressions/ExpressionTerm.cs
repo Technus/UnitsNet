@@ -111,7 +111,7 @@ internal sealed record class ExpressionTerm(Fraction Coefficient, Fraction Expon
 
     public int CompareTo(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return 1;
+        if (obj is null) return 1;
         if (ReferenceEquals(this, obj)) return 0;
         return obj is ExpressionTerm other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(ExpressionTerm)}");
     }

@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -21,9 +22,7 @@ public static class QuantityInfoBuilderExtensions
     public static IEnumerable<TUnitDefinition> SelectUnits<TUnitDefinition, TUnit>(this IEnumerable<TUnitDefinition> unitMappings, params IEnumerable<TUnit> units)
         where TUnitDefinition : IUnitDefinition<TUnit>
         where TUnit : struct, Enum
-    {
-        return unitMappings.Where(x => units.Contains(x.Value));
-    }
+        => unitMappings.Where(x => units.Contains(x.Value));
 
     /// <summary>
     ///     Filters the collection of unit mappings to exclude the specified units.
@@ -36,9 +35,7 @@ public static class QuantityInfoBuilderExtensions
     public static IEnumerable<TUnitDefinition> ExcludeUnits<TUnitDefinition, TUnit>(this IEnumerable<TUnitDefinition> unitMappings, params IEnumerable<TUnit> units)
         where TUnitDefinition : IUnitDefinition<TUnit>
         where TUnit : struct, Enum
-    {
-        return unitMappings.Where(x => !units.Contains(x.Value));
-    }
+        => unitMappings.Where(x => !units.Contains(x.Value));
 
     /// <summary>
     ///     Configures a specific unit within a collection of unit mappings.
@@ -62,13 +59,9 @@ public static class QuantityInfoBuilderExtensions
         foreach (TUnitDefinition unitMapping in unitMappings)
         {
             if (comparer.Equals(unitMapping.Value, unit))
-            {
                 yield return unitConfiguration(unitMapping);
-            }
             else
-            {
                 yield return unitMapping;
-            }
         }
     }
 
@@ -79,11 +72,11 @@ public static class QuantityInfoBuilderExtensions
     /// <param name="unitDefinition">The unit definition to which the conversion factor will be added.</param>
     /// <param name="conversionFromBase">The conversion factor from the base unit to the specified unit.</param>
     /// <returns>A new <see cref="UnitDefinition{TUnit}" /> instance with the specified conversion factor from the base unit.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UnitDefinition<TUnit> WithConversionFactorFromBase<TUnit>(this IUnitDefinition<TUnit> unitDefinition, QuantityValue conversionFromBase)
         where TUnit : struct, Enum
-    {
-        return new UnitDefinition<TUnit>(unitDefinition.Value, unitDefinition.Name, unitDefinition.PluralName, unitDefinition.BaseUnits, conversionFromBase);
-    }
+        => new(unitDefinition.Value, unitDefinition.Name, unitDefinition.PluralName,
+            unitDefinition.BaseUnits, conversionFromBase);
 
     /// <summary>
     ///     Creates a new unit definition by specifying a new conversion factor to the base unit.
@@ -94,10 +87,8 @@ public static class QuantityInfoBuilderExtensions
     /// <returns>A new <see cref="UnitDefinition{TUnit}" /> instance with the specified conversion factor to the base unit.</returns>
     public static UnitDefinition<TUnit> WithConversionFactorToBase<TUnit>(this IUnitDefinition<TUnit> unitDefinition, QuantityValue conversionToBase)
         where TUnit : struct, Enum
-    {
-        return new UnitDefinition<TUnit>(unitDefinition.Value, unitDefinition.Name, unitDefinition.PluralName, unitDefinition.BaseUnits,
-            QuantityValue.Inverse(conversionToBase), conversionToBase);
-    }
+        => new(unitDefinition.Value, unitDefinition.Name, unitDefinition.PluralName,
+            unitDefinition.BaseUnits, QuantityValue.Inverse(conversionToBase), conversionToBase);
 
     /// <summary>
     ///     Creates a new unit definition by specifying conversion expressions for both conversion from the base unit and
@@ -108,11 +99,10 @@ public static class QuantityInfoBuilderExtensions
     /// <param name="conversionFromBase">The conversion expression from the base unit to the specified unit.</param>
     /// <param name="conversionToBase">The conversion expression from the specified unit to the base unit.</param>
     /// <returns>A new <see cref="UnitDefinition{TUnit}" /> instance with the specified conversion expressions.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UnitDefinition<TUnit> WithConversionExpression<TUnit>(this IUnitDefinition<TUnit> unitDefinition, ConversionExpression conversionFromBase,
         ConversionExpression conversionToBase)
         where TUnit : struct, Enum
-    {
-        return new UnitDefinition<TUnit>(unitDefinition.Value, unitDefinition.Name, unitDefinition.PluralName, unitDefinition.BaseUnits, conversionFromBase,
-            conversionToBase);
-    }
+        => new(unitDefinition.Value, unitDefinition.Name, unitDefinition.PluralName,
+            unitDefinition.BaseUnits, conversionFromBase, conversionToBase);
 }

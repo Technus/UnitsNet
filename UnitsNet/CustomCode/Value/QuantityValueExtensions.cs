@@ -18,9 +18,7 @@ public static class QuantityValueExtensions
     /// <param name="values">The collection of <see cref="QuantityValue" /> instances to sum.</param>
     /// <returns>The sum of the <see cref="QuantityValue" /> instances.</returns>
     public static QuantityValue Sum(this IEnumerable<QuantityValue> values)
-    {
-        return values.Aggregate(QuantityValue.Zero, (total, value) => total + value);
-    }
+        => values.Aggregate(QuantityValue.Zero, (total, value) => total + value);
 
     /// <summary>
     ///     Calculates the average of a collection of <see cref="QuantityValue" /> instances.
@@ -64,14 +62,10 @@ public static class QuantityValueExtensions
     ///     need to use 20 instead.
     /// </remarks>
     internal static double ToLinearSpace(this QuantityValue logValue, QuantityValue scalingFactor)
-    {
-        return Math.Pow(10, (logValue / scalingFactor).ToDouble());
-    }
-    
+        => Math.Pow(10, (logValue / scalingFactor).ToDouble());
+
     internal static QuantityValue ToLinearSpace(this QuantityValue logValue, QuantityValue scalingFactor, byte significantDigits)
-    {
-        return QuantityValue.FromDoubleRounded(logValue.ToLinearSpace(scalingFactor), significantDigits);
-    }
+        => QuantityValue.FromDoubleRounded(logValue.ToLinearSpace(scalingFactor), significantDigits);
 
     /// <summary>
     ///     Converts a linear value to its logarithmic space equivalent.
@@ -85,11 +79,9 @@ public static class QuantityValueExtensions
     ///     need to use 20 instead.
     /// </remarks>
     internal static QuantityValue ToLogSpace(this double value, QuantityValue scalingFactor, byte significantDigits = 15)
-    {
-        return scalingFactor * QuantityValue.FromDoubleRounded(Math.Log10(value), significantDigits);
-    }
+        => scalingFactor * QuantityValue.FromDoubleRounded(Math.Log10(value), significantDigits);
 
-    /// <inheritdoc cref="ToLogSpace(double,UnitsNet.QuantityValue,byte)"/>
+    /// <inheritdoc cref="ToLogSpace(double,QuantityValue,byte)"/>
     internal static QuantityValue ToLogSpace(this QuantityValue value, QuantityValue scalingFactor, byte significantDigits = 15)
     {
         return value.ToDouble().ToLogSpace(scalingFactor, significantDigits);
@@ -111,10 +103,8 @@ public static class QuantityValueExtensions
     ///     </para>
     /// </remarks>
     internal static QuantityValue AddWithLogScaling(QuantityValue leftValue, QuantityValue rightValue, QuantityValue scalingFactor, byte significantDigits = 15)
-    {
-        return (leftValue.ToLinearSpace(scalingFactor) + rightValue.ToLinearSpace(scalingFactor))
+        => (leftValue.ToLinearSpace(scalingFactor) + rightValue.ToLinearSpace(scalingFactor))
             .ToLogSpace(scalingFactor, significantDigits);
-    }
 
     /// <summary>
     ///     Subtract two <see cref="QuantityValue" /> instances using logarithmic scaling.
@@ -132,8 +122,6 @@ public static class QuantityValueExtensions
     ///     </para>
     /// </remarks>
     internal static QuantityValue SubtractWithLogScaling(QuantityValue leftValue, QuantityValue rightValue, QuantityValue scalingFactor, byte significantDigits = 15)
-    {
-        return (leftValue.ToLinearSpace(scalingFactor) - rightValue.ToLinearSpace(scalingFactor))
+        => (leftValue.ToLinearSpace(scalingFactor) - rightValue.ToLinearSpace(scalingFactor))
             .ToLogSpace(scalingFactor, significantDigits);
-    }
 }

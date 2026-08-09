@@ -35,16 +35,12 @@ internal sealed class FrozenQuantityConverter : UnitConverter
     }
 
     public override bool TryConvertValue<TUnit>(QuantityValue value, TUnit fromUnit, TUnit toUnit, out QuantityValue convertedValue)
-    {
-        return TryConvertValue(value, UnitConversionKey.Create(fromUnit, toUnit), out convertedValue);
-    }
+        => TryConvertValue(value, UnitConversionKey.Create(fromUnit, toUnit), out convertedValue);
 
     public override bool TryConvertValue(QuantityValue value, UnitKey fromUnitKey, UnitKey toUnitKey, out QuantityValue convertedValue)
-    {
-        return fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
+        => fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
             ? TryConvertValue(value, UnitConversionKey.Create(fromUnitKey, toUnitKey), out convertedValue)
             : TryConvertValueFromOneQuantityToAnother(value, fromUnitKey, toUnitKey, out convertedValue);
-    }
 
     private bool TryConvertValue(QuantityValue value, UnitConversionKey conversionKey, out QuantityValue convertedValue)
     {
@@ -75,14 +71,10 @@ internal sealed class FrozenQuantityConverter : UnitConverter
     {
         var defaultConversionKey = new QuantityConversionKey(fromUnitKey, toUnitKey.UnitEnumType);
         if (_quantityConversions.TryGetValue(defaultConversionKey, out QuantityConversionFunction conversionFunction))
-        {
             return TryConvertValue(conversionFunction.Convert(value), new UnitConversionKey(conversionFunction.TargetUnit, toUnitKey.UnitEnumValue), out convertedValue);
-        }
         
         if (TryGetUnitInfo(fromUnitKey, out UnitInfo? fromUnitInfo) && TryGetUnitInfo(toUnitKey, out UnitInfo? toUnitInfo))
-        {
             return TryConvertValueFromOneQuantityToAnother(value, fromUnitInfo, toUnitInfo, out convertedValue);
-        }
 
         convertedValue = default;
         return false;
@@ -133,23 +125,17 @@ internal sealed class FrozenQuantityConverter : UnitConverter
     }
 
     public override QuantityValue ConvertValue(QuantityValue value, UnitKey fromUnitKey, UnitKey toUnitKey)
-    {
-        return fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
+        => fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType
             ? ConvertValue(value, UnitConversionKey.Create(fromUnitKey, toUnitKey))
             : ConvertValueFromOneQuantityToAnother(value, fromUnitKey, toUnitKey);
-    }
 
     private QuantityValue ConvertValue(QuantityValue value, UnitConversionKey conversionKey)
     {
         if (conversionKey.HasSameUnits)
-        {
             return value;
-        }
 
         if (_unitConversions.TryGetValue(conversionKey, out ConvertValueDelegate? cachedConversion))
-        {
             return cachedConversion(value);
-        }
 
         UnitInfo fromUnitInfo = GetUnitInfo(conversionKey.FromUnitKey);
         UnitInfo toUnitInfo = GetUnitInfo(new UnitKey(conversionKey.FromUnitKey.UnitEnumType, conversionKey.ToUnitValue));
@@ -167,29 +153,21 @@ internal sealed class FrozenQuantityConverter : UnitConverter
     protected override QuantityValue ConvertValueInternal(QuantityValue value, UnitInfo fromUnitInfo, UnitInfo toUnitInfo)
     {
         if (fromUnitInfo == toUnitInfo)
-        {
             return value;
-        }
 
         UnitKey fromUnitKey = fromUnitInfo.UnitKey;
         UnitKey toUnitKey = toUnitInfo.UnitKey;
         if (fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType)
-        {
             return _unitConversions.TryGetValue(UnitConversionKey.Create(fromUnitKey, toUnitKey), out ConvertValueDelegate? cachedConversion)
                 ? cachedConversion(value)
                 : toUnitInfo.GetValueFrom(value, fromUnitInfo);
-        }
 
         var defaultConversionKey = new QuantityConversionKey(fromUnitKey, toUnitInfo.QuantityInfo.UnitType);
         if (!_quantityConversions.TryGetValue(defaultConversionKey, out QuantityConversionFunction defaultConversion))
-        {
             return ConvertValueFromOneQuantityToAnother(value, fromUnitInfo, toUnitInfo);
-        }
         
         if (defaultConversion.TargetUnit == toUnitKey)
-        {
             return defaultConversion.Convert(value);
-        }
         
         QuantityValue valueInDefaultUnit = defaultConversion.Convert(value);
         return _unitConversions.TryGetValue(UnitConversionKey.Create(defaultConversion.TargetUnit, toUnitKey), out ConvertValueDelegate? toTargetUnitConversion)
@@ -200,16 +178,12 @@ internal sealed class FrozenQuantityConverter : UnitConverter
     public override ConvertValueDelegate GetConversionFunction(UnitKey fromUnitKey, UnitKey toUnitKey)
     {
         if (fromUnitKey == toUnitKey)
-        {
             return value => value;
-        }
 
         if (fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType)
-        {
             return _unitConversions.TryGetValue(UnitConversionKey.Create(fromUnitKey, toUnitKey), out ConvertValueDelegate? conversionFunction)
                 ? conversionFunction
                 : GetUnitInfo(fromUnitKey).GetUnitConversionExpressionTo(GetUnitInfo(toUnitKey));
-        }
 
         UnitInfo fromUnitInfo = GetUnitInfo(fromUnitKey);
         UnitInfo toUnitInfo = GetUnitInfo(toUnitKey);
@@ -217,9 +191,7 @@ internal sealed class FrozenQuantityConverter : UnitConverter
         if (_quantityConversions.TryGetValue(defaultConversionKey, out QuantityConversionFunction defaultConversion))
         {
             if (defaultConversion.TargetUnit == toUnitKey)
-            {
                 return defaultConversion.Convert;
-            }
 
             ConvertValueDelegate conversionToTarget =
                 _unitConversions.TryGetValue(UnitConversionKey.Create(defaultConversion.TargetUnit, toUnitKey), out ConvertValueDelegate? conversionFunction)
@@ -242,9 +214,7 @@ internal sealed class FrozenQuantityConverter : UnitConverter
         if (fromUnitKey.UnitEnumType == toUnitKey.UnitEnumType)
         {
             if (_unitConversions.TryGetValue(UnitConversionKey.Create(fromUnitKey, toUnitKey), out conversionFunction))
-            {
                 return true;
-            }
 
             if (TryGetUnitInfo(fromUnitKey, out UnitInfo? fromUnitInfo) && TryGetUnitInfo(toUnitKey, out UnitInfo? toUnitInfo))
             {
@@ -256,9 +226,7 @@ internal sealed class FrozenQuantityConverter : UnitConverter
         {
             var defaultConversionKey = new QuantityConversionKey(fromUnitKey, toUnitInfo.QuantityInfo.UnitType);
             if (!_quantityConversions.TryGetValue(defaultConversionKey, out QuantityConversionFunction defaultConversion))
-            {
                 return TryGetConversionFromOneQuantityToAnother(fromUnitInfo, toUnitInfo, out conversionFunction);
-            }
 
             if (defaultConversion.TargetUnit == toUnitKey)
             {
@@ -281,9 +249,7 @@ internal sealed class FrozenQuantityConverter : UnitConverter
     public override TTargetQuantity ConvertTo<TSourceUnit, TTargetQuantity, TTargetUnit>(QuantityValue value, TSourceUnit fromUnit, QuantityInfo<TTargetQuantity, TTargetUnit> targetQuantityInfo)
     {
         if (_quantityConversions.TryGetValue(QuantityConversionKey.Create<TSourceUnit, TTargetUnit>(fromUnit), out QuantityConversionFunction conversionFunction))
-        {
             return targetQuantityInfo.From(conversionFunction.Convert(value), conversionFunction.TargetUnit.ToUnit<TTargetUnit>());
-        }
         
         return base.ConvertTo(value, fromUnit, targetQuantityInfo);
     }
@@ -292,9 +258,7 @@ internal sealed class FrozenQuantityConverter : UnitConverter
     {
         if (_quantityConversions.TryGetValue(new QuantityConversionKey(fromUnitKey, targetQuantityInfo.UnitType),
                 out QuantityConversionFunction conversionFunction))
-        {
             return targetQuantityInfo.From(conversionFunction.Convert(value), conversionFunction.TargetUnit);
-        }
 
         return base.ConvertTo(value, fromUnitKey, targetQuantityInfo);
     }

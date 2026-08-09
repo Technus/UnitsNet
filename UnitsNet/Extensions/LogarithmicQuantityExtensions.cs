@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -16,17 +17,13 @@ public static class LogarithmicQuantityExtensions
         where TQuantity : ILogarithmicQuantity<TQuantity>
         where TOther : IQuantityOfType<TQuantity>
         where TTolerance : IQuantityOfType<TQuantity>
-    {
-        return other is not null && quantity.EqualsAbsolute(other, tolerance);
-    }
+        => other is not null && quantity.EqualsAbsolute(other, tolerance);
 
     /// <inheritdoc cref="EqualsAbsolute{TQuantity,TOther,TTolerance}" />
     public static bool Equals<TQuantity, TTolerance>(this TQuantity quantity, IQuantity? other, TTolerance tolerance)
         where TQuantity : ILogarithmicQuantity<TQuantity>
         where TTolerance : IQuantityOfType<TQuantity>
-    {
-        return other is TQuantity otherInstance && quantity.EqualsAbsolute(otherInstance, tolerance);
-    }
+        => other is TQuantity otherInstance && quantity.EqualsAbsolute(otherInstance, tolerance);
 
     /// <summary>
     ///     <para> Compares the logarithmic equality of the current quantity to another quantity, given a specified tolerance. </para>
@@ -92,16 +89,11 @@ public static class LogarithmicQuantityExtensions
     public static TQuantity Sum<TQuantity>(this IEnumerable<TQuantity> quantities, byte significantDigits = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity>
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         TQuantity firstQuantity = enumerator.Current!;
 #if NET
@@ -138,11 +130,10 @@ public static class LogarithmicQuantityExtensions
     ///     When the sequence is not empty, each quantity is converted to linear space (in the unit of the first element),
     ///     summed, and then the result is converted back to logarithmic space using the same unit.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Sum<TSource, TQuantity>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, byte significantDigits = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity>
-    {
-        return source.Select(selector).Sum(significantDigits);
-    }
+        => source.Select(selector).Sum(significantDigits);
 
     /// <summary>
     ///     Sums a sequence of logarithmic quantities, such as PowerRatio and AmplitudeRatio, converting them to the
@@ -163,16 +154,11 @@ public static class LogarithmicQuantityExtensions
         where TQuantity : ILogarithmicQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         var unitKey = UnitKey.ForUnit(targetUnit);
         TQuantity firstQuantity = enumerator.Current!;
@@ -212,13 +198,12 @@ public static class LogarithmicQuantityExtensions
     ///     This method converts each logarithmic quantity to linear space, sums them, and then converts the result back to
     ///     logarithmic space.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity Sum<TSource, TQuantity, TUnit>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, TUnit targetUnit,
         byte significantDigits = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return source.Select(selector).Sum(targetUnit, significantDigits);
-    }
+        => source.Select(selector).Sum(targetUnit, significantDigits);
 
     /// <summary>
     ///     Computes the arithmetic mean of a sequence of logarithmic quantities, such as PowerRatio and AmplitudeRatio.
@@ -235,16 +220,11 @@ public static class LogarithmicQuantityExtensions
     public static TQuantity ArithmeticMean<TQuantity>(this IEnumerable<TQuantity> quantities, byte significantDigits = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity>
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         TQuantity firstQuantity = enumerator.Current!;
 #if NET
@@ -284,11 +264,10 @@ public static class LogarithmicQuantityExtensions
     ///     When the sequence is not empty, each quantity is converted to linear space (in the unit of the first element),
     ///     averaged, and then the result is converted back to logarithmic space using the same unit.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity ArithmeticMean<TSource, TQuantity>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, byte significantDigits = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity>
-    {
-        return source.Select(selector).ArithmeticMean(significantDigits);
-    }
+        => source.Select(selector).ArithmeticMean(significantDigits);
 
     /// <summary>
     ///     Computes the arithmetic mean of a sequence of logarithmic quantities, such as PowerRatio and AmplitudeRatio.
@@ -308,16 +287,11 @@ public static class LogarithmicQuantityExtensions
         where TQuantity : ILogarithmicQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         var unitKey = UnitKey.ForUnit(unit);
         TQuantity firstQuantity = enumerator.Current!;
@@ -360,13 +334,12 @@ public static class LogarithmicQuantityExtensions
     ///     When the sequence is not empty, each quantity is converted to linear space (in the specified unit),
     ///     averaged, and then the result is converted back to logarithmic space using the same unit.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity ArithmeticMean<TSource, TQuantity, TUnit>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, TUnit targetUnit,
         byte significantDigits = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return source.Select(selector).ArithmeticMean(targetUnit, significantDigits);
-    }
+        => source.Select(selector).ArithmeticMean(targetUnit, significantDigits);
 
     /// <summary>
     ///     Computes the geometric mean of a sequence of logarithmic quantities, such as PowerRatio and AmplitudeRatio.
@@ -386,16 +359,11 @@ public static class LogarithmicQuantityExtensions
     public static TQuantity GeometricMean<TQuantity>(this IEnumerable<TQuantity> quantities, int accuracy = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity>
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         TQuantity firstQuantity = enumerator.Current!;
         UnitKey resultUnit = firstQuantity.UnitKey;
@@ -431,11 +399,10 @@ public static class LogarithmicQuantityExtensions
     ///     When the sequence is not empty, calculates the n-th root of the product of the quantities, which for the
     ///     logarithmic quantities is equal to the sum the values, converted in unit of the first element.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity GeometricMean<TSource, TQuantity>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, int accuracy = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity>
-    {
-        return source.Select(selector).GeometricMean(accuracy);
-    }
+        => source.Select(selector).GeometricMean(accuracy);
 
 
     /// <summary>
@@ -457,16 +424,11 @@ public static class LogarithmicQuantityExtensions
         where TQuantity : ILogarithmicQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         var unitKey = UnitKey.ForUnit(targetUnit);
         TQuantity firstQuantity = enumerator.Current!;
@@ -504,11 +466,10 @@ public static class LogarithmicQuantityExtensions
     ///     When the sequence is not empty, calculates the n-th root of the product of the quantities, which for the
     ///     logarithmic quantities is equal to the sum the values, converted in unit of the first element.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity GeometricMean<TSource, TQuantity, TUnit>(this IEnumerable<TSource> source, Func<TSource, TQuantity> selector, TUnit targetUnit,
         int accuracy = 15)
         where TQuantity : ILogarithmicQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return source.Select(selector).GeometricMean(targetUnit, accuracy);
-    }
+        => source.Select(selector).GeometricMean(targetUnit, accuracy);
 }

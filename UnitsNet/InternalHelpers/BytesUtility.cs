@@ -19,8 +19,8 @@ namespace UnitsNet.InternalHelpers
         /// <returns>A byte array representing a copy of <paramref name="value"/>s bytes.</returns>
         internal static byte[] GetBytes<T>(T value) where T : struct
         {
-            int size = Marshal.SizeOf(value);
-            byte[] array = new byte[size];
+            var size = Marshal.SizeOf(value);
+            var array = new byte[size];
 
             IntPtr ptr = Marshal.AllocHGlobal(size);
 

@@ -22,10 +22,7 @@ internal static class QuantityInfoExtensions
     public static IEnumerable<QuantityInfo> GetQuantitiesWithBaseDimensions(this IEnumerable<QuantityInfo> quantityInfos,
         BaseDimensions baseDimensions)
     {
-        if (baseDimensions is null)
-        {
-            throw new ArgumentNullException(nameof(baseDimensions));
-        }
+        if (baseDimensions is null) throw new ArgumentNullException(nameof(baseDimensions));
 
         return quantityInfos.Where(info => info.BaseDimensions.Equals(baseDimensions));
     }
@@ -47,23 +44,16 @@ internal static class QuantityInfoExtensions
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
     {
-        if (unitSystem is null)
-        {
-            throw new ArgumentNullException(nameof(unitSystem));
-        }
+        if (unitSystem is null) throw new ArgumentNullException(nameof(unitSystem));
 
         if (quantityInfo.BaseDimensions.IsDimensionless())
-        {
             return quantityInfo.BaseUnitInfo.Value;
-        }
 
         IEnumerable<UnitInfo<TQuantity, TUnit>> unitInfos = quantityInfo.GetUnitInfosFor(unitSystem.BaseUnits);
 
         UnitInfo<TQuantity, TUnit>? firstUnitInfo = unitInfos.FirstOrDefault();
         if (firstUnitInfo == null)
-        {
             throw new ArgumentException("No units were found for the given UnitSystem.", nameof(unitSystem));
-        }
 
         return firstUnitInfo.Value;
     }
@@ -81,23 +71,16 @@ internal static class QuantityInfoExtensions
     /// <exception cref="ArgumentException">Thrown when no units are found for the given <paramref name="unitSystem" />.</exception>
     internal static UnitInfo GetDefaultUnit(this QuantityInfo quantityInfo, UnitSystem unitSystem)
     {
-        if (unitSystem is null)
-        {
-            throw new ArgumentNullException(nameof(unitSystem));
-        }
+        if (unitSystem is null) throw new ArgumentNullException(nameof(unitSystem));
 
         if (quantityInfo.BaseDimensions.IsDimensionless())
-        {
             return quantityInfo.BaseUnitInfo;
-        }
 
         IEnumerable<UnitInfo> unitInfos = quantityInfo.GetUnitInfosFor(unitSystem.BaseUnits);
 
         UnitInfo? firstUnitInfo = unitInfos.FirstOrDefault();
         if (firstUnitInfo == null)
-        {
             throw new ArgumentException("No units were found for the given UnitSystem.", nameof(unitSystem));
-        }
 
         return firstUnitInfo;
     }
@@ -116,23 +99,16 @@ internal static class QuantityInfoExtensions
     internal static UnitInfo<TUnit> GetDefaultUnit<TUnit>(this QuantityInfo<TUnit> quantityInfo, UnitSystem unitSystem)
         where TUnit : struct, Enum
     {
-        if (unitSystem is null)
-        {
-            throw new ArgumentNullException(nameof(unitSystem));
-        }
+        if (unitSystem is null) throw new ArgumentNullException(nameof(unitSystem));
 
         if (quantityInfo.BaseDimensions.IsDimensionless())
-        {
             return quantityInfo.BaseUnitInfo;
-        }
 
         IEnumerable<UnitInfo<TUnit>> unitInfos = quantityInfo.GetUnitInfosFor(unitSystem.BaseUnits);
 
         UnitInfo<TUnit>? firstUnitInfo = unitInfos.FirstOrDefault();
         if (firstUnitInfo == null)
-        {
             throw new ArgumentException("No units were found for the given UnitSystem.", nameof(unitSystem));
-        }
 
         return firstUnitInfo;
     }
@@ -181,20 +157,14 @@ internal static class QuantityInfoExtensions
     internal static QuantityValue GetValueFrom(this UnitInfo toUnit, QuantityValue value, UnitInfo fromUnit)
     {
         if (fromUnit == toUnit)
-        {
             return value;
-        }
 
         UnitInfo baseUnit = toUnit.QuantityInfo.BaseUnitInfo;
         if (toUnit == baseUnit)
-        {
             return fromUnit.ConversionToBase.Evaluate(value);
-        }
 
         if (fromUnit == baseUnit)
-        {
             return toUnit.ConversionFromBase.Evaluate(value);
-        }
 
         QuantityValue valueInBase = fromUnit.ConversionToBase.Evaluate(value);
         return toUnit.ConversionFromBase.Evaluate(valueInBase);
@@ -207,9 +177,7 @@ internal static class QuantityInfoExtensions
     /// <param name="value">The value to be converted.</param>
     /// <returns>The value converted to the base unit of the quantity.</returns>
     internal static QuantityValue ConvertValueToBaseUnit(this UnitInfo fromUnit, QuantityValue value)
-    {
-        return fromUnit == fromUnit.QuantityInfo.BaseUnitInfo ? value : fromUnit.ConversionToBase.Evaluate(value);
-    }
+        => fromUnit == fromUnit.QuantityInfo.BaseUnitInfo ? value : fromUnit.ConversionToBase.Evaluate(value);
 
     /// <summary>
     ///     Converts a value from the base unit to the specified unit.
@@ -218,9 +186,7 @@ internal static class QuantityInfoExtensions
     /// <param name="value">The value in the base unit to be converted.</param>
     /// <returns>The converted value in the specified unit.</returns>
     internal static QuantityValue ConvertValueFromBaseUnit(this UnitInfo toUnit, QuantityValue value)
-    {
-        return toUnit == toUnit.QuantityInfo.BaseUnitInfo ? value : toUnit.ConversionFromBase.Evaluate(value);
-    }
+        => toUnit == toUnit.QuantityInfo.BaseUnitInfo ? value : toUnit.ConversionFromBase.Evaluate(value);
 
     /// <summary>
     ///     Retrieves the quantities that are connected to the specified <paramref name="quantityInfo" />
@@ -241,13 +207,9 @@ internal static class QuantityInfoExtensions
         foreach (QuantityConversion conversion in conversions)
         {
             if (conversion.LeftQuantity == quantityInfo)
-            {
                 yield return conversion.RightQuantity;
-            }
             else if (conversion.RightQuantity == quantityInfo)
-            {
                 yield return conversion.LeftQuantity;
-            }
         }
     }
 
@@ -386,16 +348,12 @@ internal static class QuantityInfoExtensions
         where TTargetUnit : struct, Enum
     {
         if(targetQuantityInfo.TryConvertFrom(sourceValue, sourceUnit, out TTargetQuantity? convertedValue))
-        {
             return convertedValue;
-        }
 
         QuantityInfo sourceQuantityInfo = sourceUnit.QuantityInfo;
         if (sourceQuantityInfo.BaseDimensions != targetQuantityInfo.BaseDimensions &&
             !sourceQuantityInfo.BaseDimensions.IsInverseOf(targetQuantityInfo.BaseDimensions))
-        {
             throw InvalidConversionException.CreateIncompatibleDimensionsException(sourceQuantityInfo, targetQuantityInfo);
-        }
         
         throw InvalidConversionException.CreateIncompatibleUnitsException(sourceUnit, targetQuantityInfo);
     }
@@ -506,56 +464,26 @@ internal static class QuantityInfoExtensions
     internal static IQuantity ConvertFrom(this QuantityInfo targetQuantityInfo, QuantityValue sourceValue, UnitInfo sourceUnit)
     {
         if(targetQuantityInfo.TryConvertFrom(sourceValue, sourceUnit, out IQuantity? convertedValue))
-        {
             return convertedValue;
-        }
 
         QuantityInfo sourceQuantityInfo = sourceUnit.QuantityInfo;
         if (sourceQuantityInfo.BaseDimensions != targetQuantityInfo.BaseDimensions &&
             !sourceQuantityInfo.BaseDimensions.IsInverseOf(targetQuantityInfo.BaseDimensions))
-        {
             throw InvalidConversionException.CreateIncompatibleDimensionsException(sourceQuantityInfo, targetQuantityInfo);
-        }
 
         throw InvalidConversionException.CreateIncompatibleUnitsException(sourceUnit, targetQuantityInfo);
     }
 
     internal static bool IsInverseOf(this BaseDimensions first, BaseDimensions second)
     {
-        if (first.Amount != -second.Amount)
-        {
+        if ((first.Amount != -second.Amount) ||
+            (first.Current != -second.Current) ||
+            (first.Length != -second.Length) ||
+            (first.Mass != -second.Mass) ||
+            (first.LuminousIntensity != -second.LuminousIntensity) ||
+            (first.Temperature != -second.Temperature) ||
+            (first.Time != -second.Time))
             return false;
-        }
-
-        if (first.Current != -second.Current)
-        {
-            return false;
-        }
-
-        if (first.Length != -second.Length)
-        {
-            return false;
-        }
-
-        if (first.Mass != -second.Mass)
-        {
-            return false;
-        }
-
-        if (first.LuminousIntensity != -second.LuminousIntensity)
-        {
-            return false;
-        }
-
-        if (first.Temperature != -second.Temperature)
-        {
-            return false;
-        }
-
-        if (first.Time != -second.Time)
-        {
-            return false;
-        }
 
         return !first.IsDimensionless();
     }

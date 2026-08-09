@@ -2,89 +2,75 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System.Numerics;
-#if NET
 using System.Runtime.CompilerServices;
-#endif
 
 namespace UnitsNet;
 
 public partial struct QuantityValue
 {
     /// <summary>Implicit cast from <see cref="byte" /> to <see cref="QuantityValue" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(byte value)
-    {
-        return new QuantityValue(value, BigInteger.One);
-    }
+        => new(value, BigInteger.One);
 
     /// <summary>Implicit cast from <see cref="sbyte" /> to <see cref="QuantityValue" />.</summary>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(sbyte value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="short" /> to <see cref="QuantityValue" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(short value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="ushort" /> to <see cref="QuantityValue" />.</summary>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(ushort value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="int" /> to <see cref="QuantityValue" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(int value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="uint" /> to <see cref="QuantityValue" />.</summary>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(uint value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="long" /> to <see cref="QuantityValue" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(long value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="ulong" /> to <see cref="QuantityValue" />.</summary>
     [CLSCompliant(false)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(ulong value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="float" /> to <see cref="QuantityValue" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(float value)
-    {
-        return FromDoubleRounded(value);
-    }
+        => FromDoubleRounded(value);
 
     /// <summary>Implicit cast from <see cref="double" /> to <see cref="QuantityValue" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(double value)
-    {
-        return FromDoubleRounded(value);
-    }
+        => FromDoubleRounded(value);
 
     /// <summary>Implicit cast from <see cref="decimal" /> to <see cref="QuantityValue" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(decimal value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>Implicit cast from <see cref="QuantityValue" /> to <see cref="BigInteger" />.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator QuantityValue(BigInteger value)
-    {
-        return new QuantityValue(value);
-    }
+        => new(value);
 
     /// <summary>
     ///     Creates a new instance of <see cref="QuantityValue" /> from the specified numerator and denominator.
@@ -99,9 +85,7 @@ public partial struct QuantityValue
     ///     A <see cref="QuantityValue" /> instance representing the fraction defined by the given numerator and denominator.
     /// </returns>
     public static QuantityValue FromTerms(BigInteger numerator, BigInteger denominator)
-    {
-        return denominator.Sign < 0 ? new QuantityValue(-numerator, -denominator) : new QuantityValue(numerator, denominator);
-    }
+        => denominator.Sign < 0 ? new QuantityValue(-numerator, -denominator) : new QuantityValue(numerator, denominator);
 
     /// <summary>
     ///     Creates a new instance of the <see cref="QuantityValue" /> struct with the specified number and a power of ten exponent.
@@ -119,10 +103,9 @@ public partial struct QuantityValue
     ///     This constructor enables precise representation of values using a fraction and a power of ten, 
     ///     corresponding to the scientific notation: number * 10 ^ powerOfTen.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue FromPowerOfTen(BigInteger number, int powerOfTen)
-    {
-        return new QuantityValue(number, BigInteger.One, powerOfTen);
-    }
+        => new(number, BigInteger.One, powerOfTen);
 
     /// <summary>
     ///     Creates a new instance of the <see cref="QuantityValue" /> struct with the specified numerator, denominator,
@@ -143,9 +126,7 @@ public partial struct QuantityValue
     ///     corresponding to the scientific notation: (numerator/denominator) * 10 ^ powerOfTen.
     /// </remarks>
     public static QuantityValue FromPowerOfTen(BigInteger numerator, BigInteger denominator, int powerOfTen)
-    {
-        return denominator.Sign < 0 ? new QuantityValue(-numerator, -denominator, powerOfTen) : new QuantityValue(numerator, denominator, powerOfTen);
-    }
+        => denominator.Sign < 0 ? new QuantityValue(-numerator, -denominator, powerOfTen) : new QuantityValue(numerator, denominator, powerOfTen);
 
     /// <summary>
     ///     Converts a floating point value to a QuantityValue. The value is rounded if possible.
@@ -180,9 +161,7 @@ public partial struct QuantityValue
     public static QuantityValue FromDoubleRounded(double value, byte nbSignificantDigits = 15)
     {
         if (nbSignificantDigits is < 1 or > 17)
-        {
             throw new ArgumentOutOfRangeException(nameof(nbSignificantDigits), nbSignificantDigits, "The number of significant digits must be between 1 and 17 (inclusive).");
-        }
 
         switch (value)
         {
@@ -213,9 +192,7 @@ public partial struct QuantityValue
         // Get the fractional part
         var fractionalPart = (long)Math.Round((value - truncatedValue) * scaleFactor);
         if (fractionalPart == 0) // rounded to integer
-        {
             return new QuantityValue(integerPart);
-        }
 
         // reduce the insignificant trailing zeros from the fractional part before converting it to BigInteger
         while (fractionalPart % 10 == 0)
@@ -231,14 +208,11 @@ public partial struct QuantityValue
 
 #if NET7_0_OR_GREATER
 
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static bool INumberBase<QuantityValue>.TryConvertFromChecked<TOther>(TOther value, out QuantityValue result)
     {
         if (TryConvertFrom(value, out result))
-        {
             return true;
-        }
 
         if (typeof(TOther) == typeof(Complex))
         {
@@ -257,9 +231,7 @@ public partial struct QuantityValue
     static bool INumberBase<QuantityValue>.TryConvertFromSaturating<TOther>(TOther value, out QuantityValue result)
     {
         if (TryConvertFrom(value, out result))
-        {
             return true;
-        }
 
         if (typeof(TOther) == typeof(Complex))
         {
@@ -275,9 +247,7 @@ public partial struct QuantityValue
     static bool INumberBase<QuantityValue>.TryConvertFromTruncating<TOther>(TOther value, out QuantityValue result)
     {
         if (TryConvertFrom(value, out result))
-        {
             return true;
-        }
 
         if (typeof(TOther) == typeof(Complex))
         {
@@ -449,9 +419,7 @@ public partial struct QuantityValue
         static bool TryConvertChecked<TSource, TTarget>(TSource source, out TTarget? result)
             where TSource : INumberBase<TSource>
             where TTarget : INumberBase<TTarget>
-        {
-            return TTarget.TryConvertFromChecked(source, out result);
-        }
+            => TTarget.TryConvertFromChecked(source, out result);
     }
 
     /// <summary>
@@ -481,9 +449,7 @@ public partial struct QuantityValue
         static bool TryConvertSaturating<TSource, TTarget>(TSource source, out TTarget? result)
             where TSource : INumberBase<TSource>
             where TTarget : INumberBase<TTarget>
-        {
-            return TTarget.TryConvertFromSaturating(source, out result);
-        }
+            => TTarget.TryConvertFromSaturating(source, out result);
     }
     
     /// <summary>
@@ -513,9 +479,7 @@ public partial struct QuantityValue
         static bool TryConvertTruncating<TSource, TTarget>(TSource source, out TTarget? result)
             where TSource : INumberBase<TSource>
             where TTarget : INumberBase<TTarget>
-        {
-            return TTarget.TryConvertFromTruncating(source, out result);
-        }
+            => TTarget.TryConvertFromTruncating(source, out result);
     }
 #endif
 }

@@ -136,9 +136,7 @@ public sealed class QuantityConversionOptions
     public QuantityConversionOptions SetCustomConversion<TFromUnit, TToUnit>(TFromUnit fromUnit, TToUnit toUnit, ConvertValueDelegate conversionFunction)
         where TFromUnit : struct, Enum
         where TToUnit : struct, Enum
-    {
-        return SetCustomConversion(fromUnit, toUnit, new ConversionExpression(QuantityValue.One, conversionFunction));
-    }
+        => SetCustomConversion(fromUnit, toUnit, new ConversionExpression(QuantityValue.One, conversionFunction));
 
     /// <summary>
     ///     Adds a custom conversion function between two specified units.
@@ -161,10 +159,8 @@ public sealed class QuantityConversionOptions
         where TToUnit : struct, Enum
     {
         if (typeof(TFromUnit) == typeof(TToUnit))
-        {
             throw new InvalidConversionException(
                 $"Mapping conversion units for different quantities using the same unit type ({typeof(TFromUnit).Name}) is not allowed.");
-        }
 
         var fromUnitKey = UnitKey.ForUnit(fromUnit);
         var toUnitKey = UnitKey.ForUnit(toUnit);
@@ -197,18 +193,14 @@ public sealed class QuantityConversionOptions
         where TToUnit : struct, Enum
     {
         if (typeof(TFromUnit) == typeof(TToUnit))
-        {
             throw new InvalidConversionException(
                 $"Mapping conversion units for different quantities using the same unit type ({typeof(TFromUnit).Name}) is not allowed.");
-        }
 
         var fromUnitKey = UnitKey.ForUnit(fromUnit);
         var toUnitKey = UnitKey.ForUnit(toUnit);
         CustomConversionFunctions[new UnitConversionMapping(fromUnitKey, toUnitKey)] = conversionCoefficient;
         if (mapBothDirections)
-        {
             CustomConversionFunctions[new UnitConversionMapping(toUnitKey, fromUnitKey)] = QuantityValue.Inverse(conversionCoefficient);
-        }
         
         return this;
     }

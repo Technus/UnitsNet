@@ -1,41 +1,67 @@
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet
 {
     public static partial class Quantity
     {
-        private static QuantityInfoLookup Quantities => UnitsNetSetup.Default.Quantities;
-        private static QuantityParser QuantityParser => UnitsNetSetup.Default.QuantityParser;
-        private static UnitParser UnitParser => UnitsNetSetup.Default.UnitParser;
+        private static QuantityInfoLookup Quantities
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitsNetSetup.Default.Quantities;
+        }
+        private static QuantityParser QuantityParser
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitsNetSetup.Default.QuantityParser;
+        }
+        private static UnitParser UnitParser
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => UnitsNetSetup.Default.UnitParser;
+        }
 
         /// <summary>
         /// All quantity names, such as "Length" and "Mass", that are present in the <see cref="UnitsNetSetup.Default"/> configuration.
         /// </summary>
-        public static IReadOnlyCollection<string> Names => Quantities.Names;
+        public static IReadOnlyCollection<string> Names
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Quantities.Names;
+        }
 
         /// <summary>
         /// All quantity information objects, such as <see cref="Length.Info"/> and <see cref="Mass.Info"/>, that are present in the <see cref="UnitsNetSetup.Default"/> configuration.
         /// </summary>
-        public static IReadOnlyList<QuantityInfo> Infos => Quantities.Infos;
+        public static IReadOnlyList<QuantityInfo> Infos
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Quantities.Infos;
+        }
 
         /// <summary>
         /// All QuantityInfo instances mapped by quantity name that are present in the <see cref="UnitsNetSetup.Default"/> configuration.
         /// </summary>
-        public static IReadOnlyDictionary<string, QuantityInfo> ByName => Quantities.ByName;
+        public static IReadOnlyDictionary<string, QuantityInfo> ByName
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Quantities.ByName;
+        }
 
         /// <summary>
         /// Get <see cref="UnitInfo{TQuantity,TUnit}"/> for a given unit enum value.
         /// </summary>
-        public static UnitInfo GetUnitInfo(UnitKey unitEnum) => Quantities.GetUnitInfo(unitEnum);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static UnitInfo GetUnitInfo(UnitKey unitEnum)
+            => Quantities.GetUnitInfo(unitEnum);
 
         /// <summary>
         /// Try to get <see cref="UnitInfo{TQuantity,TUnit}"/> for a given unit enum value.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryGetUnitInfo(UnitKey unitEnum, [NotNullWhen(true)] out UnitInfo? unitInfo)
-        {
-            return Quantities.TryGetUnitInfo(unitEnum, out unitInfo);
-        }
-        
+            => Quantities.TryGetUnitInfo(unitEnum, out unitInfo);
+
         /// <summary>
         ///     Dynamically constructs a quantity from a numeric value and a unit enum value.
         /// </summary>
@@ -43,10 +69,9 @@ namespace UnitsNet
         /// <param name="unit">Unit enum value.</param>
         /// <returns>An <see cref="IQuantity"/> object.</returns>
         /// <exception cref="UnitNotFoundException">Unit value is not a known unit enum type.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IQuantity From(QuantityValue value, UnitKey unit)
-        {
-            return Quantities.From(value, unit);
-        }
+            => Quantities.From(value, unit);
 
         /// <summary>
         ///     Dynamically construct a quantity from a value, the quantity name and the unit name.
@@ -62,9 +87,7 @@ namespace UnitsNet
         ///     Thrown when no unit is found for the specified quantity name and unit name.
         /// </exception>
         public static IQuantity From(QuantityValue value, string quantityName, string unitName)
-        {
-            return Quantities.GetUnitByName(quantityName, unitName).From(value);
-        }
+            => Quantities.GetUnitByName(quantityName, unitName).From(value);
 
         /// <summary>
         ///     Dynamically construct a quantity from a numeric value and a unit abbreviation using <see cref="CultureInfo.CurrentCulture"/>.
@@ -81,7 +104,9 @@ namespace UnitsNet
         /// <returns>An <see cref="IQuantity"/> object.</returns>
         /// <exception cref="UnitNotFoundException">Unit abbreviation is not known.</exception>
         /// <exception cref="AmbiguousUnitParseException">Multiple units found matching the given unit abbreviation.</exception>
-        public static IQuantity FromUnitAbbreviation(QuantityValue value, string unitAbbreviation) => FromUnitAbbreviation(null, value, unitAbbreviation);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IQuantity FromUnitAbbreviation(QuantityValue value, string unitAbbreviation)
+            => FromUnitAbbreviation(null, value, unitAbbreviation);
 
         /// <summary>
         ///     Dynamically construct a quantity from a numeric value and a unit abbreviation.
@@ -99,10 +124,9 @@ namespace UnitsNet
         /// <returns>An <see cref="IQuantity"/> object.</returns>
         /// <exception cref="UnitNotFoundException">Unit abbreviation is not known.</exception>
         /// <exception cref="AmbiguousUnitParseException">Multiple units found matching the given unit abbreviation.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IQuantity FromUnitAbbreviation(IFormatProvider? culture, QuantityValue value, string unitAbbreviation)
-        {
-            return UnitParser.FromUnitAbbreviation(value, unitAbbreviation, culture);
-        }
+            => UnitParser.FromUnitAbbreviation(value, unitAbbreviation, culture);
 
         /// <summary>
         ///     Try to dynamically construct a quantity from a value, the quantity name and the unit name.
@@ -136,10 +160,9 @@ namespace UnitsNet
         /// <returns>
         ///     <c>true</c> if the quantity was successfully created; otherwise, <c>false</c>.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFrom(QuantityValue value, Enum? unit, [NotNullWhen(true)] out IQuantity? quantity)
-        {
-            return Quantities.TryFrom(value, unit, out quantity);
-        }
+            => Quantities.TryFrom(value, unit, out quantity);
 
         /// <summary>
         ///     Dynamically construct a quantity from a numeric value and a unit abbreviation using <see cref="CultureInfo.CurrentCulture"/>.
@@ -156,6 +179,7 @@ namespace UnitsNet
         /// <param name="quantity">The quantity if successful, otherwise null.</param>
         /// <returns>True if successful.</returns>
         /// <exception cref="ArgumentException">Unit value is not a known unit enum type.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFromUnitAbbreviation(QuantityValue value, string unitAbbreviation, [NotNullWhen(true)] out IQuantity? quantity) =>
             TryFromUnitAbbreviation(null, value, unitAbbreviation, out quantity);
 
@@ -187,8 +211,10 @@ namespace UnitsNet
             return false;
         }
 
-        /// <inheritdoc cref="Parse(IFormatProvider, System.Type,string)"/>
-        public static IQuantity Parse(Type quantityType, string quantityString) => Parse(null, quantityType, quantityString);
+        /// <inheritdoc cref="Parse(IFormatProvider, Type,string)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IQuantity Parse(Type quantityType, string quantityString)
+            => Parse(null, quantityType, quantityString);
 
         /// <summary>
         ///     Dynamically parse a quantity string representation.
@@ -210,19 +236,16 @@ namespace UnitsNet
             return QuantityParser.Parse(quantityString, formatProvider, quantityInfo);
         }
 
-        /// <inheritdoc cref="TryParse(IFormatProvider,System.Type,string,out UnitsNet.IQuantity)"/>
+        /// <inheritdoc cref="TryParse(IFormatProvider,Type,string,out IQuantity)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParse(Type quantityType, string quantityString, [NotNullWhen(true)] out IQuantity? quantity)
-        {
-            return TryParse(null, quantityType, quantityString, out quantity);
-        }
+            => TryParse(null, quantityType, quantityString, out quantity);
 
-        /// <inheritdoc cref="TryParse(IFormatProvider,System.Type,string,out UnitsNet.IQuantity)"/>
+        /// <inheritdoc cref="TryParse(IFormatProvider,Type,string,out IQuantity)"/>
         public static bool TryParse(IFormatProvider? formatProvider, Type quantityType, string quantityString, [NotNullWhen(true)] out IQuantity? quantity)
         {
             if (Quantities.TryGetQuantityInfo(quantityType, out QuantityInfo? quantityInfo))
-            {
                 return QuantityParser.TryParse(quantityString, formatProvider, quantityInfo, out quantity);
-            }
 
             quantity = null;
             return false;
@@ -232,9 +255,8 @@ namespace UnitsNet
         ///     Get a list of quantities that has the given base dimensions.
         /// </summary>
         /// <param name="baseDimensions">The base dimensions to match.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<QuantityInfo> GetQuantitiesWithBaseDimensions(BaseDimensions baseDimensions)
-        {
-            return Infos.GetQuantitiesWithBaseDimensions(baseDimensions);
-        }
+            => Infos.GetQuantitiesWithBaseDimensions(baseDimensions);
     }
 }

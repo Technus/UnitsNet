@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 // ReSharper disable once CheckNamespace
@@ -63,6 +64,7 @@ public sealed class UnitParser
     /// </remarks>
     public QuantityInfoLookup Quantities
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => Abbreviations.Quantities;
     }
 
@@ -70,7 +72,11 @@ public sealed class UnitParser
     ///     The default static instance used internally to parse quantities and units using the
     ///     default abbreviations cache for all units and abbreviations defined in the library.
     /// </summary>
-    public static UnitParser Default => UnitsNetSetup.Default.UnitParser;
+    public static UnitParser Default
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => UnitsNetSetup.Default.UnitParser;
+    }
 
     /// <summary>
     ///     Creates a default instance of the <see cref="UnitParser" /> class with all the built-in unit abbreviations defined
@@ -78,9 +84,7 @@ public sealed class UnitParser
     /// </summary>
     /// <returns>A <see cref="UnitParser" /> instance with the default abbreviations cache.</returns>
     public static UnitParser CreateDefault()
-    {
-        return new UnitParser(UnitAbbreviationsCache.CreateDefault());
-    }
+        => new UnitParser(UnitAbbreviationsCache.CreateDefault());
 
     /// <summary>
     ///     Creates a parser for the built-in quantities and any additions made by <paramref name="configureQuantities" />.
@@ -88,9 +92,7 @@ public sealed class UnitParser
     /// <param name="configureQuantities">Configures the selected quantities.</param>
     /// <returns>A parser for the configured quantity selection.</returns>
     public static UnitParser CreateDefault(Action<QuantitiesSelector> configureQuantities)
-    {
-        return new UnitParser(UnitAbbreviationsCache.CreateDefault(configureQuantities));
-    }
+        => new UnitParser(UnitAbbreviationsCache.CreateDefault(configureQuantities));
 
     /// <summary>
     ///     Creates a parser for the built-in quantities, with configurable quantities and abbreviations.
@@ -98,10 +100,9 @@ public sealed class UnitParser
     /// <param name="configureQuantities">Configures the selected quantities.</param>
     /// <param name="configureAbbreviations">Configures abbreviations before constructing the parser.</param>
     /// <returns>A parser for the configured quantities and abbreviations.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UnitParser CreateDefault(Action<QuantitiesSelector> configureQuantities, Action<UnitAbbreviationsCache> configureAbbreviations)
-    {
-        return Create(Quantity.DefaultProvider.Quantities, configureQuantities, configureAbbreviations);
-    }
+        => Create(Quantity.DefaultProvider.Quantities, configureQuantities, configureAbbreviations);
 
     /// <summary>
     ///     Creates a parser for a configured selection based on <paramref name="defaultQuantities" />.
@@ -109,10 +110,9 @@ public sealed class UnitParser
     /// <param name="defaultQuantities">The initial quantity definitions.</param>
     /// <param name="configureQuantities">Configures the selected quantities.</param>
     /// <returns>A parser for the configured quantity selection.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UnitParser Create(IEnumerable<QuantityInfo> defaultQuantities, Action<QuantitiesSelector> configureQuantities)
-    {
-        return new UnitParser(UnitAbbreviationsCache.Create(defaultQuantities, configureQuantities));
-    }
+        => new UnitParser(UnitAbbreviationsCache.Create(defaultQuantities, configureQuantities));
 
     /// <summary>
     ///     Creates a parser for a base catalog, with configurable quantities and abbreviations.
@@ -248,9 +248,7 @@ public sealed class UnitParser
         if (unitAbbreviation == null) throw new ArgumentNullException(nameof(unitAbbreviation));
         
         if (formatProvider is not CultureInfo culture)
-        {
             culture = CultureInfo.CurrentCulture;
-        }
         
         unitAbbreviation = unitAbbreviation.Trim();
         while (true)
@@ -281,9 +279,7 @@ public sealed class UnitParser
     {
         var abbreviationLength = unitAbbreviation.Length;
         if (abbreviationLength == 0)
-        {
             return unitAbbreviation;
-        }
 
         // Remove all whitespace using StringBuilder
         var sb = new StringBuilder(abbreviationLength);
@@ -291,9 +287,7 @@ public sealed class UnitParser
         {
             var character = unitAbbreviation[i];
             if (!char.IsWhiteSpace(character))
-            {
                 sb.Append(character);
-            }
         }
 
         // Perform replacements using StringBuilder
@@ -328,11 +322,10 @@ public sealed class UnitParser
     /// <param name="unit">The unit enum value as out result.</param>
     /// <typeparam name="TUnitType">Type of unit enum.</typeparam>
     /// <returns>True if successful.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryParse<TUnitType>([NotNullWhen(true)] string? unitAbbreviation, out TUnitType unit)
         where TUnitType : struct, Enum
-    {
-        return TryParse(unitAbbreviation, null, out unit);
-    }
+        => TryParse(unitAbbreviation, null, out unit);
 
     /// <summary>
     ///     Try to parse a unit abbreviation.
@@ -362,10 +355,9 @@ public sealed class UnitParser
     /// <param name="unitType">Type of unit enum.</param>
     /// <param name="unit">The unit enum value as out result.</param>
     /// <returns>True if successful.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryParse([NotNullWhen(true)]string? unitAbbreviation, Type unitType, [NotNullWhen(true)] out Enum? unit)
-    {
-        return TryParse(unitAbbreviation, unitType, null, out unit);
-    }
+        => TryParse(unitAbbreviation, unitType, null, out unit);
 
     /// <summary>
     ///     Try to parse a unit abbreviation.
@@ -445,9 +437,7 @@ public sealed class UnitParser
     public bool TryGetUnitFromAbbreviation(string quantityName, string? unitAbbreviation, IFormatProvider? formatProvider, [NotNullWhen(true)] out UnitInfo? unitInfo)
     {
         if (unitAbbreviation != null && Quantities.TryGetQuantityByName(quantityName, out QuantityInfo? quantityInfo))
-        {
             return TryParse(unitAbbreviation, quantityInfo.UnitInfos, formatProvider, out unitInfo);
-        }
 
         unitInfo = null;
         return false;
@@ -477,9 +467,7 @@ public sealed class UnitParser
     public bool TryGetUnitFromAbbreviation(Type quantityType, string? unitAbbreviation, IFormatProvider? formatProvider, [NotNullWhen(true)] out UnitInfo? unitInfo)
     {
         if (unitAbbreviation != null && Quantities.TryGetQuantityInfo(quantityType, out QuantityInfo? quantityInfo))
-        {
             return TryParse(unitAbbreviation, quantityInfo.UnitInfos, formatProvider, out unitInfo);
-        }
 
         unitInfo = null;
         return false;
@@ -506,16 +494,12 @@ public sealed class UnitParser
     {
         unit = null;
         if (unitAbbreviation == null)
-        {
             return false;
-        }
         
         unitAbbreviation = unitAbbreviation.Trim();
         
         if (formatProvider is not CultureInfo culture)
-        {
             culture = CultureInfo.CurrentCulture;
-        }
         
         List<(TUnitInfo UnitInfo, string Abbreviation)> matches = FindMatchingUnits(unitAbbreviation, units, culture);
         
@@ -526,16 +510,12 @@ public sealed class UnitParser
         }
 
         if (matches.Count != 0 || !UnitAbbreviationsCache.HasFallbackCulture(culture))
-        {
             return false; // either there are duplicates or nothing was matched and we're already using the fallback culture
-        }
 
         // retry the lookup using the fallback culture
         matches = FindMatchingUnits(unitAbbreviation, units, UnitAbbreviationsCache.FallbackCulture);
         if (matches.Count != 1)
-        {
             return false;
-        }
         
         unit = matches[0].UnitInfo;
         return true;
@@ -551,23 +531,17 @@ public sealed class UnitParser
         {
             var normalizeUnitString = NormalizeUnitString(unitAbbreviation);
             if (unitAbbreviation == normalizeUnitString)
-            {
                 return caseInsensitiveMatches;
-            }
 
             unitAbbreviation = normalizeUnitString;
             caseInsensitiveMatches = FindMatchingUnitsForCulture(units, unitAbbreviation, culture, StringComparison.OrdinalIgnoreCase);
             if (caseInsensitiveMatches.Count == 0)
-            {
                 return caseInsensitiveMatches;
-            }
         }
 
         var nbAbbreviationsFound = caseInsensitiveMatches.Count;
         if (nbAbbreviationsFound == 1)
-        {
             return caseInsensitiveMatches;
-        }
 
         // Narrow the search if too many hits, for example Megabar "Mbar" and Millibar "mbar" need to be distinguished
         var caseSensitiveMatches = new List<(TUnitInfo UnitInfo, string Abbreviation)>(nbAbbreviationsFound);
@@ -575,9 +549,7 @@ public sealed class UnitParser
         {
             (TUnitInfo UnitInfo, string Abbreviation) match = caseInsensitiveMatches[i];
             if (unitAbbreviation == match.Abbreviation)
-            {
                 caseSensitiveMatches.Add(match);
-            }
         }
 
         return caseSensitiveMatches.Count == 0 ? caseInsensitiveMatches : caseSensitiveMatches;
@@ -598,9 +570,7 @@ public sealed class UnitParser
             {
                 var abbreviation = abbreviations[p];
                 if (unitAbbreviation.Equals(abbreviation, comparison))
-                {
                     unitAbbreviationsPairs.Add((unitInfo, abbreviation));
-                }
             }
         }
 
@@ -703,9 +673,7 @@ public sealed class UnitParser
         {
             List<(UnitInfo UnitInfo, string Abbreviation)> matches = FindAllMatchingUnitsForCulture(unitAbbreviation, culture, comparison);
             if (matches.Count != 0)
-            {
                 return matches;
-            }
             
             // Retry with fallback culture, if different.
             if (UnitAbbreviationsCache.HasFallbackCulture(culture))
@@ -748,9 +716,7 @@ public sealed class UnitParser
                 {
                     var abbreviation = abbreviations[p];
                     if (unitAbbreviation.Equals(abbreviation, comparison))
-                    {
                         unitAbbreviationsPairs.Add((unitInfo, abbreviation));
-                    }
                 }
             }
         }
@@ -775,7 +741,5 @@ public sealed class UnitParser
     /// <exception cref="UnitNotFoundException">Unit abbreviation is not known.</exception>
     /// <exception cref="AmbiguousUnitParseException">Multiple units found matching the given unit abbreviation.</exception>
     internal IQuantity FromUnitAbbreviation(QuantityValue value, string unitAbbreviation, IFormatProvider? formatProvider)
-    {
-        return GetUnitFromAbbreviation(unitAbbreviation, formatProvider).From(value);
-    }
+        => GetUnitFromAbbreviation(unitAbbreviation, formatProvider).From(value);
 }

@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -27,10 +28,9 @@ public readonly partial struct QuantityValue
     ///     b/a. For the multiplicative inverse of a real number, divide 1 by the number. For example, the reciprocal of 5 is
     ///     one fifth (1/5 or 0.2), and the reciprocal of 0.25 is 1 divided by 0.25, or 4.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue Inverse(QuantityValue value)
-    {
-        return FromTerms(value.Denominator, value.Numerator);
-    }
+        => FromTerms(value.Denominator, value.Numerator);
 
     /// <summary>
     ///     Reduces the specified <see cref="QuantityValue" /> to its simplest form.
@@ -52,14 +52,10 @@ public readonly partial struct QuantityValue
         }
 
         if (numerator.IsZero)
-        {
             return Zero;
-        }
 
         if (numerator.IsOne || denominator.IsOne || numerator == BigInteger.MinusOne)
-        {
             return new QuantityValue(numerator, denominator);
-        }
 
         var gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
 

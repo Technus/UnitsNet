@@ -24,14 +24,10 @@ namespace UnitsNet
             var errorMessage = $"The base-10 logarithm of a number ≤ 0 is undefined ({quantity}/{reference}).";
 
             if (quantity == 0 || (quantity < 0 && reference > 0))
-            {
-                throw new ArgumentOutOfRangeException(nameof(quantity), errorMessage);
-            }
+                throw new ArgumentOutOfRangeException(nameof(quantity), quantity, errorMessage);
 
             if (reference == 0 || (quantity > 0 && reference < 0))
-            {
-                throw new ArgumentOutOfRangeException(nameof(reference), errorMessage);
-            }
+                throw new ArgumentOutOfRangeException(nameof(reference), reference, errorMessage);
 
             _value = QuantityValue.FromDoubleRounded(10 * Math.Log10(quantity / reference), significantDigits);
             _unit = LevelUnit.Decibel;

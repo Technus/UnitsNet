@@ -1,6 +1,8 @@
 // Licensed under MIT No Attribution, see LICENSE file at the root.
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
+using System.Runtime.CompilerServices;
+
 namespace UnitsNet;
 
 /// <summary>
@@ -111,10 +113,10 @@ public sealed class UnitsNetSetup
         /// <param name="quantities">The quantities to add to the default configuration.</param>
         /// <param name="configureQuantities">An action to configure the selected quantities.</param>
         /// <returns>
-        ///     The <see cref="UnitsNet.UnitsNetSetup.DefaultConfigurationBuilder" /> instance with the additional quantities
+        ///     The <see cref="DefaultConfigurationBuilder" /> instance with the additional quantities
         ///     added.
         /// </returns>
-        /// <exception cref="System.InvalidOperationException">Thrown if the list of quantities to use is already specified.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the list of quantities to use is already specified.</exception>
         public DefaultConfigurationBuilder WithAdditionalQuantities(IEnumerable<QuantityInfo> quantities, Action<QuantitiesSelector> configureQuantities)
         {
             if (configureQuantities is null) throw new ArgumentNullException(nameof(configureQuantities));
@@ -132,7 +134,7 @@ public sealed class UnitsNetSetup
         /// <param name="createCustomConfigurationDelegate">
         ///     A delegate that creates a custom configuration for the quantity.
         /// </param>
-        /// <returns>The current instance of <see cref="UnitsNet.UnitsNetSetup.DefaultConfigurationBuilder" /> for method chaining.</returns>
+        /// <returns>The current instance of <see cref="DefaultConfigurationBuilder" /> for method chaining.</returns>
         public DefaultConfigurationBuilder ConfigureQuantity<TQuantity, TUnit>(Func<QuantityInfo<TQuantity, TUnit>> createCustomConfigurationDelegate)
             where TQuantity : IQuantity<TQuantity, TUnit>
             where TUnit : struct, Enum
@@ -150,7 +152,7 @@ public sealed class UnitsNetSetup
         ///     constants reduction, and custom quantity options.
         /// </param>
         /// <returns>
-        ///     The <see cref="UnitsNetSetup.DefaultConfigurationBuilder" /> instance for chaining further configuration.
+        ///     The <see cref="DefaultConfigurationBuilder" /> instance for chaining further configuration.
         /// </returns>
         public DefaultConfigurationBuilder WithConverterOptions(QuantityConverterBuildOptions converterBuildOptions)
         {
@@ -161,9 +163,7 @@ public sealed class UnitsNetSetup
         internal QuantityInfo<TQuantity, TUnit> CreateQuantityInfoOrDefault<TQuantity, TUnit>(Func<QuantityInfo<TQuantity, TUnit>> defaultConfiguration)
             where TQuantity : IQuantity<TQuantity, TUnit>
             where TUnit : struct, Enum
-        {
-            return _quantitiesSelector is null ? defaultConfiguration() : _quantitiesSelector.CreateOrDefault(defaultConfiguration);
-        }
+            => _quantitiesSelector is null ? defaultConfiguration() : _quantitiesSelector.CreateOrDefault(defaultConfiguration);
 
         internal UnitsNetSetup Build()
         {
@@ -215,12 +215,11 @@ public sealed class UnitsNetSetup
     ///     By using this method, any customizations to the default unit definitions are taken into account by the unit
     ///     converter, parser, formatter, the debug proxy, etc.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static QuantityInfo<TQuantity, TUnit> CreateQuantityInfo<TQuantity, TUnit>(Func<QuantityInfo<TQuantity, TUnit>> defaultConfiguration)
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return _defaultConfigurationBuilder.CreateQuantityInfoOrDefault(defaultConfiguration);
-    }
+        => _defaultConfigurationBuilder.CreateQuantityInfoOrDefault(defaultConfiguration);
 
     /// <summary>
     ///     Configures and creates the global default setup before its first use.
@@ -236,17 +235,13 @@ public sealed class UnitsNetSetup
         lock (DefaultConfigurationLock)
         {
             if (DefaultConfiguration.IsValueCreated)
-            {
                 throw new InvalidOperationException("The default configuration cannot be changed after it has been created.");
-            }
 
             var builder = new DefaultConfigurationBuilder();
             configuration(builder);
 
             if (DefaultConfiguration.IsValueCreated)
-            {
                 throw new InvalidOperationException("The default configuration was created while it was being configured.");
-            }
 
             _defaultConfigurationBuilder = builder;
             return DefaultConfiguration.Value;
@@ -277,7 +272,11 @@ public sealed class UnitsNetSetup
     ///     current AppDomain since the typical use is via static members and not providing a setup instance.
     /// </remarks>
     /// <seealso cref="ConfigureDefaults" />
-    public static UnitsNetSetup Default => DefaultConfiguration.Value;
+    public static UnitsNetSetup Default
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => DefaultConfiguration.Value;
+    }
 
     /// <summary>
     ///     Converts between units of a quantity, such as from meters to centimeters of a given length.

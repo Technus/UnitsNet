@@ -13,10 +13,9 @@ namespace UnitsNet;
 public partial struct QuantityValue
 {
     /// <summary>Returns the string representation of the numeric value.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString()
-    {
-        return ToString("G");
-    }
+        => ToString("G");
 
     /// <summary>
     ///     Returns the string representation of the numeric value, formatted using the given standard numeric format string
@@ -26,20 +25,18 @@ public partial struct QuantityValue
     ///     base type)
     /// </param>
     /// <returns>The string representation</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToString([StringSyntax(StringSyntaxAttribute.NumericFormat)] string format)
-    {
-        return ToString(format, NumberFormatInfo.CurrentInfo);
-    }
+        => ToString(format, NumberFormatInfo.CurrentInfo);
 
     /// <summary>
     ///     Returns the string representation of the numeric value, formatted using the given standard numeric format string
     /// </summary>
     /// <param name="formatProvider">The culture to use</param>
     /// <returns>The string representation</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToString(IFormatProvider? formatProvider)
-    {
-        return ToString(null, formatProvider);
-    }
+        => ToString(null, formatProvider);
 
     /// <summary>
     ///     Returns the string representation of the underlying value
@@ -133,19 +130,17 @@ public partial struct QuantityValue
     ///     </see>
     ///     in the GitHub README.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string ToString(
         [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format,
         IFormatProvider? formatProvider)
-    {
-        return DecimalNotationFormatter.Format(this, format, formatProvider);
-    }
+        => DecimalNotationFormatter.Format(this, format, formatProvider);
 
 #if NET7_0_OR_GREATER
     /// <inheritdoc />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
-    {
-        return DecimalNotationFormatter.TryFormat(destination, out charsWritten, this, format, provider);
-    }
+        => DecimalNotationFormatter.TryFormat(destination, out charsWritten, this, format, provider);
 #endif
 
 #if NET
@@ -296,9 +291,7 @@ public partial struct QuantityValue
             }
 
             if (string.IsNullOrEmpty(format))
-            {
                 return FormatGeneral(numerator, denominator, "G", numberFormatInfo);
-            }
 
             if (format[0] is 'S' or 's' &&
                 (format.Length == 1 || int.TryParse(format.AsSpan(1), NumberStyles.Integer, CultureInfo.InvariantCulture, out _)))
@@ -333,25 +326,19 @@ public partial struct QuantityValue
                 {
                     case 1:
                         if (!numberFormatInfo.PositiveInfinitySymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = numberFormatInfo.PositiveInfinitySymbol.Length;
                         return true;
                     case -1:
                         if (!numberFormatInfo.NegativeInfinitySymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = numberFormatInfo.NegativeInfinitySymbol.Length;
                         return true;
                     default:
                         if (!numberFormatInfo.NaNSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = numberFormatInfo.NaNSymbol.Length;
                         return true;
@@ -359,9 +346,7 @@ public partial struct QuantityValue
             }
 
             if (format.IsEmpty)
-            {
                 return TryFormatGeneral(destination, out charsWritten, numerator, denominator, "G", numberFormatInfo);
-            }
 
             if (format[0] is 'S' or 's' &&
                 (format.Length == 1 || int.TryParse(format[1..], NumberStyles.Integer, CultureInfo.InvariantCulture, out _)))
@@ -394,9 +379,7 @@ public partial struct QuantityValue
             }
 
             if (int.TryParse(format[1..], NumberStyles.Integer, CultureInfo.InvariantCulture, out maxNbDecimals))
-            {
                 return true;
-            }
 
             // Seems to be some kind of custom format we do not understand, fallback to default precision.
             maxNbDecimals = defaultPrecision;
@@ -414,14 +397,10 @@ public partial struct QuantityValue
         private static string FormatWithFixedPointFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.NumberDecimalDigits, out var maxNbDecimalsAfterRadix))
             {
@@ -432,9 +411,7 @@ public partial struct QuantityValue
             Span<char> buffer = stackalloc char[StackLimit]; // Use stack memory
             int charsWritten;
             while (!TryFormatWithFixedPointFormat(buffer, out charsWritten, numerator, denominator, format, formatProvider, maxNbDecimalsAfterRadix))
-            {
                 buffer = new char[buffer.Length * 2]; // Use heap if needed
-            }
 
             return new string(buffer[..charsWritten]);
         }
@@ -443,14 +420,10 @@ public partial struct QuantityValue
             NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.NumberDecimalDigits, out var maxNbDecimalsAfterRadix))
             {
@@ -490,9 +463,7 @@ public partial struct QuantityValue
 
                     roundedNumerator = -roundedNumerator;
                     if (!TryAppendDecimals(destination[charsWritten..], out var digitsWritten, roundedNumerator, roundedDenominator, formatProvider, maxNbDecimalsAfterRadix, "F0"))
-                    {
                         return false;
-                    }
 
                     charsWritten += digitsWritten;
                     return true;
@@ -513,14 +484,10 @@ public partial struct QuantityValue
         private static string FormatWithStandardNumericFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.NumberDecimalDigits, out var maxNbDecimals))
             {
@@ -531,9 +498,7 @@ public partial struct QuantityValue
             Span<char> buffer = stackalloc char[StackLimit]; // Use stack memory
             int charsWritten;
             while (!TryFormatWithStandardNumericFormat(buffer, out charsWritten, numerator, denominator, format, formatProvider, maxNbDecimals))
-            {
                 buffer = new char[buffer.Length * 2]; // Use heap if needed
-            }
 
             return new string(buffer[..charsWritten]);
         }
@@ -542,14 +507,10 @@ public partial struct QuantityValue
             ReadOnlySpan<char> format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.NumberDecimalDigits, out var maxNbDecimals))
             {
@@ -579,22 +540,16 @@ public partial struct QuantityValue
                     return TryAppendDecimals(destination, out charsWritten, roundedNumerator, roundedDenominator, formatProvider, maxNbDecimals, "N0");
                 default:
                     if (!TryAppendLeadingNegativePattern(destination, out charsWritten, formatProvider.NegativeSign, formatProvider.NumberNegativePattern))
-                    {
                         return false;
-                    }
 
                     roundedNumerator = -roundedNumerator;
                     if (!TryAppendDecimals(destination[charsWritten..], out var decimalsWritten, roundedNumerator, roundedDenominator, formatProvider, maxNbDecimals, "N0"))
-                    {
                         return false;
-                    }
 
                     charsWritten += decimalsWritten;
                     if (!TryAppendTrailingNegativePattern(destination[charsWritten..], out var trailingCharsWritten, formatProvider.NegativeSign,
                             formatProvider.NumberNegativePattern))
-                    {
                         return false;
-                    }
 
                     charsWritten += trailingCharsWritten;
                     return true;
@@ -607,32 +562,24 @@ public partial struct QuantityValue
                 {
                     case 0: // (n) : leading is '('
                         if (destination.IsEmpty)
-                        {
                             return false;
-                        }
 
                         destination[0] = '(';
                         charsWritten = 1;
                         return true;
                     case 1: // -n : leading is negativeSignSymbol
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         return true;
                     case 2: // - n : leading is negativeSignSymbol + ' '
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         if (charsWritten == destination.Length)
-                        {
                             return false;
-                        }
 
                         destination[charsWritten] = ' ';
                         charsWritten++;
@@ -649,33 +596,25 @@ public partial struct QuantityValue
                 {
                     case 0: // (n) : trailing is ')'
                         if (destination.IsEmpty)
-                        {
                             return false;
-                        }
 
                         destination[0] = ')';
                         charsWritten = 1;
                         return true;
                     case 3: // n- : trailing is negativeSignSymbol
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         return true;
                     case 4: // n - : trailing is ' ' + negativeSignSymbol
                         if (destination.IsEmpty)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         charsWritten = 1;
                         if (!negativeSignSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += negativeSignSymbol.Length;
                         return true;
@@ -697,14 +636,10 @@ public partial struct QuantityValue
         private static string FormatWithPercentFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.PercentDecimalDigits, out var maxNbDecimals))
             {
@@ -715,9 +650,7 @@ public partial struct QuantityValue
             Span<char> buffer = stackalloc char[StackLimit]; // Use stack memory
             int charsWritten;
             while (!TryFormatWithPercentFormat(buffer, out charsWritten, numerator, denominator, format, formatProvider, maxNbDecimals))
-            {
                 buffer = new char[buffer.Length * 2]; // Use heap if needed
-            }
 
             return new string(buffer[..charsWritten]);
         }
@@ -726,14 +659,10 @@ public partial struct QuantityValue
             NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.PercentDecimalDigits, out var maxNbDecimals))
             {
@@ -751,9 +680,7 @@ public partial struct QuantityValue
             {
                 var roundedValue = RoundToBigInteger(100 * numerator, denominator, DefaultMidpointRoundingMode);
                 if (roundedValue.IsZero)
-                {
                     return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-                }
 
                 var percentFormatInfo = new NumberFormatInfo
                 {
@@ -767,22 +694,16 @@ public partial struct QuantityValue
                 if (roundedValue.Sign >= 0)
                 {
                     if (!TryAppendLeadingPositivePercentPattern(destination, out charsWritten, formatProvider.PercentSymbol, formatProvider.PercentPositivePattern))
-                    {
                         return false;
-                    }
 
                     if (!roundedValue.TryFormat(destination[charsWritten..], out var decimalsWritten, "N0", percentFormatInfo))
-                    {
                         return false;
-                    }
 
                     charsWritten += decimalsWritten;
 
                     if (!TryAppendTrailingPositivePercentPattern(destination[charsWritten..], out var trailingCharsWritten, formatProvider.PercentSymbol,
                             formatProvider.PercentPositivePattern))
-                    {
                         return false;
-                    }
 
                     charsWritten += trailingCharsWritten;
                 }
@@ -790,24 +711,18 @@ public partial struct QuantityValue
                 {
                     if (!TryAppendLeadingNegativePercentPattern(destination, out charsWritten, formatProvider.PercentSymbol, formatProvider.NegativeSign,
                             formatProvider.PercentNegativePattern))
-                    {
                         return false;
-                    }
 
                     roundedValue = -roundedValue;
                     if (!roundedValue.TryFormat(destination[charsWritten..], out var decimalsWritten, "N0", percentFormatInfo))
-                    {
                         return false;
-                    }
 
                     charsWritten += decimalsWritten;
 
                     if (!TryAppendTrailingNegativePercentPattern(destination[charsWritten..], out var trailingCharsWritten, formatProvider.PercentSymbol,
                             formatProvider.NegativeSign,
                             formatProvider.PercentNegativePattern))
-                    {
                         return false;
-                    }
 
                     charsWritten += trailingCharsWritten;
                 }
@@ -816,9 +731,7 @@ public partial struct QuantityValue
             {
                 var (roundedNumerator, roundedDenominator) = Round(numerator * 100, denominator, maxNbDecimals, DefaultMidpointRoundingMode);
                 if (roundedNumerator.IsZero)
-                {
                     return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-                }
 
                 var percentFormatInfo = new NumberFormatInfo
                 {
@@ -832,22 +745,16 @@ public partial struct QuantityValue
                 if (roundedNumerator.Sign > 0)
                 {
                     if (!TryAppendLeadingPositivePercentPattern(destination, out charsWritten, formatProvider.PercentSymbol, formatProvider.PercentPositivePattern))
-                    {
                         return false;
-                    }
 
                     if (!TryAppendDecimals(destination[charsWritten..], out var decimalsWritten, roundedNumerator, roundedDenominator, percentFormatInfo, maxNbDecimals, "N0"))
-                    {
                         return false;
-                    }
 
                     charsWritten += decimalsWritten;
 
                     if (!TryAppendTrailingPositivePercentPattern(destination[charsWritten..], out var trailingCharsWritten, formatProvider.PercentSymbol,
                             formatProvider.PercentPositivePattern))
-                    {
                         return false;
-                    }
 
                     charsWritten += trailingCharsWritten;
                 }
@@ -855,23 +762,17 @@ public partial struct QuantityValue
                 {
                     if (!TryAppendLeadingNegativePercentPattern(destination, out charsWritten, formatProvider.PercentSymbol, formatProvider.NegativeSign,
                             formatProvider.PercentNegativePattern))
-                    {
                         return false;
-                    }
 
                     roundedNumerator = -roundedNumerator;
                     if (!TryAppendDecimals(destination[charsWritten..], out var decimalsWritten, roundedNumerator, roundedDenominator, percentFormatInfo, maxNbDecimals, "N0"))
-                    {
                         return false;
-                    }
 
                     charsWritten += decimalsWritten;
 
                     if (!TryAppendTrailingNegativePercentPattern(destination[charsWritten..], out var trailingCharsWritten, formatProvider.PercentSymbol,
                             formatProvider.NegativeSign, formatProvider.PercentNegativePattern))
-                    {
                         return false;
-                    }
 
                     charsWritten += trailingCharsWritten;
                 }
@@ -889,23 +790,17 @@ public partial struct QuantityValue
                         return true;
                     case 2: // %n  : leading is percentSymbol only
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         return true;
                     default: // % n : leading is percentSymbol + ' '
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         if (destination.Length == charsWritten)
-                        {
                             return false;
-                        }
 
                         destination[charsWritten] = ' ';
                         charsWritten++;
@@ -920,24 +815,18 @@ public partial struct QuantityValue
                 {
                     case 0: // n % : trailing is ' ' + percentSymbol
                         if (destination.IsEmpty)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         charsWritten = 1;
                         if (!percentSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += percentSymbol.Length;
                         return true;
                     case 1: // n%  : trailing is percentSymbol only
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         return true;
@@ -954,45 +843,33 @@ public partial struct QuantityValue
                     case 0: // -n %
                     case 1: // -n%
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         return true;
                     case 2: // -%n
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         if (!percentSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += percentSymbol.Length;
                         return true;
                     case 3: // %-n
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         if (!negativeSignSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += negativeSignSymbol.Length;
                         return true;
                     case 4: // %n-
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         return true;
@@ -1001,21 +878,15 @@ public partial struct QuantityValue
                         return true;
                     case 7: // -% n
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         if (!percentSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += percentSymbol.Length;
                         if (charsWritten == destination.Length)
-                        {
                             return false;
-                        }
 
                         destination[charsWritten] = ' ';
                         charsWritten++;
@@ -1024,38 +895,28 @@ public partial struct QuantityValue
                         return true;
                     case 9: // % n-
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         if (charsWritten == destination.Length)
-                        {
                             return false;
-                        }
 
                         destination[charsWritten] = ' ';
                         charsWritten++;
                         return true;
                     case 10: // % -n
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         if (charsWritten == destination.Length)
-                        {
                             return false;
-                        }
 
                         destination[charsWritten] = ' ';
                         charsWritten++;
 
                         if (!negativeSignSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += negativeSignSymbol.Length;
                         return true;
@@ -1072,24 +933,18 @@ public partial struct QuantityValue
                 {
                     case 0: // -n %: trailing is " " + percentSymbol
                         if (destination.IsEmpty)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         charsWritten = 1;
                         if (!percentSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += percentSymbol.Length;
                         return true;
                     case 1: // -n%: trailing is percentSymbol
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         return true;
@@ -1098,37 +953,27 @@ public partial struct QuantityValue
                         return true;
                     case 4: // %n-: trailing is negativeSignSymbol
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         return true;
                     case 5: // n-%: trailing is negativeSignSymbol + percentSymbol
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         if (!percentSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += percentSymbol.Length;
                         return true;
                     case 6: // n%-: trailing is percentSymbol + negativeSignSymbol
                         if (!percentSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = percentSymbol.Length;
                         if (!negativeSignSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += negativeSignSymbol.Length;
                         return true;
@@ -1136,9 +981,7 @@ public partial struct QuantityValue
                         return true;
                     case 8: // n %-: trailing is " " + percentSymbol + negativeSignSymbol
                         if (destination.Length < 1 + percentSymbol.Length + negativeSignSymbol.Length)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         charsWritten = 1;
@@ -1149,9 +992,7 @@ public partial struct QuantityValue
                         return true;
                     case 9: // % n-: trailing is negativeSignSymbol
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         return true;
@@ -1159,22 +1000,16 @@ public partial struct QuantityValue
                         return true;
                     default: // n- %: trailing is negativeSignSymbol + " " + percentSymbol
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         if (destination.Length == charsWritten)
-                        {
                             return false;
-                        }
 
                         destination[charsWritten] = ' ';
                         charsWritten++;
                         if (!percentSymbol.TryCopyTo(destination[charsWritten..]))
-                        {
                             return false;
-                        }
 
                         charsWritten += percentSymbol.Length;
                         return true;
@@ -1195,14 +1030,10 @@ public partial struct QuantityValue
         private static string FormatWithCurrencyFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.CurrencyDecimalDigits, out var maxNbDecimals))
             {
@@ -1213,9 +1044,7 @@ public partial struct QuantityValue
             Span<char> buffer = stackalloc char[StackLimit]; // Use stack memory
             int charsWritten;
             while (!TryFormatWithCurrencyFormat(buffer, out charsWritten, numerator, denominator, format, formatProvider, maxNbDecimals))
-            {
                 buffer = new char[buffer.Length * 2]; // Use heap if needed
-            }
 
             return new string(buffer[..charsWritten]);
         }
@@ -1224,14 +1053,10 @@ public partial struct QuantityValue
             NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.CurrencyDecimalDigits, out var maxNbDecimals))
             {
@@ -1254,9 +1079,7 @@ public partial struct QuantityValue
 
             var (roundedNumerator, roundedDenominator) = Round(numerator, denominator, maxNbDecimals, DefaultMidpointRoundingMode);
             if (roundedNumerator.IsZero)
-            {
                 return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             var currencyFormatInfo = new NumberFormatInfo
             {
@@ -1270,21 +1093,15 @@ public partial struct QuantityValue
             if (roundedNumerator.Sign > 0)
             {
                 if (!TryAppendLeadingSymbolsWithPositivePattern(destination, out charsWritten, formatProvider.CurrencySymbol, formatProvider.CurrencyPositivePattern))
-                {
                     return false;
-                }
 
                 if (!TryAppendDecimals(destination[charsWritten..], out var decimalsWritten, roundedNumerator, roundedDenominator, currencyFormatInfo, maxNbDecimals, "N0"))
-                {
                     return false;
-                }
 
                 charsWritten += decimalsWritten;
                 if (!TryAppendTrailingSymbolsWithPositivePattern(destination[charsWritten..], out var trailingCharsWritten, formatProvider.CurrencySymbol,
                         formatProvider.CurrencyPositivePattern))
-                {
                     return false;
-                }
 
                 charsWritten += trailingCharsWritten;
             }
@@ -1292,23 +1109,17 @@ public partial struct QuantityValue
             {
                 if (!TryAppendLeadingSymbolsWithNegativePattern(destination, out charsWritten, formatProvider.CurrencySymbol, formatProvider.NegativeSign,
                         formatProvider.CurrencyNegativePattern))
-                {
                     return false;
-                }
 
                 roundedNumerator = -roundedNumerator;
                 if (!TryAppendDecimals(destination[charsWritten..], out var decimalsWritten, roundedNumerator, roundedDenominator, currencyFormatInfo, maxNbDecimals, "N0"))
-                {
                     return false;
-                }
 
                 charsWritten += decimalsWritten;
                 if (!TryAppendTrailingSymbolsWithNegativePattern(destination[charsWritten..], out var trailingCharsWritten, formatProvider.CurrencySymbol,
                         formatProvider.NegativeSign,
                         formatProvider.CurrencyNegativePattern))
-                {
                     return false;
-                }
 
                 charsWritten += trailingCharsWritten;
             }
@@ -1322,9 +1133,7 @@ public partial struct QuantityValue
                 {
                     case 0: // $n
                         if (!currencySymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = currencySymbol.Length;
                         return true;
@@ -1332,9 +1141,7 @@ public partial struct QuantityValue
                         return true;
                     case 2: // $ n
                         if (destination.Length < currencySymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         destination[currencySymbol.Length] = ' ';
@@ -1354,9 +1161,7 @@ public partial struct QuantityValue
                         return true;
                     case 1: // n$
                         if (!currencySymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = currencySymbol.Length;
                         return true;
@@ -1364,9 +1169,7 @@ public partial struct QuantityValue
                         return true;
                     default: // n $
                         if (destination.Length < currencySymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         currencySymbol.CopyTo(destination[1..]);
@@ -1382,9 +1185,7 @@ public partial struct QuantityValue
                 {
                     case 0: // ($n)
                         if (destination.Length < currencySymbol.Length + 3)
-                        {
                             return false;
-                        }
 
                         destination[0] = '(';
                         currencySymbol.CopyTo(destination[1..]);
@@ -1392,9 +1193,7 @@ public partial struct QuantityValue
                         return true;
                     case 1: // -$n
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         negativeSignSymbol.CopyTo(destination);
                         currencySymbol.CopyTo(destination[negativeSignSymbol.Length..]);
@@ -1402,9 +1201,7 @@ public partial struct QuantityValue
                         return true;
                     case 2: // $-n
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         negativeSignSymbol.CopyTo(destination[currencySymbol.Length..]);
@@ -1412,27 +1209,21 @@ public partial struct QuantityValue
                         return true;
                     case 3: // $n-
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         charsWritten = currencySymbol.Length;
                         return true;
                     case 4: // (n$)
                         if (destination.Length < currencySymbol.Length + 3)
-                        {
                             return false;
-                        }
 
                         destination[0] = '(';
                         charsWritten = 1;
                         return true;
                     case 5: // -n$
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         negativeSignSymbol.CopyTo(destination);
                         charsWritten = negativeSignSymbol.Length;
@@ -1442,18 +1233,14 @@ public partial struct QuantityValue
                         return true;
                     case 8: // -n $
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 2)
-                        {
                             return false;
-                        }
 
                         negativeSignSymbol.CopyTo(destination);
                         charsWritten = negativeSignSymbol.Length;
                         return true;
                     case 9: // -$ n
                         if (destination.Length < negativeSignSymbol.Length + currencySymbol.Length + 2)
-                        {
                             return false;
-                        }
 
                         negativeSignSymbol.CopyTo(destination);
                         currencySymbol.CopyTo(destination[negativeSignSymbol.Length..]);
@@ -1464,9 +1251,7 @@ public partial struct QuantityValue
                         return true;
                     case 11: // $ n-
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 2)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         destination[currencySymbol.Length] = ' ';
@@ -1474,9 +1259,7 @@ public partial struct QuantityValue
                         return true;
                     case 12: // $ -n
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 2)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         destination[currencySymbol.Length] = ' ';
@@ -1487,9 +1270,7 @@ public partial struct QuantityValue
                         return true;
                     case 14: // ($ n)
                         if (destination.Length < currencySymbol.Length + 4)
-                        {
                             return false;
-                        }
 
                         destination[0] = '(';
                         currencySymbol.CopyTo(destination[1..]);
@@ -1498,18 +1279,14 @@ public partial struct QuantityValue
                         return true;
                     case 15: // (n $)
                         if (destination.Length < currencySymbol.Length + 4)
-                        {
                             return false;
-                        }
 
                         destination[0] = '(';
                         charsWritten = 1;
                         return true;
                     default: // $- n
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length + 2)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         negativeSignSymbol.CopyTo(destination[currencySymbol.Length..]);
@@ -1526,9 +1303,7 @@ public partial struct QuantityValue
                 {
                     case 0: // ($n)
                         if (destination.IsEmpty)
-                        {
                             return false;
-                        }
 
                         destination[0] = ')';
                         charsWritten = 1;
@@ -1539,17 +1314,13 @@ public partial struct QuantityValue
                         return true;
                     case 3: // $n-
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         return true;
                     case 4: // (n$)
                         if (destination.Length < currencySymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         destination[currencySymbol.Length] = ')';
@@ -1557,17 +1328,13 @@ public partial struct QuantityValue
                         return true;
                     case 5: // -n$
                         if (!currencySymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = currencySymbol.Length;
                         return true;
                     case 6: // n-$
                         if (destination.Length < negativeSignSymbol.Length + currencySymbol.Length)
-                        {
                             return false;
-                        }
 
                         negativeSignSymbol.CopyTo(destination);
                         currencySymbol.CopyTo(destination[negativeSignSymbol.Length..]);
@@ -1575,9 +1342,7 @@ public partial struct QuantityValue
                         return true;
                     case 7: // n$-
                         if (destination.Length < currencySymbol.Length + negativeSignSymbol.Length)
-                        {
                             return false;
-                        }
 
                         currencySymbol.CopyTo(destination);
                         negativeSignSymbol.CopyTo(destination[currencySymbol.Length..]);
@@ -1585,9 +1350,7 @@ public partial struct QuantityValue
                         return true;
                     case 8: // -n $
                         if (destination.Length < currencySymbol.Length + 1)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         currencySymbol.CopyTo(destination[1..]);
@@ -1597,9 +1360,7 @@ public partial struct QuantityValue
                         return true;
                     case 10: // n $-
                         if (destination.Length < 1 + currencySymbol.Length + negativeSignSymbol.Length)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         currencySymbol.CopyTo(destination[1..]);
@@ -1608,9 +1369,7 @@ public partial struct QuantityValue
                         return true;
                     case 11: // $ n-
                         if (!negativeSignSymbol.TryCopyTo(destination))
-                        {
                             return false;
-                        }
 
                         charsWritten = negativeSignSymbol.Length;
                         return true;
@@ -1618,9 +1377,7 @@ public partial struct QuantityValue
                         return true;
                     case 13: // n- $
                         if (destination.Length < negativeSignSymbol.Length + 1 + currencySymbol.Length)
-                        {
                             return false;
-                        }
 
                         negativeSignSymbol.CopyTo(destination);
                         destination[negativeSignSymbol.Length] = ' ';
@@ -1629,18 +1386,14 @@ public partial struct QuantityValue
                         return true;
                     case 14: // ($ n)
                         if (destination.IsEmpty)
-                        {
                             return false;
-                        }
 
                         destination[0] = ')';
                         charsWritten = 1;
                         return true;
                     case 15: // (n $)
                         if (destination.Length < currencySymbol.Length + 2)
-                        {
                             return false;
-                        }
 
                         destination[0] = ' ';
                         currencySymbol.CopyTo(destination[1..]);
@@ -1669,14 +1422,10 @@ public partial struct QuantityValue
         private static string FormatWithScientificFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, DefaultScientificFormatPrecision, out var maxNbDecimals))
             {
@@ -1702,14 +1451,10 @@ public partial struct QuantityValue
             NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, DefaultScientificFormatPrecision, out var maxNbDecimals))
             {
@@ -1727,9 +1472,7 @@ public partial struct QuantityValue
             if (numerator.Sign < 0)
             {
                 if (!formatProvider.NegativeSign.TryCopyTo(destination))
-                {
                     return false;
-                }
 
                 charsWritten += formatProvider.NegativeSign.Length;
                 numerator = -numerator;
@@ -1749,35 +1492,27 @@ public partial struct QuantityValue
                 formatSpan[0] = 'F';
                 maxNbDecimals.TryFormat(formatSpan[1..], out var formatCharsWritten, default, CultureInfo.InvariantCulture);
                 if (!mantissa.Numerator.TryFormat(destination[charsWritten..], out var written, formatSpan[..(formatCharsWritten + 1)], formatProvider))
-                {
                     return false;
-                }
 
                 charsWritten += written;
             }
             else
             {
                 if (!TryAppendDecimals(destination[charsWritten..], out var written, mantissa.Numerator, mantissa.Denominator, formatProvider, maxNbDecimals, "F0"))
-                {
                     return false;
-                }
 
                 charsWritten += written;
             }
 
             if (charsWritten == destination.Length)
-            {
                 return false;
-            }
 
             destination[charsWritten] = exponentSymbol;
             charsWritten++;
             if (exponent >= 0)
             {
                 if (!formatProvider.PositiveSign.TryCopyTo(destination[charsWritten..]))
-                {
                     return false;
-                }
 
                 charsWritten += formatProvider.PositiveSign.Length;
             }
@@ -1785,9 +1520,7 @@ public partial struct QuantityValue
             // note: for the standard numeric types this is fixed to "D3" (but we could go higher)
             ReadOnlySpan<char> exponentFormat = exponent < 1000 ? "D3" : Span<char>.Empty;
             if (!exponent.TryFormat(destination[charsWritten..], out var exponentCharsWritten, exponentFormat, formatProvider))
-            {
                 return false;
-            }
 
             charsWritten += exponentCharsWritten;
             return true;
@@ -1805,9 +1538,7 @@ public partial struct QuantityValue
         private static string FormatGeneral(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, DefaultGeneralFormatPrecision, out var maxNbDecimals))
             {
@@ -1816,9 +1547,7 @@ public partial struct QuantityValue
             }
 
             if (maxNbDecimals == 0)
-            {
                 maxNbDecimals = DefaultGeneralFormatPrecision;
-            }
 
             // worst case: -1.23E+123456
             var significantDigitsLength = maxNbDecimals;
@@ -1838,9 +1567,7 @@ public partial struct QuantityValue
             NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.TryFormat(destination, out charsWritten, format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, DefaultGeneralFormatPrecision, out var maxNbDecimals))
             {
@@ -1849,9 +1576,7 @@ public partial struct QuantityValue
             }
 
             if (maxNbDecimals == 0)
-            {
                 maxNbDecimals = DefaultGeneralFormatPrecision;
-            }
 
             return TryFormatGeneral(destination, out charsWritten, numerator, denominator, formatProvider, maxNbDecimals, format[0] == 'g');
         }
@@ -1863,9 +1588,7 @@ public partial struct QuantityValue
             if (numerator.Sign < 0)
             {
                 if (!formatProvider.NegativeSign.TryCopyTo(destination))
-                {
                     return false;
-                }
 
                 charsWritten += formatProvider.NegativeSign.Length;
                 numerator = -numerator;
@@ -1878,9 +1601,7 @@ public partial struct QuantityValue
                 // integral result: both 123400 (1.234e5) and 123400.01 (1.234001e+005) result in "123400" with the "G6" format
                 var roundedValue = RoundToBigInteger(numerator, denominator, DefaultMidpointRoundingMode);
                 if (!roundedValue.TryFormat(destination[charsWritten..], out var written))
-                {
                     return false;
-                }
 
                 charsWritten += written;
                 return true;
@@ -1893,9 +1614,7 @@ public partial struct QuantityValue
                 {
                     var roundedValue = RoundToBigInteger(numerator, denominator * exponentTerm, DefaultMidpointRoundingMode);
                     if (!roundedValue.TryFormat(destination[charsWritten..], out var written))
-                    {
                         return false;
-                    }
 
                     charsWritten += written;
                 }
@@ -1903,17 +1622,13 @@ public partial struct QuantityValue
                 {
                     var mantissa = Round(numerator, denominator * exponentTerm, maxNbDecimals - 1, DefaultMidpointRoundingMode);
                     if (!TryAppendSignificantDecimals(destination[charsWritten..], out var written, mantissa, formatProvider, maxNbDecimals - 1, "F0"))
-                    {
                         return false;
-                    }
 
                     charsWritten += written;
                 }
 
                 if (!TryAppendExponentWithSignificantDigits(destination[charsWritten..], out var exponentCharsWritten, exponent, formatProvider, lowerCase ? 'e' : 'E'))
-                {
                     return false;
-                }
 
                 charsWritten += exponentCharsWritten;
                 return true;
@@ -1924,15 +1639,11 @@ public partial struct QuantityValue
                 // the largest value would have the form: 1.23e-5 (0.0000123)
                 var mantissa = Round(numerator * exponentTerm, denominator, maxNbDecimals - 1, DefaultMidpointRoundingMode);
                 if (!TryAppendSignificantDecimals(destination[charsWritten..], out var written, mantissa, formatProvider, maxNbDecimals - 1, "F0"))
-                {
                     return false;
-                }
 
                 charsWritten += written;
                 if (!TryAppendExponentWithSignificantDigits(destination[charsWritten..], out written, exponent, formatProvider, lowerCase ? 'e' : 'E'))
-                {
                     return false;
-                }
 
                 charsWritten += written;
             }
@@ -1941,9 +1652,7 @@ public partial struct QuantityValue
                 // the smallest value would have the form: 1.23e-4 (0.000123)
                 var roundedDecimal = Round(numerator, denominator, maxNbDecimals - exponent - 1, DefaultMidpointRoundingMode);
                 if (!TryAppendSignificantDecimals(destination[charsWritten..], out var written, roundedDecimal, formatProvider, maxNbDecimals - exponent - 1, "F0"))
-                {
                     return false;
-                }
 
                 charsWritten += written;
             }
@@ -1952,15 +1661,11 @@ public partial struct QuantityValue
         }
 
         private static string FormatWithCustomFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
-        {
-            return new QuantityValue(numerator, denominator).ToDouble().ToString(format, formatProvider);
-        }
+            => new QuantityValue(numerator, denominator).ToDouble().ToString(format, formatProvider);
 
-        private static bool TryFormatWithCustomFormat(Span<char> destination, out int charsWritten, BigInteger numerator, BigInteger denominator, ReadOnlySpan<char> format,
-            NumberFormatInfo formatProvider)
-        {
-            return new QuantityValue(numerator, denominator).ToDouble().TryFormat(destination, out charsWritten, format, formatProvider);
-        }
+        private static bool TryFormatWithCustomFormat(Span<char> destination, out int charsWritten,
+            BigInteger numerator, BigInteger denominator, ReadOnlySpan<char> format, NumberFormatInfo formatProvider)
+            => new QuantityValue(numerator, denominator).ToDouble().TryFormat(destination, out charsWritten, format, formatProvider);
 
         /// <summary>
         ///     Attempts to append the decimal representation of a fraction to the specified destination span.
@@ -2004,21 +1709,15 @@ public partial struct QuantityValue
             int nbDecimals, ReadOnlySpan<char> quotientFormat)
         {
             if (denominator <= long.MaxValue / 10 && numerator <= long.MaxValue && numerator >= long.MinValue)
-            {
                 return TryAppendDecimals(destination, out charsWritten, (long)numerator, (long)denominator, formatProvider, nbDecimals, quotientFormat);
-            }
 
             var quotient = BigInteger.DivRem(numerator, denominator, out var remainder);
 
             if (!quotient.TryFormat(destination, out charsWritten, quotientFormat, formatProvider))
-            {
                 return false;
-            }
 
             if (!formatProvider.NumberDecimalSeparator.TryCopyTo(destination[charsWritten..]))
-            {
                 return false;
-            }
 
             charsWritten += formatProvider.NumberDecimalSeparator.Length;
 
@@ -2026,9 +1725,7 @@ public partial struct QuantityValue
             while (!remainder.IsZero && decimalsAdded++ < nbDecimals - 1)
             {
                 if (charsWritten == destination.Length)
-                {
                     return false;
-                }
 
                 denominator = PreviousPowerOfTen(denominator, nbDecimals - decimalsAdded + 1);
                 var digit = (char)('0' + (int)BigInteger.DivRem(remainder, denominator, out remainder));
@@ -2040,9 +1737,7 @@ public partial struct QuantityValue
             {
                 var zerosRemaining = nbDecimals - decimalsAdded;
                 if (charsWritten + zerosRemaining > destination.Length)
-                {
                     return false;
-                }
 
                 destination.Slice(charsWritten, zerosRemaining).Fill('0');
                 charsWritten += zerosRemaining;
@@ -2067,14 +1762,10 @@ public partial struct QuantityValue
             var (quotient, remainder) = long.DivRem(numerator, denominator);
 
             if (!quotient.TryFormat(destination, out charsWritten, quotientFormat, formatProvider))
-            {
                 return false;
-            }
 
             if (!formatProvider.NumberDecimalSeparator.TryCopyTo(destination[charsWritten..]))
-            {
                 return false;
-            }
 
             charsWritten += formatProvider.NumberDecimalSeparator.Length;
 
@@ -2082,9 +1773,7 @@ public partial struct QuantityValue
             while (remainder != 0 && decimalsAdded++ < nbDecimals)
             {
                 if (charsWritten == destination.Length)
-                {
                     return false;
-                }
 
                 (var digit, remainder) = long.DivRem(remainder * 10, denominator);
                 destination[charsWritten] = (char)(digit + '0');
@@ -2095,9 +1784,7 @@ public partial struct QuantityValue
             {
                 var zerosRemaining = nbDecimals - decimalsAdded;
                 if (charsWritten + zerosRemaining > destination.Length)
-                {
                     return false;
-                }
 
                 destination.Slice(charsWritten, zerosRemaining).Fill('0');
                 charsWritten += zerosRemaining;
@@ -2151,26 +1838,18 @@ public partial struct QuantityValue
             var numerator = decimalFraction.Numerator;
             var denominator = decimalFraction.Denominator;
             if (denominator <= long.MaxValue / 10 && numerator <= long.MaxValue && numerator >= long.MinValue)
-            {
                 return TryAppendSignificantDecimals(destination, out charsWritten, (long)numerator, (long)denominator, formatProvider, maxNbDecimals, quotientFormat);
-            }
 
             var quotient = BigInteger.DivRem(numerator, denominator, out var remainder);
 
             if (!quotient.TryFormat(destination, out charsWritten, quotientFormat, formatProvider))
-            {
                 return false;
-            }
 
             if (remainder.IsZero)
-            {
                 return true;
-            }
 
             if (!formatProvider.NumberDecimalSeparator.TryCopyTo(destination[charsWritten..]))
-            {
                 return false;
-            }
 
             charsWritten += formatProvider.NumberDecimalSeparator.Length;
 
@@ -2178,9 +1857,7 @@ public partial struct QuantityValue
             do
             {
                 if (charsWritten == destination.Length)
-                {
                     return false;
-                }
 
                 denominator = PreviousPowerOfTen(denominator, decimalsRemaining);
                 var digit = (char)('0' + (int)BigInteger.DivRem(remainder, denominator, out remainder));
@@ -2198,19 +1875,13 @@ public partial struct QuantityValue
             var (quotient, remainder) = long.DivRem(numerator, denominator);
 
             if (!quotient.TryFormat(destination, out charsWritten, quotientFormat, formatProvider))
-            {
                 return false;
-            }
 
             if (remainder == 0)
-            {
                 return true;
-            }
 
             if (!formatProvider.NumberDecimalSeparator.TryCopyTo(destination[charsWritten..]))
-            {
                 return false;
-            }
 
             charsWritten += formatProvider.NumberDecimalSeparator.Length;
 
@@ -2218,9 +1889,7 @@ public partial struct QuantityValue
             do
             {
                 if (charsWritten == destination.Length)
-                {
                     return false;
-                }
 
                 (var digit, remainder) = long.DivRem(remainder * 10, denominator);
                 destination[charsWritten++] = (char)(digit + '0');
@@ -2235,9 +1904,7 @@ public partial struct QuantityValue
         {
             charsWritten = 0;
             if (destination.IsEmpty)
-            {
                 return false;
-            }
 
             destination[0] = exponentSymbol;
             charsWritten++;
@@ -2246,9 +1913,7 @@ public partial struct QuantityValue
                 case <= -1000:
                 {
                     if (!exponent.TryFormat(destination[charsWritten..], out var written, default, formatProvider))
-                    {
                         return false;
-                    }
 
                     charsWritten += written;
                     return true;
@@ -2256,9 +1921,7 @@ public partial struct QuantityValue
                 case <= 0:
                 {
                     if (!exponent.TryFormat(destination[charsWritten..], out var written, "D2", formatProvider))
-                    {
                         return false;
-                    }
 
                     charsWritten += written;
                     return true;
@@ -2267,9 +1930,7 @@ public partial struct QuantityValue
 
             // exponent > 0
             if (!formatProvider.PositiveSign.TryCopyTo(destination[charsWritten..]))
-            {
                 return false;
-            }
 
             charsWritten += formatProvider.PositiveSign.Length;
             ReadOnlySpan<char> exponentFormat = exponent switch
@@ -2280,9 +1941,7 @@ public partial struct QuantityValue
             };
 
             if (!exponent.TryFormat(destination[charsWritten..], out var exponentCharsWritten, exponentFormat, formatProvider))
-            {
                 return false;
-            }
 
             charsWritten += exponentCharsWritten;
             return true;
@@ -2330,9 +1989,7 @@ public partial struct QuantityValue
                 // Adjustment: if our candidate powerOfTen is too high,
                 // then the quotient doesn't reach that many digits.
                 if (numerator >= denominator * powerOfTen)
-                {
                     return exponent;
-                }
 
                 powerOfTen = PreviousPowerOfTen(powerOfTen, exponent);
                 return exponent - 1;
@@ -2347,18 +2004,14 @@ public partial struct QuantityValue
 
                 // First, check if one fewer factor of Ten would suffice.
                 if (numerator * powerOfTen >= denominator)
-                {
                     return -exponent;
-                }
 
                 // Select the next guess as 10^exponent
                 powerOfTen = NextPowerOfTen(powerOfTen, exponent++);
 
                 // Then, check if our candidate is too low.
                 if (numerator * powerOfTen < denominator)
-                {
                     powerOfTen = NextPowerOfTen(powerOfTen, exponent++);
-                }
 
                 // For numbers < 1, the scientific exponent is -k.
                 return -exponent;
@@ -2366,14 +2019,10 @@ public partial struct QuantityValue
         }
 
         private static BigInteger PreviousPowerOfTen(BigInteger powerOfTen, int exponent)
-        {
-            return exponent <= PowersOfTen.Length ? PowersOfTen[exponent - 1] : powerOfTen / Ten;
-        }
+            => exponent <= PowersOfTen.Length ? PowersOfTen[exponent - 1] : powerOfTen / Ten;
 
         private static BigInteger NextPowerOfTen(BigInteger powerOfTen, int exponent)
-        {
-            return exponent + 1 < PowersOfTen.Length ? PowersOfTen[exponent + 1] : powerOfTen * Ten;
-        }
+            => exponent + 1 < PowersOfTen.Length ? PowersOfTen[exponent + 1] : powerOfTen * Ten;
     }
 
 #else
@@ -2527,9 +2176,7 @@ public partial struct QuantityValue
             }
 
             if (string.IsNullOrEmpty(format))
-            {
                 return FormatGeneral(numerator, denominator, "G", numberFormatInfo);
-            }
 
             if (format![0] is 'S' or 's' &&
                 (format.Length == 1 || int.TryParse(format.Substring(1), NumberStyles.Integer, CultureInfo.InvariantCulture, out _)))
@@ -2563,14 +2210,10 @@ public partial struct QuantityValue
 
 #if NET
             if (int.TryParse(format.AsSpan(1), NumberStyles.Integer, CultureInfo.InvariantCulture, out maxNbDecimals))
-            {
                 return true;
-            }
 #else
             if (int.TryParse(format.Substring(1), NumberStyles.Integer, CultureInfo.InvariantCulture, out maxNbDecimals))
-            {
                 return true;
-            }
 #endif
 
             // Seems to be some kind of custom format we do not understand, fallback to default precision.
@@ -2589,14 +2232,10 @@ public partial struct QuantityValue
         private static string FormatWithFixedPointFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider)!;
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.NumberDecimalDigits, out var maxNbDecimalsAfterRadix))
             {
@@ -2605,9 +2244,7 @@ public partial struct QuantityValue
             }
 
             if (maxNbDecimalsAfterRadix == 0)
-            {
                 return RoundToBigInteger(numerator, denominator, DefaultMidpointRoundingMode).ToString(format, formatProvider)!;
-            }
 
             var (roundedNumerator, roundedDenominator) = Round(numerator, denominator, maxNbDecimalsAfterRadix, DefaultMidpointRoundingMode);
             bool isPositive;
@@ -2626,9 +2263,7 @@ public partial struct QuantityValue
 
             var sb = new StringBuilder(12 + maxNbDecimalsAfterRadix);
             if (!isPositive)
-            {
                 sb.Append(formatProvider.NegativeSign);
-            }
 
             return AppendDecimals(sb, roundedNumerator, roundedDenominator, formatProvider, maxNbDecimalsAfterRadix).ToString();
         }
@@ -2646,14 +2281,10 @@ public partial struct QuantityValue
         private static string FormatWithStandardNumericFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider)!;
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.NumberDecimalDigits, out var maxNbDecimals))
             {
@@ -2717,14 +2348,10 @@ public partial struct QuantityValue
         private static string FormatWithPercentFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider)!;
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.PercentDecimalDigits, out var maxNbDecimals))
             {
@@ -2852,14 +2479,10 @@ public partial struct QuantityValue
         private static string FormatWithCurrencyFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider)!;
-            }
 
             if (!TryGetPrecisionDigits(format, formatProvider.CurrencyDecimalDigits, out var maxNbDecimals))
             {
@@ -2983,14 +2606,10 @@ public partial struct QuantityValue
         private static string FormatWithScientificFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (denominator.IsOne)
-            {
                 return numerator.ToString(format, formatProvider)!;
-            }
 
             if (!TryGetPrecisionDigits(format, DefaultScientificFormatPrecision, out var maxNbDecimals))
             {
@@ -3047,9 +2666,7 @@ public partial struct QuantityValue
         private static string FormatGeneral(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
         {
             if (numerator.IsZero)
-            {
                 return 0.ToString(format, formatProvider);
-            }
 
             if (!TryGetPrecisionDigits(format, DefaultGeneralFormatPrecision, out var maxNbDecimals))
             {
@@ -3058,9 +2675,7 @@ public partial struct QuantityValue
             }
 
             if (maxNbDecimals == 0)
-            {
                 maxNbDecimals = DefaultGeneralFormatPrecision;
-            }
 
             var sb = new StringBuilder(3 + maxNbDecimals);
 
@@ -3110,9 +2725,7 @@ public partial struct QuantityValue
         }
 
         private static string FormatWithCustomFormat(BigInteger numerator, BigInteger denominator, string format, NumberFormatInfo formatProvider)
-        {
-            return new QuantityValue(numerator, denominator).ToDouble().ToString(format, formatProvider);
-        }
+            => new QuantityValue(numerator, denominator).ToDouble().ToString(format, formatProvider);
 
         /// <summary>
         ///     Appends the decimal representation of a fraction to the specified <see cref="StringBuilder" />.
@@ -3143,9 +2756,7 @@ public partial struct QuantityValue
             int nbDecimals, string quotientFormat = "F0")
         {
             if (denominator <= long.MaxValue / 10 && numerator <= long.MaxValue && numerator >= long.MinValue)
-            {
                 return AppendDecimals(sb, (long)numerator, (long)denominator, formatProvider, nbDecimals, quotientFormat);
-            }
 
             var quotient = BigInteger.DivRem(numerator, denominator, out var remainder);
 
@@ -3187,9 +2798,7 @@ public partial struct QuantityValue
             }
 
             if (remainder == 0)
-            {
                 sb.Append('0', nbDecimals - decimalsAdded);
-            }
 
             return sb;
         }
@@ -3224,18 +2833,14 @@ public partial struct QuantityValue
             var numerator = decimalFraction.Numerator;
             var denominator = decimalFraction.Denominator;
             if (denominator <= long.MaxValue / 10 && numerator <= long.MaxValue && numerator >= long.MinValue)
-            {
                 return AppendSignificantDecimals(sb, (long)numerator, (long)denominator, formatProvider, maxNbDecimals, quotientFormat);
-            }
 
             var quotient = BigInteger.DivRem(numerator, denominator, out var remainder);
 
             sb.Append(quotient.ToString(quotientFormat, formatProvider));
 
             if (remainder.IsZero)
-            {
                 return sb;
-            }
 
             sb.Append(formatProvider.NumberDecimalSeparator);
 
@@ -3260,9 +2865,7 @@ public partial struct QuantityValue
             sb.Append(quotient.ToString(quotientFormat, formatProvider));
 
             if (remainder == 0)
-            {
                 return sb;
-            }
 
             sb.Append(formatProvider.NumberDecimalSeparator);
 
@@ -3277,19 +2880,16 @@ public partial struct QuantityValue
             return sb;
         }
 
-        private static StringBuilder AppendExponentWithSignificantDigits(StringBuilder sb, int exponent, NumberFormatInfo formatProvider, char exponentSymbol)
+        private static StringBuilder AppendExponentWithSignificantDigits(StringBuilder sb, int exponent, NumberFormatInfo formatProvider, char exponentSymbol) => exponent switch
         {
-            return exponent switch
-            {
-                <= -1000 => sb.Append(exponentSymbol).Append(exponent.ToString(formatProvider)),
-                <= 0 => sb.Append(exponentSymbol).Append(exponent.ToString("D2", formatProvider)),
-                < 100 => sb.Append(exponentSymbol).Append(formatProvider.PositiveSign)
-                    .Append(exponent.ToString("D2", formatProvider)),
-                < 1000 => sb.Append(exponentSymbol).Append(formatProvider.PositiveSign)
-                    .Append(exponent.ToString("D3", formatProvider)),
-                _ => sb.Append(exponentSymbol).Append(formatProvider.PositiveSign).Append(exponent.ToString(formatProvider))
-            };
-        }
+            <= -1000 => sb.Append(exponentSymbol).Append(exponent.ToString(formatProvider)),
+            <= 0 => sb.Append(exponentSymbol).Append(exponent.ToString("D2", formatProvider)),
+            < 100 => sb.Append(exponentSymbol).Append(formatProvider.PositiveSign)
+                .Append(exponent.ToString("D2", formatProvider)),
+            < 1000 => sb.Append(exponentSymbol).Append(formatProvider.PositiveSign)
+                .Append(exponent.ToString("D3", formatProvider)),
+            _ => sb.Append(exponentSymbol).Append(formatProvider.PositiveSign).Append(exponent.ToString(formatProvider))
+        };
 
         /// <summary>
         ///     Calculates the exponent power for the given fraction terms.
@@ -3338,9 +2938,7 @@ public partial struct QuantityValue
                 // Adjustment: if our candidate powerOfTen is too high,
                 // then the quotient doesn't reach that many digits.
                 if (numerator >= denominator * powerOfTen)
-                {
                     return exponent;
-                }
 
                 powerOfTen = PreviousPowerOfTen(powerOfTen, exponent);
                 return exponent - 1;
@@ -3355,18 +2953,14 @@ public partial struct QuantityValue
 
                 // First, check if one fewer factor of Ten would suffice.
                 if (numerator * powerOfTen >= denominator)
-                {
                     return -exponent;
-                }
 
                 // Select the next guess as 10^exponent
                 powerOfTen = NextPowerOfTen(powerOfTen, exponent++);
 
                 // Then, check if our candidate is too low.
                 if (numerator * powerOfTen < denominator)
-                {
                     powerOfTen = NextPowerOfTen(powerOfTen, exponent++);
-                }
 
                 // For numbers < 1, the scientific exponent is -k.
                 return -exponent;
@@ -3383,14 +2977,10 @@ public partial struct QuantityValue
         }
 
         private static BigInteger PreviousPowerOfTen(BigInteger powerOfTen, int exponent)
-        {
-            return exponent <= PowersOfTen.Length ? PowersOfTen[exponent - 1] : powerOfTen / Ten;
-        }
+            => exponent <= PowersOfTen.Length ? PowersOfTen[exponent - 1] : powerOfTen / Ten;
 
         private static BigInteger NextPowerOfTen(BigInteger powerOfTen, int exponent)
-        {
-            return exponent + 1 < PowersOfTen.Length ? PowersOfTen[exponent + 1] : powerOfTen * Ten;
-        }
+            => exponent + 1 < PowersOfTen.Length ? PowersOfTen[exponent + 1] : powerOfTen * Ten;
     }
 
 

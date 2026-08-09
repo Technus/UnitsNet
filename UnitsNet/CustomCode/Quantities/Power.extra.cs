@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet
 {
@@ -16,9 +17,8 @@ namespace UnitsNet
         ///         <c>var powerRatio = power.ToPowerRatio();</c>
         ///     </example>
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PowerRatio ToPowerRatio()
-        {
-            return PowerRatio.FromPower(this);
-        }
+            => PowerRatio.FromPower(this);
     }
 }

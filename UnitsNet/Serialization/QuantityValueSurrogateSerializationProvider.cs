@@ -86,7 +86,5 @@ public sealed class QuantityValueSurrogateSerializationProvider : ISerialization
     ///     The surrogate type if the specified type is <see cref="QuantityValue" />; otherwise, the original type.
     /// </returns>
     public Type GetSurrogateType(Type type)
-    {
-        return type == typeof(QuantityValue) ? typeof(QuantityValueSurrogate) : type;
-    }
+        => type == typeof(QuantityValue) ? typeof(QuantityValueSurrogate) : type;
 }

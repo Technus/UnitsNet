@@ -1,6 +1,8 @@
 // Licensed under MIT No Attribution, see LICENSE file at the root.
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
+using System.Runtime.CompilerServices;
+
 namespace UnitsNet;
 
 /// <summary>
@@ -14,17 +16,13 @@ public static class AffineQuantityExtensions
     public static bool Equals<TQuantity, TOffset>(this TQuantity quantity, TQuantity? other, TOffset tolerance)
         where TQuantity : IAffineQuantity<TQuantity, TOffset>, ISubtractionOperators<TQuantity, TQuantity, TOffset>
         where TOffset : IQuantityOfType<TOffset>, IAdditiveIdentity<TOffset, TOffset>
-    {
-        return other != null && quantity.EqualsAbsolute(other, tolerance);
-    }
+        => other != null && quantity.EqualsAbsolute(other, tolerance);
 
     /// <inheritdoc cref="EqualsAbsolute{TQuantity,TOffset}" />
     public static bool Equals<TQuantity, TOffset>(this TQuantity quantity, IQuantity? other, TOffset tolerance)
         where TQuantity : IAffineQuantity<TQuantity, TOffset>, ISubtractionOperators<TQuantity, TQuantity, TOffset>
         where TOffset : IQuantityOfType<TOffset>, IAdditiveIdentity<TOffset, TOffset>
-    {
-        return other is TQuantity otherInstance && quantity.EqualsAbsolute(otherInstance, tolerance);
-    }
+        => other is TQuantity otherInstance && quantity.EqualsAbsolute(otherInstance, tolerance);
 
     /// <summary>
     ///     <para>
@@ -59,9 +57,7 @@ public static class AffineQuantityExtensions
         where TOffset : IQuantityOfType<TOffset>, IAdditiveIdentity<TOffset, TOffset>
     {
         if (QuantityValue.IsNegative(tolerance.Value))
-        {
             throw ExceptionHelper.CreateArgumentOutOfRangeExceptionForNegativeTolerance(nameof(tolerance));
-        }
 
         TOffset difference = quantity - other;
         return QuantityValue.Abs(difference.Value) <= tolerance.GetValue(difference.UnitKey);
@@ -96,15 +92,13 @@ public static class AffineQuantityExtensions
     public static bool Equals(this Temperature quantity, Temperature other, TemperatureDelta tolerance)
     {
         if (QuantityValue.IsNegative(tolerance.Value))
-        {
             throw ExceptionHelper.CreateArgumentOutOfRangeExceptionForNegativeTolerance(nameof(tolerance));
-        }
 
         TemperatureDelta difference = quantity - other;
         return QuantityValue.Abs(difference.Value) <= tolerance.GetValue(UnitKey.ForUnit(difference.Unit));
     }
 
-    /// <inheritdoc cref="Equals(UnitsNet.Temperature,UnitsNet.Temperature,UnitsNet.TemperatureDelta)" />
+    /// <inheritdoc cref="Equals(Temperature,Temperature,TemperatureDelta)" />
     public static bool Equals(this Temperature quantity, IQuantity? other, TemperatureDelta tolerance)
     {
         return other is Temperature otherInstance && quantity.Equals(otherInstance, tolerance);
@@ -118,10 +112,9 @@ public static class AffineQuantityExtensions
     /// <returns>The average <see cref="Temperature" />, in the unit of the first element in the sequence.</returns>
     /// <exception cref="ArgumentNullException">Thrown if the <paramref name="temperatures" /> collection is null.</exception>
     /// <exception cref="InvalidOperationException">Thrown if the <paramref name="temperatures" /> collection is empty.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Temperature Average(this IEnumerable<Temperature> temperatures)
-    {
-        return temperatures.ArithmeticMean();
-    }
+        => temperatures.ArithmeticMean();
 
     /// <summary>
     ///     Calculates the average of a collection of <see cref="Temperature" /> values.
@@ -136,8 +129,7 @@ public static class AffineQuantityExtensions
     ///     <see cref="Average(IEnumerable{Temperature})" />
     ///     when most of the quantities in the collection are expected to be in the target unit.
     /// </remarks>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Temperature Average(this IEnumerable<Temperature> temperatures, TemperatureUnit unit)
-    {
-        return temperatures.ArithmeticMean(unit);
-    }
+        => temperatures.ArithmeticMean(unit);
 }

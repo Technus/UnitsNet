@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnitsNet.Units;
 
 namespace UnitsNet
@@ -8,10 +9,9 @@ namespace UnitsNet
         ///     Get a <see cref="MassConcentration"/> from this <see cref="Molarity"/>.
         /// </summary>
         /// <param name="molecularWeight"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MassConcentration ToMassConcentration(MolarMass molecularWeight)
-        {
-            return this * molecularWeight;
-        }
+            => this * molecularWeight;
 
         /// <summary>
         ///     Get a <see cref="MassConcentration"/> from this <see cref="Molarity"/>.
@@ -19,9 +19,7 @@ namespace UnitsNet
         /// <param name="componentDensity"></param>
         /// <param name="componentMass"></param>
         public VolumeConcentration ToVolumeConcentration(Density componentDensity, MolarMass componentMass)
-        {
-            return this * componentMass / componentDensity;
-        }
+            => this * componentMass / componentDensity;
 
         #region Static Methods
 
@@ -33,9 +31,7 @@ namespace UnitsNet
         /// <param name="componentMass"></param>
         /// <returns></returns>
         public static Molarity FromVolumeConcentration(VolumeConcentration volumeConcentration, Density componentDensity, MolarMass componentMass)
-        {
-            return volumeConcentration * componentDensity / componentMass;
-        }
+            => volumeConcentration * componentDensity / componentMass;
 
         #endregion
     }

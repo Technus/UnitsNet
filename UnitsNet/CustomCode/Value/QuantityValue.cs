@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
+
 #if NET
 using System.Buffers.Binary;
 #endif
@@ -51,7 +53,11 @@ public readonly partial struct QuantityValue :
     ///     The numerator is a <see cref="System.Numerics.BigInteger" /> that, together with the denominator,
     ///     defines the value of the fraction stored in this <see cref="QuantityValue" />.
     /// </remarks>
-    internal BigInteger Numerator => _numerator;
+    internal BigInteger Numerator
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _numerator;
+    }
 
     /// <summary>
     ///     Gets the denominator of the fraction representing the value of this <see cref="QuantityValue" />.

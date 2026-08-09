@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace UnitsNet;
 
@@ -43,18 +44,15 @@ internal readonly record struct QuantityConversionMapping
     ///     An <see cref="QuantityConversionMapping" /> instance representing the conversion between the specified quantity
     ///     types.
     /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityConversionMapping Create<TFirstQuantity, TSecondQuantity>()
         where TFirstQuantity : IQuantity
         where TSecondQuantity : IQuantity
-    {
-        return new QuantityConversionMapping(typeof(TFirstQuantity), typeof(TSecondQuantity));
-    }
+        => new(typeof(TFirstQuantity), typeof(TSecondQuantity));
 
     public bool Equals(QuantityConversionMapping other)
-    {
-        return (FirstQuantityType == other.FirstQuantityType && SecondQuantityType == other.SecondQuantityType) ||
-               (FirstQuantityType == other.SecondQuantityType && SecondQuantityType == other.FirstQuantityType);
-    }
+        => (FirstQuantityType == other.FirstQuantityType && SecondQuantityType == other.SecondQuantityType) ||
+           (FirstQuantityType == other.SecondQuantityType && SecondQuantityType == other.FirstQuantityType);
 
     public override int GetHashCode()
     {

@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 // ReSharper disable once CheckNamespace
@@ -62,6 +63,7 @@ public class QuantityParser
     /// </summary>
     public static QuantityParser Default
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => UnitsNetSetup.Default.QuantityParser;
     }
 
@@ -228,14 +230,10 @@ public class QuantityParser
         result = default;
 
         if (!QuantityValue.TryParse(valueString, ParseNumberStyles, formatProvider, out QuantityValue value))
-        {
             return false;
-        }
 
         if (!_unitParser.TryParse(unitString, formatProvider, out TUnitType parsedUnit))
-        {
             return false;
-        }
 
         result = fromDelegate(value, parsedUnit);
         return true;
@@ -251,14 +249,10 @@ public class QuantityParser
         result = null;
 
         if (!QuantityValue.TryParse(valueString, ParseNumberStyles, formatProvider, out QuantityValue value))
-        {
             return false;
-        }
 
         if (!_unitParser.TryParse(unitString, units, formatProvider, out UnitInfo? parsedUnit))
-        {
             return false;
-        }
 
         result = parsedUnit.From(value);
         return true;
@@ -309,9 +303,8 @@ public class QuantityParser
         return new Regex(pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private Regex CreateRegexForQuantity<TUnitType>(IFormatProvider? formatProvider)
         where TUnitType : struct, Enum
-    {
-        return CreateRegexForQuantity(typeof(TUnitType), formatProvider);
-    }
+        => CreateRegexForQuantity(typeof(TUnitType), formatProvider);
 }

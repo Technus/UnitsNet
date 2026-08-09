@@ -2,6 +2,7 @@
 // Copyright 2013 Andreas Gullberg Larsen (andreas.larsen84@gmail.com). Maintained at https://github.com/angularsen/UnitsNet.
 
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 // ReSharper disable once CheckNamespace
 namespace UnitsNet;
@@ -23,17 +24,13 @@ public static class QuantityExtensions
     /// <param name="quantity">The quantity instance.</param>
     /// <returns>The <see cref="QuantityInfo"/> registered in <see cref="UnitsNetSetup.Default"/> for the quantity's runtime type.</returns>
     public static QuantityInfo GetQuantityInfo(this IQuantity quantity)
-    {
-        return UnitsNetSetup.Default.Quantities.GetQuantityInfo(quantity.GetType());
-    }
+        => UnitsNetSetup.Default.Quantities.GetQuantityInfo(quantity.GetType());
 
     /// <inheritdoc cref="GetQuantityInfo(IQuantity)"/>
     /// <typeparam name="TUnit">The unit enum type of the quantity.</typeparam>
     public static QuantityInfo<TUnit> GetQuantityInfo<TUnit>(this IQuantity<TUnit> quantity)
         where TUnit : struct, Enum
-    {
-        return (QuantityInfo<TUnit>)UnitsNetSetup.Default.Quantities.GetQuantityInfo(quantity.GetType());
-    }
+        => (QuantityInfo<TUnit>)UnitsNetSetup.Default.Quantities.GetQuantityInfo(quantity.GetType());
 
     /// <summary>
     ///     Gets the <see cref="UnitInfo"/> for the unit this quantity was constructed with.
@@ -47,9 +44,7 @@ public static class QuantityExtensions
     /// <param name="quantity">The quantity.</param>
     /// <returns>The <see cref="UnitInfo"/> for the quantity's unit.</returns>
     public static UnitInfo GetUnitInfo(this IQuantity quantity)
-    {
-        return quantity.GetQuantityInfo()[quantity.UnitKey];
-    }
+        => quantity.GetQuantityInfo()[quantity.UnitKey];
 
     /// <summary>
     ///     Gets the <see cref="UnitInfo{TQuantity,TUnit}"/> for the unit this quantity was constructed with.
@@ -64,6 +59,9 @@ public static class QuantityExtensions
     /// <typeparam name="TUnit">The unit enum type.</typeparam>
     /// <param name="quantity">The quantity.</param>
     /// <returns>The <see cref="UnitInfo{TQuantity,TUnit}"/> for the quantity's unit.</returns>
+#if NET
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     public static UnitInfo<TQuantity, TUnit> GetUnitInfo<TQuantity, TUnit>(this IQuantity<TQuantity, TUnit> quantity)
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
@@ -79,18 +77,16 @@ public static class QuantityExtensions
     }
 
     /// <inheritdoc cref="UnitConverter.ConvertValue(QuantityValue,UnitKey,UnitKey)" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static QuantityValue GetValue<TQuantity>(this TQuantity quantity, UnitKey toUnit)
         where TQuantity : IQuantity
-    {
-        return UnitConverter.Default.ConvertValue(quantity, toUnit);
-    }
+        => UnitConverter.Default.ConvertValue(quantity, toUnit);
 
     /// <inheritdoc cref="UnitConverter.ConvertValue(QuantityValue,UnitKey,UnitKey)" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static QuantityValue ConvertValue<TQuantity>(this UnitConverter converter, TQuantity quantity, UnitKey toUnit)
         where TQuantity : IQuantity
-    {
-        return converter.ConvertValue(quantity.Value, quantity.UnitKey, toUnit);
-    }
+        => converter.ConvertValue(quantity.Value, quantity.UnitKey, toUnit);
 
     /// <inheritdoc cref="UnitConverter.ConvertToUnit{TQuantity,TUnit}" />
     internal static TQuantity ConvertToUnit<TQuantity>(this UnitConverter converter, TQuantity quantity, UnitKey toUnit)
@@ -103,14 +99,13 @@ public static class QuantityExtensions
         return quantity.QuantityInfo.Create(convertedValue, toUnit);
 #endif
     }
-    
+
     /// <inheritdoc cref="UnitConverter.ConvertValue{TQuantity,TUnit}" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue As<TQuantity, TUnit>(this TQuantity quantity, TUnit unit)
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return UnitConverter.Default.ConvertValue(quantity, unit);
-    }
+        => UnitConverter.Default.ConvertValue(quantity, unit);
 
     /// <inheritdoc cref="UnitConverter.ConvertValue{TQuantity,TUnit}" />
     /// <param name="quantity">The quantity to convert.</param>
@@ -120,10 +115,7 @@ public static class QuantityExtensions
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
     {
-        if (unitConverter is null)
-        {
-            throw new ArgumentNullException(nameof(unitConverter));
-        }
+        if (unitConverter is null) throw new ArgumentNullException(nameof(unitConverter));
 
         return unitConverter.ConvertValue(quantity, unit);
     }
@@ -138,29 +130,24 @@ public static class QuantityExtensions
     /// <returns>The converted value.</returns>
     public static QuantityValue As<TQuantity>(this TQuantity quantity, UnitSystem unitSystem)
         where TQuantity : IQuantity
-    {
 #pragma warning disable CS0618 // Type or member is obsolete
-        return quantity.GetValue(quantity.QuantityInfo.GetDefaultUnit(unitSystem).UnitKey);
+        =>  quantity.GetValue(quantity.QuantityInfo.GetDefaultUnit(unitSystem).UnitKey);
 #pragma warning restore CS0618 // Type or member is obsolete
-    }
+
 
     /// <inheritdoc cref="UnitConverter.ConvertToUnit{TQuantity,TUnit}" />
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TQuantity ToUnit<TQuantity, TUnit>(this TQuantity quantity, TUnit unit)
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
-    {
-        return UnitConverter.Default.ConvertToUnit(quantity, unit);
-    }
+        => UnitConverter.Default.ConvertToUnit(quantity, unit);
 
     /// <inheritdoc cref="UnitConverter.ConvertToUnit{TQuantity,TUnit}" />
     public static TQuantity ToUnit<TQuantity, TUnit>(this TQuantity quantity, TUnit unit, UnitConverter unitConverter)
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit : struct, Enum
     {
-        if (unitConverter is null)
-        {
-            throw new ArgumentNullException(nameof(unitConverter));
-        }
+        if (unitConverter is null) throw new ArgumentNullException(nameof(unitConverter));
 
         return unitConverter.ConvertToUnit(quantity, unit);
     }
@@ -179,18 +166,16 @@ public static class QuantityExtensions
     
     /// <inheritdoc cref="UnitConverter.ConvertValue(QuantityValue,UnitKey,UnitKey)" />
     [Obsolete("This method will be removed in the next major update. Consider using the UnitConverter.Default.ConvertValue(quantity, unit) method instead.")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static QuantityValue As(this IQuantity quantity, UnitKey unit)
-    {
-        return UnitConverter.Default.ConvertValue(quantity, unit);
-    }
-    
+        => UnitConverter.Default.ConvertValue(quantity, unit);
+
     /// <inheritdoc cref="UnitConverter.ConvertTo{TQuantity}" />
     [Obsolete("This method will be removed in the next major update. Consider using the UnitConverter.Default.ConvertTo(quantity, unit) method instead.")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IQuantity ToUnit(this IQuantity quantity, UnitKey unit)
-    {
-         return UnitConverter.Default.ConvertTo(quantity, unit);
-    }
-    
+        => UnitConverter.Default.ConvertTo(quantity, unit);
+
     /// <summary>
     ///     Converts this <see cref="IQuantity{TUnitType}"/> to an <see cref="IQuantity{TUnitType}"/> in the given <paramref name="unit"/>.
     /// </summary>
@@ -225,9 +210,7 @@ public static class QuantityExtensions
     /// </exception>
     [Obsolete("This method will be removed in the next major update. Consider using the UnitConverter.Default.ConvertTo(quantity, unit) method instead.")]
     public static IQuantity ToUnit(this IQuantity quantity, UnitSystem unitSystem)
-    {
-         return UnitConverter.Default.ConvertTo(quantity, quantity.QuantityInfo.GetDefaultUnit(unitSystem).UnitKey);
-    }
+        => UnitConverter.Default.ConvertTo(quantity, quantity.QuantityInfo.GetDefaultUnit(unitSystem).UnitKey);
 
     /// <summary>
     ///     Converts the specified quantity to a new quantity with a unit determined by the given <see cref="UnitSystem" />.
@@ -269,11 +252,10 @@ public static class QuantityExtensions
     ///     If <c>null</c>, the default is <see cref="CultureInfo.CurrentCulture" />.
     /// </param>
     /// <returns>A string representation of the quantity.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string ToString<TQuantity>(this TQuantity quantity, IFormatProvider? formatProvider)
         where TQuantity : IQuantity, IFormattable
-    {
-        return quantity.ToString(null, formatProvider);
-    }
+        => quantity.ToString(null, formatProvider);
 
     /// <summary>
     ///     Returns the string representation of the specified quantity using the provided format string.
@@ -288,13 +270,12 @@ public static class QuantityExtensions
     ///     If <c>null</c> or empty, the default format is used.
     /// </param>
     /// <returns>A string representation of the quantity.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string ToString<TQuantity>(
         this TQuantity quantity,
         [StringSyntax(StringSyntaxAttribute.NumericFormat)] string? format)
         where TQuantity : IQuantity, IFormattable
-    {
-        return quantity.ToString(format, null);
-    }
+        => quantity.ToString(format, null);
 
     /// <summary>
     ///     Calculates the arithmetic mean of a sequence of quantities.
@@ -307,16 +288,11 @@ public static class QuantityExtensions
     internal static TQuantity ArithmeticMean<TQuantity>(this IEnumerable<TQuantity> quantities)
         where TQuantity : IQuantityOfType<TQuantity>
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         TQuantity firstQuantity = enumerator.Current!;
         UnitKey resultUnit = firstQuantity.UnitKey;
@@ -353,16 +329,11 @@ public static class QuantityExtensions
         where TQuantity : IQuantity<TQuantity, TUnit>
         where TUnit: struct, Enum
     {
-        if (quantities is null)
-        {
-            throw new ArgumentNullException(nameof(quantities));
-        }
+        if (quantities is null) throw new ArgumentNullException(nameof(quantities));
 
         using IEnumerator<TQuantity> enumerator = quantities.GetEnumerator();
         if (!enumerator.MoveNext())
-        {
             throw ExceptionHelper.CreateInvalidOperationOnEmptyCollectionException();
-        }
 
         TQuantity firstQuantity = enumerator.Current!;
         var unitKey = UnitKey.ForUnit(unit);
