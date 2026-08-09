@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="SolidAngle"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class SolidAngleInfo: QuantityInfo<SolidAngle, SolidAngleUnit>
+        public sealed class SolidAngleInfo : QuantityInfo<SolidAngle, SolidAngleUnit>
         {
             /// <inheritdoc />
             public SolidAngleInfo(string name, SolidAngleUnit baseUnit, IEnumerable<IUnitDefinition<SolidAngleUnit>> unitMappings, SolidAngle zero, BaseDimensions baseDimensions,
@@ -267,11 +267,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{SolidAngle,SolidAngleUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SolidAngleUnit.Steradian"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SolidAngle AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{SolidAngle,SolidAngleUnit}.AsBaseValue"/>
+        /// <returns><see cref="SolidAngleUnit.Steradian"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

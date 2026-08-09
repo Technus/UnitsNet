@@ -78,7 +78,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Force"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ForceInfo: QuantityInfo<Force, ForceUnit>
+        public sealed class ForceInfo : QuantityInfo<Force, ForceUnit>
         {
             /// <inheritdoc />
             public ForceInfo(string name, ForceUnit baseUnit, IEnumerable<IUnitDefinition<ForceUnit>> unitMappings, Force zero, BaseDimensions baseDimensions,
@@ -337,11 +337,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Force,ForceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ForceUnit.Newton"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Force AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Force,ForceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ForceUnit.Newton"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

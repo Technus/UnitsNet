@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="PowerRatio"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class PowerRatioInfo: QuantityInfo<PowerRatio, PowerRatioUnit>
+        public sealed class PowerRatioInfo : QuantityInfo<PowerRatio, PowerRatioUnit>
         {
             /// <inheritdoc />
             public PowerRatioInfo(string name, PowerRatioUnit baseUnit, IEnumerable<IUnitDefinition<PowerRatioUnit>> unitMappings, PowerRatio zero, BaseDimensions baseDimensions,
@@ -282,11 +282,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{PowerRatio,PowerRatioUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PowerRatioUnit.DecibelWatt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PowerRatio AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{PowerRatio,PowerRatioUnit}.AsBaseValue"/>
+        /// <returns><see cref="PowerRatioUnit.DecibelWatt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -71,7 +71,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MassConcentration"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MassConcentrationInfo: QuantityInfo<MassConcentration, MassConcentrationUnit>
+        public sealed class MassConcentrationInfo : QuantityInfo<MassConcentration, MassConcentrationUnit>
         {
             /// <inheritdoc />
             public MassConcentrationInfo(string name, MassConcentrationUnit baseUnit, IEnumerable<IUnitDefinition<MassConcentrationUnit>> unitMappings, MassConcentration zero, BaseDimensions baseDimensions,
@@ -429,11 +429,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MassConcentration,MassConcentrationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassConcentrationUnit.KilogramPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MassConcentration AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MassConcentration,MassConcentrationUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassConcentrationUnit.KilogramPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

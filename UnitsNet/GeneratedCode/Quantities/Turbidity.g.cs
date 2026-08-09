@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Turbidity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class TurbidityInfo: QuantityInfo<Turbidity, TurbidityUnit>
+        public sealed class TurbidityInfo : QuantityInfo<Turbidity, TurbidityUnit>
         {
             /// <inheritdoc />
             public TurbidityInfo(string name, TurbidityUnit baseUnit, IEnumerable<IUnitDefinition<TurbidityUnit>> unitMappings, Turbidity zero, BaseDimensions baseDimensions,
@@ -266,11 +266,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Turbidity,TurbidityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TurbidityUnit.NTU"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Turbidity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Turbidity,TurbidityUnit}.AsBaseValue"/>
+        /// <returns><see cref="TurbidityUnit.NTU"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

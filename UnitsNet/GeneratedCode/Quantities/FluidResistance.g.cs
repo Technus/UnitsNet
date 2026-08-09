@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="FluidResistance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class FluidResistanceInfo: QuantityInfo<FluidResistance, FluidResistanceUnit>
+        public sealed class FluidResistanceInfo : QuantityInfo<FluidResistance, FluidResistanceUnit>
         {
             /// <inheritdoc />
             public FluidResistanceInfo(string name, FluidResistanceUnit baseUnit, IEnumerable<IUnitDefinition<FluidResistanceUnit>> unitMappings, FluidResistance zero, BaseDimensions baseDimensions,
@@ -335,11 +335,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{FluidResistance,FluidResistanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="FluidResistanceUnit.PascalSecondPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public FluidResistance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{FluidResistance,FluidResistanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="FluidResistanceUnit.PascalSecondPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="CoefficientOfThermalExpansion"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class CoefficientOfThermalExpansionInfo: QuantityInfo<CoefficientOfThermalExpansion, CoefficientOfThermalExpansionUnit>
+        public sealed class CoefficientOfThermalExpansionInfo : QuantityInfo<CoefficientOfThermalExpansion, CoefficientOfThermalExpansionUnit>
         {
             /// <inheritdoc />
             public CoefficientOfThermalExpansionInfo(string name, CoefficientOfThermalExpansionUnit baseUnit, IEnumerable<IUnitDefinition<CoefficientOfThermalExpansionUnit>> unitMappings, CoefficientOfThermalExpansion zero, BaseDimensions baseDimensions,
@@ -293,11 +293,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{CoefficientOfThermalExpansion,CoefficientOfThermalExpansionUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="CoefficientOfThermalExpansionUnit.PerKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CoefficientOfThermalExpansion AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{CoefficientOfThermalExpansion,CoefficientOfThermalExpansionUnit}.AsBaseValue"/>
+        /// <returns><see cref="CoefficientOfThermalExpansionUnit.PerKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

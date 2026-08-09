@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="SpecificFuelConsumption"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class SpecificFuelConsumptionInfo: QuantityInfo<SpecificFuelConsumption, SpecificFuelConsumptionUnit>
+        public sealed class SpecificFuelConsumptionInfo : QuantityInfo<SpecificFuelConsumption, SpecificFuelConsumptionUnit>
         {
             /// <inheritdoc />
             public SpecificFuelConsumptionInfo(string name, SpecificFuelConsumptionUnit baseUnit, IEnumerable<IUnitDefinition<SpecificFuelConsumptionUnit>> unitMappings, SpecificFuelConsumption zero, BaseDimensions baseDimensions,
@@ -289,11 +289,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{SpecificFuelConsumption,SpecificFuelConsumptionUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificFuelConsumptionUnit.GramPerKilonewtonSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SpecificFuelConsumption AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{SpecificFuelConsumption,SpecificFuelConsumptionUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificFuelConsumptionUnit.GramPerKilonewtonSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Permittivity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class PermittivityInfo: QuantityInfo<Permittivity, PermittivityUnit>
+        public sealed class PermittivityInfo : QuantityInfo<Permittivity, PermittivityUnit>
         {
             /// <inheritdoc />
             public PermittivityInfo(string name, PermittivityUnit baseUnit, IEnumerable<IUnitDefinition<PermittivityUnit>> unitMappings, Permittivity zero, BaseDimensions baseDimensions,
@@ -280,11 +280,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Permittivity,PermittivityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PermittivityUnit.FaradPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Permittivity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Permittivity,PermittivityUnit}.AsBaseValue"/>
+        /// <returns><see cref="PermittivityUnit.FaradPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

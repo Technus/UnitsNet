@@ -70,7 +70,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Torque"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class TorqueInfo: QuantityInfo<Torque, TorqueUnit>
+        public sealed class TorqueInfo : QuantityInfo<Torque, TorqueUnit>
         {
             /// <inheritdoc />
             public TorqueInfo(string name, TorqueUnit baseUnit, IEnumerable<IUnitDefinition<TorqueUnit>> unitMappings, Torque zero, BaseDimensions baseDimensions,
@@ -362,11 +362,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Torque,TorqueUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TorqueUnit.NewtonMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Torque AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Torque,TorqueUnit}.AsBaseValue"/>
+        /// <returns><see cref="TorqueUnit.NewtonMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

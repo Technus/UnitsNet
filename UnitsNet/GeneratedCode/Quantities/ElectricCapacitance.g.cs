@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricCapacitance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricCapacitanceInfo: QuantityInfo<ElectricCapacitance, ElectricCapacitanceUnit>
+        public sealed class ElectricCapacitanceInfo : QuantityInfo<ElectricCapacitance, ElectricCapacitanceUnit>
         {
             /// <inheritdoc />
             public ElectricCapacitanceInfo(string name, ElectricCapacitanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCapacitanceUnit>> unitMappings, ElectricCapacitance zero, BaseDimensions baseDimensions,
@@ -299,11 +299,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricCapacitance,ElectricCapacitanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCapacitanceUnit.Farad"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricCapacitance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricCapacitance,ElectricCapacitanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCapacitanceUnit.Farad"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

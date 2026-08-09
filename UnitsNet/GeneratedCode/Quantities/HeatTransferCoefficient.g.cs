@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="HeatTransferCoefficient"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class HeatTransferCoefficientInfo: QuantityInfo<HeatTransferCoefficient, HeatTransferCoefficientUnit>
+        public sealed class HeatTransferCoefficientInfo : QuantityInfo<HeatTransferCoefficient, HeatTransferCoefficientUnit>
         {
             /// <inheritdoc />
             public HeatTransferCoefficientInfo(string name, HeatTransferCoefficientUnit baseUnit, IEnumerable<IUnitDefinition<HeatTransferCoefficientUnit>> unitMappings, HeatTransferCoefficient zero, BaseDimensions baseDimensions,
@@ -293,11 +293,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{HeatTransferCoefficient,HeatTransferCoefficientUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="HeatTransferCoefficientUnit.WattPerSquareMeterKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public HeatTransferCoefficient AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{HeatTransferCoefficient,HeatTransferCoefficientUnit}.AsBaseValue"/>
+        /// <returns><see cref="HeatTransferCoefficientUnit.WattPerSquareMeterKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

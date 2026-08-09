@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RotationalSpeed"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RotationalSpeedInfo: QuantityInfo<RotationalSpeed, RotationalSpeedUnit>
+        public sealed class RotationalSpeedInfo : QuantityInfo<RotationalSpeed, RotationalSpeedUnit>
         {
             /// <inheritdoc />
             public RotationalSpeedInfo(string name, RotationalSpeedUnit baseUnit, IEnumerable<IUnitDefinition<RotationalSpeedUnit>> unitMappings, RotationalSpeed zero, BaseDimensions baseDimensions,
@@ -317,11 +317,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RotationalSpeed,RotationalSpeedUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RotationalSpeedUnit.RadianPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RotationalSpeed AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RotationalSpeed,RotationalSpeedUnit}.AsBaseValue"/>
+        /// <returns><see cref="RotationalSpeedUnit.RadianPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

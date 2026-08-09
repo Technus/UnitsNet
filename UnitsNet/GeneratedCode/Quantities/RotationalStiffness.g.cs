@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RotationalStiffness"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RotationalStiffnessInfo: QuantityInfo<RotationalStiffness, RotationalStiffnessUnit>
+        public sealed class RotationalStiffnessInfo : QuantityInfo<RotationalStiffness, RotationalStiffnessUnit>
         {
             /// <inheritdoc />
             public RotationalStiffnessInfo(string name, RotationalStiffnessUnit baseUnit, IEnumerable<IUnitDefinition<RotationalStiffnessUnit>> unitMappings, RotationalStiffness zero, BaseDimensions baseDimensions,
@@ -379,11 +379,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RotationalStiffness,RotationalStiffnessUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RotationalStiffnessUnit.NewtonMeterPerRadian"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RotationalStiffness AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RotationalStiffness,RotationalStiffnessUnit}.AsBaseValue"/>
+        /// <returns><see cref="RotationalStiffnessUnit.NewtonMeterPerRadian"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

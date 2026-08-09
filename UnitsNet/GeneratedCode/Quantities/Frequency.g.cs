@@ -65,7 +65,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Frequency"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class FrequencyInfo: QuantityInfo<Frequency, FrequencyUnit>
+        public sealed class FrequencyInfo : QuantityInfo<Frequency, FrequencyUnit>
         {
             /// <inheritdoc />
             public FrequencyInfo(string name, FrequencyUnit baseUnit, IEnumerable<IUnitDefinition<FrequencyUnit>> unitMappings, Frequency zero, BaseDimensions baseDimensions,
@@ -312,11 +312,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Frequency,FrequencyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="FrequencyUnit.Hertz"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Frequency AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Frequency,FrequencyUnit}.AsBaseValue"/>
+        /// <returns><see cref="FrequencyUnit.Hertz"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

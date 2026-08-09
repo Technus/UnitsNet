@@ -72,7 +72,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="SpecificEnergy"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class SpecificEnergyInfo: QuantityInfo<SpecificEnergy, SpecificEnergyUnit>
+        public sealed class SpecificEnergyInfo : QuantityInfo<SpecificEnergy, SpecificEnergyUnit>
         {
             /// <inheritdoc />
             public SpecificEnergyInfo(string name, SpecificEnergyUnit baseUnit, IEnumerable<IUnitDefinition<SpecificEnergyUnit>> unitMappings, SpecificEnergy zero, BaseDimensions baseDimensions,
@@ -373,11 +373,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{SpecificEnergy,SpecificEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificEnergyUnit.JoulePerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SpecificEnergy AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{SpecificEnergy,SpecificEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificEnergyUnit.JoulePerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

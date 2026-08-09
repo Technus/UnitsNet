@@ -174,7 +174,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref=""{_quantity.Name}""/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class {quantityInfoClassName}: QuantityInfo<{_quantity.Name}, {_unitEnumName}>
+        public sealed class {quantityInfoClassName} : QuantityInfo<{_quantity.Name}, {_unitEnumName}>
         {{");
             Writer.WL($@"
             /// <inheritdoc />
@@ -504,11 +504,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref=""IQuantity{{{_quantity.Name},{_unitEnumName}}}.AsBaseQuantity""/>
+        /// <returns><see cref=""{_unitEnumName}.{_quantity.BaseUnit}""/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public {_quantity.Name} AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref=""IQuantity{{{_quantity.Name},{_unitEnumName}}}.AsBaseValue""/>
+        /// <returns><see cref=""{_unitEnumName}.{_quantity.BaseUnit}""/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

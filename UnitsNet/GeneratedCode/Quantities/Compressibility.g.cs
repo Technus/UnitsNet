@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Compressibility"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class CompressibilityInfo: QuantityInfo<Compressibility, CompressibilityUnit>
+        public sealed class CompressibilityInfo : QuantityInfo<Compressibility, CompressibilityUnit>
         {
             /// <inheritdoc />
             public CompressibilityInfo(string name, CompressibilityUnit baseUnit, IEnumerable<IUnitDefinition<CompressibilityUnit>> unitMappings, Compressibility zero, BaseDimensions baseDimensions,
@@ -296,11 +296,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Compressibility,CompressibilityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="CompressibilityUnit.InversePascal"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Compressibility AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Compressibility,CompressibilityUnit}.AsBaseValue"/>
+        /// <returns><see cref="CompressibilityUnit.InversePascal"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

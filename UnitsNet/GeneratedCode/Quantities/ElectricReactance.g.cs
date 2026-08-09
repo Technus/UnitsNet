@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricReactance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricReactanceInfo: QuantityInfo<ElectricReactance, ElectricReactanceUnit>
+        public sealed class ElectricReactanceInfo : QuantityInfo<ElectricReactance, ElectricReactanceUnit>
         {
             /// <inheritdoc />
             public ElectricReactanceInfo(string name, ElectricReactanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactanceUnit>> unitMappings, ElectricReactance zero, BaseDimensions baseDimensions,
@@ -301,11 +301,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricReactance,ElectricReactanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricReactanceUnit.Ohm"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricReactance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricReactance,ElectricReactanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricReactanceUnit.Ohm"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

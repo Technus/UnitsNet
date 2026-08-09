@@ -74,7 +74,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ForcePerLength"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ForcePerLengthInfo: QuantityInfo<ForcePerLength, ForcePerLengthUnit>
+        public sealed class ForcePerLengthInfo : QuantityInfo<ForcePerLength, ForcePerLengthUnit>
         {
             /// <inheritdoc />
             public ForcePerLengthInfo(string name, ForcePerLengthUnit baseUnit, IEnumerable<IUnitDefinition<ForcePerLengthUnit>> unitMappings, ForcePerLength zero, BaseDimensions baseDimensions,
@@ -399,11 +399,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ForcePerLength,ForcePerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ForcePerLengthUnit.NewtonPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ForcePerLength AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ForcePerLength,ForcePerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="ForcePerLengthUnit.NewtonPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="LinearPowerDensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class LinearPowerDensityInfo: QuantityInfo<LinearPowerDensity, LinearPowerDensityUnit>
+        public sealed class LinearPowerDensityInfo : QuantityInfo<LinearPowerDensity, LinearPowerDensityUnit>
         {
             /// <inheritdoc />
             public LinearPowerDensityInfo(string name, LinearPowerDensityUnit baseUnit, IEnumerable<IUnitDefinition<LinearPowerDensityUnit>> unitMappings, LinearPowerDensity zero, BaseDimensions baseDimensions,
@@ -353,11 +353,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{LinearPowerDensity,LinearPowerDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LinearPowerDensityUnit.WattPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public LinearPowerDensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{LinearPowerDensity,LinearPowerDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="LinearPowerDensityUnit.WattPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

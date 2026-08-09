@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RotationalStiffnessPerLength"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RotationalStiffnessPerLengthInfo: QuantityInfo<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit>
+        public sealed class RotationalStiffnessPerLengthInfo : QuantityInfo<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit>
         {
             /// <inheritdoc />
             public RotationalStiffnessPerLengthInfo(string name, RotationalStiffnessPerLengthUnit baseUnit, IEnumerable<IUnitDefinition<RotationalStiffnessPerLengthUnit>> unitMappings, RotationalStiffnessPerLength zero, BaseDimensions baseDimensions,
@@ -290,11 +290,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RotationalStiffnessPerLength,RotationalStiffnessPerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RotationalStiffnessPerLength AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RotationalStiffnessPerLength,RotationalStiffnessPerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

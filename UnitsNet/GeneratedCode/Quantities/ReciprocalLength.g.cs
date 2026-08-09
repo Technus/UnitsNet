@@ -73,7 +73,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ReciprocalLength"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ReciprocalLengthInfo: QuantityInfo<ReciprocalLength, ReciprocalLengthUnit>
+        public sealed class ReciprocalLengthInfo : QuantityInfo<ReciprocalLength, ReciprocalLengthUnit>
         {
             /// <inheritdoc />
             public ReciprocalLengthInfo(string name, ReciprocalLengthUnit baseUnit, IEnumerable<IUnitDefinition<ReciprocalLengthUnit>> unitMappings, ReciprocalLength zero, BaseDimensions baseDimensions,
@@ -314,11 +314,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ReciprocalLength,ReciprocalLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ReciprocalLengthUnit.InverseMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ReciprocalLength AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ReciprocalLength,ReciprocalLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="ReciprocalLengthUnit.InverseMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -73,7 +73,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MassFlow"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MassFlowInfo: QuantityInfo<MassFlow, MassFlowUnit>
+        public sealed class MassFlowInfo : QuantityInfo<MassFlow, MassFlowUnit>
         {
             /// <inheritdoc />
             public MassFlowInfo(string name, MassFlowUnit baseUnit, IEnumerable<IUnitDefinition<MassFlowUnit>> unitMappings, MassFlow zero, BaseDimensions baseDimensions,
@@ -383,11 +383,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MassFlow,MassFlowUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassFlowUnit.GramPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MassFlow AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MassFlow,MassFlowUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassFlowUnit.GramPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

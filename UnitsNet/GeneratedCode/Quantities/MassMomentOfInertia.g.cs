@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MassMomentOfInertia"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MassMomentOfInertiaInfo: QuantityInfo<MassMomentOfInertia, MassMomentOfInertiaUnit>
+        public sealed class MassMomentOfInertiaInfo : QuantityInfo<MassMomentOfInertia, MassMomentOfInertiaUnit>
         {
             /// <inheritdoc />
             public MassMomentOfInertiaInfo(string name, MassMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<MassMomentOfInertiaUnit>> unitMappings, MassMomentOfInertia zero, BaseDimensions baseDimensions,
@@ -358,11 +358,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MassMomentOfInertia,MassMomentOfInertiaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassMomentOfInertiaUnit.KilogramSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MassMomentOfInertia AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MassMomentOfInertia,MassMomentOfInertiaUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassMomentOfInertiaUnit.KilogramSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

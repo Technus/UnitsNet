@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RatioChangeRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RatioChangeRateInfo: QuantityInfo<RatioChangeRate, RatioChangeRateUnit>
+        public sealed class RatioChangeRateInfo : QuantityInfo<RatioChangeRate, RatioChangeRateUnit>
         {
             /// <inheritdoc />
             public RatioChangeRateInfo(string name, RatioChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<RatioChangeRateUnit>> unitMappings, RatioChangeRate zero, BaseDimensions baseDimensions,
@@ -281,11 +281,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RatioChangeRate,RatioChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RatioChangeRateUnit.DecimalFractionPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RatioChangeRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RatioChangeRate,RatioChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="RatioChangeRateUnit.DecimalFractionPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

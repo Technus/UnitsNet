@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="WarpingMomentOfInertia"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class WarpingMomentOfInertiaInfo: QuantityInfo<WarpingMomentOfInertia, WarpingMomentOfInertiaUnit>
+        public sealed class WarpingMomentOfInertiaInfo : QuantityInfo<WarpingMomentOfInertia, WarpingMomentOfInertiaUnit>
         {
             /// <inheritdoc />
             public WarpingMomentOfInertiaInfo(string name, WarpingMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<WarpingMomentOfInertiaUnit>> unitMappings, WarpingMomentOfInertia zero, BaseDimensions baseDimensions,
@@ -292,11 +292,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{WarpingMomentOfInertia,WarpingMomentOfInertiaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="WarpingMomentOfInertiaUnit.MeterToTheSixth"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public WarpingMomentOfInertia AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{WarpingMomentOfInertia,WarpingMomentOfInertiaUnit}.AsBaseValue"/>
+        /// <returns><see cref="WarpingMomentOfInertiaUnit.MeterToTheSixth"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

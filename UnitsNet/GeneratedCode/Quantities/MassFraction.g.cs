@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MassFraction"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MassFractionInfo: QuantityInfo<MassFraction, MassFractionUnit>
+        public sealed class MassFractionInfo : QuantityInfo<MassFraction, MassFractionUnit>
         {
             /// <inheritdoc />
             public MassFractionInfo(string name, MassFractionUnit baseUnit, IEnumerable<IUnitDefinition<MassFractionUnit>> unitMappings, MassFraction zero, BaseDimensions baseDimensions,
@@ -336,11 +336,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MassFraction,MassFractionUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassFractionUnit.DecimalFraction"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MassFraction AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MassFraction,MassFractionUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassFractionUnit.DecimalFraction"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

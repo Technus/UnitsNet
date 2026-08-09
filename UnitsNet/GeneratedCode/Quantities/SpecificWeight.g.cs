@@ -71,7 +71,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="SpecificWeight"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class SpecificWeightInfo: QuantityInfo<SpecificWeight, SpecificWeightUnit>
+        public sealed class SpecificWeightInfo : QuantityInfo<SpecificWeight, SpecificWeightUnit>
         {
             /// <inheritdoc />
             public SpecificWeightInfo(string name, SpecificWeightUnit baseUnit, IEnumerable<IUnitDefinition<SpecificWeightUnit>> unitMappings, SpecificWeight zero, BaseDimensions baseDimensions,
@@ -333,11 +333,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{SpecificWeight,SpecificWeightUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificWeightUnit.NewtonPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SpecificWeight AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{SpecificWeight,SpecificWeightUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificWeightUnit.NewtonPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -69,7 +69,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="BitRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class BitRateInfo: QuantityInfo<BitRate, BitRateUnit>
+        public sealed class BitRateInfo : QuantityInfo<BitRate, BitRateUnit>
         {
             /// <inheritdoc />
             public BitRateInfo(string name, BitRateUnit baseUnit, IEnumerable<IUnitDefinition<BitRateUnit>> unitMappings, BitRate zero, BaseDimensions baseDimensions,
@@ -397,11 +397,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{BitRate,BitRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="BitRateUnit.BitPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public BitRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{BitRate,BitRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="BitRateUnit.BitPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

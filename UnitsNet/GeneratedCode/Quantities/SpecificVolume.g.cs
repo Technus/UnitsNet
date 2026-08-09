@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="SpecificVolume"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class SpecificVolumeInfo: QuantityInfo<SpecificVolume, SpecificVolumeUnit>
+        public sealed class SpecificVolumeInfo : QuantityInfo<SpecificVolume, SpecificVolumeUnit>
         {
             /// <inheritdoc />
             public SpecificVolumeInfo(string name, SpecificVolumeUnit baseUnit, IEnumerable<IUnitDefinition<SpecificVolumeUnit>> unitMappings, SpecificVolume zero, BaseDimensions baseDimensions,
@@ -284,11 +284,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{SpecificVolume,SpecificVolumeUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificVolumeUnit.CubicMeterPerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SpecificVolume AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{SpecificVolume,SpecificVolumeUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificVolumeUnit.CubicMeterPerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

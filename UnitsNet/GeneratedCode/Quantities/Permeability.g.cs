@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Permeability"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class PermeabilityInfo: QuantityInfo<Permeability, PermeabilityUnit>
+        public sealed class PermeabilityInfo : QuantityInfo<Permeability, PermeabilityUnit>
         {
             /// <inheritdoc />
             public PermeabilityInfo(string name, PermeabilityUnit baseUnit, IEnumerable<IUnitDefinition<PermeabilityUnit>> unitMappings, Permeability zero, BaseDimensions baseDimensions,
@@ -280,11 +280,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Permeability,PermeabilityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PermeabilityUnit.HenryPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Permeability AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Permeability,PermeabilityUnit}.AsBaseValue"/>
+        /// <returns><see cref="PermeabilityUnit.HenryPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

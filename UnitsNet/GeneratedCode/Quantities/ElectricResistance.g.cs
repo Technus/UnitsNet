@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricResistance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricResistanceInfo: QuantityInfo<ElectricResistance, ElectricResistanceUnit>
+        public sealed class ElectricResistanceInfo : QuantityInfo<ElectricResistance, ElectricResistanceUnit>
         {
             /// <inheritdoc />
             public ElectricResistanceInfo(string name, ElectricResistanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricResistanceUnit>> unitMappings, ElectricResistance zero, BaseDimensions baseDimensions,
@@ -302,11 +302,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricResistance,ElectricResistanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricResistanceUnit.Ohm"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricResistance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricResistance,ElectricResistanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricResistanceUnit.Ohm"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

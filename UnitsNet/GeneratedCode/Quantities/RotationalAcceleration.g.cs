@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RotationalAcceleration"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RotationalAccelerationInfo: QuantityInfo<RotationalAcceleration, RotationalAccelerationUnit>
+        public sealed class RotationalAccelerationInfo : QuantityInfo<RotationalAcceleration, RotationalAccelerationUnit>
         {
             /// <inheritdoc />
             public RotationalAccelerationInfo(string name, RotationalAccelerationUnit baseUnit, IEnumerable<IUnitDefinition<RotationalAccelerationUnit>> unitMappings, RotationalAcceleration zero, BaseDimensions baseDimensions,
@@ -287,11 +287,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RotationalAcceleration,RotationalAccelerationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RotationalAccelerationUnit.RadianPerSecondSquared"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RotationalAcceleration AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RotationalAcceleration,RotationalAccelerationUnit}.AsBaseValue"/>
+        /// <returns><see cref="RotationalAccelerationUnit.RadianPerSecondSquared"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -65,7 +65,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricReactiveEnergy"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricReactiveEnergyInfo: QuantityInfo<ElectricReactiveEnergy, ElectricReactiveEnergyUnit>
+        public sealed class ElectricReactiveEnergyInfo : QuantityInfo<ElectricReactiveEnergy, ElectricReactiveEnergyUnit>
         {
             /// <inheritdoc />
             public ElectricReactiveEnergyInfo(string name, ElectricReactiveEnergyUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactiveEnergyUnit>> unitMappings, ElectricReactiveEnergy zero, BaseDimensions baseDimensions,
@@ -285,11 +285,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricReactiveEnergy,ElectricReactiveEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricReactiveEnergyUnit.VoltampereReactiveHour"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricReactiveEnergy AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricReactiveEnergy,ElectricReactiveEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricReactiveEnergyUnit.VoltampereReactiveHour"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

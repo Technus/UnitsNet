@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="AreaMomentOfInertia"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AreaMomentOfInertiaInfo: QuantityInfo<AreaMomentOfInertia, AreaMomentOfInertiaUnit>
+        public sealed class AreaMomentOfInertiaInfo : QuantityInfo<AreaMomentOfInertia, AreaMomentOfInertiaUnit>
         {
             /// <inheritdoc />
             public AreaMomentOfInertiaInfo(string name, AreaMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<AreaMomentOfInertiaUnit>> unitMappings, AreaMomentOfInertia zero, BaseDimensions baseDimensions,
@@ -295,11 +295,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{AreaMomentOfInertia,AreaMomentOfInertiaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaMomentOfInertiaUnit.MeterToTheFourth"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AreaMomentOfInertia AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{AreaMomentOfInertia,AreaMomentOfInertiaUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaMomentOfInertiaUnit.MeterToTheFourth"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

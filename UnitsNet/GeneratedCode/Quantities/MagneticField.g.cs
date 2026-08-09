@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MagneticField"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MagneticFieldInfo: QuantityInfo<MagneticField, MagneticFieldUnit>
+        public sealed class MagneticFieldInfo : QuantityInfo<MagneticField, MagneticFieldUnit>
         {
             /// <inheritdoc />
             public MagneticFieldInfo(string name, MagneticFieldUnit baseUnit, IEnumerable<IUnitDefinition<MagneticFieldUnit>> unitMappings, MagneticField zero, BaseDimensions baseDimensions,
@@ -296,11 +296,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MagneticField,MagneticFieldUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MagneticFieldUnit.Tesla"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MagneticField AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MagneticField,MagneticFieldUnit}.AsBaseValue"/>
+        /// <returns><see cref="MagneticFieldUnit.Tesla"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

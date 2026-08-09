@@ -75,7 +75,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricCurrent"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricCurrentInfo: QuantityInfo<ElectricCurrent, ElectricCurrentUnit>
+        public sealed class ElectricCurrentInfo : QuantityInfo<ElectricCurrent, ElectricCurrentUnit>
         {
             /// <inheritdoc />
             public ElectricCurrentInfo(string name, ElectricCurrentUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentUnit>> unitMappings, ElectricCurrent zero, BaseDimensions baseDimensions,
@@ -313,11 +313,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricCurrent,ElectricCurrentUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCurrentUnit.Ampere"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricCurrent AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricCurrent,ElectricCurrentUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCurrentUnit.Ampere"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

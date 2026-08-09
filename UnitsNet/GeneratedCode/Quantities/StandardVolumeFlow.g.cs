@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="StandardVolumeFlow"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class StandardVolumeFlowInfo: QuantityInfo<StandardVolumeFlow, StandardVolumeFlowUnit>
+        public sealed class StandardVolumeFlowInfo : QuantityInfo<StandardVolumeFlow, StandardVolumeFlowUnit>
         {
             /// <inheritdoc />
             public StandardVolumeFlowInfo(string name, StandardVolumeFlowUnit baseUnit, IEnumerable<IUnitDefinition<StandardVolumeFlowUnit>> unitMappings, StandardVolumeFlow zero, BaseDimensions baseDimensions,
@@ -301,11 +301,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{StandardVolumeFlow,StandardVolumeFlowUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="StandardVolumeFlowUnit.StandardCubicMeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public StandardVolumeFlow AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{StandardVolumeFlow,StandardVolumeFlowUnit}.AsBaseValue"/>
+        /// <returns><see cref="StandardVolumeFlowUnit.StandardCubicMeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

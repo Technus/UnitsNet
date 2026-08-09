@@ -71,7 +71,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Molarity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MolarityInfo: QuantityInfo<Molarity, MolarityUnit>
+        public sealed class MolarityInfo : QuantityInfo<Molarity, MolarityUnit>
         {
             /// <inheritdoc />
             public MolarityInfo(string name, MolarityUnit baseUnit, IEnumerable<IUnitDefinition<MolarityUnit>> unitMappings, Molarity zero, BaseDimensions baseDimensions,
@@ -315,11 +315,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Molarity,MolarityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarityUnit.MolePerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Molarity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Molarity,MolarityUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarityUnit.MolePerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

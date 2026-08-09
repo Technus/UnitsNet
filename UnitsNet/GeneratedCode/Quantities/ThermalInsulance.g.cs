@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ThermalInsulance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ThermalInsulanceInfo: QuantityInfo<ThermalInsulance, ThermalInsulanceUnit>
+        public sealed class ThermalInsulanceInfo : QuantityInfo<ThermalInsulance, ThermalInsulanceUnit>
         {
             /// <inheritdoc />
             public ThermalInsulanceInfo(string name, ThermalInsulanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalInsulanceUnit>> unitMappings, ThermalInsulance zero, BaseDimensions baseDimensions,
@@ -299,11 +299,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ThermalInsulance,ThermalInsulanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ThermalInsulance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ThermalInsulance,ThermalInsulanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

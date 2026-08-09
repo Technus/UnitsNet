@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="AreaPerLength"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AreaPerLengthInfo: QuantityInfo<AreaPerLength, AreaPerLengthUnit>
+        public sealed class AreaPerLengthInfo : QuantityInfo<AreaPerLength, AreaPerLengthUnit>
         {
             /// <inheritdoc />
             public AreaPerLengthInfo(string name, AreaPerLengthUnit baseUnit, IEnumerable<IUnitDefinition<AreaPerLengthUnit>> unitMappings, AreaPerLength zero, BaseDimensions baseDimensions,
@@ -293,11 +293,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{AreaPerLength,AreaPerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaPerLengthUnit.SquareMeterPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AreaPerLength AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{AreaPerLength,AreaPerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaPerLengthUnit.SquareMeterPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

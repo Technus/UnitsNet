@@ -65,7 +65,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="SpecificEntropy"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class SpecificEntropyInfo: QuantityInfo<SpecificEntropy, SpecificEntropyUnit>
+        public sealed class SpecificEntropyInfo : QuantityInfo<SpecificEntropy, SpecificEntropyUnit>
         {
             /// <inheritdoc />
             public SpecificEntropyInfo(string name, SpecificEntropyUnit baseUnit, IEnumerable<IUnitDefinition<SpecificEntropyUnit>> unitMappings, SpecificEntropy zero, BaseDimensions baseDimensions,
@@ -303,11 +303,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{SpecificEntropy,SpecificEntropyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificEntropyUnit.JoulePerKilogramKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SpecificEntropy AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{SpecificEntropy,SpecificEntropyUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificEntropyUnit.JoulePerKilogramKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

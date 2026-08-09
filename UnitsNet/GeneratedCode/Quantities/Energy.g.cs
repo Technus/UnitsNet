@@ -76,7 +76,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Energy"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class EnergyInfo: QuantityInfo<Energy, EnergyUnit>
+        public sealed class EnergyInfo : QuantityInfo<Energy, EnergyUnit>
         {
             /// <inheritdoc />
             public EnergyInfo(string name, EnergyUnit baseUnit, IEnumerable<IUnitDefinition<EnergyUnit>> unitMappings, Energy zero, BaseDimensions baseDimensions,
@@ -407,11 +407,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Energy,EnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="EnergyUnit.Joule"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Energy AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Energy,EnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="EnergyUnit.Joule"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

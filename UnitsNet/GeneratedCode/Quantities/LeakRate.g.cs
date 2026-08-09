@@ -68,7 +68,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="LeakRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class LeakRateInfo: QuantityInfo<LeakRate, LeakRateUnit>
+        public sealed class LeakRateInfo : QuantityInfo<LeakRate, LeakRateUnit>
         {
             /// <inheritdoc />
             public LeakRateInfo(string name, LeakRateUnit baseUnit, IEnumerable<IUnitDefinition<LeakRateUnit>> unitMappings, LeakRate zero, BaseDimensions baseDimensions,
@@ -291,11 +291,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{LeakRate,LeakRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LeakRateUnit.PascalCubicMeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public LeakRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{LeakRate,LeakRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="LeakRateUnit.PascalCubicMeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

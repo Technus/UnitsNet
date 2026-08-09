@@ -79,7 +79,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Mass"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MassInfo: QuantityInfo<Mass, MassUnit>
+        public sealed class MassInfo : QuantityInfo<Mass, MassUnit>
         {
             /// <inheritdoc />
             public MassInfo(string name, MassUnit baseUnit, IEnumerable<IUnitDefinition<MassUnit>> unitMappings, Mass zero, BaseDimensions baseDimensions,
@@ -383,11 +383,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Mass,MassUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassUnit.Kilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Mass AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Mass,MassUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassUnit.Kilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

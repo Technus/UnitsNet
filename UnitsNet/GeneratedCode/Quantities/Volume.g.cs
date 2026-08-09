@@ -79,7 +79,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Volume"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class VolumeInfo: QuantityInfo<Volume, VolumeUnit>
+        public sealed class VolumeInfo : QuantityInfo<Volume, VolumeUnit>
         {
             /// <inheritdoc />
             public VolumeInfo(string name, VolumeUnit baseUnit, IEnumerable<IUnitDefinition<VolumeUnit>> unitMappings, Volume zero, BaseDimensions baseDimensions,
@@ -452,11 +452,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Volume,VolumeUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumeUnit.CubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Volume AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Volume,VolumeUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumeUnit.CubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

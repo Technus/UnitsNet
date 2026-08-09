@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricImpedance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricImpedanceInfo: QuantityInfo<ElectricImpedance, ElectricImpedanceUnit>
+        public sealed class ElectricImpedanceInfo : QuantityInfo<ElectricImpedance, ElectricImpedanceUnit>
         {
             /// <inheritdoc />
             public ElectricImpedanceInfo(string name, ElectricImpedanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricImpedanceUnit>> unitMappings, ElectricImpedance zero, BaseDimensions baseDimensions,
@@ -302,11 +302,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricImpedance,ElectricImpedanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricImpedanceUnit.Ohm"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricImpedance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricImpedance,ElectricImpedanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricImpedanceUnit.Ohm"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

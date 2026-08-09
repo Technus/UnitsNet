@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ThermalTransmittance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ThermalTransmittanceInfo: QuantityInfo<ThermalTransmittance, ThermalTransmittanceUnit>
+        public sealed class ThermalTransmittanceInfo : QuantityInfo<ThermalTransmittance, ThermalTransmittanceUnit>
         {
             /// <inheritdoc />
             public ThermalTransmittanceInfo(string name, ThermalTransmittanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalTransmittanceUnit>> unitMappings, ThermalTransmittance zero, BaseDimensions baseDimensions,
@@ -298,11 +298,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ThermalTransmittance,ThermalTransmittanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ThermalTransmittance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ThermalTransmittance,ThermalTransmittanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

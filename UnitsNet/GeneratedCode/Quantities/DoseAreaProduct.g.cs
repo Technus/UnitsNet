@@ -68,7 +68,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="DoseAreaProduct"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class DoseAreaProductInfo: QuantityInfo<DoseAreaProduct, DoseAreaProductUnit>
+        public sealed class DoseAreaProductInfo : QuantityInfo<DoseAreaProduct, DoseAreaProductUnit>
         {
             /// <inheritdoc />
             public DoseAreaProductInfo(string name, DoseAreaProductUnit baseUnit, IEnumerable<IUnitDefinition<DoseAreaProductUnit>> unitMappings, DoseAreaProduct zero, BaseDimensions baseDimensions,
@@ -354,11 +354,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{DoseAreaProduct,DoseAreaProductUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="DoseAreaProductUnit.GraySquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public DoseAreaProduct AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{DoseAreaProduct,DoseAreaProductUnit}.AsBaseValue"/>
+        /// <returns><see cref="DoseAreaProductUnit.GraySquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

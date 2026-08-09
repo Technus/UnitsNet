@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="VitaminA"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class VitaminAInfo: QuantityInfo<VitaminA, VitaminAUnit>
+        public sealed class VitaminAInfo : QuantityInfo<VitaminA, VitaminAUnit>
         {
             /// <inheritdoc />
             public VitaminAInfo(string name, VitaminAUnit baseUnit, IEnumerable<IUnitDefinition<VitaminAUnit>> unitMappings, VitaminA zero, BaseDimensions baseDimensions,
@@ -263,11 +263,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{VitaminA,VitaminAUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VitaminAUnit.InternationalUnit"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VitaminA AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{VitaminA,VitaminAUnit}.AsBaseValue"/>
+        /// <returns><see cref="VitaminAUnit.InternationalUnit"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

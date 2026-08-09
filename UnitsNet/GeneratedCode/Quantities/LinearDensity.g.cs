@@ -72,7 +72,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="LinearDensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class LinearDensityInfo: QuantityInfo<LinearDensity, LinearDensityUnit>
+        public sealed class LinearDensityInfo : QuantityInfo<LinearDensity, LinearDensityUnit>
         {
             /// <inheritdoc />
             public LinearDensityInfo(string name, LinearDensityUnit baseUnit, IEnumerable<IUnitDefinition<LinearDensityUnit>> unitMappings, LinearDensity zero, BaseDimensions baseDimensions,
@@ -337,11 +337,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{LinearDensity,LinearDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LinearDensityUnit.KilogramPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public LinearDensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{LinearDensity,LinearDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="LinearDensityUnit.KilogramPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

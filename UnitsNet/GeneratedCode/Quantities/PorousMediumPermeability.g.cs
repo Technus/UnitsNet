@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="PorousMediumPermeability"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class PorousMediumPermeabilityInfo: QuantityInfo<PorousMediumPermeability, PorousMediumPermeabilityUnit>
+        public sealed class PorousMediumPermeabilityInfo : QuantityInfo<PorousMediumPermeability, PorousMediumPermeabilityUnit>
         {
             /// <inheritdoc />
             public PorousMediumPermeabilityInfo(string name, PorousMediumPermeabilityUnit baseUnit, IEnumerable<IUnitDefinition<PorousMediumPermeabilityUnit>> unitMappings, PorousMediumPermeability zero, BaseDimensions baseDimensions,
@@ -292,11 +292,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{PorousMediumPermeability,PorousMediumPermeabilityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PorousMediumPermeabilityUnit.SquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PorousMediumPermeability AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{PorousMediumPermeability,PorousMediumPermeabilityUnit}.AsBaseValue"/>
+        /// <returns><see cref="PorousMediumPermeabilityUnit.SquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

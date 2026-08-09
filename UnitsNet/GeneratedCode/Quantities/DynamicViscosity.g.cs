@@ -68,7 +68,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="DynamicViscosity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class DynamicViscosityInfo: QuantityInfo<DynamicViscosity, DynamicViscosityUnit>
+        public sealed class DynamicViscosityInfo : QuantityInfo<DynamicViscosity, DynamicViscosityUnit>
         {
             /// <inheritdoc />
             public DynamicViscosityInfo(string name, DynamicViscosityUnit baseUnit, IEnumerable<IUnitDefinition<DynamicViscosityUnit>> unitMappings, DynamicViscosity zero, BaseDimensions baseDimensions,
@@ -309,11 +309,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{DynamicViscosity,DynamicViscosityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="DynamicViscosityUnit.NewtonSecondPerMeterSquared"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public DynamicViscosity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{DynamicViscosity,DynamicViscosityUnit}.AsBaseValue"/>
+        /// <returns><see cref="DynamicViscosityUnit.NewtonSecondPerMeterSquared"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

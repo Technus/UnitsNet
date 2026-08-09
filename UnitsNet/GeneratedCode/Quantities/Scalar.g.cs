@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Scalar"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ScalarInfo: QuantityInfo<Scalar, ScalarUnit>
+        public sealed class ScalarInfo : QuantityInfo<Scalar, ScalarUnit>
         {
             /// <inheritdoc />
             public ScalarInfo(string name, ScalarUnit baseUnit, IEnumerable<IUnitDefinition<ScalarUnit>> unitMappings, Scalar zero, BaseDimensions baseDimensions,
@@ -263,11 +263,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Scalar,ScalarUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ScalarUnit.Amount"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Scalar AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Scalar,ScalarUnit}.AsBaseValue"/>
+        /// <returns><see cref="ScalarUnit.Amount"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

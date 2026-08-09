@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RadiationEquivalentDoseRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RadiationEquivalentDoseRateInfo: QuantityInfo<RadiationEquivalentDoseRate, RadiationEquivalentDoseRateUnit>
+        public sealed class RadiationEquivalentDoseRateInfo : QuantityInfo<RadiationEquivalentDoseRate, RadiationEquivalentDoseRateUnit>
         {
             /// <inheritdoc />
             public RadiationEquivalentDoseRateInfo(string name, RadiationEquivalentDoseRateUnit baseUnit, IEnumerable<IUnitDefinition<RadiationEquivalentDoseRateUnit>> unitMappings, RadiationEquivalentDoseRate zero, BaseDimensions baseDimensions,
@@ -305,11 +305,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RadiationEquivalentDoseRate,RadiationEquivalentDoseRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RadiationEquivalentDoseRateUnit.SievertPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RadiationEquivalentDoseRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RadiationEquivalentDoseRate,RadiationEquivalentDoseRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="RadiationEquivalentDoseRateUnit.SievertPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

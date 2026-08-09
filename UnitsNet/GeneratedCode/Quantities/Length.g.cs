@@ -87,7 +87,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Length"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class LengthInfo: QuantityInfo<Length, LengthUnit>
+        public sealed class LengthInfo : QuantityInfo<Length, LengthUnit>
         {
             /// <inheritdoc />
             public LengthInfo(string name, LengthUnit baseUnit, IEnumerable<IUnitDefinition<LengthUnit>> unitMappings, Length zero, BaseDimensions baseDimensions,
@@ -424,11 +424,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Length,LengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LengthUnit.Meter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Length AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Length,LengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="LengthUnit.Meter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -69,7 +69,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="LuminousIntensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class LuminousIntensityInfo: QuantityInfo<LuminousIntensity, LuminousIntensityUnit>
+        public sealed class LuminousIntensityInfo : QuantityInfo<LuminousIntensity, LuminousIntensityUnit>
         {
             /// <inheritdoc />
             public LuminousIntensityInfo(string name, LuminousIntensityUnit baseUnit, IEnumerable<IUnitDefinition<LuminousIntensityUnit>> unitMappings, LuminousIntensity zero, BaseDimensions baseDimensions,
@@ -283,11 +283,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{LuminousIntensity,LuminousIntensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LuminousIntensityUnit.Candela"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public LuminousIntensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{LuminousIntensity,LuminousIntensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="LuminousIntensityUnit.Candela"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricConductance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricConductanceInfo: QuantityInfo<ElectricConductance, ElectricConductanceUnit>
+        public sealed class ElectricConductanceInfo : QuantityInfo<ElectricConductance, ElectricConductanceUnit>
         {
             /// <inheritdoc />
             public ElectricConductanceInfo(string name, ElectricConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricConductanceUnit>> unitMappings, ElectricConductance zero, BaseDimensions baseDimensions,
@@ -326,11 +326,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricConductance,ElectricConductanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricConductanceUnit.Siemens"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricConductance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricConductance,ElectricConductanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricConductanceUnit.Siemens"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

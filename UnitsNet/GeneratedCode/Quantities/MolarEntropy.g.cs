@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MolarEntropy"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MolarEntropyInfo: QuantityInfo<MolarEntropy, MolarEntropyUnit>
+        public sealed class MolarEntropyInfo : QuantityInfo<MolarEntropy, MolarEntropyUnit>
         {
             /// <inheritdoc />
             public MolarEntropyInfo(string name, MolarEntropyUnit baseUnit, IEnumerable<IUnitDefinition<MolarEntropyUnit>> unitMappings, MolarEntropy zero, BaseDimensions baseDimensions,
@@ -283,11 +283,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MolarEntropy,MolarEntropyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarEntropyUnit.JoulePerMoleKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MolarEntropy AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MolarEntropy,MolarEntropyUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarEntropyUnit.JoulePerMoleKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

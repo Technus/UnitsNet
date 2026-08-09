@@ -68,7 +68,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="AreaDensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AreaDensityInfo: QuantityInfo<AreaDensity, AreaDensityUnit>
+        public sealed class AreaDensityInfo : QuantityInfo<AreaDensity, AreaDensityUnit>
         {
             /// <inheritdoc />
             public AreaDensityInfo(string name, AreaDensityUnit baseUnit, IEnumerable<IUnitDefinition<AreaDensityUnit>> unitMappings, AreaDensity zero, BaseDimensions baseDimensions,
@@ -294,11 +294,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{AreaDensity,AreaDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaDensityUnit.KilogramPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AreaDensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{AreaDensity,AreaDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaDensityUnit.KilogramPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

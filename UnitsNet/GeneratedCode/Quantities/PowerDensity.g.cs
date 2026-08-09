@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="PowerDensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class PowerDensityInfo: QuantityInfo<PowerDensity, PowerDensityUnit>
+        public sealed class PowerDensityInfo : QuantityInfo<PowerDensity, PowerDensityUnit>
         {
             /// <inheritdoc />
             public PowerDensityInfo(string name, PowerDensityUnit baseUnit, IEnumerable<IUnitDefinition<PowerDensityUnit>> unitMappings, PowerDensity zero, BaseDimensions baseDimensions,
@@ -413,11 +413,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{PowerDensity,PowerDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PowerDensityUnit.WattPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PowerDensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{PowerDensity,PowerDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="PowerDensityUnit.WattPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -75,7 +75,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricCharge"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricChargeInfo: QuantityInfo<ElectricCharge, ElectricChargeUnit>
+        public sealed class ElectricChargeInfo : QuantityInfo<ElectricCharge, ElectricChargeUnit>
         {
             /// <inheritdoc />
             public ElectricChargeInfo(string name, ElectricChargeUnit baseUnit, IEnumerable<IUnitDefinition<ElectricChargeUnit>> unitMappings, ElectricCharge zero, BaseDimensions baseDimensions,
@@ -319,11 +319,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricCharge,ElectricChargeUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricChargeUnit.Coulomb"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricCharge AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricCharge,ElectricChargeUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricChargeUnit.Coulomb"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

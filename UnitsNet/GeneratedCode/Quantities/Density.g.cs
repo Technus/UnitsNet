@@ -74,7 +74,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Density"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class DensityInfo: QuantityInfo<Density, DensityUnit>
+        public sealed class DensityInfo : QuantityInfo<Density, DensityUnit>
         {
             /// <inheritdoc />
             public DensityInfo(string name, DensityUnit baseUnit, IEnumerable<IUnitDefinition<DensityUnit>> unitMappings, Density zero, BaseDimensions baseDimensions,
@@ -453,11 +453,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Density,DensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="DensityUnit.KilogramPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Density AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Density,DensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="DensityUnit.KilogramPerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

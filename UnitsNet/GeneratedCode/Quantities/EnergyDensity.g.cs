@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="EnergyDensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class EnergyDensityInfo: QuantityInfo<EnergyDensity, EnergyDensityUnit>
+        public sealed class EnergyDensityInfo : QuantityInfo<EnergyDensity, EnergyDensityUnit>
         {
             /// <inheritdoc />
             public EnergyDensityInfo(string name, EnergyDensityUnit baseUnit, IEnumerable<IUnitDefinition<EnergyDensityUnit>> unitMappings, EnergyDensity zero, BaseDimensions baseDimensions,
@@ -313,11 +313,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{EnergyDensity,EnergyDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="EnergyDensityUnit.JoulePerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EnergyDensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{EnergyDensity,EnergyDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="EnergyDensityUnit.JoulePerCubicMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

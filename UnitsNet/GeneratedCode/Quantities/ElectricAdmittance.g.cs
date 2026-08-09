@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricAdmittance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricAdmittanceInfo: QuantityInfo<ElectricAdmittance, ElectricAdmittanceUnit>
+        public sealed class ElectricAdmittanceInfo : QuantityInfo<ElectricAdmittance, ElectricAdmittanceUnit>
         {
             /// <inheritdoc />
             public ElectricAdmittanceInfo(string name, ElectricAdmittanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricAdmittanceUnit>> unitMappings, ElectricAdmittance zero, BaseDimensions baseDimensions,
@@ -326,11 +326,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricAdmittance,ElectricAdmittanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricAdmittanceUnit.Siemens"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricAdmittance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricAdmittance,ElectricAdmittanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricAdmittanceUnit.Siemens"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

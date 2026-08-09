@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MolarMass"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MolarMassInfo: QuantityInfo<MolarMass, MolarMassUnit>
+        public sealed class MolarMassInfo : QuantityInfo<MolarMass, MolarMassUnit>
         {
             /// <inheritdoc />
             public MolarMassInfo(string name, MolarMassUnit baseUnit, IEnumerable<IUnitDefinition<MolarMassUnit>> unitMappings, MolarMass zero, BaseDimensions baseDimensions,
@@ -319,11 +319,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MolarMass,MolarMassUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarMassUnit.KilogramPerMole"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MolarMass AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MolarMass,MolarMassUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarMassUnit.KilogramPerMole"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

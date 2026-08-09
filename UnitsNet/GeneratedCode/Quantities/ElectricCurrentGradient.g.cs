@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricCurrentGradient"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricCurrentGradientInfo: QuantityInfo<ElectricCurrentGradient, ElectricCurrentGradientUnit>
+        public sealed class ElectricCurrentGradientInfo : QuantityInfo<ElectricCurrentGradient, ElectricCurrentGradientUnit>
         {
             /// <inheritdoc />
             public ElectricCurrentGradientInfo(string name, ElectricCurrentGradientUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentGradientUnit>> unitMappings, ElectricCurrentGradient zero, BaseDimensions baseDimensions,
@@ -296,11 +296,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricCurrentGradient,ElectricCurrentGradientUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCurrentGradientUnit.AmperePerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricCurrentGradient AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricCurrentGradient,ElectricCurrentGradientUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCurrentGradientUnit.AmperePerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

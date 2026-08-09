@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="TemperatureChangeRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class TemperatureChangeRateInfo: QuantityInfo<TemperatureChangeRate, TemperatureChangeRateUnit>
+        public sealed class TemperatureChangeRateInfo : QuantityInfo<TemperatureChangeRate, TemperatureChangeRateUnit>
         {
             /// <inheritdoc />
             public TemperatureChangeRateInfo(string name, TemperatureChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureChangeRateUnit>> unitMappings, TemperatureChangeRate zero, BaseDimensions baseDimensions,
@@ -326,11 +326,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{TemperatureChangeRate,TemperatureChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TemperatureChangeRateUnit.DegreeCelsiusPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TemperatureChangeRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{TemperatureChangeRate,TemperatureChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="TemperatureChangeRateUnit.DegreeCelsiusPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

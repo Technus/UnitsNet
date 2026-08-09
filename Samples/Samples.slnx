@@ -9,10 +9,17 @@
     <File Path="Directory.Packages.props" />
     <File Path="msbuild.cmd" />
   </Folder>
+  <Project Path="../UnitsNet.NumberExtensions.CS14/UnitsNet.NumberExtensions.CS14.csproj">
+    <BuildType Solution="Official|*" Project="Release" />
+  </Project>
+  <Project Path="../UnitsNet.NumberExtensions/UnitsNet.NumberExtensions.csproj">
+    <BuildType Solution="Official|*" Project="Release" />
+  </Project>
+  <Project Path="../UnitsNet/UnitsNet.csproj">
+    <BuildType Solution="Official|*" Project="Release" />
+  </Project>
   <Project Path="MvvmSample.Wpf/MvvmSample.Wpf/MvvmSample.Wpf.csproj" />
   <Project Path="UnitConverter.Console/UnitConverter.Console.csproj" />
   <Project Path="UnitConverter.Wpf/UnitConverter.Wpf/UnitConverter.Wpf.csproj" />
-  <Project Path="UnitsNetSetup.Configuration/UnitsNetSetup.Configuration.csproj">
-    <Configuration Solution="Official|Any CPU" Project="Official|Any CPU|NoBuild" />
-  </Project>
+  <Project Path="UnitsNetSetup.Configuration/UnitsNetSetup.Configuration.csproj" />
 </Solution>

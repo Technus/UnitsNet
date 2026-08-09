@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="VolumetricHeatCapacity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class VolumetricHeatCapacityInfo: QuantityInfo<VolumetricHeatCapacity, VolumetricHeatCapacityUnit>
+        public sealed class VolumetricHeatCapacityInfo : QuantityInfo<VolumetricHeatCapacity, VolumetricHeatCapacityUnit>
         {
             /// <inheritdoc />
             public VolumetricHeatCapacityInfo(string name, VolumetricHeatCapacityUnit baseUnit, IEnumerable<IUnitDefinition<VolumetricHeatCapacityUnit>> unitMappings, VolumetricHeatCapacity zero, BaseDimensions baseDimensions,
@@ -305,11 +305,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{VolumetricHeatCapacity,VolumetricHeatCapacityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VolumetricHeatCapacity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{VolumetricHeatCapacity,VolumetricHeatCapacityUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

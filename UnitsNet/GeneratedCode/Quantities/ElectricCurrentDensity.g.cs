@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricCurrentDensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricCurrentDensityInfo: QuantityInfo<ElectricCurrentDensity, ElectricCurrentDensityUnit>
+        public sealed class ElectricCurrentDensityInfo : QuantityInfo<ElectricCurrentDensity, ElectricCurrentDensityUnit>
         {
             /// <inheritdoc />
             public ElectricCurrentDensityInfo(string name, ElectricCurrentDensityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentDensityUnit>> unitMappings, ElectricCurrentDensity zero, BaseDimensions baseDimensions,
@@ -287,11 +287,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricCurrentDensity,ElectricCurrentDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCurrentDensityUnit.AmperePerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricCurrentDensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricCurrentDensity,ElectricCurrentDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCurrentDensityUnit.AmperePerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

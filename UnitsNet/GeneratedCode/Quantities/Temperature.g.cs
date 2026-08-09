@@ -62,7 +62,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Temperature"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class TemperatureInfo: QuantityInfo<Temperature, TemperatureUnit>
+        public sealed class TemperatureInfo : QuantityInfo<Temperature, TemperatureUnit>
         {
             /// <inheritdoc />
             public TemperatureInfo(string name, TemperatureUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureUnit>> unitMappings, Temperature zero, BaseDimensions baseDimensions,
@@ -310,11 +310,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Temperature,TemperatureUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TemperatureUnit.Kelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Temperature AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Temperature,TemperatureUnit}.AsBaseValue"/>
+        /// <returns><see cref="TemperatureUnit.Kelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

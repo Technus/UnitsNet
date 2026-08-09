@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ThermalConductance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ThermalConductanceInfo: QuantityInfo<ThermalConductance, ThermalConductanceUnit>
+        public sealed class ThermalConductanceInfo : QuantityInfo<ThermalConductance, ThermalConductanceUnit>
         {
             /// <inheritdoc />
             public ThermalConductanceInfo(string name, ThermalConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalConductanceUnit>> unitMappings, ThermalConductance zero, BaseDimensions baseDimensions,
@@ -283,11 +283,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ThermalConductance,ThermalConductanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalConductanceUnit.WattPerKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ThermalConductance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ThermalConductance,ThermalConductanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalConductanceUnit.WattPerKelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

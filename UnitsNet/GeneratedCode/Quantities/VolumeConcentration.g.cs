@@ -68,7 +68,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="VolumeConcentration"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class VolumeConcentrationInfo: QuantityInfo<VolumeConcentration, VolumeConcentrationUnit>
+        public sealed class VolumeConcentrationInfo : QuantityInfo<VolumeConcentration, VolumeConcentrationUnit>
         {
             /// <inheritdoc />
             public VolumeConcentrationInfo(string name, VolumeConcentrationUnit baseUnit, IEnumerable<IUnitDefinition<VolumeConcentrationUnit>> unitMappings, VolumeConcentration zero, BaseDimensions baseDimensions,
@@ -325,11 +325,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{VolumeConcentration,VolumeConcentrationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumeConcentrationUnit.DecimalFraction"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VolumeConcentration AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{VolumeConcentration,VolumeConcentrationUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumeConcentrationUnit.DecimalFraction"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -71,7 +71,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ReciprocalArea"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ReciprocalAreaInfo: QuantityInfo<ReciprocalArea, ReciprocalAreaUnit>
+        public sealed class ReciprocalAreaInfo : QuantityInfo<ReciprocalArea, ReciprocalAreaUnit>
         {
             /// <inheritdoc />
             public ReciprocalAreaInfo(string name, ReciprocalAreaUnit baseUnit, IEnumerable<IUnitDefinition<ReciprocalAreaUnit>> unitMappings, ReciprocalArea zero, BaseDimensions baseDimensions,
@@ -315,11 +315,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ReciprocalArea,ReciprocalAreaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ReciprocalAreaUnit.InverseSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ReciprocalArea AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ReciprocalArea,ReciprocalAreaUnit}.AsBaseValue"/>
+        /// <returns><see cref="ReciprocalAreaUnit.InverseSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

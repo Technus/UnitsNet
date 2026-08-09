@@ -76,7 +76,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="TemperatureDelta"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class TemperatureDeltaInfo: QuantityInfo<TemperatureDelta, TemperatureDeltaUnit>
+        public sealed class TemperatureDeltaInfo : QuantityInfo<TemperatureDelta, TemperatureDeltaUnit>
         {
             /// <inheritdoc />
             public TemperatureDeltaInfo(string name, TemperatureDeltaUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureDeltaUnit>> unitMappings, TemperatureDelta zero, BaseDimensions baseDimensions,
@@ -314,11 +314,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{TemperatureDelta,TemperatureDeltaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TemperatureDeltaUnit.Kelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TemperatureDelta AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{TemperatureDelta,TemperatureDeltaUnit}.AsBaseValue"/>
+        /// <returns><see cref="TemperatureDeltaUnit.Kelvin"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

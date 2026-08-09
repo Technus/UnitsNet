@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Radioactivity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RadioactivityInfo: QuantityInfo<Radioactivity, RadioactivityUnit>
+        public sealed class RadioactivityInfo : QuantityInfo<Radioactivity, RadioactivityUnit>
         {
             /// <inheritdoc />
             public RadioactivityInfo(string name, RadioactivityUnit baseUnit, IEnumerable<IUnitDefinition<RadioactivityUnit>> unitMappings, Radioactivity zero, BaseDimensions baseDimensions,
@@ -361,11 +361,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Radioactivity,RadioactivityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RadioactivityUnit.Becquerel"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Radioactivity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Radioactivity,RadioactivityUnit}.AsBaseValue"/>
+        /// <returns><see cref="RadioactivityUnit.Becquerel"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

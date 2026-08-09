@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Angle"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AngleInfo: QuantityInfo<Angle, AngleUnit>
+        public sealed class AngleInfo : QuantityInfo<Angle, AngleUnit>
         {
             /// <inheritdoc />
             public AngleInfo(string name, AngleUnit baseUnit, IEnumerable<IUnitDefinition<AngleUnit>> unitMappings, Angle zero, BaseDimensions baseDimensions,
@@ -308,11 +308,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Angle,AngleUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AngleUnit.Radian"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Angle AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Angle,AngleUnit}.AsBaseValue"/>
+        /// <returns><see cref="AngleUnit.Radian"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

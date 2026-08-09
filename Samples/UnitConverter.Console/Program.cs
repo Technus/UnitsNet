@@ -2,9 +2,11 @@ using UnitsNet;
 using UnitConverter.Console;
 
 using static System.Console;
-
-var w = Length.FromCentimeters(4).N;
-var h = Length.FromMeters(5).N;
+using UnitsNet.Units;
+var w = _Length.FromCentimeters(4).N;
+var h = _Length.FromMeters(5).N;
 var a = w * h;
-var area = a.D;
+var area = A(w, h);
 WriteLine(area);
+
+static Area A(Length l, Length w) => w * l;

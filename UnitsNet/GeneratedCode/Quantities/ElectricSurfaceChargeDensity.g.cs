@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricSurfaceChargeDensity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricSurfaceChargeDensityInfo: QuantityInfo<ElectricSurfaceChargeDensity, ElectricSurfaceChargeDensityUnit>
+        public sealed class ElectricSurfaceChargeDensityInfo : QuantityInfo<ElectricSurfaceChargeDensity, ElectricSurfaceChargeDensityUnit>
         {
             /// <inheritdoc />
             public ElectricSurfaceChargeDensityInfo(string name, ElectricSurfaceChargeDensityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricSurfaceChargeDensityUnit>> unitMappings, ElectricSurfaceChargeDensity zero, BaseDimensions baseDimensions,
@@ -287,11 +287,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricSurfaceChargeDensity,ElectricSurfaceChargeDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricSurfaceChargeDensityUnit.CoulombPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricSurfaceChargeDensity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricSurfaceChargeDensity,ElectricSurfaceChargeDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricSurfaceChargeDensityUnit.CoulombPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

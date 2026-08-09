@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricPotentialChangeRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricPotentialChangeRateInfo: QuantityInfo<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit>
+        public sealed class ElectricPotentialChangeRateInfo : QuantityInfo<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit>
         {
             /// <inheritdoc />
             public ElectricPotentialChangeRateInfo(string name, ElectricPotentialChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<ElectricPotentialChangeRateUnit>> unitMappings, ElectricPotentialChangeRate zero, BaseDimensions baseDimensions,
@@ -335,11 +335,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricPotentialChangeRate,ElectricPotentialChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricPotentialChangeRateUnit.VoltPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricPotentialChangeRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricPotentialChangeRate,ElectricPotentialChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricPotentialChangeRateUnit.VoltPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

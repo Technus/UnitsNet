@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MolarFlow"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MolarFlowInfo: QuantityInfo<MolarFlow, MolarFlowUnit>
+        public sealed class MolarFlowInfo : QuantityInfo<MolarFlow, MolarFlowUnit>
         {
             /// <inheritdoc />
             public MolarFlowInfo(string name, MolarFlowUnit baseUnit, IEnumerable<IUnitDefinition<MolarFlowUnit>> unitMappings, MolarFlow zero, BaseDimensions baseDimensions,
@@ -305,11 +305,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MolarFlow,MolarFlowUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarFlowUnit.MolePerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MolarFlow AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MolarFlow,MolarFlowUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarFlowUnit.MolePerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

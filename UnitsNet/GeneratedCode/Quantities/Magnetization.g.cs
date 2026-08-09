@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Magnetization"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MagnetizationInfo: QuantityInfo<Magnetization, MagnetizationUnit>
+        public sealed class MagnetizationInfo : QuantityInfo<Magnetization, MagnetizationUnit>
         {
             /// <inheritdoc />
             public MagnetizationInfo(string name, MagnetizationUnit baseUnit, IEnumerable<IUnitDefinition<MagnetizationUnit>> unitMappings, Magnetization zero, BaseDimensions baseDimensions,
@@ -280,11 +280,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Magnetization,MagnetizationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MagnetizationUnit.AmperePerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Magnetization AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Magnetization,MagnetizationUnit}.AsBaseValue"/>
+        /// <returns><see cref="MagnetizationUnit.AmperePerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

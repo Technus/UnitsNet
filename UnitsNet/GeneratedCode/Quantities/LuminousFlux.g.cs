@@ -70,7 +70,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="LuminousFlux"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class LuminousFluxInfo: QuantityInfo<LuminousFlux, LuminousFluxUnit>
+        public sealed class LuminousFluxInfo : QuantityInfo<LuminousFlux, LuminousFluxUnit>
         {
             /// <inheritdoc />
             public LuminousFluxInfo(string name, LuminousFluxUnit baseUnit, IEnumerable<IUnitDefinition<LuminousFluxUnit>> unitMappings, LuminousFlux zero, BaseDimensions baseDimensions,
@@ -284,11 +284,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{LuminousFlux,LuminousFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LuminousFluxUnit.Lumen"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public LuminousFlux AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{LuminousFlux,LuminousFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="LuminousFluxUnit.Lumen"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

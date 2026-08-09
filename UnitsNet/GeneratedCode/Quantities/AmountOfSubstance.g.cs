@@ -69,7 +69,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="AmountOfSubstance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AmountOfSubstanceInfo: QuantityInfo<AmountOfSubstance, AmountOfSubstanceUnit>
+        public sealed class AmountOfSubstanceInfo : QuantityInfo<AmountOfSubstance, AmountOfSubstanceUnit>
         {
             /// <inheritdoc />
             public AmountOfSubstanceInfo(string name, AmountOfSubstanceUnit baseUnit, IEnumerable<IUnitDefinition<AmountOfSubstanceUnit>> unitMappings, AmountOfSubstance zero, BaseDimensions baseDimensions,
@@ -331,11 +331,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{AmountOfSubstance,AmountOfSubstanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AmountOfSubstanceUnit.Mole"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AmountOfSubstance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{AmountOfSubstance,AmountOfSubstanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="AmountOfSubstanceUnit.Mole"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

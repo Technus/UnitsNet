@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Level"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class LevelInfo: QuantityInfo<Level, LevelUnit>
+        public sealed class LevelInfo : QuantityInfo<Level, LevelUnit>
         {
             /// <inheritdoc />
             public LevelInfo(string name, LevelUnit baseUnit, IEnumerable<IUnitDefinition<LevelUnit>> unitMappings, Level zero, BaseDimensions baseDimensions,
@@ -281,11 +281,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Level,LevelUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LevelUnit.Decibel"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Level AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Level,LevelUnit}.AsBaseValue"/>
+        /// <returns><see cref="LevelUnit.Decibel"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

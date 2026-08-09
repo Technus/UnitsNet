@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Jerk"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class JerkInfo: QuantityInfo<Jerk, JerkUnit>
+        public sealed class JerkInfo : QuantityInfo<Jerk, JerkUnit>
         {
             /// <inheritdoc />
             public JerkInfo(string name, JerkUnit baseUnit, IEnumerable<IUnitDefinition<JerkUnit>> unitMappings, Jerk zero, BaseDimensions baseDimensions,
@@ -308,11 +308,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Jerk,JerkUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="JerkUnit.MeterPerSecondCubed"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Jerk AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Jerk,JerkUnit}.AsBaseValue"/>
+        /// <returns><see cref="JerkUnit.MeterPerSecondCubed"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

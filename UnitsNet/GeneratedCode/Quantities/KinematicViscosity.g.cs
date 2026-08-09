@@ -70,7 +70,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="KinematicViscosity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class KinematicViscosityInfo: QuantityInfo<KinematicViscosity, KinematicViscosityUnit>
+        public sealed class KinematicViscosityInfo : QuantityInfo<KinematicViscosity, KinematicViscosityUnit>
         {
             /// <inheritdoc />
             public KinematicViscosityInfo(string name, KinematicViscosityUnit baseUnit, IEnumerable<IUnitDefinition<KinematicViscosityUnit>> unitMappings, KinematicViscosity zero, BaseDimensions baseDimensions,
@@ -308,11 +308,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{KinematicViscosity,KinematicViscosityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="KinematicViscosityUnit.SquareMeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public KinematicViscosity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{KinematicViscosity,KinematicViscosityUnit}.AsBaseValue"/>
+        /// <returns><see cref="KinematicViscosityUnit.SquareMeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

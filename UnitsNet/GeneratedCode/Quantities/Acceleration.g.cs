@@ -70,7 +70,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Acceleration"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AccelerationInfo: QuantityInfo<Acceleration, AccelerationUnit>
+        public sealed class AccelerationInfo : QuantityInfo<Acceleration, AccelerationUnit>
         {
             /// <inheritdoc />
             public AccelerationInfo(string name, AccelerationUnit baseUnit, IEnumerable<IUnitDefinition<AccelerationUnit>> unitMappings, Acceleration zero, BaseDimensions baseDimensions,
@@ -323,11 +323,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Acceleration,AccelerationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AccelerationUnit.MeterPerSecondSquared"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Acceleration AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Acceleration,AccelerationUnit}.AsBaseValue"/>
+        /// <returns><see cref="AccelerationUnit.MeterPerSecondSquared"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

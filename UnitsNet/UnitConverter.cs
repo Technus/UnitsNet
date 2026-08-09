@@ -96,9 +96,7 @@ public class UnitConverter
     public static UnitConverter Create(UnitParser unitParser, QuantityConverterBuildOptions options)
     {
         if (options is { DefaultCachingMode: ConversionCachingMode.None, CustomQuantityOptions.Count: 0, QuantityConversionOptions: null, Freeze: true })
-        {
             return new NoCachingConverter(unitParser); // this is just a sealed version of the default converter
-        }
 
         QuantityInfoLookup quantityLookup = unitParser.Quantities;
         IEnumerable<KeyValuePair<UnitConversionKey, ConvertValueDelegate>> unitConversionFunctions =
@@ -119,9 +117,7 @@ public class UnitConverter
         }
         
         if (options.Freeze)
-        {
             return new FrozenQuantityConverter(unitParser, quantityConversions, unitConversionFunctions, quantityConversionFunctions);
-        }
 
         return new DynamicQuantityConverter(unitParser, quantityConversions, unitConversionFunctions, quantityConversionFunctions, options.ReduceConstants);
     }
@@ -313,9 +309,7 @@ public class UnitConverter
         }
         
         if (TryGetUnitInfo(fromUnitKey, out UnitInfo? fromUnitInfo) && TryGetUnitInfo(toUnitKey, out UnitInfo? toUnitInfo))
-        {
             return TryConvertValueInternal(value, fromUnitInfo, toUnitInfo, out convertedValue);
-        }
 
         convertedValue = default;
         return false;
@@ -341,9 +335,7 @@ public class UnitConverter
     protected virtual bool TryConvertValueInternal(QuantityValue value, UnitInfo fromUnitInfo, UnitInfo toUnitInfo, out QuantityValue convertedValue)
     {
         if (fromUnitInfo.QuantityInfo != toUnitInfo.QuantityInfo)
-        {
             return TryConvertValueFromOneQuantityToAnother(value, fromUnitInfo, toUnitInfo, out convertedValue);
-        }
 
         convertedValue = toUnitInfo.GetValueFrom(value, fromUnitInfo);
         return true;
@@ -439,9 +431,7 @@ public class UnitConverter
         foreach (UnitInfo sourceUnit in sourceQuantity.UnitInfos)
         {
             if (sourceUnit.BaseUnits == BaseUnits.Undefined || sourceUnit.BaseUnits == fromUnit.BaseUnits)
-            {
                 continue;
-            }
 
             if (targetQuantity.UnitInfos.TryGetUnitWithBase(sourceUnit.BaseUnits, out UnitInfo? matchingUnit))
             {
@@ -475,9 +465,7 @@ public class UnitConverter
         where TTargetUnit : struct, Enum
     {
         if (TryGetUnitInfo(UnitKey.ForUnit(fromUnit), out UnitInfo? fromUnitInfo) && ConversionDefined(fromUnitInfo.QuantityInfo, targetQuantityInfo))
-        {
             return targetQuantityInfo.TryConvertFrom(value, fromUnitInfo, out convertedQuantity);
-        }
 
         convertedQuantity = default;
         return false;
@@ -488,9 +476,7 @@ public class UnitConverter
         [NotNullWhen(true)] out IQuantity? convertedQuantity)
     {
         if (TryGetUnitInfo(fromUnitKey, out UnitInfo? fromUnitInfo) && ConversionDefined(fromUnitInfo.QuantityInfo, targetQuantityInfo))
-        {
             return targetQuantityInfo.TryConvertFrom(value, fromUnitInfo, out convertedQuantity);
-        }
 
         convertedQuantity = null;
         return false;
@@ -610,12 +596,13 @@ public class UnitConverter
     public virtual QuantityValue ConvertValue<TUnit>(QuantityValue value, TUnit fromUnit, TUnit toUnit)
         where TUnit : struct, Enum
     {
+        if (EqualityComparer<TUnit>.Default.Equals(fromUnit, toUnit))
+            return value;
+
         var fromUnitKey = UnitKey.ForUnit(fromUnit);
         var toUnitKey = UnitKey.ForUnit(toUnit);
         if (fromUnitKey.UnitEnumValue == toUnitKey.UnitEnumValue)
-        {
             return value;
-        }
         
         UnitInfo fromUnitInfo = GetUnitInfo(fromUnitKey);
         UnitInfo toUnitInfo = GetUnitInfo(toUnitKey);
@@ -641,9 +628,7 @@ public class UnitConverter
     public virtual QuantityValue ConvertValue(QuantityValue value, UnitKey fromUnitKey, UnitKey toUnitKey)
     {
         if (fromUnitKey == toUnitKey)
-        {
             return value;
-        }
         
         UnitInfo fromUnitInfo = GetUnitInfo(fromUnitKey);
         UnitInfo toUnitInfo = GetUnitInfo(toUnitKey);
@@ -690,9 +675,7 @@ public class UnitConverter
         QuantityInfo sourceQuantity = fromUnitInfo.QuantityInfo;
         QuantityInfo targetQuantity = toUnitInfo.QuantityInfo;
         if (!ConversionDefined(sourceQuantity, targetQuantity))
-        {
             throw InvalidConversionException.CreateImplicitConversionException(sourceQuantity, targetQuantity);
-        }
         
         ConvertValueDelegate conversionExpression;
         if (sourceQuantity.BaseDimensions.IsInverseOf(targetQuantity.BaseDimensions))
@@ -702,9 +685,7 @@ public class UnitConverter
         else if (sourceQuantity.BaseDimensions == targetQuantity.BaseDimensions)
         {
             if (sourceQuantity.BaseDimensions.IsDimensionless())
-            {
                 return toUnitInfo.ConvertValueFromBaseUnit(fromUnitInfo.ConvertValueToBaseUnit(value));
-            }
 
             conversionExpression = sourceValue => sourceValue;
         }
@@ -716,9 +697,7 @@ public class UnitConverter
         if (fromUnitInfo.BaseUnits != BaseUnits.Undefined)
         {
             if (toUnitInfo.BaseUnits == fromUnitInfo.BaseUnits)
-            {
                 return conversionExpression(value);
-            }
 
             if (targetQuantity.UnitInfos.TryGetUnitWithBase(fromUnitInfo.BaseUnits, out UnitInfo? matchingUnit))
             {
@@ -729,25 +708,19 @@ public class UnitConverter
             if (fromUnitInfo.BaseUnits != fromBaseUnit.BaseUnits && fromBaseUnit.BaseUnits != BaseUnits.Undefined)
             {
                 if (toUnitInfo.QuantityInfo.BaseUnitInfo.BaseUnits == fromBaseUnit.BaseUnits)
-                {
                     return toUnitInfo.ConvertValueFromBaseUnit(conversionExpression(fromUnitInfo.ConversionToBase.Evaluate(value)));
-                }
             }
         }
         else if (toUnitInfo.BaseUnits != BaseUnits.Undefined)
         {
             if (sourceQuantity.UnitInfos.TryGetUnitWithBase(toUnitInfo.BaseUnits, out UnitInfo? matchingUnit))
-            {
                 return conversionExpression(ConvertValueInternal(value, fromUnitInfo, matchingUnit));
-            }
 
             UnitInfo toBaseUnit = targetQuantity.BaseUnitInfo;
             if (toUnitInfo.BaseUnits != toBaseUnit.BaseUnits && toBaseUnit.BaseUnits != BaseUnits.Undefined)
             {
                 if (sourceQuantity.BaseUnitInfo.BaseUnits == toBaseUnit.BaseUnits)
-                {
                     return toUnitInfo.ConversionFromBase.Evaluate(conversionExpression(fromUnitInfo.ConvertValueToBaseUnit(value)));
-                }
             }
         }
 
@@ -757,14 +730,10 @@ public class UnitConverter
         {
             UnitInfo sourceUnit = sourceQuantityUnits[i];
             if (sourceUnit.BaseUnits == BaseUnits.Undefined || sourceUnit.BaseUnits == fromUnitInfo.BaseUnits)
-            {
                 continue;
-            }
 
             if (targetQuantity.UnitInfos.TryGetUnitWithBase(sourceUnit.BaseUnits, out UnitInfo? matchingUnit))
-            {
                 return ConvertValueInternal(conversionExpression(ConvertValueInternal(value, fromUnitInfo, sourceUnit)), matchingUnit, toUnitInfo);
-            }
         }
         
         throw InvalidConversionException.CreateIncompatibleUnitsException(fromUnitInfo, targetQuantity);
@@ -792,9 +761,7 @@ public class UnitConverter
         UnitInfo fromUnitInfo = GetUnitInfo(UnitKey.ForUnit(fromUnit));
         QuantityInfo sourceQuantityInfo = fromUnitInfo.QuantityInfo;
         if (!ConversionDefined(sourceQuantityInfo, targetQuantityInfo))
-        {
             throw InvalidConversionException.CreateImplicitConversionException(sourceQuantityInfo, targetQuantityInfo);
-        }
         
         return targetQuantityInfo.ConvertFrom(value, fromUnitInfo);
     }
@@ -805,9 +772,7 @@ public class UnitConverter
         UnitInfo fromUnitInfo = GetUnitInfo(fromUnitKey);
         QuantityInfo sourceQuantityInfo = fromUnitInfo.QuantityInfo;
         if (!ConversionDefined(sourceQuantityInfo, targetQuantityInfo))
-        {
             throw InvalidConversionException.CreateImplicitConversionException(sourceQuantityInfo, targetQuantityInfo);
-        }
         
         return targetQuantityInfo.ConvertFrom(value, fromUnitInfo);
     }
@@ -834,9 +799,7 @@ public class UnitConverter
     public virtual ConvertValueDelegate GetConversionFunction(UnitKey fromUnitKey, UnitKey toUnitKey)
     {
         if (fromUnitKey == toUnitKey)
-        {
             return value => value;
-        }
 
         UnitInfo fromUnitInfo = GetUnitInfo(fromUnitKey);
         UnitInfo toUnitInfo = GetUnitInfo(toUnitKey);
@@ -863,9 +826,7 @@ public class UnitConverter
         QuantityInfo sourceQuantity = fromUnitInfo.QuantityInfo;
         QuantityInfo targetQuantity = toUnitInfo.QuantityInfo;
         if (!ConversionDefined(sourceQuantity, targetQuantity))
-        {
             throw InvalidConversionException.CreateImplicitConversionException(sourceQuantity, targetQuantity);
-        }
 
         return fromUnitInfo.GetQuantityConversionExpressionTo(toUnitInfo);
     }
@@ -984,9 +945,7 @@ public class UnitConverter
     {
         if (Quantities.TryGetUnitByName(quantityName, fromUnitName, out UnitInfo? fromUnitInfo) &&
             Quantities.TryGetUnitByName(quantityName, toUnitName, out UnitInfo? toUnitInfo))
-        {
             return TryConvertValueInternal(inputValue, fromUnitInfo, toUnitInfo, out result);
-        }
 
         result = default;
         return false;

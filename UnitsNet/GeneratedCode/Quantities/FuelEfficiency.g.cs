@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="FuelEfficiency"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class FuelEfficiencyInfo: QuantityInfo<FuelEfficiency, FuelEfficiencyUnit>
+        public sealed class FuelEfficiencyInfo : QuantityInfo<FuelEfficiency, FuelEfficiencyUnit>
         {
             /// <inheritdoc />
             public FuelEfficiencyInfo(string name, FuelEfficiencyUnit baseUnit, IEnumerable<IUnitDefinition<FuelEfficiencyUnit>> unitMappings, FuelEfficiency zero, BaseDimensions baseDimensions,
@@ -290,11 +290,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{FuelEfficiency,FuelEfficiencyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="FuelEfficiencyUnit.KilometerPerLiter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public FuelEfficiency AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{FuelEfficiency,FuelEfficiencyUnit}.AsBaseValue"/>
+        /// <returns><see cref="FuelEfficiencyUnit.KilometerPerLiter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

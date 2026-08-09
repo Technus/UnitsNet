@@ -82,7 +82,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Power"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class PowerInfo: QuantityInfo<Power, PowerUnit>
+        public sealed class PowerInfo : QuantityInfo<Power, PowerUnit>
         {
             /// <inheritdoc />
             public PowerInfo(string name, PowerUnit baseUnit, IEnumerable<IUnitDefinition<PowerUnit>> unitMappings, Power zero, BaseDimensions baseDimensions,
@@ -374,11 +374,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Power,PowerUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PowerUnit.Watt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Power AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Power,PowerUnit}.AsBaseValue"/>
+        /// <returns><see cref="PowerUnit.Watt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

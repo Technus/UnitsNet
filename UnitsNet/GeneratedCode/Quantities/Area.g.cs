@@ -85,7 +85,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Area"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AreaInfo: QuantityInfo<Area, AreaUnit>
+        public sealed class AreaInfo : QuantityInfo<Area, AreaUnit>
         {
             /// <inheritdoc />
             public AreaInfo(string name, AreaUnit baseUnit, IEnumerable<IUnitDefinition<AreaUnit>> unitMappings, Area zero, BaseDimensions baseDimensions,
@@ -338,11 +338,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Area,AreaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaUnit.SquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Area AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Area,AreaUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaUnit.SquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

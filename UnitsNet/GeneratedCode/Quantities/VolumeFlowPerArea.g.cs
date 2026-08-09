@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="VolumeFlowPerArea"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class VolumeFlowPerAreaInfo: QuantityInfo<VolumeFlowPerArea, VolumeFlowPerAreaUnit>
+        public sealed class VolumeFlowPerAreaInfo : QuantityInfo<VolumeFlowPerArea, VolumeFlowPerAreaUnit>
         {
             /// <inheritdoc />
             public VolumeFlowPerAreaInfo(string name, VolumeFlowPerAreaUnit baseUnit, IEnumerable<IUnitDefinition<VolumeFlowPerAreaUnit>> unitMappings, VolumeFlowPerArea zero, BaseDimensions baseDimensions,
@@ -281,11 +281,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{VolumeFlowPerArea,VolumeFlowPerAreaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VolumeFlowPerArea AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{VolumeFlowPerArea,VolumeFlowPerAreaUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

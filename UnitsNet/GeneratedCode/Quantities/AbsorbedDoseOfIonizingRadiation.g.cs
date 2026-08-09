@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="AbsorbedDoseOfIonizingRadiation"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AbsorbedDoseOfIonizingRadiationInfo: QuantityInfo<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit>
+        public sealed class AbsorbedDoseOfIonizingRadiationInfo : QuantityInfo<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit>
         {
             /// <inheritdoc />
             public AbsorbedDoseOfIonizingRadiationInfo(string name, AbsorbedDoseOfIonizingRadiationUnit baseUnit, IEnumerable<IUnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>> unitMappings, AbsorbedDoseOfIonizingRadiation zero, BaseDimensions baseDimensions,
@@ -329,11 +329,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{AbsorbedDoseOfIonizingRadiation,AbsorbedDoseOfIonizingRadiationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AbsorbedDoseOfIonizingRadiationUnit.Gray"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AbsorbedDoseOfIonizingRadiation AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{AbsorbedDoseOfIonizingRadiation,AbsorbedDoseOfIonizingRadiationUnit}.AsBaseValue"/>
+        /// <returns><see cref="AbsorbedDoseOfIonizingRadiationUnit.Gray"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

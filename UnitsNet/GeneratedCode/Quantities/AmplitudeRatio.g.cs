@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="AmplitudeRatio"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class AmplitudeRatioInfo: QuantityInfo<AmplitudeRatio, AmplitudeRatioUnit>
+        public sealed class AmplitudeRatioInfo : QuantityInfo<AmplitudeRatio, AmplitudeRatioUnit>
         {
             /// <inheritdoc />
             public AmplitudeRatioInfo(string name, AmplitudeRatioUnit baseUnit, IEnumerable<IUnitDefinition<AmplitudeRatioUnit>> unitMappings, AmplitudeRatio zero, BaseDimensions baseDimensions,
@@ -290,11 +290,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{AmplitudeRatio,AmplitudeRatioUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AmplitudeRatioUnit.DecibelVolt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AmplitudeRatio AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{AmplitudeRatio,AmplitudeRatioUnit}.AsBaseValue"/>
+        /// <returns><see cref="AmplitudeRatioUnit.DecibelVolt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

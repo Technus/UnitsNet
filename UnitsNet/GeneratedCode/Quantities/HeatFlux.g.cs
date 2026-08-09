@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="HeatFlux"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class HeatFluxInfo: QuantityInfo<HeatFlux, HeatFluxUnit>
+        public sealed class HeatFluxInfo : QuantityInfo<HeatFlux, HeatFluxUnit>
         {
             /// <inheritdoc />
             public HeatFluxInfo(string name, HeatFluxUnit baseUnit, IEnumerable<IUnitDefinition<HeatFluxUnit>> unitMappings, HeatFlux zero, BaseDimensions baseDimensions,
@@ -353,11 +353,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{HeatFlux,HeatFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="HeatFluxUnit.WattPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public HeatFlux AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{HeatFlux,HeatFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="HeatFluxUnit.WattPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

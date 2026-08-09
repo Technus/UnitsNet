@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Molality"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MolalityInfo: QuantityInfo<Molality, MolalityUnit>
+        public sealed class MolalityInfo : QuantityInfo<Molality, MolalityUnit>
         {
             /// <inheritdoc />
             public MolalityInfo(string name, MolalityUnit baseUnit, IEnumerable<IUnitDefinition<MolalityUnit>> unitMappings, Molality zero, BaseDimensions baseDimensions,
@@ -286,11 +286,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Molality,MolalityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolalityUnit.MolePerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Molality AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Molality,MolalityUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolalityUnit.MolePerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -76,7 +76,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricPotential"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricPotentialInfo: QuantityInfo<ElectricPotential, ElectricPotentialUnit>
+        public sealed class ElectricPotentialInfo : QuantityInfo<ElectricPotential, ElectricPotentialUnit>
         {
             /// <inheritdoc />
             public ElectricPotentialInfo(string name, ElectricPotentialUnit baseUnit, IEnumerable<IUnitDefinition<ElectricPotentialUnit>> unitMappings, ElectricPotential zero, BaseDimensions baseDimensions,
@@ -305,11 +305,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricPotential,ElectricPotentialUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricPotentialUnit.Volt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricPotential AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricPotential,ElectricPotentialUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricPotentialUnit.Volt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

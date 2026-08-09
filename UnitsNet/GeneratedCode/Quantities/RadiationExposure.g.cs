@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RadiationExposure"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RadiationExposureInfo: QuantityInfo<RadiationExposure, RadiationExposureUnit>
+        public sealed class RadiationExposureInfo : QuantityInfo<RadiationExposure, RadiationExposureUnit>
         {
             /// <inheritdoc />
             public RadiationExposureInfo(string name, RadiationExposureUnit baseUnit, IEnumerable<IUnitDefinition<RadiationExposureUnit>> unitMappings, RadiationExposure zero, BaseDimensions baseDimensions,
@@ -298,11 +298,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RadiationExposure,RadiationExposureUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RadiationExposureUnit.CoulombPerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RadiationExposure AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RadiationExposure,RadiationExposureUnit}.AsBaseValue"/>
+        /// <returns><see cref="RadiationExposureUnit.CoulombPerKilogram"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

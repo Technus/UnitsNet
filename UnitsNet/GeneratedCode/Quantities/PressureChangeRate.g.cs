@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="PressureChangeRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class PressureChangeRateInfo: QuantityInfo<PressureChangeRate, PressureChangeRateUnit>
+        public sealed class PressureChangeRateInfo : QuantityInfo<PressureChangeRate, PressureChangeRateUnit>
         {
             /// <inheritdoc />
             public PressureChangeRateInfo(string name, PressureChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<PressureChangeRateUnit>> unitMappings, PressureChangeRate zero, BaseDimensions baseDimensions,
@@ -329,11 +329,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{PressureChangeRate,PressureChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PressureChangeRateUnit.PascalPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PressureChangeRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{PressureChangeRate,PressureChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="PressureChangeRateUnit.PascalPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

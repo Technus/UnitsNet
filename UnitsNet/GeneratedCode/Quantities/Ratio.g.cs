@@ -67,7 +67,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Ratio"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RatioInfo: QuantityInfo<Ratio, RatioUnit>
+        public sealed class RatioInfo : QuantityInfo<Ratio, RatioUnit>
         {
             /// <inheritdoc />
             public RatioInfo(string name, RatioUnit baseUnit, IEnumerable<IUnitDefinition<RatioUnit>> unitMappings, Ratio zero, BaseDimensions baseDimensions,
@@ -282,11 +282,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Ratio,RatioUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RatioUnit.DecimalFraction"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Ratio AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Ratio,RatioUnit}.AsBaseValue"/>
+        /// <returns><see cref="RatioUnit.DecimalFraction"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

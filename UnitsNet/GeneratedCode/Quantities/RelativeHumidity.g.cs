@@ -63,7 +63,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="RelativeHumidity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class RelativeHumidityInfo: QuantityInfo<RelativeHumidity, RelativeHumidityUnit>
+        public sealed class RelativeHumidityInfo : QuantityInfo<RelativeHumidity, RelativeHumidityUnit>
         {
             /// <inheritdoc />
             public RelativeHumidityInfo(string name, RelativeHumidityUnit baseUnit, IEnumerable<IUnitDefinition<RelativeHumidityUnit>> unitMappings, RelativeHumidity zero, BaseDimensions baseDimensions,
@@ -263,11 +263,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{RelativeHumidity,RelativeHumidityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RelativeHumidityUnit.Percent"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RelativeHumidity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{RelativeHumidity,RelativeHumidityUnit}.AsBaseValue"/>
+        /// <returns><see cref="RelativeHumidityUnit.Percent"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

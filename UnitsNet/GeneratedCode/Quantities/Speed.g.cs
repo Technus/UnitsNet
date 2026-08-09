@@ -71,7 +71,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Speed"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class SpeedInfo: QuantityInfo<Speed, SpeedUnit>
+        public sealed class SpeedInfo : QuantityInfo<Speed, SpeedUnit>
         {
             /// <inheritdoc />
             public SpeedInfo(string name, SpeedUnit baseUnit, IEnumerable<IUnitDefinition<SpeedUnit>> unitMappings, Speed zero, BaseDimensions baseDimensions,
@@ -381,11 +381,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Speed,SpeedUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpeedUnit.MeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Speed AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Speed,SpeedUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpeedUnit.MeterPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

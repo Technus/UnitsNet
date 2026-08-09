@@ -65,7 +65,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ElectricApparentEnergy"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ElectricApparentEnergyInfo: QuantityInfo<ElectricApparentEnergy, ElectricApparentEnergyUnit>
+        public sealed class ElectricApparentEnergyInfo : QuantityInfo<ElectricApparentEnergy, ElectricApparentEnergyUnit>
         {
             /// <inheritdoc />
             public ElectricApparentEnergyInfo(string name, ElectricApparentEnergyUnit baseUnit, IEnumerable<IUnitDefinition<ElectricApparentEnergyUnit>> unitMappings, ElectricApparentEnergy zero, BaseDimensions baseDimensions,
@@ -285,11 +285,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ElectricApparentEnergy,ElectricApparentEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricApparentEnergyUnit.VoltampereHour"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ElectricApparentEnergy AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ElectricApparentEnergy,ElectricApparentEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricApparentEnergyUnit.VoltampereHour"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

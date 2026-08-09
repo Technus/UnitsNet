@@ -65,7 +65,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Impulse"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ImpulseInfo: QuantityInfo<Impulse, ImpulseUnit>
+        public sealed class ImpulseInfo : QuantityInfo<Impulse, ImpulseUnit>
         {
             /// <inheritdoc />
             public ImpulseInfo(string name, ImpulseUnit baseUnit, IEnumerable<IUnitDefinition<ImpulseUnit>> unitMappings, Impulse zero, BaseDimensions baseDimensions,
@@ -315,11 +315,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Impulse,ImpulseUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ImpulseUnit.NewtonSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Impulse AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Impulse,ImpulseUnit}.AsBaseValue"/>
+        /// <returns><see cref="ImpulseUnit.NewtonSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

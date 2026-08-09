@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="TemperatureGradient"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class TemperatureGradientInfo: QuantityInfo<TemperatureGradient, TemperatureGradientUnit>
+        public sealed class TemperatureGradientInfo : QuantityInfo<TemperatureGradient, TemperatureGradientUnit>
         {
             /// <inheritdoc />
             public TemperatureGradientInfo(string name, TemperatureGradientUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureGradientUnit>> unitMappings, TemperatureGradient zero, BaseDimensions baseDimensions,
@@ -287,11 +287,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{TemperatureGradient,TemperatureGradientUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TemperatureGradientUnit.KelvinPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TemperatureGradient AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{TemperatureGradient,TemperatureGradientUnit}.AsBaseValue"/>
+        /// <returns><see cref="TemperatureGradientUnit.KelvinPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

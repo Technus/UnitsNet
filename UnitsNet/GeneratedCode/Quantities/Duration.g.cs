@@ -86,7 +86,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Duration"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class DurationInfo: QuantityInfo<Duration, DurationUnit>
+        public sealed class DurationInfo : QuantityInfo<Duration, DurationUnit>
         {
             /// <inheritdoc />
             public DurationInfo(string name, DurationUnit baseUnit, IEnumerable<IUnitDefinition<DurationUnit>> unitMappings, Duration zero, BaseDimensions baseDimensions,
@@ -336,11 +336,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Duration,DurationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="DurationUnit.Second"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Duration AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Duration,DurationUnit}.AsBaseValue"/>
+        /// <returns><see cref="DurationUnit.Second"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MolarEnergy"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MolarEnergyInfo: QuantityInfo<MolarEnergy, MolarEnergyUnit>
+        public sealed class MolarEnergyInfo : QuantityInfo<MolarEnergy, MolarEnergyUnit>
         {
             /// <inheritdoc />
             public MolarEnergyInfo(string name, MolarEnergyUnit baseUnit, IEnumerable<IUnitDefinition<MolarEnergyUnit>> unitMappings, MolarEnergy zero, BaseDimensions baseDimensions,
@@ -284,11 +284,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MolarEnergy,MolarEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarEnergyUnit.JoulePerMole"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MolarEnergy AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MolarEnergy,MolarEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarEnergyUnit.JoulePerMole"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

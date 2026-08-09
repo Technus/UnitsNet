@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Irradiance"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class IrradianceInfo: QuantityInfo<Irradiance, IrradianceUnit>
+        public sealed class IrradianceInfo : QuantityInfo<Irradiance, IrradianceUnit>
         {
             /// <inheritdoc />
             public IrradianceInfo(string name, IrradianceUnit baseUnit, IEnumerable<IUnitDefinition<IrradianceUnit>> unitMappings, Irradiance zero, BaseDimensions baseDimensions,
@@ -317,11 +317,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Irradiance,IrradianceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="IrradianceUnit.WattPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Irradiance AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Irradiance,IrradianceUnit}.AsBaseValue"/>
+        /// <returns><see cref="IrradianceUnit.WattPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

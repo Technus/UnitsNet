@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="VolumePerLength"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class VolumePerLengthInfo: QuantityInfo<VolumePerLength, VolumePerLengthUnit>
+        public sealed class VolumePerLengthInfo : QuantityInfo<VolumePerLength, VolumePerLengthUnit>
         {
             /// <inheritdoc />
             public VolumePerLengthInfo(string name, VolumePerLengthUnit baseUnit, IEnumerable<IUnitDefinition<VolumePerLengthUnit>> unitMappings, VolumePerLength zero, BaseDimensions baseDimensions,
@@ -302,11 +302,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{VolumePerLength,VolumePerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumePerLengthUnit.CubicMeterPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VolumePerLength AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{VolumePerLength,VolumePerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumePerLengthUnit.CubicMeterPerMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

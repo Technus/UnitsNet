@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MassFlux"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MassFluxInfo: QuantityInfo<MassFlux, MassFluxUnit>
+        public sealed class MassFluxInfo : QuantityInfo<MassFlux, MassFluxUnit>
         {
             /// <inheritdoc />
             public MassFluxInfo(string name, MassFluxUnit baseUnit, IEnumerable<IUnitDefinition<MassFluxUnit>> unitMappings, MassFlux zero, BaseDimensions baseDimensions,
@@ -313,11 +313,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MassFlux,MassFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassFluxUnit.KilogramPerSecondPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MassFlux AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MassFlux,MassFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassFluxUnit.KilogramPerSecondPerSquareMeter"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

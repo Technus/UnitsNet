@@ -68,7 +68,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="MagneticFlux"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class MagneticFluxInfo: QuantityInfo<MagneticFlux, MagneticFluxUnit>
+        public sealed class MagneticFluxInfo : QuantityInfo<MagneticFlux, MagneticFluxUnit>
         {
             /// <inheritdoc />
             public MagneticFluxInfo(string name, MagneticFluxUnit baseUnit, IEnumerable<IUnitDefinition<MagneticFluxUnit>> unitMappings, MagneticFlux zero, BaseDimensions baseDimensions,
@@ -282,11 +282,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{MagneticFlux,MagneticFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MagneticFluxUnit.Weber"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public MagneticFlux AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{MagneticFlux,MagneticFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="MagneticFluxUnit.Weber"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ThermalResistivity"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ThermalResistivityInfo: QuantityInfo<ThermalResistivity, ThermalResistivityUnit>
+        public sealed class ThermalResistivityInfo : QuantityInfo<ThermalResistivity, ThermalResistivityUnit>
         {
             /// <inheritdoc />
             public ThermalResistivityInfo(string name, ThermalResistivityUnit baseUnit, IEnumerable<IUnitDefinition<ThermalResistivityUnit>> unitMappings, ThermalResistivity zero, BaseDimensions baseDimensions,
@@ -286,11 +286,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ThermalResistivity,ThermalResistivityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalResistivityUnit.KelvinMeterPerWatt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ThermalResistivity AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ThermalResistivity,ThermalResistivityUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalResistivityUnit.KelvinMeterPerWatt"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

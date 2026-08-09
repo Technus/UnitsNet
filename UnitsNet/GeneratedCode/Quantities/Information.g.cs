@@ -66,7 +66,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="Information"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class InformationInfo: QuantityInfo<Information, InformationUnit>
+        public sealed class InformationInfo : QuantityInfo<Information, InformationUnit>
         {
             /// <inheritdoc />
             public InformationInfo(string name, InformationUnit baseUnit, IEnumerable<IUnitDefinition<InformationUnit>> unitMappings, Information zero, BaseDimensions baseDimensions,
@@ -380,11 +380,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{Information,InformationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="InformationUnit.Bit"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Information AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{Information,InformationUnit}.AsBaseValue"/>
+        /// <returns><see cref="InformationUnit.Bit"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);

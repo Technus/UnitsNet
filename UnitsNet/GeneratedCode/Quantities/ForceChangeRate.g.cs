@@ -64,7 +64,7 @@ namespace UnitsNet
         /// <summary>
         ///     Provides detailed information about the <see cref="ForceChangeRate"/> quantity, including its name, base unit, unit mappings, base dimensions, and conversion functions.
         /// </summary>
-        public sealed class ForceChangeRateInfo: QuantityInfo<ForceChangeRate, ForceChangeRateUnit>
+        public sealed class ForceChangeRateInfo : QuantityInfo<ForceChangeRate, ForceChangeRateUnit>
         {
             /// <inheritdoc />
             public ForceChangeRateInfo(string name, ForceChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<ForceChangeRateUnit>> unitMappings, ForceChangeRate zero, BaseDimensions baseDimensions,
@@ -320,11 +320,13 @@ namespace UnitsNet
         #region Conversion Properties
 
         /// <inheritdoc cref="IQuantity{ForceChangeRate,ForceChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ForceChangeRateUnit.NewtonPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ForceChangeRate AsBaseQuantity()
             => new(this.As(BaseUnit), BaseUnit);
 
         /// <inheritdoc cref="IQuantity{ForceChangeRate,ForceChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="ForceChangeRateUnit.NewtonPerSecond"/></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
