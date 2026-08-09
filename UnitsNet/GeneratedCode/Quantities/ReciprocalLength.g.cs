@@ -313,6 +313,16 @@ namespace UnitsNet
 
         #region Conversion Properties
 
+        /// <inheritdoc cref="IQuantity{ReciprocalLength,ReciprocalLengthUnit}.AsBaseQuantity"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReciprocalLength AsBaseQuantity()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ReciprocalLength,ReciprocalLengthUnit}.AsBaseValue"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsBaseValue()
+            => this.As(BaseUnit);
+
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ReciprocalLengthUnit.InverseCentimeter"/>
         /// </summary>

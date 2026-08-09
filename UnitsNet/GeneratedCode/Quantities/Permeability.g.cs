@@ -279,6 +279,16 @@ namespace UnitsNet
 
         #region Conversion Properties
 
+        /// <inheritdoc cref="IQuantity{Permeability,PermeabilityUnit}.AsBaseQuantity"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Permeability AsBaseQuantity()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Permeability,PermeabilityUnit}.AsBaseValue"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsBaseValue()
+            => this.As(BaseUnit);
+
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PermeabilityUnit.HenryPerMeter"/>
         /// </summary>

@@ -322,6 +322,16 @@ namespace UnitsNet
 
         #region Conversion Properties
 
+        /// <inheritdoc cref="IQuantity{Acceleration,AccelerationUnit}.AsBaseQuantity"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Acceleration AsBaseQuantity()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Acceleration,AccelerationUnit}.AsBaseValue"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsBaseValue()
+            => this.As(BaseUnit);
+
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.CentimeterPerSecondSquared"/>
         /// </summary>

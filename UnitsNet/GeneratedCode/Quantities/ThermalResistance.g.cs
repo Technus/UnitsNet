@@ -283,6 +283,16 @@ namespace UnitsNet
 
         #region Conversion Properties
 
+        /// <inheritdoc cref="IQuantity{ThermalResistance,ThermalResistanceUnit}.AsBaseQuantity"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ThermalResistance AsBaseQuantity()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalResistance,ThermalResistanceUnit}.AsBaseValue"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsBaseValue()
+            => this.As(BaseUnit);
+
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalResistanceUnit.DegreeCelsiusPerWatt"/>
         /// </summary>

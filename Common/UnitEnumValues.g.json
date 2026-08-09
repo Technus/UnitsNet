@@ -2057,15 +2057,6 @@
     "KelvinMeterPerWatt": 5,
     "SecondInchFahrenheitPerBtu": 7
   },
-  "ThermalTransmitance": {
-    "BtuPerHourSquareFeetDegreeFahrenheit": 1,
-    "KilocaloriePerSquareCentimeterHourDegreeCelsius": 4,
-    "KilowattPerSquareMeterKelvin": 10,
-    "WattPerSquareCentimeterKelvin": 7,
-    "WattPerSquareMeterDegreeCelsius": 3,
-    "WattPerSquareMeterKelvin": 6,
-    "WattPerSquareMillimeterKelvin": 8
-  },
   "ThermalTransmittance": {
     "BtuPerHourSquareFeetDegreeFahrenheit": 8,
     "KilocaloriePerSquareCentimeterHourDegreeCelsius": 7,

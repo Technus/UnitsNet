@@ -92,6 +92,16 @@ public class ClassOfLogarithmicQuantity(QuantityValue value, ClassOfLogarithmicQ
         return QuantityFormatter.Default.Format(this, format, formatProvider);
     }
 
+    public QuantityValue AsBaseValue()
+    {
+        return this.As(Info.BaseUnitInfo.Value);
+    }
+
+    public ClassOfLogarithmicQuantity AsBaseQuantity()
+    {
+        return new ClassOfLogarithmicQuantity(AsBaseValue(), Info.BaseUnitInfo.Value);
+    }
+
     UnitKey IQuantity.UnitKey
     {
         get => UnitKey.ForUnit(Unit);

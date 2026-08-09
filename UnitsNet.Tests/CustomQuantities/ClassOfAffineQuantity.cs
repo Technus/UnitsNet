@@ -73,6 +73,16 @@ public class ClassOfAffineQuantity(QuantityValue value, ClassOfAffineQuantityUni
         return QuantityFormatter.Default.Format(this, format, formatProvider);
     }
 
+    public QuantityValue AsBaseValue()
+    {
+        return this.As(Info.BaseUnitInfo.Value);
+    }
+
+    public ClassOfAffineQuantity AsBaseQuantity()
+    {
+        return new ClassOfAffineQuantity(AsBaseValue(), Info.BaseUnitInfo.Value);
+    }
+
     UnitKey IQuantity.UnitKey
     {
         get => UnitKey.ForUnit(Unit);

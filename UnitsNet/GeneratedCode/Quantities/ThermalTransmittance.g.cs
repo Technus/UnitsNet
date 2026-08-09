@@ -31,7 +31,7 @@ namespace UnitsNet
 {
     /// <inheritdoc />
     /// <summary>
-    ///     Thermal transmitance (U-value) is a measure of a material's conductance to the heat current.
+    ///     Thermal transmittance (U-value) is a measure of a material's conductance to the heat current.
     /// </summary>
     /// <remarks>
     ///     https://en.wikipedia.org/wiki/Thermal_transmittance
@@ -296,6 +296,16 @@ namespace UnitsNet
         #endregion
 
         #region Conversion Properties
+
+        /// <inheritdoc cref="IQuantity{ThermalTransmittance,ThermalTransmittanceUnit}.AsBaseQuantity"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ThermalTransmittance AsBaseQuantity()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalTransmittance,ThermalTransmittanceUnit}.AsBaseValue"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsBaseValue()
+            => this.As(BaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalTransmittanceUnit.BtuPerHourSquareFeetDegreeFahrenheit"/>

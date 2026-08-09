@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnitsNet.Units;
 
 namespace UnitsNet.Tests.CustomQuantities
@@ -19,6 +20,20 @@ namespace UnitsNet.Tests.CustomQuantities
         {
             return new HowMuch(value, unit);
         }
+
+        /// <summary>
+        /// Get the value as <see cref="QuantityValue"/> of the base unit
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsBaseValue()
+            => this.As(Info.BaseUnitInfo.Value);
+
+        /// <summary>
+        /// Get the quantity as quantity of the base unit
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public HowMuch AsBaseQuantity()
+            => new(AsBaseValue(), Info.BaseUnitInfo.Value);
 
         public HowMuchUnit Unit { get; }
 

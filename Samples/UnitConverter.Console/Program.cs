@@ -1,11 +1,10 @@
 using UnitsNet;
+using UnitConverter.Console;
+
 using static System.Console;
-using static UnitsNet.Units.LengthUnit;
 
-WriteLine(Length.FromMeters(1).ToUnit(Centimeter)); // 100 cm
-WriteLine(Length.Parse("100 cm").ToUnit(Meter)); // 1 m
-
-var area = Length.FromCentimeters(3) * Length.FromMeters(3);
-area = area.ToUnit(UnitsNet.Units.AreaUnit.SquareDecimeter);
-
-ReadLine();
+var w = Length.FromCentimeters(4).N;
+var h = Length.FromMeters(5).N;
+var a = w * h;
+var area = a.D;
+WriteLine(area);

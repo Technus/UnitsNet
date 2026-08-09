@@ -500,8 +500,18 @@ namespace UnitsNet
 
         private void GenerateConversionProperties()
         {
-            Writer.WL(@"
+            Writer.WL($@"
         #region Conversion Properties
+
+        /// <inheritdoc cref=""IQuantity{{{_quantity.Name},{_unitEnumName}}}.AsBaseQuantity""/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public {_quantity.Name} AsBaseQuantity()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <inheritdoc cref=""IQuantity{{{_quantity.Name},{_unitEnumName}}}.AsBaseValue""/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsBaseValue()
+            => this.As(BaseUnit);
 ");
             foreach (Unit unit in _quantity.Units)
             {
