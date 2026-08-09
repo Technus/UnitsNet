@@ -2,7 +2,7 @@
   <!-- NuGet properties -->
   <PropertyGroup>
     <PackageId>UnitsNet</PackageId>
-    <Version>6.0.0-pre021</Version>
+    <Version>6.0.0-pre022</Version>
     <Authors>Andreas Gullberg Larsen</Authors>
     <Title>Units.NET</Title>
     <Description>Add strongly typed quantities and units to your code and get merrily on with your life. No more magic constants found online or guessing the unit of variables.</Description>
