@@ -68,15 +68,15 @@ namespace UnitsNet
         public sealed class FrequencyInfo : QuantityInfo<Frequency, FrequencyUnit>
         {
             /// <inheritdoc />
-            public FrequencyInfo(string name, FrequencyUnit baseUnit, IEnumerable<IUnitDefinition<FrequencyUnit>> unitMappings, Frequency zero, BaseDimensions baseDimensions,
+            public FrequencyInfo(string name, FrequencyUnit baseUnit, FrequencyUnit siBaseUnit, IEnumerable<IUnitDefinition<FrequencyUnit>> unitMappings, Frequency zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Frequency, FrequencyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public FrequencyInfo(string name, FrequencyUnit baseUnit, IEnumerable<IUnitDefinition<FrequencyUnit>> unitMappings, Frequency zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Frequency.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Frequency", typeof(Frequency).Assembly))
+            public FrequencyInfo(string name, FrequencyUnit baseUnit, FrequencyUnit siBaseUnit, IEnumerable<IUnitDefinition<FrequencyUnit>> unitMappings, Frequency zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Frequency.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Frequency", typeof(Frequency).Assembly))
             {
             }
 
@@ -85,7 +85,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="FrequencyInfo"/> class with the default settings.</returns>
             public static FrequencyInfo CreateDefault()
-                => new(nameof(Frequency), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Frequency), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="FrequencyInfo"/> class with the default settings for the Frequency quantity and a callback for customizing the default unit mappings.
@@ -97,7 +97,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="FrequencyInfo"/> class with the default settings.
             /// </returns>
             public static FrequencyInfo CreateDefault(Func<IEnumerable<UnitDefinition<FrequencyUnit>>, IEnumerable<IUnitDefinition<FrequencyUnit>>> customizeUnits)
-                => new(nameof(Frequency), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Frequency), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Frequency"/> is T^-1.
@@ -112,6 +112,15 @@ namespace UnitsNet
             ///     The default base unit of Frequency is Hertz. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static FrequencyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = FrequencyUnit.Hertz;
+
+            /// <summary>
+            ///     The default base unit of Frequency is Hertz.
+            /// </summary>
+            public static FrequencyUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -224,6 +233,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Frequency, which is Hertz.
+        /// </summary>
+        public static FrequencyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => FrequencyUnit.Hertz;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Frequency quantity.
         /// </summary>
         public static IReadOnlyCollection<FrequencyUnit> Units
@@ -319,9 +337,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Frequency,FrequencyUnit}.AsBaseValue"/>
         /// <returns><see cref="FrequencyUnit.Hertz"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Frequency,FrequencyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="FrequencyUnit.Hertz"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Frequency AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Frequency,FrequencyUnit}.AsBaseValue"/>
+        /// <returns><see cref="FrequencyUnit.Hertz"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FrequencyUnit.BeatPerMinute"/>
@@ -461,8 +492,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Hertz.
         /// </summary>
-        public Frequency HertzToFrequency()
+        public Frequency HertzToBaseFrequency()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Hertz.
+        /// </summary>
+        public Frequency HertzToSiBaseFrequency()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Frequency"/> from <see cref="FrequencyUnit.BeatPerMinute"/>.

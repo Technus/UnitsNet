@@ -1,6 +1,7 @@
 {
   "Name": "ElectricReactance",
   "BaseUnit": "Ohm",
+  "SiBaseUnit": "Ohm",
   "XmlDocSummary": "In electrical circuits, reactance is the opposition presented to alternating current by inductance and capacitance. Along with resistance, it is one of two elements of impedance.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Electrical_reactance",
   "BaseDimensions": {

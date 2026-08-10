@@ -68,15 +68,15 @@ namespace UnitsNet
         public sealed class ImpulseInfo : QuantityInfo<Impulse, ImpulseUnit>
         {
             /// <inheritdoc />
-            public ImpulseInfo(string name, ImpulseUnit baseUnit, IEnumerable<IUnitDefinition<ImpulseUnit>> unitMappings, Impulse zero, BaseDimensions baseDimensions,
+            public ImpulseInfo(string name, ImpulseUnit baseUnit, ImpulseUnit siBaseUnit, IEnumerable<IUnitDefinition<ImpulseUnit>> unitMappings, Impulse zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Impulse, ImpulseUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ImpulseInfo(string name, ImpulseUnit baseUnit, IEnumerable<IUnitDefinition<ImpulseUnit>> unitMappings, Impulse zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Impulse.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Impulse", typeof(Impulse).Assembly))
+            public ImpulseInfo(string name, ImpulseUnit baseUnit, ImpulseUnit siBaseUnit, IEnumerable<IUnitDefinition<ImpulseUnit>> unitMappings, Impulse zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Impulse.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Impulse", typeof(Impulse).Assembly))
             {
             }
 
@@ -85,7 +85,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ImpulseInfo"/> class with the default settings.</returns>
             public static ImpulseInfo CreateDefault()
-                => new(nameof(Impulse), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Impulse), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ImpulseInfo"/> class with the default settings for the Impulse quantity and a callback for customizing the default unit mappings.
@@ -97,7 +97,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ImpulseInfo"/> class with the default settings.
             /// </returns>
             public static ImpulseInfo CreateDefault(Func<IEnumerable<UnitDefinition<ImpulseUnit>>, IEnumerable<IUnitDefinition<ImpulseUnit>>> customizeUnits)
-                => new(nameof(Impulse), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Impulse), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Impulse"/> is T^-1LM.
@@ -112,6 +112,15 @@ namespace UnitsNet
             ///     The default base unit of Impulse is NewtonSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ImpulseUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ImpulseUnit.NewtonSecond;
+
+            /// <summary>
+            ///     The default base unit of Impulse is NewtonSecond.
+            /// </summary>
+            public static ImpulseUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -227,6 +236,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Impulse, which is NewtonSecond.
+        /// </summary>
+        public static ImpulseUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ImpulseUnit.NewtonSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Impulse quantity.
         /// </summary>
         public static IReadOnlyCollection<ImpulseUnit> Units
@@ -322,9 +340,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Impulse,ImpulseUnit}.AsBaseValue"/>
         /// <returns><see cref="ImpulseUnit.NewtonSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Impulse,ImpulseUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ImpulseUnit.NewtonSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Impulse AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Impulse,ImpulseUnit}.AsBaseValue"/>
+        /// <returns><see cref="ImpulseUnit.NewtonSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ImpulseUnit.CentinewtonSecond"/>
@@ -473,8 +504,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecond.
         /// </summary>
-        public Impulse NewtonSecondsToImpulse()
+        public Impulse NewtonSecondsToBaseImpulse()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonSecond.
+        /// </summary>
+        public Impulse NewtonSecondsToSiBaseImpulse()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Impulse"/> from <see cref="ImpulseUnit.CentinewtonSecond"/>.

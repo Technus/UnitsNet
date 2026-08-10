@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class EntropyInfo : QuantityInfo<Entropy, EntropyUnit>
         {
             /// <inheritdoc />
-            public EntropyInfo(string name, EntropyUnit baseUnit, IEnumerable<IUnitDefinition<EntropyUnit>> unitMappings, Entropy zero, BaseDimensions baseDimensions,
+            public EntropyInfo(string name, EntropyUnit baseUnit, EntropyUnit siBaseUnit, IEnumerable<IUnitDefinition<EntropyUnit>> unitMappings, Entropy zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Entropy, EntropyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public EntropyInfo(string name, EntropyUnit baseUnit, IEnumerable<IUnitDefinition<EntropyUnit>> unitMappings, Entropy zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Entropy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Entropy", typeof(Entropy).Assembly))
+            public EntropyInfo(string name, EntropyUnit baseUnit, EntropyUnit siBaseUnit, IEnumerable<IUnitDefinition<EntropyUnit>> unitMappings, Entropy zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Entropy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Entropy", typeof(Entropy).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="EntropyInfo"/> class with the default settings.</returns>
             public static EntropyInfo CreateDefault()
-                => new(nameof(Entropy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Entropy), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="EntropyInfo"/> class with the default settings for the Entropy quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="EntropyInfo"/> class with the default settings.
             /// </returns>
             public static EntropyInfo CreateDefault(Func<IEnumerable<UnitDefinition<EntropyUnit>>, IEnumerable<IUnitDefinition<EntropyUnit>>> customizeUnits)
-                => new(nameof(Entropy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Entropy), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Entropy"/> is T^-2L^2MΘ^-1.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Entropy is JoulePerKelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static EntropyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = EntropyUnit.JoulePerKelvin;
+
+            /// <summary>
+            ///     The default base unit of Entropy is JoulePerKelvin.
+            /// </summary>
+            public static EntropyUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -207,6 +216,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Entropy, which is JoulePerKelvin.
+        /// </summary>
+        public static EntropyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => EntropyUnit.JoulePerKelvin;
         }
 
         /// <summary>
@@ -305,9 +323,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Entropy,EntropyUnit}.AsBaseValue"/>
         /// <returns><see cref="EntropyUnit.JoulePerKelvin"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Entropy,EntropyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="EntropyUnit.JoulePerKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Entropy AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Entropy,EntropyUnit}.AsBaseValue"/>
+        /// <returns><see cref="EntropyUnit.JoulePerKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="EntropyUnit.CaloriePerKelvin"/>
@@ -402,8 +433,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKelvin.
         /// </summary>
-        public Entropy JoulesPerKelvinToEntropy()
+        public Entropy JoulesPerKelvinToBaseEntropy()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKelvin.
+        /// </summary>
+        public Entropy JoulesPerKelvinToSiBaseEntropy()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Entropy"/> from <see cref="EntropyUnit.CaloriePerKelvin"/>.

@@ -35,925 +35,1981 @@ public static class BaseUnitsExtensions
         /// <summary>
         ///     Convert to base unit quantity of Gray.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double GraysToAbsorbedDoseOfIonizingRadiation()
+        public double GraysToBaseAbsorbedDoseOfIonizingRadiation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Gray.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double GraysToSiBaseAbsorbedDoseOfIonizingRadiation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecondSquared.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MetersPerSecondSquaredToBaseAcceleration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MetersPerSecondSquaredToAcceleration()
+        public double MetersPerSecondSquaredToSiBaseAcceleration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Mole.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MolesToBaseAmountOfSubstance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Mole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MolesToAmountOfSubstance()
+        public double MolesToSiBaseAmountOfSubstance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecibelVolt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DecibelVoltsToBaseAmplitudeRatio()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelVolt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DecibelVoltsToAmplitudeRatio()
+        public double DecibelVoltsToSiBaseAmplitudeRatio()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Radian.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double RadiansToBaseAngle()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Radian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double RadiansToAngle()
+        public double RadiansToSiBaseAngle()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SquareMetersToBaseArea()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SquareMetersToArea()
+        public double SquareMetersToSiBaseArea()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerSquareMeterToBaseAreaDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsPerSquareMeterToAreaDensity()
+        public double KilogramsPerSquareMeterToSiBaseAreaDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterToTheFourth.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MetersToTheFourthToBaseAreaMomentOfInertia()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheFourth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MetersToTheFourthToAreaMomentOfInertia()
+        public double MetersToTheFourthToSiBaseAreaMomentOfInertia()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SquareMetersPerMeterToBaseAreaPerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SquareMetersPerMeterToAreaPerLength()
+        public double SquareMetersPerMeterToSiBaseAreaPerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of BitPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double BitsPerSecondToBaseBitRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of BitPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double BitsPerSecondToBitRate()
+        public double BitsPerSecondToSiBaseBitRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerJoule.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerJouleToBaseBrakeSpecificFuelConsumption()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerJoule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsPerJouleToBrakeSpecificFuelConsumption()
+        public double KilogramsPerJouleToSiBaseBrakeSpecificFuelConsumption()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PerKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double PerKelvinToBaseCoefficientOfThermalExpansion()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double PerKelvinToCoefficientOfThermalExpansion()
+        public double PerKelvinToSiBaseCoefficientOfThermalExpansion()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InversePascal.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double InversePascalsToBaseCompressibility()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InversePascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double InversePascalsToCompressibility()
+        public double InversePascalsToSiBaseCompressibility()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerCubicMeterToBaseDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsPerCubicMeterToDensity()
+        public double KilogramsPerCubicMeterToSiBaseDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of GraySquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double GraySquareMetersToBaseDoseAreaProduct()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GraySquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double GraySquareMetersToDoseAreaProduct()
+        public double GraySquareMetersToSiBaseDoseAreaProduct()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Second.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SecondsToBaseDuration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Second.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SecondsToDuration()
+        public double SecondsToSiBaseDuration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonSecondPerMeterSquared.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonSecondsPerMeterSquaredToBaseDynamicViscosity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecondPerMeterSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonSecondsPerMeterSquaredToDynamicViscosity()
+        public double NewtonSecondsPerMeterSquaredToSiBaseDynamicViscosity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SiemensToBaseElectricAdmittance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SiemensToElectricAdmittance()
+        public double SiemensToSiBaseElectricAdmittance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereHour.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double VoltampereHoursToElectricApparentEnergy()
+        public double VoltampereHoursToBaseElectricApparentEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double VoltampereSecondsToSiBaseElectricApparentEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Voltampere.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double VoltamperesToBaseElectricApparentPower()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Voltampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double VoltamperesToElectricApparentPower()
+        public double VoltamperesToSiBaseElectricApparentPower()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Farad.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double FaradsToBaseElectricCapacitance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Farad.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double FaradsToElectricCapacitance()
+        public double FaradsToSiBaseElectricCapacitance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Coulomb.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CoulombsToBaseElectricCharge()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Coulomb.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CoulombsToElectricCharge()
+        public double CoulombsToSiBaseElectricCharge()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CoulombsPerCubicMeterToBaseElectricChargeDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CoulombsPerCubicMeterToElectricChargeDensity()
+        public double CoulombsPerCubicMeterToSiBaseElectricChargeDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SiemensToBaseElectricConductance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SiemensToElectricConductance()
+        public double SiemensToSiBaseElectricConductance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SiemensPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SiemensPerMeterToBaseElectricConductivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SiemensPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SiemensPerMeterToElectricConductivity()
+        public double SiemensPerMeterToSiBaseElectricConductivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ampere.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double AmperesToBaseElectricCurrent()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double AmperesToElectricCurrent()
+        public double AmperesToSiBaseElectricCurrent()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double AmperesPerSquareMeterToBaseElectricCurrentDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double AmperesPerSquareMeterToElectricCurrentDensity()
+        public double AmperesPerSquareMeterToSiBaseElectricCurrentDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double AmperesPerSecondToBaseElectricCurrentGradient()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double AmperesPerSecondToElectricCurrentGradient()
+        public double AmperesPerSecondToSiBaseElectricCurrentGradient()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double VoltsPerMeterToBaseElectricField()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double VoltsPerMeterToElectricField()
+        public double VoltsPerMeterToSiBaseElectricField()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double OhmsToBaseElectricImpedance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double OhmsToElectricImpedance()
+        public double OhmsToSiBaseElectricImpedance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Henry.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double HenriesToBaseElectricInductance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Henry.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double HenriesToElectricInductance()
+        public double HenriesToSiBaseElectricInductance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Volt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double VoltsToBaseElectricPotential()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Volt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double VoltsToElectricPotential()
+        public double VoltsToSiBaseElectricPotential()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double VoltsPerSecondToBaseElectricPotentialChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double VoltsPerSecondToElectricPotentialChangeRate()
+        public double VoltsPerSecondToSiBaseElectricPotentialChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double OhmsToBaseElectricReactance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double OhmsToElectricReactance()
+        public double OhmsToSiBaseElectricReactance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactiveHour.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double VoltampereReactiveHoursToElectricReactiveEnergy()
+        public double VoltampereReactiveHoursToBaseElectricReactiveEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereReactiveSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double VoltampereReactiveSecondsToSiBaseElectricReactiveEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereReactive.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double VoltamperesReactiveToBaseElectricReactivePower()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactive.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double VoltamperesReactiveToElectricReactivePower()
+        public double VoltamperesReactiveToSiBaseElectricReactivePower()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double OhmsToBaseElectricResistance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double OhmsToElectricResistance()
+        public double OhmsToSiBaseElectricResistance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of OhmMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double OhmMetersToBaseElectricResistivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of OhmMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double OhmMetersToElectricResistivity()
+        public double OhmMetersToSiBaseElectricResistivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CoulombsPerSquareMeterToBaseElectricSurfaceChargeDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CoulombsPerSquareMeterToElectricSurfaceChargeDensity()
+        public double CoulombsPerSquareMeterToSiBaseElectricSurfaceChargeDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SiemensToBaseElectricSusceptance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SiemensToElectricSusceptance()
+        public double SiemensToSiBaseElectricSusceptance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Joule.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesToBaseEnergy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Joule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesToEnergy()
+        public double JoulesToSiBaseEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerCubicMeterToBaseEnergyDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerCubicMeterToEnergyDensity()
+        public double JoulesPerCubicMeterToSiBaseEnergyDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerKelvinToBaseEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerKelvinToEntropy()
+        public double JoulesPerKelvinToSiBaseEntropy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double PascalSecondsPerCubicMeterToBaseFluidResistance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double PascalSecondsPerCubicMeterToFluidResistance()
+        public double PascalSecondsPerCubicMeterToSiBaseFluidResistance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Newton.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonsToBaseForce()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Newton.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonsToForce()
+        public double NewtonsToSiBaseForce()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonsPerSecondToBaseForceChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonsPerSecondToForceChangeRate()
+        public double NewtonsPerSecondToSiBaseForceChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonsPerMeterToBaseForcePerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonsPerMeterToForcePerLength()
+        public double NewtonsPerMeterToSiBaseForcePerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Hertz.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double HertzToBaseFrequency()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Hertz.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double HertzToFrequency()
+        public double HertzToSiBaseFrequency()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilometerPerLiter.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilometersPerLiterToFuelEfficiency()
+        public double KilometersPerLiterToBaseFuelEfficiency()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerCubicMeter.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MetersPerCubicMeterToSiBaseFuelEfficiency()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerSquareMeterToBaseHeatFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsPerSquareMeterToHeatFlux()
+        public double WattsPerSquareMeterToSiBaseHeatFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerSquareMeterKelvinToBaseHeatTransferCoefficient()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsPerSquareMeterKelvinToHeatTransferCoefficient()
+        public double WattsPerSquareMeterKelvinToSiBaseHeatTransferCoefficient()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Lux.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double LuxToBaseIlluminance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lux.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double LuxToIlluminance()
+        public double LuxToSiBaseIlluminance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonSecondsToBaseImpulse()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonSecondsToImpulse()
+        public double NewtonSecondsToSiBaseImpulse()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Bit.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double BitsToBaseInformation()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Bit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double BitsToInformation()
+        public double BitsToSiBaseInformation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerSquareMeterToBaseIrradiance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsPerSquareMeterToIrradiance()
+        public double WattsPerSquareMeterToSiBaseIrradiance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerSquareMeterToBaseIrradiation()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerSquareMeterToIrradiation()
+        public double JoulesPerSquareMeterToSiBaseIrradiation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecondCubed.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MetersPerSecondCubedToBaseJerk()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondCubed.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MetersPerSecondCubedToJerk()
+        public double MetersPerSecondCubedToSiBaseJerk()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SquareMetersPerSecondToBaseKinematicViscosity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SquareMetersPerSecondToKinematicViscosity()
+        public double SquareMetersPerSecondToSiBaseKinematicViscosity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double PascalCubicMetersPerSecondToBaseLeakRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double PascalCubicMetersPerSecondToLeakRate()
+        public double PascalCubicMetersPerSecondToSiBaseLeakRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Meter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MetersToBaseLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Meter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MetersToLength()
+        public double MetersToSiBaseLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Decibel.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DecibelsToBaseLevel()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Decibel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DecibelsToLevel()
+        public double DecibelsToSiBaseLevel()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerMeterToBaseLinearDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsPerMeterToLinearDensity()
+        public double KilogramsPerMeterToSiBaseLinearDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerMeterToBaseLinearPowerDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsPerMeterToLinearPowerDensity()
+        public double WattsPerMeterToSiBaseLinearPowerDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CandelaPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CandelasPerSquareMeterToBaseLuminance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CandelaPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CandelasPerSquareMeterToLuminance()
+        public double CandelasPerSquareMeterToSiBaseLuminance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Watt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsToBaseLuminosity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsToLuminosity()
+        public double WattsToSiBaseLuminosity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Lumen.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double LumensToBaseLuminousFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lumen.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double LumensToLuminousFlux()
+        public double LumensToSiBaseLuminousFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Candela.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CandelaToBaseLuminousIntensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Candela.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CandelaToLuminousIntensity()
+        public double CandelaToSiBaseLuminousIntensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Tesla.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double TeslasToBaseMagneticField()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Tesla.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double TeslasToMagneticField()
+        public double TeslasToSiBaseMagneticField()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Weber.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WebersToBaseMagneticFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Weber.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WebersToMagneticFlux()
+        public double WebersToSiBaseMagneticFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double AmperesPerMeterToBaseMagnetization()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double AmperesPerMeterToMagnetization()
+        public double AmperesPerMeterToSiBaseMagnetization()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsToBaseMass()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsToMass()
+        public double KilogramsToSiBaseMass()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerCubicMeterToBaseMassConcentration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsPerCubicMeterToMassConcentration()
+        public double KilogramsPerCubicMeterToSiBaseMassConcentration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerSecond.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double GramsPerSecondToMassFlow()
+        public double GramsPerSecondToBaseMassFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerSecondToSiBaseMassFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerSecondPerSquareMeterToBaseMassFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsPerSecondPerSquareMeterToMassFlux()
+        public double KilogramsPerSecondPerSquareMeterToSiBaseMassFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DecimalFractionsToBaseMassFraction()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DecimalFractionsToMassFraction()
+        public double DecimalFractionsToSiBaseMassFraction()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramSquareMetersToBaseMassMomentOfInertia()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramSquareMetersToMassMomentOfInertia()
+        public double KilogramSquareMetersToSiBaseMassMomentOfInertia()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MolesPerKilogramToBaseMolality()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MolesPerKilogramToMolality()
+        public double MolesPerKilogramToSiBaseMolality()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerMole.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerMoleToBaseMolarEnergy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerMoleToMolarEnergy()
+        public double JoulesPerMoleToSiBaseMolarEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerMoleKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerMoleKelvinToBaseMolarEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMoleKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerMoleKelvinToMolarEntropy()
+        public double JoulesPerMoleKelvinToSiBaseMolarEntropy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MolesPerSecondToBaseMolarFlow()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MolesPerSecondToMolarFlow()
+        public double MolesPerSecondToSiBaseMolarFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MolesPerCubicMeterToBaseMolarity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MolesPerCubicMeterToMolarity()
+        public double MolesPerCubicMeterToSiBaseMolarity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerMole.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerMoleToBaseMolarMass()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilogramsPerMoleToMolarMass()
+        public double KilogramsPerMoleToSiBaseMolarMass()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of HenryPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double HenriesPerMeterToBasePermeability()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of HenryPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double HenriesPerMeterToPermeability()
+        public double HenriesPerMeterToSiBasePermeability()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of FaradPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double FaradsPerMeterToBasePermittivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of FaradPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double FaradsPerMeterToPermittivity()
+        public double FaradsPerMeterToSiBasePermittivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SquareMetersToBasePorousMediumPermeability()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SquareMetersToPorousMediumPermeability()
+        public double SquareMetersToSiBasePorousMediumPermeability()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Watt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsToBasePower()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsToPower()
+        public double WattsToSiBasePower()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerCubicMeterToBasePowerDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsPerCubicMeterToPowerDensity()
+        public double WattsPerCubicMeterToSiBasePowerDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecibelWatt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DecibelWattsToBasePowerRatio()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DecibelWattsToPowerRatio()
+        public double DecibelWattsToSiBasePowerRatio()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Pascal.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double PascalsToBasePressure()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Pascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double PascalsToPressure()
+        public double PascalsToSiBasePressure()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double PascalsPerSecondToBasePressureChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double PascalsPerSecondToPressureChangeRate()
+        public double PascalsPerSecondToSiBasePressureChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Sievert.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SievertsToBaseRadiationEquivalentDose()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Sievert.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SievertsToRadiationEquivalentDose()
+        public double SievertsToSiBaseRadiationEquivalentDose()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SievertPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SievertsPerSecondToBaseRadiationEquivalentDoseRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SievertPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SievertsPerSecondToRadiationEquivalentDoseRate()
+        public double SievertsPerSecondToSiBaseRadiationEquivalentDoseRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CoulombsPerKilogramToBaseRadiationExposure()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CoulombsPerKilogramToRadiationExposure()
+        public double CoulombsPerKilogramToSiBaseRadiationExposure()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Becquerel.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double BecquerelsToBaseRadioactivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Becquerel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double BecquerelsToRadioactivity()
+        public double BecquerelsToSiBaseRadioactivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DecimalFractionsToBaseRatio()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DecimalFractionsToRatio()
+        public double DecimalFractionsToSiBaseRatio()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFractionPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DecimalFractionsPerSecondToBaseRatioChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFractionPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DecimalFractionsPerSecondToRatioChangeRate()
+        public double DecimalFractionsPerSecondToSiBaseRatioChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InverseSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double InverseSquareMetersToBaseReciprocalArea()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double InverseSquareMetersToReciprocalArea()
+        public double InverseSquareMetersToSiBaseReciprocalArea()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InverseMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double InverseMetersToBaseReciprocalLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double InverseMetersToReciprocalLength()
+        public double InverseMetersToSiBaseReciprocalLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Percent.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double PercentToBaseRelativeHumidity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Percent.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double PercentToRelativeHumidity()
+        public double PercentToSiBaseRelativeHumidity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of RadianPerSecondSquared.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double RadiansPerSecondSquaredToBaseRotationalAcceleration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double RadiansPerSecondSquaredToRotationalAcceleration()
+        public double RadiansPerSecondSquaredToSiBaseRotationalAcceleration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of RadianPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double RadiansPerSecondToBaseRotationalSpeed()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double RadiansPerSecondToRotationalSpeed()
+        public double RadiansPerSecondToSiBaseRotationalSpeed()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeterPerRadian.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonMetersPerRadianToBaseRotationalStiffness()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonMetersPerRadianToRotationalStiffness()
+        public double NewtonMetersPerRadianToSiBaseRotationalStiffness()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonMetersPerRadianPerMeterToBaseRotationalStiffnessPerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
+        public double NewtonMetersPerRadianPerMeterToSiBaseRotationalStiffnessPerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Amount.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double AmountToBaseScalar()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double AmountToScalar()
+        public double AmountToSiBaseScalar()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Steradian.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SteradiansToBaseSolidAngle()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Steradian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SteradiansToSolidAngle()
+        public double SteradiansToSiBaseSolidAngle()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerKilogramToBaseSpecificEnergy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerKilogramToSpecificEnergy()
+        public double JoulesPerKilogramToSiBaseSpecificEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKilogramKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerKilogramKelvinToBaseSpecificEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogramKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerKilogramKelvinToSpecificEntropy()
+        public double JoulesPerKilogramKelvinToSiBaseSpecificEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerKilonewtonSecond.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double GramsPerKilonewtonSecondToSpecificFuelConsumption()
+        public double GramsPerKilonewtonSecondToBaseSpecificFuelConsumption()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerNewtonSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KilogramsPerNewtonSecondToSiBaseSpecificFuelConsumption()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CubicMetersPerKilogramToBaseSpecificVolume()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CubicMetersPerKilogramToSpecificVolume()
+        public double CubicMetersPerKilogramToSiBaseSpecificVolume()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonsPerCubicMeterToBaseSpecificWeight()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonsPerCubicMeterToSpecificWeight()
+        public double NewtonsPerCubicMeterToSiBaseSpecificWeight()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MetersPerSecondToBaseSpeed()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MetersPerSecondToSpeed()
+        public double MetersPerSecondToSiBaseSpeed()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double StandardCubicMetersPerSecondToBaseStandardVolumeFlow()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double StandardCubicMetersPerSecondToStandardVolumeFlow()
+        public double StandardCubicMetersPerSecondToSiBaseStandardVolumeFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KelvinsToBaseTemperature()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KelvinsToTemperature()
+        public double KelvinsToSiBaseTemperature()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DegreeCelsiusPerSecond.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DegreesCelsiusPerSecondToTemperatureChangeRate()
+        public double DegreesCelsiusPerSecondToBaseTemperatureChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DegreeKelvinPerSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DegreesKelvinPerSecondToSiBaseTemperatureChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KelvinsToBaseTemperatureDelta()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KelvinsToTemperatureDelta()
+        public double KelvinsToSiBaseTemperatureDelta()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KelvinsPerMeterToBaseTemperatureGradient()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KelvinsPerMeterToTemperatureGradient()
+        public double KelvinsPerMeterToSiBaseTemperatureGradient()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerKelvinToBaseThermalConductance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsPerKelvinToThermalConductance()
+        public double WattsPerKelvinToSiBaseThermalConductance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerMeterKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerMeterKelvinToBaseThermalConductivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double WattsPerMeterKelvinToThermalConductivity()
+        public double WattsPerMeterKelvinToSiBaseThermalConductivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterKelvinPerKilowatt.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double SquareMeterKelvinsPerKilowattToThermalInsulance()
+        public double SquareMeterKelvinsPerKilowattToBaseThermalInsulance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterKelvinPerWatt.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double SquareMeterKelvinsPerWattToSiBaseThermalInsulance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinPerWatt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KelvinsPerWattToBaseThermalResistance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KelvinsPerWattToThermalResistance()
+        public double KelvinsPerWattToSiBaseThermalResistance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinMeterPerWatt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double KelvinMetersPerWattToBaseThermalResistivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinMeterPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KelvinMetersPerWattToThermalResistivity()
+        public double KelvinMetersPerWattToSiBaseThermalResistivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilowattPerSquareMeterKelvin.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double KilowattsPerSquareMeterKelvinToThermalTransmittance()
+        public double KilowattsPerSquareMeterKelvinToBaseThermalTransmittance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double WattsPerSquareMeterKelvinToSiBaseThermalTransmittance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NewtonMetersToBaseTorque()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NewtonMetersToTorque()
+        public double NewtonMetersToSiBaseTorque()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NTU.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double NTUToBaseTurbidity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NTU.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NTUToTurbidity()
+        public double NTUToSiBaseTurbidity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InternationalUnit.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double InternationalUnitsToBaseVitaminA()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InternationalUnit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double InternationalUnitsToVitaminA()
+        public double InternationalUnitsToSiBaseVitaminA()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CubicMetersToBaseVolume()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CubicMetersToVolume()
+        public double CubicMetersToSiBaseVolume()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double DecimalFractionsToBaseVolumeConcentration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DecimalFractionsToVolumeConcentration()
+        public double DecimalFractionsToSiBaseVolumeConcentration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CubicMetersPerSecondToBaseVolumeFlow()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CubicMetersPerSecondToVolumeFlow()
+        public double CubicMetersPerSecondToSiBaseVolumeFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CubicMetersPerSecondPerSquareMeterToBaseVolumeFlowPerArea()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CubicMetersPerSecondPerSquareMeterToVolumeFlowPerArea()
+        public double CubicMetersPerSecondPerSquareMeterToSiBaseVolumeFlowPerArea()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double CubicMetersPerMeterToBaseVolumePerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CubicMetersPerMeterToVolumePerLength()
+        public double CubicMetersPerMeterToSiBaseVolumePerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double JoulesPerCubicMeterKelvinToBaseVolumetricHeatCapacity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double JoulesPerCubicMeterKelvinToVolumetricHeatCapacity()
+        public double JoulesPerCubicMeterKelvinToSiBaseVolumetricHeatCapacity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterToTheSixth.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double MetersToTheSixthToBaseWarpingMomentOfInertia()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheSixth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double MetersToTheSixthToWarpingMomentOfInertia()
+        public double MetersToTheSixthToSiBaseWarpingMomentOfInertia()
             => d;
     }
 
@@ -963,925 +2019,1981 @@ public static class BaseUnitsExtensions
         /// <summary>
         ///     Convert to base unit quantity of Gray.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GraysToAbsorbedDoseOfIonizingRadiation()
+        public int GraysToBaseAbsorbedDoseOfIonizingRadiation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Gray.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GraysToSiBaseAbsorbedDoseOfIonizingRadiation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecondSquared.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MetersPerSecondSquaredToBaseAcceleration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MetersPerSecondSquaredToAcceleration()
+        public int MetersPerSecondSquaredToSiBaseAcceleration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Mole.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MolesToBaseAmountOfSubstance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Mole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MolesToAmountOfSubstance()
+        public int MolesToSiBaseAmountOfSubstance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecibelVolt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DecibelVoltsToBaseAmplitudeRatio()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelVolt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DecibelVoltsToAmplitudeRatio()
+        public int DecibelVoltsToSiBaseAmplitudeRatio()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Radian.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int RadiansToBaseAngle()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Radian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int RadiansToAngle()
+        public int RadiansToSiBaseAngle()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SquareMetersToBaseArea()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SquareMetersToArea()
+        public int SquareMetersToSiBaseArea()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerSquareMeterToBaseAreaDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsPerSquareMeterToAreaDensity()
+        public int KilogramsPerSquareMeterToSiBaseAreaDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterToTheFourth.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MetersToTheFourthToBaseAreaMomentOfInertia()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheFourth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MetersToTheFourthToAreaMomentOfInertia()
+        public int MetersToTheFourthToSiBaseAreaMomentOfInertia()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SquareMetersPerMeterToBaseAreaPerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SquareMetersPerMeterToAreaPerLength()
+        public int SquareMetersPerMeterToSiBaseAreaPerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of BitPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int BitsPerSecondToBaseBitRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of BitPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int BitsPerSecondToBitRate()
+        public int BitsPerSecondToSiBaseBitRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerJoule.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerJouleToBaseBrakeSpecificFuelConsumption()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerJoule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsPerJouleToBrakeSpecificFuelConsumption()
+        public int KilogramsPerJouleToSiBaseBrakeSpecificFuelConsumption()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PerKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int PerKelvinToBaseCoefficientOfThermalExpansion()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int PerKelvinToCoefficientOfThermalExpansion()
+        public int PerKelvinToSiBaseCoefficientOfThermalExpansion()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InversePascal.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int InversePascalsToBaseCompressibility()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InversePascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int InversePascalsToCompressibility()
+        public int InversePascalsToSiBaseCompressibility()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerCubicMeterToBaseDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsPerCubicMeterToDensity()
+        public int KilogramsPerCubicMeterToSiBaseDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of GraySquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GraySquareMetersToBaseDoseAreaProduct()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GraySquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GraySquareMetersToDoseAreaProduct()
+        public int GraySquareMetersToSiBaseDoseAreaProduct()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Second.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SecondsToBaseDuration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Second.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SecondsToDuration()
+        public int SecondsToSiBaseDuration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonSecondPerMeterSquared.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonSecondsPerMeterSquaredToBaseDynamicViscosity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecondPerMeterSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonSecondsPerMeterSquaredToDynamicViscosity()
+        public int NewtonSecondsPerMeterSquaredToSiBaseDynamicViscosity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SiemensToBaseElectricAdmittance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SiemensToElectricAdmittance()
+        public int SiemensToSiBaseElectricAdmittance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereHour.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int VoltampereHoursToElectricApparentEnergy()
+        public int VoltampereHoursToBaseElectricApparentEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int VoltampereSecondsToSiBaseElectricApparentEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Voltampere.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int VoltamperesToBaseElectricApparentPower()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Voltampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int VoltamperesToElectricApparentPower()
+        public int VoltamperesToSiBaseElectricApparentPower()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Farad.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int FaradsToBaseElectricCapacitance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Farad.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int FaradsToElectricCapacitance()
+        public int FaradsToSiBaseElectricCapacitance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Coulomb.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CoulombsToBaseElectricCharge()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Coulomb.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CoulombsToElectricCharge()
+        public int CoulombsToSiBaseElectricCharge()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CoulombsPerCubicMeterToBaseElectricChargeDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CoulombsPerCubicMeterToElectricChargeDensity()
+        public int CoulombsPerCubicMeterToSiBaseElectricChargeDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SiemensToBaseElectricConductance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SiemensToElectricConductance()
+        public int SiemensToSiBaseElectricConductance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SiemensPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SiemensPerMeterToBaseElectricConductivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SiemensPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SiemensPerMeterToElectricConductivity()
+        public int SiemensPerMeterToSiBaseElectricConductivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ampere.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int AmperesToBaseElectricCurrent()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int AmperesToElectricCurrent()
+        public int AmperesToSiBaseElectricCurrent()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int AmperesPerSquareMeterToBaseElectricCurrentDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int AmperesPerSquareMeterToElectricCurrentDensity()
+        public int AmperesPerSquareMeterToSiBaseElectricCurrentDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int AmperesPerSecondToBaseElectricCurrentGradient()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int AmperesPerSecondToElectricCurrentGradient()
+        public int AmperesPerSecondToSiBaseElectricCurrentGradient()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int VoltsPerMeterToBaseElectricField()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int VoltsPerMeterToElectricField()
+        public int VoltsPerMeterToSiBaseElectricField()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int OhmsToBaseElectricImpedance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OhmsToElectricImpedance()
+        public int OhmsToSiBaseElectricImpedance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Henry.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int HenriesToBaseElectricInductance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Henry.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int HenriesToElectricInductance()
+        public int HenriesToSiBaseElectricInductance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Volt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int VoltsToBaseElectricPotential()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Volt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int VoltsToElectricPotential()
+        public int VoltsToSiBaseElectricPotential()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int VoltsPerSecondToBaseElectricPotentialChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int VoltsPerSecondToElectricPotentialChangeRate()
+        public int VoltsPerSecondToSiBaseElectricPotentialChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int OhmsToBaseElectricReactance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OhmsToElectricReactance()
+        public int OhmsToSiBaseElectricReactance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactiveHour.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int VoltampereReactiveHoursToElectricReactiveEnergy()
+        public int VoltampereReactiveHoursToBaseElectricReactiveEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereReactiveSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int VoltampereReactiveSecondsToSiBaseElectricReactiveEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereReactive.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int VoltamperesReactiveToBaseElectricReactivePower()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactive.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int VoltamperesReactiveToElectricReactivePower()
+        public int VoltamperesReactiveToSiBaseElectricReactivePower()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int OhmsToBaseElectricResistance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OhmsToElectricResistance()
+        public int OhmsToSiBaseElectricResistance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of OhmMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int OhmMetersToBaseElectricResistivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of OhmMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int OhmMetersToElectricResistivity()
+        public int OhmMetersToSiBaseElectricResistivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CoulombsPerSquareMeterToBaseElectricSurfaceChargeDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CoulombsPerSquareMeterToElectricSurfaceChargeDensity()
+        public int CoulombsPerSquareMeterToSiBaseElectricSurfaceChargeDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SiemensToBaseElectricSusceptance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SiemensToElectricSusceptance()
+        public int SiemensToSiBaseElectricSusceptance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Joule.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesToBaseEnergy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Joule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesToEnergy()
+        public int JoulesToSiBaseEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerCubicMeterToBaseEnergyDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerCubicMeterToEnergyDensity()
+        public int JoulesPerCubicMeterToSiBaseEnergyDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerKelvinToBaseEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerKelvinToEntropy()
+        public int JoulesPerKelvinToSiBaseEntropy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int PascalSecondsPerCubicMeterToBaseFluidResistance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int PascalSecondsPerCubicMeterToFluidResistance()
+        public int PascalSecondsPerCubicMeterToSiBaseFluidResistance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Newton.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonsToBaseForce()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Newton.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonsToForce()
+        public int NewtonsToSiBaseForce()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonsPerSecondToBaseForceChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonsPerSecondToForceChangeRate()
+        public int NewtonsPerSecondToSiBaseForceChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonsPerMeterToBaseForcePerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonsPerMeterToForcePerLength()
+        public int NewtonsPerMeterToSiBaseForcePerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Hertz.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int HertzToBaseFrequency()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Hertz.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int HertzToFrequency()
+        public int HertzToSiBaseFrequency()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilometerPerLiter.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilometersPerLiterToFuelEfficiency()
+        public int KilometersPerLiterToBaseFuelEfficiency()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerCubicMeter.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MetersPerCubicMeterToSiBaseFuelEfficiency()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerSquareMeterToBaseHeatFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsPerSquareMeterToHeatFlux()
+        public int WattsPerSquareMeterToSiBaseHeatFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerSquareMeterKelvinToBaseHeatTransferCoefficient()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsPerSquareMeterKelvinToHeatTransferCoefficient()
+        public int WattsPerSquareMeterKelvinToSiBaseHeatTransferCoefficient()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Lux.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int LuxToBaseIlluminance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lux.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int LuxToIlluminance()
+        public int LuxToSiBaseIlluminance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonSecondsToBaseImpulse()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonSecondsToImpulse()
+        public int NewtonSecondsToSiBaseImpulse()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Bit.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int BitsToBaseInformation()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Bit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int BitsToInformation()
+        public int BitsToSiBaseInformation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerSquareMeterToBaseIrradiance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsPerSquareMeterToIrradiance()
+        public int WattsPerSquareMeterToSiBaseIrradiance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerSquareMeterToBaseIrradiation()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerSquareMeterToIrradiation()
+        public int JoulesPerSquareMeterToSiBaseIrradiation()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecondCubed.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MetersPerSecondCubedToBaseJerk()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondCubed.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MetersPerSecondCubedToJerk()
+        public int MetersPerSecondCubedToSiBaseJerk()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SquareMetersPerSecondToBaseKinematicViscosity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SquareMetersPerSecondToKinematicViscosity()
+        public int SquareMetersPerSecondToSiBaseKinematicViscosity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int PascalCubicMetersPerSecondToBaseLeakRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int PascalCubicMetersPerSecondToLeakRate()
+        public int PascalCubicMetersPerSecondToSiBaseLeakRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Meter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MetersToBaseLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Meter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MetersToLength()
+        public int MetersToSiBaseLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Decibel.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DecibelsToBaseLevel()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Decibel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DecibelsToLevel()
+        public int DecibelsToSiBaseLevel()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerMeterToBaseLinearDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsPerMeterToLinearDensity()
+        public int KilogramsPerMeterToSiBaseLinearDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerMeterToBaseLinearPowerDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsPerMeterToLinearPowerDensity()
+        public int WattsPerMeterToSiBaseLinearPowerDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CandelaPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CandelasPerSquareMeterToBaseLuminance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CandelaPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CandelasPerSquareMeterToLuminance()
+        public int CandelasPerSquareMeterToSiBaseLuminance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Watt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsToBaseLuminosity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsToLuminosity()
+        public int WattsToSiBaseLuminosity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Lumen.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int LumensToBaseLuminousFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lumen.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int LumensToLuminousFlux()
+        public int LumensToSiBaseLuminousFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Candela.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CandelaToBaseLuminousIntensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Candela.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CandelaToLuminousIntensity()
+        public int CandelaToSiBaseLuminousIntensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Tesla.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int TeslasToBaseMagneticField()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Tesla.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int TeslasToMagneticField()
+        public int TeslasToSiBaseMagneticField()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Weber.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WebersToBaseMagneticFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Weber.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WebersToMagneticFlux()
+        public int WebersToSiBaseMagneticFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int AmperesPerMeterToBaseMagnetization()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int AmperesPerMeterToMagnetization()
+        public int AmperesPerMeterToSiBaseMagnetization()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsToBaseMass()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsToMass()
+        public int KilogramsToSiBaseMass()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerCubicMeterToBaseMassConcentration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsPerCubicMeterToMassConcentration()
+        public int KilogramsPerCubicMeterToSiBaseMassConcentration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerSecond.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GramsPerSecondToMassFlow()
+        public int GramsPerSecondToBaseMassFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerSecondToSiBaseMassFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerSecondPerSquareMeterToBaseMassFlux()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsPerSecondPerSquareMeterToMassFlux()
+        public int KilogramsPerSecondPerSquareMeterToSiBaseMassFlux()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DecimalFractionsToBaseMassFraction()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DecimalFractionsToMassFraction()
+        public int DecimalFractionsToSiBaseMassFraction()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramSquareMetersToBaseMassMomentOfInertia()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramSquareMetersToMassMomentOfInertia()
+        public int KilogramSquareMetersToSiBaseMassMomentOfInertia()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MolesPerKilogramToBaseMolality()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MolesPerKilogramToMolality()
+        public int MolesPerKilogramToSiBaseMolality()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerMole.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerMoleToBaseMolarEnergy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerMoleToMolarEnergy()
+        public int JoulesPerMoleToSiBaseMolarEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerMoleKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerMoleKelvinToBaseMolarEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMoleKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerMoleKelvinToMolarEntropy()
+        public int JoulesPerMoleKelvinToSiBaseMolarEntropy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MolesPerSecondToBaseMolarFlow()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MolesPerSecondToMolarFlow()
+        public int MolesPerSecondToSiBaseMolarFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MolesPerCubicMeterToBaseMolarity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MolesPerCubicMeterToMolarity()
+        public int MolesPerCubicMeterToSiBaseMolarity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerMole.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerMoleToBaseMolarMass()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilogramsPerMoleToMolarMass()
+        public int KilogramsPerMoleToSiBaseMolarMass()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of HenryPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int HenriesPerMeterToBasePermeability()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of HenryPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int HenriesPerMeterToPermeability()
+        public int HenriesPerMeterToSiBasePermeability()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of FaradPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int FaradsPerMeterToBasePermittivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of FaradPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int FaradsPerMeterToPermittivity()
+        public int FaradsPerMeterToSiBasePermittivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SquareMetersToBasePorousMediumPermeability()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SquareMetersToPorousMediumPermeability()
+        public int SquareMetersToSiBasePorousMediumPermeability()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Watt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsToBasePower()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsToPower()
+        public int WattsToSiBasePower()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerCubicMeterToBasePowerDensity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsPerCubicMeterToPowerDensity()
+        public int WattsPerCubicMeterToSiBasePowerDensity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecibelWatt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DecibelWattsToBasePowerRatio()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DecibelWattsToPowerRatio()
+        public int DecibelWattsToSiBasePowerRatio()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Pascal.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int PascalsToBasePressure()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Pascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int PascalsToPressure()
+        public int PascalsToSiBasePressure()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int PascalsPerSecondToBasePressureChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int PascalsPerSecondToPressureChangeRate()
+        public int PascalsPerSecondToSiBasePressureChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Sievert.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SievertsToBaseRadiationEquivalentDose()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Sievert.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SievertsToRadiationEquivalentDose()
+        public int SievertsToSiBaseRadiationEquivalentDose()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SievertPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SievertsPerSecondToBaseRadiationEquivalentDoseRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SievertPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SievertsPerSecondToRadiationEquivalentDoseRate()
+        public int SievertsPerSecondToSiBaseRadiationEquivalentDoseRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CoulombsPerKilogramToBaseRadiationExposure()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CoulombsPerKilogramToRadiationExposure()
+        public int CoulombsPerKilogramToSiBaseRadiationExposure()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Becquerel.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int BecquerelsToBaseRadioactivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Becquerel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int BecquerelsToRadioactivity()
+        public int BecquerelsToSiBaseRadioactivity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DecimalFractionsToBaseRatio()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DecimalFractionsToRatio()
+        public int DecimalFractionsToSiBaseRatio()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFractionPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DecimalFractionsPerSecondToBaseRatioChangeRate()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFractionPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DecimalFractionsPerSecondToRatioChangeRate()
+        public int DecimalFractionsPerSecondToSiBaseRatioChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InverseSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int InverseSquareMetersToBaseReciprocalArea()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int InverseSquareMetersToReciprocalArea()
+        public int InverseSquareMetersToSiBaseReciprocalArea()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InverseMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int InverseMetersToBaseReciprocalLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int InverseMetersToReciprocalLength()
+        public int InverseMetersToSiBaseReciprocalLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Percent.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int PercentToBaseRelativeHumidity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Percent.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int PercentToRelativeHumidity()
+        public int PercentToSiBaseRelativeHumidity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of RadianPerSecondSquared.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int RadiansPerSecondSquaredToBaseRotationalAcceleration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int RadiansPerSecondSquaredToRotationalAcceleration()
+        public int RadiansPerSecondSquaredToSiBaseRotationalAcceleration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of RadianPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int RadiansPerSecondToBaseRotationalSpeed()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int RadiansPerSecondToRotationalSpeed()
+        public int RadiansPerSecondToSiBaseRotationalSpeed()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeterPerRadian.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonMetersPerRadianToBaseRotationalStiffness()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonMetersPerRadianToRotationalStiffness()
+        public int NewtonMetersPerRadianToSiBaseRotationalStiffness()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonMetersPerRadianPerMeterToBaseRotationalStiffnessPerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
+        public int NewtonMetersPerRadianPerMeterToSiBaseRotationalStiffnessPerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Amount.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int AmountToBaseScalar()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int AmountToScalar()
+        public int AmountToSiBaseScalar()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Steradian.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SteradiansToBaseSolidAngle()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Steradian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SteradiansToSolidAngle()
+        public int SteradiansToSiBaseSolidAngle()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerKilogramToBaseSpecificEnergy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerKilogramToSpecificEnergy()
+        public int JoulesPerKilogramToSiBaseSpecificEnergy()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKilogramKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerKilogramKelvinToBaseSpecificEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogramKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerKilogramKelvinToSpecificEntropy()
+        public int JoulesPerKilogramKelvinToSiBaseSpecificEntropy()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerKilonewtonSecond.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GramsPerKilonewtonSecondToSpecificFuelConsumption()
+        public int GramsPerKilonewtonSecondToBaseSpecificFuelConsumption()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerNewtonSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KilogramsPerNewtonSecondToSiBaseSpecificFuelConsumption()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerKilogram.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CubicMetersPerKilogramToBaseSpecificVolume()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CubicMetersPerKilogramToSpecificVolume()
+        public int CubicMetersPerKilogramToSiBaseSpecificVolume()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerCubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonsPerCubicMeterToBaseSpecificWeight()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonsPerCubicMeterToSpecificWeight()
+        public int NewtonsPerCubicMeterToSiBaseSpecificWeight()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MetersPerSecondToBaseSpeed()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MetersPerSecondToSpeed()
+        public int MetersPerSecondToSiBaseSpeed()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int StandardCubicMetersPerSecondToBaseStandardVolumeFlow()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int StandardCubicMetersPerSecondToStandardVolumeFlow()
+        public int StandardCubicMetersPerSecondToSiBaseStandardVolumeFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KelvinsToBaseTemperature()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KelvinsToTemperature()
+        public int KelvinsToSiBaseTemperature()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DegreeCelsiusPerSecond.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DegreesCelsiusPerSecondToTemperatureChangeRate()
+        public int DegreesCelsiusPerSecondToBaseTemperatureChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DegreeKelvinPerSecond.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DegreesKelvinPerSecondToSiBaseTemperatureChangeRate()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KelvinsToBaseTemperatureDelta()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KelvinsToTemperatureDelta()
+        public int KelvinsToSiBaseTemperatureDelta()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KelvinsPerMeterToBaseTemperatureGradient()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KelvinsPerMeterToTemperatureGradient()
+        public int KelvinsPerMeterToSiBaseTemperatureGradient()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerKelvinToBaseThermalConductance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsPerKelvinToThermalConductance()
+        public int WattsPerKelvinToSiBaseThermalConductance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerMeterKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerMeterKelvinToBaseThermalConductivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int WattsPerMeterKelvinToThermalConductivity()
+        public int WattsPerMeterKelvinToSiBaseThermalConductivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterKelvinPerKilowatt.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int SquareMeterKelvinsPerKilowattToThermalInsulance()
+        public int SquareMeterKelvinsPerKilowattToBaseThermalInsulance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterKelvinPerWatt.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int SquareMeterKelvinsPerWattToSiBaseThermalInsulance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinPerWatt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KelvinsPerWattToBaseThermalResistance()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KelvinsPerWattToThermalResistance()
+        public int KelvinsPerWattToSiBaseThermalResistance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinMeterPerWatt.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int KelvinMetersPerWattToBaseThermalResistivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinMeterPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KelvinMetersPerWattToThermalResistivity()
+        public int KelvinMetersPerWattToSiBaseThermalResistivity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilowattPerSquareMeterKelvin.
         /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int KilowattsPerSquareMeterKelvinToThermalTransmittance()
+        public int KilowattsPerSquareMeterKelvinToBaseThermalTransmittance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int WattsPerSquareMeterKelvinToSiBaseThermalTransmittance()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NewtonMetersToBaseTorque()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NewtonMetersToTorque()
+        public int NewtonMetersToSiBaseTorque()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of NTU.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int NTUToBaseTurbidity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NTU.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int NTUToTurbidity()
+        public int NTUToSiBaseTurbidity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of InternationalUnit.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int InternationalUnitsToBaseVitaminA()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InternationalUnit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int InternationalUnitsToVitaminA()
+        public int InternationalUnitsToSiBaseVitaminA()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CubicMetersToBaseVolume()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CubicMetersToVolume()
+        public int CubicMetersToSiBaseVolume()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int DecimalFractionsToBaseVolumeConcentration()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int DecimalFractionsToVolumeConcentration()
+        public int DecimalFractionsToSiBaseVolumeConcentration()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerSecond.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CubicMetersPerSecondToBaseVolumeFlow()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CubicMetersPerSecondToVolumeFlow()
+        public int CubicMetersPerSecondToSiBaseVolumeFlow()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CubicMetersPerSecondPerSquareMeterToBaseVolumeFlowPerArea()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CubicMetersPerSecondPerSquareMeterToVolumeFlowPerArea()
+        public int CubicMetersPerSecondPerSquareMeterToSiBaseVolumeFlowPerArea()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerMeter.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CubicMetersPerMeterToBaseVolumePerLength()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CubicMetersPerMeterToVolumePerLength()
+        public int CubicMetersPerMeterToSiBaseVolumePerLength()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int JoulesPerCubicMeterKelvinToBaseVolumetricHeatCapacity()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int JoulesPerCubicMeterKelvinToVolumetricHeatCapacity()
+        public int JoulesPerCubicMeterKelvinToSiBaseVolumetricHeatCapacity()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterToTheSixth.
+        /// </summary>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int MetersToTheSixthToBaseWarpingMomentOfInertia()
             => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheSixth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int MetersToTheSixthToWarpingMomentOfInertia()
+        public int MetersToTheSixthToSiBaseWarpingMomentOfInertia()
             => d;
     }
 #endif

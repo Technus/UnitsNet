@@ -26,8 +26,11 @@ namespace UnitsNet.Units
     public enum ElectricApparentEnergyUnit
     {
         KilovoltampereHour = 7,
+        KilovoltampereSecond = 2,
         MegavoltampereHour = 3,
+        MegavoltampereSecond = 13,
         VoltampereHour = 10,
+        VoltampereSecond = 4,
     }
 
     #pragma warning restore 1591

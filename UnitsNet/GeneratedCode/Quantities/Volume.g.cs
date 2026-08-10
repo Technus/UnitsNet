@@ -82,15 +82,15 @@ namespace UnitsNet
         public sealed class VolumeInfo : QuantityInfo<Volume, VolumeUnit>
         {
             /// <inheritdoc />
-            public VolumeInfo(string name, VolumeUnit baseUnit, IEnumerable<IUnitDefinition<VolumeUnit>> unitMappings, Volume zero, BaseDimensions baseDimensions,
+            public VolumeInfo(string name, VolumeUnit baseUnit, VolumeUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeUnit>> unitMappings, Volume zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Volume, VolumeUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public VolumeInfo(string name, VolumeUnit baseUnit, IEnumerable<IUnitDefinition<VolumeUnit>> unitMappings, Volume zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Volume.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Volume", typeof(Volume).Assembly))
+            public VolumeInfo(string name, VolumeUnit baseUnit, VolumeUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeUnit>> unitMappings, Volume zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Volume.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Volume", typeof(Volume).Assembly))
             {
             }
 
@@ -99,7 +99,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumeInfo"/> class with the default settings.</returns>
             public static VolumeInfo CreateDefault()
-                => new(nameof(Volume), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Volume), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumeInfo"/> class with the default settings for the Volume quantity and a callback for customizing the default unit mappings.
@@ -111,7 +111,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumeInfo"/> class with the default settings.
             /// </returns>
             public static VolumeInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumeUnit>>, IEnumerable<IUnitDefinition<VolumeUnit>>> customizeUnits)
-                => new(nameof(Volume), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Volume), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Volume"/> is L^3.
@@ -126,6 +126,15 @@ namespace UnitsNet
             ///     The default base unit of Volume is CubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static VolumeUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumeUnit.CubicMeter;
+
+            /// <summary>
+            ///     The default base unit of Volume is CubicMeter.
+            /// </summary>
+            public static VolumeUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -364,6 +373,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Volume, which is CubicMeter.
+        /// </summary>
+        public static VolumeUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => VolumeUnit.CubicMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Volume quantity.
         /// </summary>
         public static IReadOnlyCollection<VolumeUnit> Units
@@ -459,9 +477,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Volume,VolumeUnit}.AsBaseValue"/>
         /// <returns><see cref="VolumeUnit.CubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Volume,VolumeUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumeUnit.CubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Volume AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Volume,VolumeUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumeUnit.CubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeUnit.AcreFoot"/>
@@ -979,8 +1010,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CubicMeter.
         /// </summary>
-        public Volume CubicMetersToVolume()
+        public Volume CubicMetersToBaseVolume()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeter.
+        /// </summary>
+        public Volume CubicMetersToSiBaseVolume()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Volume"/> from <see cref="VolumeUnit.AcreFoot"/>.

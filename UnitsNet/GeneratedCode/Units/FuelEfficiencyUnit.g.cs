@@ -27,6 +27,7 @@ namespace UnitsNet.Units
     {
         KilometerPerLiter = 1,
         LiterPer100Kilometers = 2,
+        MeterPerCubicMeter = 6,
         MilePerUkGallon = 3,
         MilePerUsGallon = 4,
     }

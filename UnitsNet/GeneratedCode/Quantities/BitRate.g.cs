@@ -72,15 +72,15 @@ namespace UnitsNet
         public sealed class BitRateInfo : QuantityInfo<BitRate, BitRateUnit>
         {
             /// <inheritdoc />
-            public BitRateInfo(string name, BitRateUnit baseUnit, IEnumerable<IUnitDefinition<BitRateUnit>> unitMappings, BitRate zero, BaseDimensions baseDimensions,
+            public BitRateInfo(string name, BitRateUnit baseUnit, BitRateUnit siBaseUnit, IEnumerable<IUnitDefinition<BitRateUnit>> unitMappings, BitRate zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<BitRate, BitRateUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public BitRateInfo(string name, BitRateUnit baseUnit, IEnumerable<IUnitDefinition<BitRateUnit>> unitMappings, BitRate zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, BitRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.BitRate", typeof(BitRate).Assembly))
+            public BitRateInfo(string name, BitRateUnit baseUnit, BitRateUnit siBaseUnit, IEnumerable<IUnitDefinition<BitRateUnit>> unitMappings, BitRate zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, BitRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.BitRate", typeof(BitRate).Assembly))
             {
             }
 
@@ -89,7 +89,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="BitRateInfo"/> class with the default settings.</returns>
             public static BitRateInfo CreateDefault()
-                => new(nameof(BitRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(BitRate), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="BitRateInfo"/> class with the default settings for the BitRate quantity and a callback for customizing the default unit mappings.
@@ -101,7 +101,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="BitRateInfo"/> class with the default settings.
             /// </returns>
             public static BitRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<BitRateUnit>>, IEnumerable<IUnitDefinition<BitRateUnit>>> customizeUnits)
-                => new(nameof(BitRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(BitRate), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="BitRate"/> is T^-1.
@@ -116,6 +116,15 @@ namespace UnitsNet
             ///     The default base unit of BitRate is BitPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static BitRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = BitRateUnit.BitPerSecond;
+
+            /// <summary>
+            ///     The default base unit of BitRate is BitPerSecond.
+            /// </summary>
+            public static BitRateUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -309,6 +318,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of BitRate, which is BitPerSecond.
+        /// </summary>
+        public static BitRateUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => BitRateUnit.BitPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the BitRate quantity.
         /// </summary>
         public static IReadOnlyCollection<BitRateUnit> Units
@@ -404,9 +422,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{BitRate,BitRateUnit}.AsBaseValue"/>
         /// <returns><see cref="BitRateUnit.BitPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{BitRate,BitRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="BitRateUnit.BitPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public BitRate AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{BitRate,BitRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="BitRateUnit.BitPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="BitRateUnit.BitPerSecond"/>
@@ -789,8 +820,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of BitPerSecond.
         /// </summary>
-        public BitRate BitsPerSecondToBitRate()
+        public BitRate BitsPerSecondToBaseBitRate()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of BitPerSecond.
+        /// </summary>
+        public BitRate BitsPerSecondToSiBaseBitRate()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="BitRate"/> from <see cref="BitRateUnit.BitPerSecond"/>.

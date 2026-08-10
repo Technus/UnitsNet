@@ -43,8 +43,16 @@ public static class BaseUnitsExtensions
         /// <summary>
         ///     Convert to base unit quantity of {x.BaseUnit}.
         /// </summary>
+        [Obsolete(""Yields unpredictable results with non bare SI based units"")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public {type} {x.Units.First(u => u.SingularName == x.BaseUnit).PluralName}To{x.Name}()
+        public {type} {x.Units.First(u => u.SingularName == x.BaseUnit).PluralName}ToBase{x.Name}()
+            => d;
+
+        /// <summary>
+        ///     Convert to base unit quantity of {x.SiBaseUnit}.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public {type} {x.Units.First(u => u.SingularName == x.SiBaseUnit).PluralName}ToSiBase{x.Name}()
             => d;"));
     }
 }

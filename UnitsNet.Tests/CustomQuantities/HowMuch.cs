@@ -35,6 +35,20 @@ namespace UnitsNet.Tests.CustomQuantities
         public HowMuch AsBaseQuantity()
             => new(AsBaseValue(), Info.BaseUnitInfo.Value);
 
+        /// <summary>
+        /// Get the value as <see cref="QuantityValue"/> of the base unit
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(Info.SiBaseUnitInfo.Value);
+
+        /// <summary>
+        /// Get the quantity as quantity of the base unit
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public HowMuch AsSiBaseQuantity()
+            => new(AsSiBaseValue(), Info.SiBaseUnitInfo.Value);
+
         public HowMuchUnit Unit { get; }
 
         public QuantityValue Value { get; }
@@ -43,7 +57,7 @@ namespace UnitsNet.Tests.CustomQuantities
         
         public static QuantityInfo<HowMuch, HowMuchUnit> Info { get; } = new(
             nameof(HowMuch),
-            HowMuchUnit.Some,
+            HowMuchUnit.Some, HowMuchUnit.Some,
             new UnitDefinition<HowMuchUnit>[]
             {
                 new(HowMuchUnit.Some, "Some", BaseUnits.Undefined),

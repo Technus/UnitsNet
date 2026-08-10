@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class VolumeFlowPerAreaInfo : QuantityInfo<VolumeFlowPerArea, VolumeFlowPerAreaUnit>
         {
             /// <inheritdoc />
-            public VolumeFlowPerAreaInfo(string name, VolumeFlowPerAreaUnit baseUnit, IEnumerable<IUnitDefinition<VolumeFlowPerAreaUnit>> unitMappings, VolumeFlowPerArea zero, BaseDimensions baseDimensions,
+            public VolumeFlowPerAreaInfo(string name, VolumeFlowPerAreaUnit baseUnit, VolumeFlowPerAreaUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeFlowPerAreaUnit>> unitMappings, VolumeFlowPerArea zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<VolumeFlowPerArea, VolumeFlowPerAreaUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public VolumeFlowPerAreaInfo(string name, VolumeFlowPerAreaUnit baseUnit, IEnumerable<IUnitDefinition<VolumeFlowPerAreaUnit>> unitMappings, VolumeFlowPerArea zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, VolumeFlowPerArea.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumeFlowPerArea", typeof(VolumeFlowPerArea).Assembly))
+            public VolumeFlowPerAreaInfo(string name, VolumeFlowPerAreaUnit baseUnit, VolumeFlowPerAreaUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeFlowPerAreaUnit>> unitMappings, VolumeFlowPerArea zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, VolumeFlowPerArea.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumeFlowPerArea", typeof(VolumeFlowPerArea).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumeFlowPerAreaInfo"/> class with the default settings.</returns>
             public static VolumeFlowPerAreaInfo CreateDefault()
-                => new(nameof(VolumeFlowPerArea), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumeFlowPerArea), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumeFlowPerAreaInfo"/> class with the default settings for the VolumeFlowPerArea quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumeFlowPerAreaInfo"/> class with the default settings.
             /// </returns>
             public static VolumeFlowPerAreaInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumeFlowPerAreaUnit>>, IEnumerable<IUnitDefinition<VolumeFlowPerAreaUnit>>> customizeUnits)
-                => new(nameof(VolumeFlowPerArea), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumeFlowPerArea), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="VolumeFlowPerArea"/> is T^-1L.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of VolumeFlowPerArea is CubicMeterPerSecondPerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static VolumeFlowPerAreaUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of VolumeFlowPerArea is CubicMeterPerSecondPerSquareMeter.
+            /// </summary>
+            public static VolumeFlowPerAreaUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -190,6 +199,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of VolumeFlowPerArea, which is CubicMeterPerSecondPerSquareMeter.
+        /// </summary>
+        public static VolumeFlowPerAreaUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter;
         }
 
         /// <summary>
@@ -288,9 +306,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{VolumeFlowPerArea,VolumeFlowPerAreaUnit}.AsBaseValue"/>
         /// <returns><see cref="VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumeFlowPerArea,VolumeFlowPerAreaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VolumeFlowPerArea AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumeFlowPerArea,VolumeFlowPerAreaUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowPerAreaUnit.CubicFootPerMinutePerSquareFoot"/>
@@ -340,8 +371,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
         /// </summary>
-        public VolumeFlowPerArea CubicMetersPerSecondPerSquareMeterToVolumeFlowPerArea()
+        public VolumeFlowPerArea CubicMetersPerSecondPerSquareMeterToBaseVolumeFlowPerArea()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
+        /// </summary>
+        public VolumeFlowPerArea CubicMetersPerSecondPerSquareMeterToSiBaseVolumeFlowPerArea()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlowPerArea"/> from <see cref="VolumeFlowPerAreaUnit.CubicFootPerMinutePerSquareFoot"/>.

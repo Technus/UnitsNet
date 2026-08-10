@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class LuminanceInfo : QuantityInfo<Luminance, LuminanceUnit>
         {
             /// <inheritdoc />
-            public LuminanceInfo(string name, LuminanceUnit baseUnit, IEnumerable<IUnitDefinition<LuminanceUnit>> unitMappings, Luminance zero, BaseDimensions baseDimensions,
+            public LuminanceInfo(string name, LuminanceUnit baseUnit, LuminanceUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminanceUnit>> unitMappings, Luminance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Luminance, LuminanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LuminanceInfo(string name, LuminanceUnit baseUnit, IEnumerable<IUnitDefinition<LuminanceUnit>> unitMappings, Luminance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Luminance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Luminance", typeof(Luminance).Assembly))
+            public LuminanceInfo(string name, LuminanceUnit baseUnit, LuminanceUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminanceUnit>> unitMappings, Luminance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Luminance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Luminance", typeof(Luminance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LuminanceInfo"/> class with the default settings.</returns>
             public static LuminanceInfo CreateDefault()
-                => new(nameof(Luminance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Luminance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LuminanceInfo"/> class with the default settings for the Luminance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LuminanceInfo"/> class with the default settings.
             /// </returns>
             public static LuminanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<LuminanceUnit>>, IEnumerable<IUnitDefinition<LuminanceUnit>>> customizeUnits)
-                => new(nameof(Luminance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Luminance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Luminance"/> is L^-2J.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of Luminance is CandelaPerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LuminanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LuminanceUnit.CandelaPerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of Luminance is CandelaPerSquareMeter.
+            /// </summary>
+            public static LuminanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -220,6 +229,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Luminance, which is CandelaPerSquareMeter.
+        /// </summary>
+        public static LuminanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LuminanceUnit.CandelaPerSquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Luminance quantity.
         /// </summary>
         public static IReadOnlyCollection<LuminanceUnit> Units
@@ -315,9 +333,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Luminance,LuminanceUnit}.AsBaseValue"/>
         /// <returns><see cref="LuminanceUnit.CandelaPerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Luminance,LuminanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LuminanceUnit.CandelaPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Luminance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Luminance,LuminanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="LuminanceUnit.CandelaPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminanceUnit.CandelaPerSquareFoot"/>
@@ -439,8 +470,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CandelaPerSquareMeter.
         /// </summary>
-        public Luminance CandelasPerSquareMeterToLuminance()
+        public Luminance CandelasPerSquareMeterToBaseLuminance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CandelaPerSquareMeter.
+        /// </summary>
+        public Luminance CandelasPerSquareMeterToSiBaseLuminance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Luminance"/> from <see cref="LuminanceUnit.CandelaPerSquareFoot"/>.

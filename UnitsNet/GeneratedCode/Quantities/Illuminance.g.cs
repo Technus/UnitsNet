@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class IlluminanceInfo : QuantityInfo<Illuminance, IlluminanceUnit>
         {
             /// <inheritdoc />
-            public IlluminanceInfo(string name, IlluminanceUnit baseUnit, IEnumerable<IUnitDefinition<IlluminanceUnit>> unitMappings, Illuminance zero, BaseDimensions baseDimensions,
+            public IlluminanceInfo(string name, IlluminanceUnit baseUnit, IlluminanceUnit siBaseUnit, IEnumerable<IUnitDefinition<IlluminanceUnit>> unitMappings, Illuminance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Illuminance, IlluminanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public IlluminanceInfo(string name, IlluminanceUnit baseUnit, IEnumerable<IUnitDefinition<IlluminanceUnit>> unitMappings, Illuminance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Illuminance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Illuminance", typeof(Illuminance).Assembly))
+            public IlluminanceInfo(string name, IlluminanceUnit baseUnit, IlluminanceUnit siBaseUnit, IEnumerable<IUnitDefinition<IlluminanceUnit>> unitMappings, Illuminance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Illuminance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Illuminance", typeof(Illuminance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="IlluminanceInfo"/> class with the default settings.</returns>
             public static IlluminanceInfo CreateDefault()
-                => new(nameof(Illuminance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Illuminance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="IlluminanceInfo"/> class with the default settings for the Illuminance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="IlluminanceInfo"/> class with the default settings.
             /// </returns>
             public static IlluminanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<IlluminanceUnit>>, IEnumerable<IUnitDefinition<IlluminanceUnit>>> customizeUnits)
-                => new(nameof(Illuminance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Illuminance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Illuminance"/> is L^-2J.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of Illuminance is Lux. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static IlluminanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = IlluminanceUnit.Lux;
+
+            /// <summary>
+            ///     The default base unit of Illuminance is Lux.
+            /// </summary>
+            public static IlluminanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -199,6 +208,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Illuminance, which is Lux.
+        /// </summary>
+        public static IlluminanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => IlluminanceUnit.Lux;
         }
 
         /// <summary>
@@ -297,9 +315,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Illuminance,IlluminanceUnit}.AsBaseValue"/>
         /// <returns><see cref="IlluminanceUnit.Lux"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Illuminance,IlluminanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="IlluminanceUnit.Lux"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Illuminance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Illuminance,IlluminanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="IlluminanceUnit.Lux"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="IlluminanceUnit.Kilolux"/>
@@ -367,8 +398,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Lux.
         /// </summary>
-        public Illuminance LuxToIlluminance()
+        public Illuminance LuxToBaseIlluminance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Lux.
+        /// </summary>
+        public Illuminance LuxToSiBaseIlluminance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Illuminance"/> from <see cref="IlluminanceUnit.Kilolux"/>.

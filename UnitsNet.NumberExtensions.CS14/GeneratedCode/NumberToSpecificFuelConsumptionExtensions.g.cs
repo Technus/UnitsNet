@@ -66,6 +66,14 @@ namespace UnitsNet.NumberExtensions.NumberToSpecificFuelConsumption
                 => SpecificFuelConsumption.FromKilogramsPerKilonewtonSecond(value.ToQuantityValue());
 #endif
 
+            /// <inheritdoc cref="SpecificFuelConsumption.FromKilogramsPerNewtonSecond(QuantityValue)" />
+            public SpecificFuelConsumption KilogramsPerNewtonSecond
+#if NET7_0_OR_GREATER
+                => SpecificFuelConsumption.FromKilogramsPerNewtonSecond(QuantityValue.CreateChecked(value));
+#else
+                => SpecificFuelConsumption.FromKilogramsPerNewtonSecond(value.ToQuantityValue());
+#endif
+
             /// <inheritdoc cref="SpecificFuelConsumption.FromPoundsMassPerPoundForceHour(QuantityValue)" />
             public SpecificFuelConsumption PoundsMassPerPoundForceHour
 #if NET7_0_OR_GREATER

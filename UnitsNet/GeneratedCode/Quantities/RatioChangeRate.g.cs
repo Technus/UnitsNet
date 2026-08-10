@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class RatioChangeRateInfo : QuantityInfo<RatioChangeRate, RatioChangeRateUnit>
         {
             /// <inheritdoc />
-            public RatioChangeRateInfo(string name, RatioChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<RatioChangeRateUnit>> unitMappings, RatioChangeRate zero, BaseDimensions baseDimensions,
+            public RatioChangeRateInfo(string name, RatioChangeRateUnit baseUnit, RatioChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<RatioChangeRateUnit>> unitMappings, RatioChangeRate zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<RatioChangeRate, RatioChangeRateUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public RatioChangeRateInfo(string name, RatioChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<RatioChangeRateUnit>> unitMappings, RatioChangeRate zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, RatioChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RatioChangeRate", typeof(RatioChangeRate).Assembly))
+            public RatioChangeRateInfo(string name, RatioChangeRateUnit baseUnit, RatioChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<RatioChangeRateUnit>> unitMappings, RatioChangeRate zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, RatioChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RatioChangeRate", typeof(RatioChangeRate).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RatioChangeRateInfo"/> class with the default settings.</returns>
             public static RatioChangeRateInfo CreateDefault()
-                => new(nameof(RatioChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RatioChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RatioChangeRateInfo"/> class with the default settings for the RatioChangeRate quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RatioChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static RatioChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<RatioChangeRateUnit>>, IEnumerable<IUnitDefinition<RatioChangeRateUnit>>> customizeUnits)
-                => new(nameof(RatioChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RatioChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RatioChangeRate"/> is T^-1.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of RatioChangeRate is DecimalFractionPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static RatioChangeRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RatioChangeRateUnit.DecimalFractionPerSecond;
+
+            /// <summary>
+            ///     The default base unit of RatioChangeRate is DecimalFractionPerSecond.
+            /// </summary>
+            public static RatioChangeRateUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -190,6 +199,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of RatioChangeRate, which is DecimalFractionPerSecond.
+        /// </summary>
+        public static RatioChangeRateUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => RatioChangeRateUnit.DecimalFractionPerSecond;
         }
 
         /// <summary>
@@ -288,9 +306,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{RatioChangeRate,RatioChangeRateUnit}.AsBaseValue"/>
         /// <returns><see cref="RatioChangeRateUnit.DecimalFractionPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RatioChangeRate,RatioChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RatioChangeRateUnit.DecimalFractionPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RatioChangeRate AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RatioChangeRate,RatioChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="RatioChangeRateUnit.DecimalFractionPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioChangeRateUnit.DecimalFractionPerSecond"/>
@@ -340,8 +371,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of DecimalFractionPerSecond.
         /// </summary>
-        public RatioChangeRate DecimalFractionsPerSecondToRatioChangeRate()
+        public RatioChangeRate DecimalFractionsPerSecondToBaseRatioChangeRate()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFractionPerSecond.
+        /// </summary>
+        public RatioChangeRate DecimalFractionsPerSecondToSiBaseRatioChangeRate()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="RatioChangeRate"/> from <see cref="RatioChangeRateUnit.DecimalFractionPerSecond"/>.

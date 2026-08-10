@@ -72,8 +72,15 @@ public partial class Quantity
         ///     Convert to base unit quantity of {x.BaseUnit}.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public {x.Name} {x.Units.First(u => u.SingularName == x.BaseUnit).PluralName}To{x.Name}()
-            => new(d, {x.Name}Unit.{x.BaseUnit});"));
+        public {x.Name} {x.Units.First(u => u.SingularName == x.BaseUnit).PluralName}ToBase{x.Name}()
+            => new(d, {x.Name}Unit.{x.BaseUnit});
+
+        /// <summary>
+        ///     Convert to base unit quantity of {x.SiBaseUnit}.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public {x.Name} {x.Units.First(u => u.SingularName == x.SiBaseUnit).PluralName}ToSiBase{x.Name}()
+            => new(d, {x.Name}Unit.{x.SiBaseUnit});"));
 
     }
 

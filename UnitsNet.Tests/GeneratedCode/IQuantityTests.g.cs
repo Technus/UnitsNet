@@ -52,7 +52,7 @@ namespace UnitsNet.Tests
             Assertion(3, DurationUnit.Year365, Quantity.From(3, DurationUnit.Year365));
             Assertion(3, DynamicViscosityUnit.Reyn, Quantity.From(3, DynamicViscosityUnit.Reyn));
             Assertion(3, ElectricAdmittanceUnit.Terasiemens, Quantity.From(3, ElectricAdmittanceUnit.Terasiemens));
-            Assertion(3, ElectricApparentEnergyUnit.VoltampereHour, Quantity.From(3, ElectricApparentEnergyUnit.VoltampereHour));
+            Assertion(3, ElectricApparentEnergyUnit.VoltampereSecond, Quantity.From(3, ElectricApparentEnergyUnit.VoltampereSecond));
             Assertion(3, ElectricApparentPowerUnit.Voltampere, Quantity.From(3, ElectricApparentPowerUnit.Voltampere));
             Assertion(3, ElectricCapacitanceUnit.Picofarad, Quantity.From(3, ElectricCapacitanceUnit.Picofarad));
             Assertion(3, ElectricChargeUnit.Picocoulomb, Quantity.From(3, ElectricChargeUnit.Picocoulomb));
@@ -68,7 +68,7 @@ namespace UnitsNet.Tests
             Assertion(3, ElectricPotentialUnit.Volt, Quantity.From(3, ElectricPotentialUnit.Volt));
             Assertion(3, ElectricPotentialChangeRateUnit.VoltPerSecond, Quantity.From(3, ElectricPotentialChangeRateUnit.VoltPerSecond));
             Assertion(3, ElectricReactanceUnit.Teraohm, Quantity.From(3, ElectricReactanceUnit.Teraohm));
-            Assertion(3, ElectricReactiveEnergyUnit.VoltampereReactiveHour, Quantity.From(3, ElectricReactiveEnergyUnit.VoltampereReactiveHour));
+            Assertion(3, ElectricReactiveEnergyUnit.VoltampereReactiveSecond, Quantity.From(3, ElectricReactiveEnergyUnit.VoltampereReactiveSecond));
             Assertion(3, ElectricReactivePowerUnit.VoltampereReactive, Quantity.From(3, ElectricReactivePowerUnit.VoltampereReactive));
             Assertion(3, ElectricResistanceUnit.Teraohm, Quantity.From(3, ElectricResistanceUnit.Teraohm));
             Assertion(3, ElectricResistivityUnit.PicoohmMeter, Quantity.From(3, ElectricResistivityUnit.PicoohmMeter));

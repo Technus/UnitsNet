@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class CompressibilityInfo : QuantityInfo<Compressibility, CompressibilityUnit>
         {
             /// <inheritdoc />
-            public CompressibilityInfo(string name, CompressibilityUnit baseUnit, IEnumerable<IUnitDefinition<CompressibilityUnit>> unitMappings, Compressibility zero, BaseDimensions baseDimensions,
+            public CompressibilityInfo(string name, CompressibilityUnit baseUnit, CompressibilityUnit siBaseUnit, IEnumerable<IUnitDefinition<CompressibilityUnit>> unitMappings, Compressibility zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Compressibility, CompressibilityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public CompressibilityInfo(string name, CompressibilityUnit baseUnit, IEnumerable<IUnitDefinition<CompressibilityUnit>> unitMappings, Compressibility zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Compressibility.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Compressibility", typeof(Compressibility).Assembly))
+            public CompressibilityInfo(string name, CompressibilityUnit baseUnit, CompressibilityUnit siBaseUnit, IEnumerable<IUnitDefinition<CompressibilityUnit>> unitMappings, Compressibility zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Compressibility.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Compressibility", typeof(Compressibility).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="CompressibilityInfo"/> class with the default settings.</returns>
             public static CompressibilityInfo CreateDefault()
-                => new(nameof(Compressibility), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Compressibility), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="CompressibilityInfo"/> class with the default settings for the Compressibility quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="CompressibilityInfo"/> class with the default settings.
             /// </returns>
             public static CompressibilityInfo CreateDefault(Func<IEnumerable<UnitDefinition<CompressibilityUnit>>, IEnumerable<IUnitDefinition<CompressibilityUnit>>> customizeUnits)
-                => new(nameof(Compressibility), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Compressibility), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Compressibility"/> is T^2LM^-1.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of Compressibility is InversePascal. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static CompressibilityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = CompressibilityUnit.InversePascal;
+
+            /// <summary>
+            ///     The default base unit of Compressibility is InversePascal.
+            /// </summary>
+            public static CompressibilityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -205,6 +214,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Compressibility, which is InversePascal.
+        /// </summary>
+        public static CompressibilityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => CompressibilityUnit.InversePascal;
         }
 
         /// <summary>
@@ -303,9 +321,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Compressibility,CompressibilityUnit}.AsBaseValue"/>
         /// <returns><see cref="CompressibilityUnit.InversePascal"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Compressibility,CompressibilityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="CompressibilityUnit.InversePascal"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Compressibility AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Compressibility,CompressibilityUnit}.AsBaseValue"/>
+        /// <returns><see cref="CompressibilityUnit.InversePascal"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CompressibilityUnit.InverseAtmosphere"/>
@@ -400,8 +431,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of InversePascal.
         /// </summary>
-        public Compressibility InversePascalsToCompressibility()
+        public Compressibility InversePascalsToBaseCompressibility()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of InversePascal.
+        /// </summary>
+        public Compressibility InversePascalsToSiBaseCompressibility()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Compressibility"/> from <see cref="CompressibilityUnit.InverseAtmosphere"/>.

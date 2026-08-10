@@ -9,5 +9,4 @@
     <Configurations>Debug;Release;Official</Configurations>
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
-  
 </Project>

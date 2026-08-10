@@ -79,15 +79,15 @@ namespace UnitsNet
         public sealed class EnergyInfo : QuantityInfo<Energy, EnergyUnit>
         {
             /// <inheritdoc />
-            public EnergyInfo(string name, EnergyUnit baseUnit, IEnumerable<IUnitDefinition<EnergyUnit>> unitMappings, Energy zero, BaseDimensions baseDimensions,
+            public EnergyInfo(string name, EnergyUnit baseUnit, EnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<EnergyUnit>> unitMappings, Energy zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Energy, EnergyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public EnergyInfo(string name, EnergyUnit baseUnit, IEnumerable<IUnitDefinition<EnergyUnit>> unitMappings, Energy zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Energy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Energy", typeof(Energy).Assembly))
+            public EnergyInfo(string name, EnergyUnit baseUnit, EnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<EnergyUnit>> unitMappings, Energy zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Energy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Energy", typeof(Energy).Assembly))
             {
             }
 
@@ -96,7 +96,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="EnergyInfo"/> class with the default settings.</returns>
             public static EnergyInfo CreateDefault()
-                => new(nameof(Energy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Energy), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="EnergyInfo"/> class with the default settings for the Energy quantity and a callback for customizing the default unit mappings.
@@ -108,7 +108,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="EnergyInfo"/> class with the default settings.
             /// </returns>
             public static EnergyInfo CreateDefault(Func<IEnumerable<UnitDefinition<EnergyUnit>>, IEnumerable<IUnitDefinition<EnergyUnit>>> customizeUnits)
-                => new(nameof(Energy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Energy), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Energy"/> is T^-2L^2M.
@@ -123,6 +123,15 @@ namespace UnitsNet
             ///     The default base unit of Energy is Joule. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static EnergyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = EnergyUnit.Joule;
+
+            /// <summary>
+            ///     The default base unit of Energy is Joule.
+            /// </summary>
+            public static EnergyUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -319,6 +328,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Energy, which is Joule.
+        /// </summary>
+        public static EnergyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => EnergyUnit.Joule;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Energy quantity.
         /// </summary>
         public static IReadOnlyCollection<EnergyUnit> Units
@@ -414,9 +432,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Energy,EnergyUnit}.AsBaseValue"/>
         /// <returns><see cref="EnergyUnit.Joule"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Energy,EnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="EnergyUnit.Joule"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Energy AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Energy,EnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="EnergyUnit.Joule"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="EnergyUnit.BritishThermalUnit"/>
@@ -808,8 +839,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Joule.
         /// </summary>
-        public Energy JoulesToEnergy()
+        public Energy JoulesToBaseEnergy()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Joule.
+        /// </summary>
+        public Energy JoulesToSiBaseEnergy()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Energy"/> from <see cref="EnergyUnit.BritishThermalUnit"/>.

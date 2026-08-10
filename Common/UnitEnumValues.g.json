@@ -550,7 +550,8 @@
     "KilometerPerLiter": 1,
     "LiterPer100Kilometers": 2,
     "MilePerUkGallon": 3,
-    "MilePerUsGallon": 4
+    "MilePerUsGallon": 4,
+    "MeterPerCubicMeter": 6
   },
   "HeatFlux": {
     "BtuPerHourSquareFoot": 1,
@@ -1383,7 +1384,8 @@
     "GramPerKilonewtonSecond": 1,
     "KilogramPerKilogramForceHour": 2,
     "KilogramPerKilonewtonSecond": 3,
-    "PoundMassPerPoundForceHour": 4
+    "PoundMassPerPoundForceHour": 4,
+    "KilogramPerNewtonSecond": 8
   },
   "SpecificVolume": {
     "CubicMillimeterPerKilogram": 3,
@@ -1942,7 +1944,10 @@
   "ElectricApparentEnergy": {
     "KilovoltampereHour": 7,
     "MegavoltampereHour": 3,
-    "VoltampereHour": 10
+    "VoltampereHour": 10,
+    "KilovoltampereSecond": 2,
+    "MegavoltampereSecond": 13,
+    "VoltampereSecond": 4
   },
   "ElectricApparentPower": {
     "Gigavoltampere": 3,
@@ -1974,7 +1979,10 @@
   "ElectricReactiveEnergy": {
     "KilovoltampereReactiveHour": 10,
     "MegavoltampereReactiveHour": 4,
-    "VoltampereReactiveHour": 7
+    "VoltampereReactiveHour": 7,
+    "KilovoltampereReactiveSecond": 5,
+    "MegavoltampereReactiveSecond": 8,
+    "VoltampereReactiveSecond": 13
   },
   "ElectricReactivePower": {
     "GigavoltampereReactive": 1,

@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class FuelEfficiencyInfo : QuantityInfo<FuelEfficiency, FuelEfficiencyUnit>
         {
             /// <inheritdoc />
-            public FuelEfficiencyInfo(string name, FuelEfficiencyUnit baseUnit, IEnumerable<IUnitDefinition<FuelEfficiencyUnit>> unitMappings, FuelEfficiency zero, BaseDimensions baseDimensions,
+            public FuelEfficiencyInfo(string name, FuelEfficiencyUnit baseUnit, FuelEfficiencyUnit siBaseUnit, IEnumerable<IUnitDefinition<FuelEfficiencyUnit>> unitMappings, FuelEfficiency zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<FuelEfficiency, FuelEfficiencyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public FuelEfficiencyInfo(string name, FuelEfficiencyUnit baseUnit, IEnumerable<IUnitDefinition<FuelEfficiencyUnit>> unitMappings, FuelEfficiency zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, FuelEfficiency.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.FuelEfficiency", typeof(FuelEfficiency).Assembly))
+            public FuelEfficiencyInfo(string name, FuelEfficiencyUnit baseUnit, FuelEfficiencyUnit siBaseUnit, IEnumerable<IUnitDefinition<FuelEfficiencyUnit>> unitMappings, FuelEfficiency zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, FuelEfficiency.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.FuelEfficiency", typeof(FuelEfficiency).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="FuelEfficiencyInfo"/> class with the default settings.</returns>
             public static FuelEfficiencyInfo CreateDefault()
-                => new(nameof(FuelEfficiency), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(FuelEfficiency), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="FuelEfficiencyInfo"/> class with the default settings for the FuelEfficiency quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="FuelEfficiencyInfo"/> class with the default settings.
             /// </returns>
             public static FuelEfficiencyInfo CreateDefault(Func<IEnumerable<UnitDefinition<FuelEfficiencyUnit>>, IEnumerable<IUnitDefinition<FuelEfficiencyUnit>>> customizeUnits)
-                => new(nameof(FuelEfficiency), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(FuelEfficiency), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="FuelEfficiency"/> is L^-2.
@@ -119,6 +119,15 @@ namespace UnitsNet
             } = FuelEfficiencyUnit.KilometerPerLiter;
 
             /// <summary>
+            ///     The default base unit of FuelEfficiency is MeterPerCubicMeter.
+            /// </summary>
+            public static FuelEfficiencyUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = FuelEfficiencyUnit.MeterPerCubicMeter;
+
+            /// <summary>
             ///     Retrieves the default mappings for <see cref="FuelEfficiencyUnit"/>.
             /// </summary>
             /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="UnitDefinition{FuelEfficiencyUnit}"/> representing the default unit mappings for FuelEfficiency.</returns>
@@ -128,6 +137,9 @@ namespace UnitsNet
                 yield return new (FuelEfficiencyUnit.LiterPer100Kilometers, "LiterPer100Kilometers", "LitersPer100Kilometers", BaseUnits.Undefined,
                      new ConversionExpression(coefficient: 100, exponent: -1),
                      new ConversionExpression(coefficient: 100, exponent: -1)
+                );
+                yield return new (FuelEfficiencyUnit.MeterPerCubicMeter, "MeterPerCubicMeter", "MetersPerCubicMeter", BaseUnits.Undefined,
+                     1000000
                 );
                 yield return new (FuelEfficiencyUnit.MilePerUkGallon, "MilePerUkGallon", "MilesPerUkGallon", BaseUnits.Undefined,
                      new QuantityValue(2273045, 804672)
@@ -199,6 +211,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of FuelEfficiency, which is MeterPerCubicMeter.
+        /// </summary>
+        public static FuelEfficiencyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => FuelEfficiencyUnit.MeterPerCubicMeter;
         }
 
         /// <summary>
@@ -297,9 +318,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{FuelEfficiency,FuelEfficiencyUnit}.AsBaseValue"/>
         /// <returns><see cref="FuelEfficiencyUnit.KilometerPerLiter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{FuelEfficiency,FuelEfficiencyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="FuelEfficiencyUnit.MeterPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public FuelEfficiency AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{FuelEfficiency,FuelEfficiencyUnit}.AsBaseValue"/>
+        /// <returns><see cref="FuelEfficiencyUnit.MeterPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FuelEfficiencyUnit.KilometerPerLiter"/>
@@ -317,6 +351,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => this.As(FuelEfficiencyUnit.LiterPer100Kilometers);
+        }
+
+        /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FuelEfficiencyUnit.MeterPerCubicMeter"/>
+        /// </summary>
+        public QuantityValue MetersPerCubicMeter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(FuelEfficiencyUnit.MeterPerCubicMeter);
         }
 
         /// <summary>
@@ -367,8 +410,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilometerPerLiter.
         /// </summary>
-        public FuelEfficiency KilometersPerLiterToFuelEfficiency()
+        public FuelEfficiency KilometersPerLiterToBaseFuelEfficiency()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerCubicMeter.
+        /// </summary>
+        public FuelEfficiency MetersPerCubicMeterToSiBaseFuelEfficiency()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="FuelEfficiency"/> from <see cref="FuelEfficiencyUnit.KilometerPerLiter"/>.
@@ -383,6 +432,13 @@ namespace UnitsNet
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FuelEfficiency FromLitersPer100Kilometers(QuantityValue value)
             => new(value, FuelEfficiencyUnit.LiterPer100Kilometers);
+
+        /// <summary>
+        ///     Creates a <see cref="FuelEfficiency"/> from <see cref="FuelEfficiencyUnit.MeterPerCubicMeter"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static FuelEfficiency FromMetersPerCubicMeter(QuantityValue value)
+            => new(value, FuelEfficiencyUnit.MeterPerCubicMeter);
 
         /// <summary>
         ///     Creates a <see cref="FuelEfficiency"/> from <see cref="FuelEfficiencyUnit.MilePerUkGallon"/>.

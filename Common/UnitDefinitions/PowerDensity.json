@@ -1,6 +1,7 @@
 {
   "Name": "PowerDensity",
   "BaseUnit": "WattPerCubicMeter",
+  "SiBaseUnit": "WattPerCubicMeter",
   "XmlDocSummary": "The amount of power in a volume.",
   "BaseDimensions": {
     "L": -1,

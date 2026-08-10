@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricFieldInfo : QuantityInfo<ElectricField, ElectricFieldUnit>
         {
             /// <inheritdoc />
-            public ElectricFieldInfo(string name, ElectricFieldUnit baseUnit, IEnumerable<IUnitDefinition<ElectricFieldUnit>> unitMappings, ElectricField zero, BaseDimensions baseDimensions,
+            public ElectricFieldInfo(string name, ElectricFieldUnit baseUnit, ElectricFieldUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricFieldUnit>> unitMappings, ElectricField zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricField, ElectricFieldUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricFieldInfo(string name, ElectricFieldUnit baseUnit, IEnumerable<IUnitDefinition<ElectricFieldUnit>> unitMappings, ElectricField zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricField.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricField", typeof(ElectricField).Assembly))
+            public ElectricFieldInfo(string name, ElectricFieldUnit baseUnit, ElectricFieldUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricFieldUnit>> unitMappings, ElectricField zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricField.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricField", typeof(ElectricField).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricFieldInfo"/> class with the default settings.</returns>
             public static ElectricFieldInfo CreateDefault()
-                => new(nameof(ElectricField), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricField), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricFieldInfo"/> class with the default settings for the ElectricField quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricFieldInfo"/> class with the default settings.
             /// </returns>
             public static ElectricFieldInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricFieldUnit>>, IEnumerable<IUnitDefinition<ElectricFieldUnit>>> customizeUnits)
-                => new(nameof(ElectricField), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricField), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricField"/> is T^-3LMI^-1.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricField is VoltPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricFieldUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricFieldUnit.VoltPerMeter;
+
+            /// <summary>
+            ///     The default base unit of ElectricField is VoltPerMeter.
+            /// </summary>
+            public static ElectricFieldUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -190,6 +199,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricField, which is VoltPerMeter.
+        /// </summary>
+        public static ElectricFieldUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricFieldUnit.VoltPerMeter;
         }
 
         /// <summary>
@@ -288,9 +306,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricField,ElectricFieldUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricFieldUnit.VoltPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricField,ElectricFieldUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricFieldUnit.VoltPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricField AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricField,ElectricFieldUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricFieldUnit.VoltPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricFieldUnit.VoltPerMeter"/>
@@ -331,8 +362,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of VoltPerMeter.
         /// </summary>
-        public ElectricField VoltsPerMeterToElectricField()
+        public ElectricField VoltsPerMeterToBaseElectricField()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltPerMeter.
+        /// </summary>
+        public ElectricField VoltsPerMeterToSiBaseElectricField()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricField"/> from <see cref="ElectricFieldUnit.VoltPerMeter"/>.

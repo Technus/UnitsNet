@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class ElectricConductivityInfo : QuantityInfo<ElectricConductivity, ElectricConductivityUnit>
         {
             /// <inheritdoc />
-            public ElectricConductivityInfo(string name, ElectricConductivityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricConductivityUnit>> unitMappings, ElectricConductivity zero, BaseDimensions baseDimensions,
+            public ElectricConductivityInfo(string name, ElectricConductivityUnit baseUnit, ElectricConductivityUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricConductivityUnit>> unitMappings, ElectricConductivity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricConductivity, ElectricConductivityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricConductivityInfo(string name, ElectricConductivityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricConductivityUnit>> unitMappings, ElectricConductivity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricConductivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricConductivity", typeof(ElectricConductivity).Assembly))
+            public ElectricConductivityInfo(string name, ElectricConductivityUnit baseUnit, ElectricConductivityUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricConductivityUnit>> unitMappings, ElectricConductivity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricConductivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricConductivity", typeof(ElectricConductivity).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricConductivityInfo"/> class with the default settings.</returns>
             public static ElectricConductivityInfo CreateDefault()
-                => new(nameof(ElectricConductivity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricConductivity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricConductivityInfo"/> class with the default settings for the ElectricConductivity quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricConductivityInfo"/> class with the default settings.
             /// </returns>
             public static ElectricConductivityInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricConductivityUnit>>, IEnumerable<IUnitDefinition<ElectricConductivityUnit>>> customizeUnits)
-                => new(nameof(ElectricConductivity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricConductivity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricConductivity"/> is T^3L^-3M^-1I^2.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricConductivity is SiemensPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricConductivityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricConductivityUnit.SiemensPerMeter;
+
+            /// <summary>
+            ///     The default base unit of ElectricConductivity is SiemensPerMeter.
+            /// </summary>
+            public static ElectricConductivityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -204,6 +213,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricConductivity, which is SiemensPerMeter.
+        /// </summary>
+        public static ElectricConductivityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricConductivityUnit.SiemensPerMeter;
         }
 
         /// <summary>
@@ -302,9 +320,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricConductivity,ElectricConductivityUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricConductivityUnit.SiemensPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricConductivity,ElectricConductivityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricConductivityUnit.SiemensPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricConductivity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricConductivity,ElectricConductivityUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricConductivityUnit.SiemensPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductivityUnit.MicrosiemensPerCentimeter"/>
@@ -390,8 +421,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of SiemensPerMeter.
         /// </summary>
-        public ElectricConductivity SiemensPerMeterToElectricConductivity()
+        public ElectricConductivity SiemensPerMeterToBaseElectricConductivity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of SiemensPerMeter.
+        /// </summary>
+        public ElectricConductivity SiemensPerMeterToSiBaseElectricConductivity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductivity"/> from <see cref="ElectricConductivityUnit.MicrosiemensPerCentimeter"/>.

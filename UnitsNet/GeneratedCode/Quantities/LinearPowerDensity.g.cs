@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class LinearPowerDensityInfo : QuantityInfo<LinearPowerDensity, LinearPowerDensityUnit>
         {
             /// <inheritdoc />
-            public LinearPowerDensityInfo(string name, LinearPowerDensityUnit baseUnit, IEnumerable<IUnitDefinition<LinearPowerDensityUnit>> unitMappings, LinearPowerDensity zero, BaseDimensions baseDimensions,
+            public LinearPowerDensityInfo(string name, LinearPowerDensityUnit baseUnit, LinearPowerDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<LinearPowerDensityUnit>> unitMappings, LinearPowerDensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<LinearPowerDensity, LinearPowerDensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LinearPowerDensityInfo(string name, LinearPowerDensityUnit baseUnit, IEnumerable<IUnitDefinition<LinearPowerDensityUnit>> unitMappings, LinearPowerDensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, LinearPowerDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LinearPowerDensity", typeof(LinearPowerDensity).Assembly))
+            public LinearPowerDensityInfo(string name, LinearPowerDensityUnit baseUnit, LinearPowerDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<LinearPowerDensityUnit>> unitMappings, LinearPowerDensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, LinearPowerDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LinearPowerDensity", typeof(LinearPowerDensity).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LinearPowerDensityInfo"/> class with the default settings.</returns>
             public static LinearPowerDensityInfo CreateDefault()
-                => new(nameof(LinearPowerDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LinearPowerDensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LinearPowerDensityInfo"/> class with the default settings for the LinearPowerDensity quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LinearPowerDensityInfo"/> class with the default settings.
             /// </returns>
             public static LinearPowerDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<LinearPowerDensityUnit>>, IEnumerable<IUnitDefinition<LinearPowerDensityUnit>>> customizeUnits)
-                => new(nameof(LinearPowerDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LinearPowerDensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="LinearPowerDensity"/> is T^-3LM.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of LinearPowerDensity is WattPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LinearPowerDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LinearPowerDensityUnit.WattPerMeter;
+
+            /// <summary>
+            ///     The default base unit of LinearPowerDensity is WattPerMeter.
+            /// </summary>
+            public static LinearPowerDensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -265,6 +274,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of LinearPowerDensity, which is WattPerMeter.
+        /// </summary>
+        public static LinearPowerDensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LinearPowerDensityUnit.WattPerMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the LinearPowerDensity quantity.
         /// </summary>
         public static IReadOnlyCollection<LinearPowerDensityUnit> Units
@@ -360,9 +378,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{LinearPowerDensity,LinearPowerDensityUnit}.AsBaseValue"/>
         /// <returns><see cref="LinearPowerDensityUnit.WattPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LinearPowerDensity,LinearPowerDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LinearPowerDensityUnit.WattPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public LinearPowerDensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LinearPowerDensity,LinearPowerDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="LinearPowerDensityUnit.WattPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearPowerDensityUnit.GigawattPerCentimeter"/>
@@ -619,8 +650,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeter.
         /// </summary>
-        public LinearPowerDensity WattsPerMeterToLinearPowerDensity()
+        public LinearPowerDensity WattsPerMeterToBaseLinearPowerDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerMeter.
+        /// </summary>
+        public LinearPowerDensity WattsPerMeterToSiBaseLinearPowerDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="LinearPowerDensity"/> from <see cref="LinearPowerDensityUnit.GigawattPerCentimeter"/>.

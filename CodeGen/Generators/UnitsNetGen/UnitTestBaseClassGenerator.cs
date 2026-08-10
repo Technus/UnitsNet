@@ -28,6 +28,11 @@ namespace CodeGen.Generators.UnitsNetGen
         private readonly Unit _baseUnit;
 
         /// <summary>
+        /// Base unit for this quantity, such as Meter for quantity Length.
+        /// </summary>
+        private readonly Unit _siBaseUnit;
+
+        /// <summary>
         /// Example: "LengthUnit"
         /// </summary>
         private readonly string _unitEnumName;
@@ -41,6 +46,11 @@ namespace CodeGen.Generators.UnitsNetGen
         /// Example: "LengthUnit.Meter".
         /// </summary>
         private readonly string _baseUnitFullName;
+
+        /// <summary>
+        /// Example: "LengthUnit.Meter".
+        /// </summary>
+        private readonly string _siBaseUnitFullName;
 
         /// <summary>
         /// Other unit, if more than one unit exists for quantity, otherwise same as <see cref="_baseUnit"/>.
@@ -108,11 +118,15 @@ namespace CodeGen.Generators.UnitsNetGen
             _baseUnit = quantity.Units.FirstOrDefault(u => u.SingularName == _quantity.BaseUnit) ??
                         throw new ArgumentException($"No unit found with SingularName equal to BaseUnit [{_quantity.BaseUnit}]. This unit must be defined.",
                             nameof(quantity));
+            _siBaseUnit = quantity.Units.FirstOrDefault(u => u.SingularName == _quantity.SiBaseUnit) ??
+                        throw new ArgumentException($"No unit found with SingularName equal to BaseUnit [{_quantity.SiBaseUnit}]. This unit must be defined.",
+                            nameof(quantity));
 
             _unitEnumName = $"{quantity.Name}Unit";
 
             _baseUnitEnglishAbbreviation = GetEnglishAbbreviation(_baseUnit);
             _baseUnitFullName = $"{_unitEnumName}.{_baseUnit.SingularName}";
+            _siBaseUnitFullName = $"{_unitEnumName}.{_siBaseUnit.SingularName}";
 
             // Try to pick another unit, or fall back to base unit if only a single unit.
             _otherOrBaseUnit = quantity.Units.Where(u => u != _baseUnit).DefaultIfEmpty(_baseUnit).First();
@@ -343,7 +357,7 @@ namespace UnitsNet.Tests
         [Fact]
         public void {_quantity.Name}Info_CreateWithCustomUnitInfos()
         {{
-            {_unitEnumName}[] expectedUnits = [{_baseUnitFullName}];
+            {_unitEnumName}[] expectedUnits = [{string.Join(", ", new string[] { _baseUnitFullName, _siBaseUnitFullName }.Distinct())}];
 
             {_quantity.Name}.{_quantity.Name}Info quantityInfo = {_quantity.Name}.{_quantity.Name}Info.CreateDefault(mappings => mappings.SelectUnits(expectedUnits));
 

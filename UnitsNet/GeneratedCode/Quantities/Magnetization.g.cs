@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class MagnetizationInfo : QuantityInfo<Magnetization, MagnetizationUnit>
         {
             /// <inheritdoc />
-            public MagnetizationInfo(string name, MagnetizationUnit baseUnit, IEnumerable<IUnitDefinition<MagnetizationUnit>> unitMappings, Magnetization zero, BaseDimensions baseDimensions,
+            public MagnetizationInfo(string name, MagnetizationUnit baseUnit, MagnetizationUnit siBaseUnit, IEnumerable<IUnitDefinition<MagnetizationUnit>> unitMappings, Magnetization zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Magnetization, MagnetizationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MagnetizationInfo(string name, MagnetizationUnit baseUnit, IEnumerable<IUnitDefinition<MagnetizationUnit>> unitMappings, Magnetization zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Magnetization.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Magnetization", typeof(Magnetization).Assembly))
+            public MagnetizationInfo(string name, MagnetizationUnit baseUnit, MagnetizationUnit siBaseUnit, IEnumerable<IUnitDefinition<MagnetizationUnit>> unitMappings, Magnetization zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Magnetization.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Magnetization", typeof(Magnetization).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MagnetizationInfo"/> class with the default settings.</returns>
             public static MagnetizationInfo CreateDefault()
-                => new(nameof(Magnetization), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Magnetization), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MagnetizationInfo"/> class with the default settings for the Magnetization quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MagnetizationInfo"/> class with the default settings.
             /// </returns>
             public static MagnetizationInfo CreateDefault(Func<IEnumerable<UnitDefinition<MagnetizationUnit>>, IEnumerable<IUnitDefinition<MagnetizationUnit>>> customizeUnits)
-                => new(nameof(Magnetization), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Magnetization), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Magnetization"/> is L^-1I.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Magnetization is AmperePerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MagnetizationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MagnetizationUnit.AmperePerMeter;
+
+            /// <summary>
+            ///     The default base unit of Magnetization is AmperePerMeter.
+            /// </summary>
+            public static MagnetizationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -189,6 +198,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Magnetization, which is AmperePerMeter.
+        /// </summary>
+        public static MagnetizationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MagnetizationUnit.AmperePerMeter;
         }
 
         /// <summary>
@@ -287,9 +305,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Magnetization,MagnetizationUnit}.AsBaseValue"/>
         /// <returns><see cref="MagnetizationUnit.AmperePerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Magnetization,MagnetizationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MagnetizationUnit.AmperePerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Magnetization AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Magnetization,MagnetizationUnit}.AsBaseValue"/>
+        /// <returns><see cref="MagnetizationUnit.AmperePerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagnetizationUnit.AmperePerMeter"/>
@@ -330,8 +361,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of AmperePerMeter.
         /// </summary>
-        public Magnetization AmperesPerMeterToMagnetization()
+        public Magnetization AmperesPerMeterToBaseMagnetization()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerMeter.
+        /// </summary>
+        public Magnetization AmperesPerMeterToSiBaseMagnetization()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Magnetization"/> from <see cref="MagnetizationUnit.AmperePerMeter"/>.

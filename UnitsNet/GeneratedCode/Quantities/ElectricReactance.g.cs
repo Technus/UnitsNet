@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class ElectricReactanceInfo : QuantityInfo<ElectricReactance, ElectricReactanceUnit>
         {
             /// <inheritdoc />
-            public ElectricReactanceInfo(string name, ElectricReactanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactanceUnit>> unitMappings, ElectricReactance zero, BaseDimensions baseDimensions,
+            public ElectricReactanceInfo(string name, ElectricReactanceUnit baseUnit, ElectricReactanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricReactanceUnit>> unitMappings, ElectricReactance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricReactance, ElectricReactanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricReactanceInfo(string name, ElectricReactanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactanceUnit>> unitMappings, ElectricReactance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricReactance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricReactance", typeof(ElectricReactance).Assembly))
+            public ElectricReactanceInfo(string name, ElectricReactanceUnit baseUnit, ElectricReactanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricReactanceUnit>> unitMappings, ElectricReactance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricReactance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricReactance", typeof(ElectricReactance).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricReactanceInfo"/> class with the default settings.</returns>
             public static ElectricReactanceInfo CreateDefault()
-                => new(nameof(ElectricReactance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricReactance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricReactanceInfo"/> class with the default settings for the ElectricReactance quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricReactanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricReactanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricReactanceUnit>>, IEnumerable<IUnitDefinition<ElectricReactanceUnit>>> customizeUnits)
-                => new(nameof(ElectricReactance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricReactance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricReactance"/> is T^-3L^2MI^-2.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricReactance is Ohm. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricReactanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricReactanceUnit.Ohm;
+
+            /// <summary>
+            ///     The default base unit of ElectricReactance is Ohm.
+            /// </summary>
+            public static ElectricReactanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -213,6 +222,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricReactance, which is Ohm.
+        /// </summary>
+        public static ElectricReactanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricReactanceUnit.Ohm;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricReactance quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricReactanceUnit> Units
@@ -308,9 +326,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricReactance,ElectricReactanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricReactanceUnit.Ohm"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricReactance,ElectricReactanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricReactanceUnit.Ohm"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricReactance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricReactance,ElectricReactanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricReactanceUnit.Ohm"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactanceUnit.Gigaohm"/>
@@ -414,8 +445,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
-        public ElectricReactance OhmsToElectricReactance()
+        public ElectricReactance OhmsToBaseElectricReactance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        public ElectricReactance OhmsToSiBaseElectricReactance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactance"/> from <see cref="ElectricReactanceUnit.Gigaohm"/>.

@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class RadiationExposureInfo : QuantityInfo<RadiationExposure, RadiationExposureUnit>
         {
             /// <inheritdoc />
-            public RadiationExposureInfo(string name, RadiationExposureUnit baseUnit, IEnumerable<IUnitDefinition<RadiationExposureUnit>> unitMappings, RadiationExposure zero, BaseDimensions baseDimensions,
+            public RadiationExposureInfo(string name, RadiationExposureUnit baseUnit, RadiationExposureUnit siBaseUnit, IEnumerable<IUnitDefinition<RadiationExposureUnit>> unitMappings, RadiationExposure zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<RadiationExposure, RadiationExposureUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public RadiationExposureInfo(string name, RadiationExposureUnit baseUnit, IEnumerable<IUnitDefinition<RadiationExposureUnit>> unitMappings, RadiationExposure zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, RadiationExposure.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RadiationExposure", typeof(RadiationExposure).Assembly))
+            public RadiationExposureInfo(string name, RadiationExposureUnit baseUnit, RadiationExposureUnit siBaseUnit, IEnumerable<IUnitDefinition<RadiationExposureUnit>> unitMappings, RadiationExposure zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, RadiationExposure.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RadiationExposure", typeof(RadiationExposure).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RadiationExposureInfo"/> class with the default settings.</returns>
             public static RadiationExposureInfo CreateDefault()
-                => new(nameof(RadiationExposure), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RadiationExposure), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RadiationExposureInfo"/> class with the default settings for the RadiationExposure quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RadiationExposureInfo"/> class with the default settings.
             /// </returns>
             public static RadiationExposureInfo CreateDefault(Func<IEnumerable<UnitDefinition<RadiationExposureUnit>>, IEnumerable<IUnitDefinition<RadiationExposureUnit>>> customizeUnits)
-                => new(nameof(RadiationExposure), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RadiationExposure), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RadiationExposure"/> is TM^-1I.
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of RadiationExposure is CoulombPerKilogram. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static RadiationExposureUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RadiationExposureUnit.CoulombPerKilogram;
+
+            /// <summary>
+            ///     The default base unit of RadiationExposure is CoulombPerKilogram.
+            /// </summary>
+            public static RadiationExposureUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -210,6 +219,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of RadiationExposure, which is CoulombPerKilogram.
+        /// </summary>
+        public static RadiationExposureUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => RadiationExposureUnit.CoulombPerKilogram;
+        }
+
+        /// <summary>
         ///     All units of measurement for the RadiationExposure quantity.
         /// </summary>
         public static IReadOnlyCollection<RadiationExposureUnit> Units
@@ -305,9 +323,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{RadiationExposure,RadiationExposureUnit}.AsBaseValue"/>
         /// <returns><see cref="RadiationExposureUnit.CoulombPerKilogram"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RadiationExposure,RadiationExposureUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RadiationExposureUnit.CoulombPerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RadiationExposure AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RadiationExposure,RadiationExposureUnit}.AsBaseValue"/>
+        /// <returns><see cref="RadiationExposureUnit.CoulombPerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadiationExposureUnit.CoulombPerKilogram"/>
@@ -411,8 +442,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerKilogram.
         /// </summary>
-        public RadiationExposure CoulombsPerKilogramToRadiationExposure()
+        public RadiationExposure CoulombsPerKilogramToBaseRadiationExposure()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerKilogram.
+        /// </summary>
+        public RadiationExposure CoulombsPerKilogramToSiBaseRadiationExposure()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="RadiationExposure"/> from <see cref="RadiationExposureUnit.CoulombPerKilogram"/>.

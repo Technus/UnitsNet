@@ -71,15 +71,15 @@ namespace UnitsNet
         public sealed class AreaDensityInfo : QuantityInfo<AreaDensity, AreaDensityUnit>
         {
             /// <inheritdoc />
-            public AreaDensityInfo(string name, AreaDensityUnit baseUnit, IEnumerable<IUnitDefinition<AreaDensityUnit>> unitMappings, AreaDensity zero, BaseDimensions baseDimensions,
+            public AreaDensityInfo(string name, AreaDensityUnit baseUnit, AreaDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaDensityUnit>> unitMappings, AreaDensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<AreaDensity, AreaDensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AreaDensityInfo(string name, AreaDensityUnit baseUnit, IEnumerable<IUnitDefinition<AreaDensityUnit>> unitMappings, AreaDensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, AreaDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AreaDensity", typeof(AreaDensity).Assembly))
+            public AreaDensityInfo(string name, AreaDensityUnit baseUnit, AreaDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaDensityUnit>> unitMappings, AreaDensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, AreaDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AreaDensity", typeof(AreaDensity).Assembly))
             {
             }
 
@@ -88,7 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AreaDensityInfo"/> class with the default settings.</returns>
             public static AreaDensityInfo CreateDefault()
-                => new(nameof(AreaDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AreaDensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AreaDensityInfo"/> class with the default settings for the AreaDensity quantity and a callback for customizing the default unit mappings.
@@ -100,7 +100,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AreaDensityInfo"/> class with the default settings.
             /// </returns>
             public static AreaDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<AreaDensityUnit>>, IEnumerable<IUnitDefinition<AreaDensityUnit>>> customizeUnits)
-                => new(nameof(AreaDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AreaDensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AreaDensity"/> is L^-2M.
@@ -115,6 +115,15 @@ namespace UnitsNet
             ///     The default base unit of AreaDensity is KilogramPerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AreaDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AreaDensityUnit.KilogramPerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of AreaDensity is KilogramPerSquareMeter.
+            /// </summary>
+            public static AreaDensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -203,6 +212,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of AreaDensity, which is KilogramPerSquareMeter.
+        /// </summary>
+        public static AreaDensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AreaDensityUnit.KilogramPerSquareMeter;
         }
 
         /// <summary>
@@ -301,9 +319,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{AreaDensity,AreaDensityUnit}.AsBaseValue"/>
         /// <returns><see cref="AreaDensityUnit.KilogramPerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AreaDensity,AreaDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaDensityUnit.KilogramPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AreaDensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AreaDensity,AreaDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaDensityUnit.KilogramPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaDensityUnit.GramPerSquareMeter"/>
@@ -380,8 +411,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSquareMeter.
         /// </summary>
-        public AreaDensity KilogramsPerSquareMeterToAreaDensity()
+        public AreaDensity KilogramsPerSquareMeterToBaseAreaDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSquareMeter.
+        /// </summary>
+        public AreaDensity KilogramsPerSquareMeterToSiBaseAreaDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="AreaDensity"/> from <see cref="AreaDensityUnit.GramPerSquareMeter"/>.

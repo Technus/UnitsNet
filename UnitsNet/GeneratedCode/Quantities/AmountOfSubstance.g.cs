@@ -72,15 +72,15 @@ namespace UnitsNet
         public sealed class AmountOfSubstanceInfo : QuantityInfo<AmountOfSubstance, AmountOfSubstanceUnit>
         {
             /// <inheritdoc />
-            public AmountOfSubstanceInfo(string name, AmountOfSubstanceUnit baseUnit, IEnumerable<IUnitDefinition<AmountOfSubstanceUnit>> unitMappings, AmountOfSubstance zero, BaseDimensions baseDimensions,
+            public AmountOfSubstanceInfo(string name, AmountOfSubstanceUnit baseUnit, AmountOfSubstanceUnit siBaseUnit, IEnumerable<IUnitDefinition<AmountOfSubstanceUnit>> unitMappings, AmountOfSubstance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<AmountOfSubstance, AmountOfSubstanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AmountOfSubstanceInfo(string name, AmountOfSubstanceUnit baseUnit, IEnumerable<IUnitDefinition<AmountOfSubstanceUnit>> unitMappings, AmountOfSubstance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, AmountOfSubstance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AmountOfSubstance", typeof(AmountOfSubstance).Assembly))
+            public AmountOfSubstanceInfo(string name, AmountOfSubstanceUnit baseUnit, AmountOfSubstanceUnit siBaseUnit, IEnumerable<IUnitDefinition<AmountOfSubstanceUnit>> unitMappings, AmountOfSubstance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, AmountOfSubstance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AmountOfSubstance", typeof(AmountOfSubstance).Assembly))
             {
             }
 
@@ -89,7 +89,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AmountOfSubstanceInfo"/> class with the default settings.</returns>
             public static AmountOfSubstanceInfo CreateDefault()
-                => new(nameof(AmountOfSubstance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AmountOfSubstance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AmountOfSubstanceInfo"/> class with the default settings for the AmountOfSubstance quantity and a callback for customizing the default unit mappings.
@@ -101,7 +101,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AmountOfSubstanceInfo"/> class with the default settings.
             /// </returns>
             public static AmountOfSubstanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<AmountOfSubstanceUnit>>, IEnumerable<IUnitDefinition<AmountOfSubstanceUnit>>> customizeUnits)
-                => new(nameof(AmountOfSubstance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AmountOfSubstance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AmountOfSubstance"/> is N.
@@ -116,6 +116,15 @@ namespace UnitsNet
             ///     The default base unit of AmountOfSubstance is Mole. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AmountOfSubstanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AmountOfSubstanceUnit.Mole;
+
+            /// <summary>
+            ///     The default base unit of AmountOfSubstance is Mole.
+            /// </summary>
+            public static AmountOfSubstanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -243,6 +252,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of AmountOfSubstance, which is Mole.
+        /// </summary>
+        public static AmountOfSubstanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AmountOfSubstanceUnit.Mole;
+        }
+
+        /// <summary>
         ///     All units of measurement for the AmountOfSubstance quantity.
         /// </summary>
         public static IReadOnlyCollection<AmountOfSubstanceUnit> Units
@@ -338,9 +356,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{AmountOfSubstance,AmountOfSubstanceUnit}.AsBaseValue"/>
         /// <returns><see cref="AmountOfSubstanceUnit.Mole"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AmountOfSubstance,AmountOfSubstanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AmountOfSubstanceUnit.Mole"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AmountOfSubstance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AmountOfSubstance,AmountOfSubstanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="AmountOfSubstanceUnit.Mole"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AmountOfSubstanceUnit.Centimole"/>
@@ -525,8 +556,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Mole.
         /// </summary>
-        public AmountOfSubstance MolesToAmountOfSubstance()
+        public AmountOfSubstance MolesToBaseAmountOfSubstance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Mole.
+        /// </summary>
+        public AmountOfSubstance MolesToSiBaseAmountOfSubstance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="AmountOfSubstance"/> from <see cref="AmountOfSubstanceUnit.Centimole"/>.

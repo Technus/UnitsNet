@@ -72,15 +72,15 @@ namespace UnitsNet
         public sealed class LuminousIntensityInfo : QuantityInfo<LuminousIntensity, LuminousIntensityUnit>
         {
             /// <inheritdoc />
-            public LuminousIntensityInfo(string name, LuminousIntensityUnit baseUnit, IEnumerable<IUnitDefinition<LuminousIntensityUnit>> unitMappings, LuminousIntensity zero, BaseDimensions baseDimensions,
+            public LuminousIntensityInfo(string name, LuminousIntensityUnit baseUnit, LuminousIntensityUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminousIntensityUnit>> unitMappings, LuminousIntensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<LuminousIntensity, LuminousIntensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LuminousIntensityInfo(string name, LuminousIntensityUnit baseUnit, IEnumerable<IUnitDefinition<LuminousIntensityUnit>> unitMappings, LuminousIntensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, LuminousIntensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LuminousIntensity", typeof(LuminousIntensity).Assembly))
+            public LuminousIntensityInfo(string name, LuminousIntensityUnit baseUnit, LuminousIntensityUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminousIntensityUnit>> unitMappings, LuminousIntensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, LuminousIntensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LuminousIntensity", typeof(LuminousIntensity).Assembly))
             {
             }
 
@@ -89,7 +89,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LuminousIntensityInfo"/> class with the default settings.</returns>
             public static LuminousIntensityInfo CreateDefault()
-                => new(nameof(LuminousIntensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LuminousIntensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LuminousIntensityInfo"/> class with the default settings for the LuminousIntensity quantity and a callback for customizing the default unit mappings.
@@ -101,7 +101,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LuminousIntensityInfo"/> class with the default settings.
             /// </returns>
             public static LuminousIntensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<LuminousIntensityUnit>>, IEnumerable<IUnitDefinition<LuminousIntensityUnit>>> customizeUnits)
-                => new(nameof(LuminousIntensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LuminousIntensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="LuminousIntensity"/> is J.
@@ -116,6 +116,15 @@ namespace UnitsNet
             ///     The default base unit of LuminousIntensity is Candela. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LuminousIntensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LuminousIntensityUnit.Candela;
+
+            /// <summary>
+            ///     The default base unit of LuminousIntensity is Candela.
+            /// </summary>
+            public static LuminousIntensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -192,6 +201,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of LuminousIntensity, which is Candela.
+        /// </summary>
+        public static LuminousIntensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LuminousIntensityUnit.Candela;
         }
 
         /// <summary>
@@ -290,9 +308,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{LuminousIntensity,LuminousIntensityUnit}.AsBaseValue"/>
         /// <returns><see cref="LuminousIntensityUnit.Candela"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LuminousIntensity,LuminousIntensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LuminousIntensityUnit.Candela"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public LuminousIntensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LuminousIntensity,LuminousIntensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="LuminousIntensityUnit.Candela"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminousIntensityUnit.Candela"/>
@@ -333,8 +364,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Candela.
         /// </summary>
-        public LuminousIntensity CandelaToLuminousIntensity()
+        public LuminousIntensity CandelaToBaseLuminousIntensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Candela.
+        /// </summary>
+        public LuminousIntensity CandelaToSiBaseLuminousIntensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="LuminousIntensity"/> from <see cref="LuminousIntensityUnit.Candela"/>.

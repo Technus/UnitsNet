@@ -73,15 +73,15 @@ namespace UnitsNet
         public sealed class VolumeFlowInfo : QuantityInfo<VolumeFlow, VolumeFlowUnit>
         {
             /// <inheritdoc />
-            public VolumeFlowInfo(string name, VolumeFlowUnit baseUnit, IEnumerable<IUnitDefinition<VolumeFlowUnit>> unitMappings, VolumeFlow zero, BaseDimensions baseDimensions,
+            public VolumeFlowInfo(string name, VolumeFlowUnit baseUnit, VolumeFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeFlowUnit>> unitMappings, VolumeFlow zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<VolumeFlow, VolumeFlowUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public VolumeFlowInfo(string name, VolumeFlowUnit baseUnit, IEnumerable<IUnitDefinition<VolumeFlowUnit>> unitMappings, VolumeFlow zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, VolumeFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumeFlow", typeof(VolumeFlow).Assembly))
+            public VolumeFlowInfo(string name, VolumeFlowUnit baseUnit, VolumeFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeFlowUnit>> unitMappings, VolumeFlow zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, VolumeFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumeFlow", typeof(VolumeFlow).Assembly))
             {
             }
 
@@ -90,7 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumeFlowInfo"/> class with the default settings.</returns>
             public static VolumeFlowInfo CreateDefault()
-                => new(nameof(VolumeFlow), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumeFlow), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumeFlowInfo"/> class with the default settings for the VolumeFlow quantity and a callback for customizing the default unit mappings.
@@ -102,7 +102,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumeFlowInfo"/> class with the default settings.
             /// </returns>
             public static VolumeFlowInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumeFlowUnit>>, IEnumerable<IUnitDefinition<VolumeFlowUnit>>> customizeUnits)
-                => new(nameof(VolumeFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumeFlow), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="VolumeFlow"/> is T^-1L^3.
@@ -117,6 +117,15 @@ namespace UnitsNet
             ///     The default base unit of VolumeFlow is CubicMeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static VolumeFlowUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumeFlowUnit.CubicMeterPerSecond;
+
+            /// <summary>
+            ///     The default base unit of VolumeFlow is CubicMeterPerSecond.
+            /// </summary>
+            public static VolumeFlowUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -427,6 +436,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of VolumeFlow, which is CubicMeterPerSecond.
+        /// </summary>
+        public static VolumeFlowUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => VolumeFlowUnit.CubicMeterPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the VolumeFlow quantity.
         /// </summary>
         public static IReadOnlyCollection<VolumeFlowUnit> Units
@@ -522,9 +540,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{VolumeFlow,VolumeFlowUnit}.AsBaseValue"/>
         /// <returns><see cref="VolumeFlowUnit.CubicMeterPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumeFlow,VolumeFlowUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumeFlowUnit.CubicMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VolumeFlow AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumeFlow,VolumeFlowUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumeFlowUnit.CubicMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeFlowUnit.AcreFootPerDay"/>
@@ -1258,8 +1289,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecond.
         /// </summary>
-        public VolumeFlow CubicMetersPerSecondToVolumeFlow()
+        public VolumeFlow CubicMetersPerSecondToBaseVolumeFlow()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerSecond.
+        /// </summary>
+        public VolumeFlow CubicMetersPerSecondToSiBaseVolumeFlow()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="VolumeFlow"/> from <see cref="VolumeFlowUnit.AcreFootPerDay"/>.

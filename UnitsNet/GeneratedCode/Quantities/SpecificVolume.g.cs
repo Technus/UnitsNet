@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class SpecificVolumeInfo : QuantityInfo<SpecificVolume, SpecificVolumeUnit>
         {
             /// <inheritdoc />
-            public SpecificVolumeInfo(string name, SpecificVolumeUnit baseUnit, IEnumerable<IUnitDefinition<SpecificVolumeUnit>> unitMappings, SpecificVolume zero, BaseDimensions baseDimensions,
+            public SpecificVolumeInfo(string name, SpecificVolumeUnit baseUnit, SpecificVolumeUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificVolumeUnit>> unitMappings, SpecificVolume zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<SpecificVolume, SpecificVolumeUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public SpecificVolumeInfo(string name, SpecificVolumeUnit baseUnit, IEnumerable<IUnitDefinition<SpecificVolumeUnit>> unitMappings, SpecificVolume zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, SpecificVolume.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificVolume", typeof(SpecificVolume).Assembly))
+            public SpecificVolumeInfo(string name, SpecificVolumeUnit baseUnit, SpecificVolumeUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificVolumeUnit>> unitMappings, SpecificVolume zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, SpecificVolume.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificVolume", typeof(SpecificVolume).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="SpecificVolumeInfo"/> class with the default settings.</returns>
             public static SpecificVolumeInfo CreateDefault()
-                => new(nameof(SpecificVolume), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificVolume), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="SpecificVolumeInfo"/> class with the default settings for the SpecificVolume quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="SpecificVolumeInfo"/> class with the default settings.
             /// </returns>
             public static SpecificVolumeInfo CreateDefault(Func<IEnumerable<UnitDefinition<SpecificVolumeUnit>>, IEnumerable<IUnitDefinition<SpecificVolumeUnit>>> customizeUnits)
-                => new(nameof(SpecificVolume), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificVolume), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="SpecificVolume"/> is L^3M^-1.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of SpecificVolume is CubicMeterPerKilogram. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static SpecificVolumeUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = SpecificVolumeUnit.CubicMeterPerKilogram;
+
+            /// <summary>
+            ///     The default base unit of SpecificVolume is CubicMeterPerKilogram.
+            /// </summary>
+            public static SpecificVolumeUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -193,6 +202,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of SpecificVolume, which is CubicMeterPerKilogram.
+        /// </summary>
+        public static SpecificVolumeUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => SpecificVolumeUnit.CubicMeterPerKilogram;
         }
 
         /// <summary>
@@ -291,9 +309,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{SpecificVolume,SpecificVolumeUnit}.AsBaseValue"/>
         /// <returns><see cref="SpecificVolumeUnit.CubicMeterPerKilogram"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificVolume,SpecificVolumeUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificVolumeUnit.CubicMeterPerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SpecificVolume AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificVolume,SpecificVolumeUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificVolumeUnit.CubicMeterPerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificVolumeUnit.CubicFootPerPound"/>
@@ -352,8 +383,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerKilogram.
         /// </summary>
-        public SpecificVolume CubicMetersPerKilogramToSpecificVolume()
+        public SpecificVolume CubicMetersPerKilogramToBaseSpecificVolume()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerKilogram.
+        /// </summary>
+        public SpecificVolume CubicMetersPerKilogramToSiBaseSpecificVolume()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="SpecificVolume"/> from <see cref="SpecificVolumeUnit.CubicFootPerPound"/>.

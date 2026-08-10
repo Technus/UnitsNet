@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class PermeabilityInfo : QuantityInfo<Permeability, PermeabilityUnit>
         {
             /// <inheritdoc />
-            public PermeabilityInfo(string name, PermeabilityUnit baseUnit, IEnumerable<IUnitDefinition<PermeabilityUnit>> unitMappings, Permeability zero, BaseDimensions baseDimensions,
+            public PermeabilityInfo(string name, PermeabilityUnit baseUnit, PermeabilityUnit siBaseUnit, IEnumerable<IUnitDefinition<PermeabilityUnit>> unitMappings, Permeability zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Permeability, PermeabilityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public PermeabilityInfo(string name, PermeabilityUnit baseUnit, IEnumerable<IUnitDefinition<PermeabilityUnit>> unitMappings, Permeability zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Permeability.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Permeability", typeof(Permeability).Assembly))
+            public PermeabilityInfo(string name, PermeabilityUnit baseUnit, PermeabilityUnit siBaseUnit, IEnumerable<IUnitDefinition<PermeabilityUnit>> unitMappings, Permeability zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Permeability.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Permeability", typeof(Permeability).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PermeabilityInfo"/> class with the default settings.</returns>
             public static PermeabilityInfo CreateDefault()
-                => new(nameof(Permeability), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Permeability), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PermeabilityInfo"/> class with the default settings for the Permeability quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PermeabilityInfo"/> class with the default settings.
             /// </returns>
             public static PermeabilityInfo CreateDefault(Func<IEnumerable<UnitDefinition<PermeabilityUnit>>, IEnumerable<IUnitDefinition<PermeabilityUnit>>> customizeUnits)
-                => new(nameof(Permeability), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Permeability), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Permeability"/> is T^-2LMI^-2.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Permeability is HenryPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static PermeabilityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PermeabilityUnit.HenryPerMeter;
+
+            /// <summary>
+            ///     The default base unit of Permeability is HenryPerMeter.
+            /// </summary>
+            public static PermeabilityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -189,6 +198,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Permeability, which is HenryPerMeter.
+        /// </summary>
+        public static PermeabilityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PermeabilityUnit.HenryPerMeter;
         }
 
         /// <summary>
@@ -287,9 +305,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Permeability,PermeabilityUnit}.AsBaseValue"/>
         /// <returns><see cref="PermeabilityUnit.HenryPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Permeability,PermeabilityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PermeabilityUnit.HenryPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Permeability AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Permeability,PermeabilityUnit}.AsBaseValue"/>
+        /// <returns><see cref="PermeabilityUnit.HenryPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PermeabilityUnit.HenryPerMeter"/>
@@ -330,8 +361,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of HenryPerMeter.
         /// </summary>
-        public Permeability HenriesPerMeterToPermeability()
+        public Permeability HenriesPerMeterToBasePermeability()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of HenryPerMeter.
+        /// </summary>
+        public Permeability HenriesPerMeterToSiBasePermeability()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Permeability"/> from <see cref="PermeabilityUnit.HenryPerMeter"/>.

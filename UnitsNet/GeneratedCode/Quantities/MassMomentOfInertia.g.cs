@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class MassMomentOfInertiaInfo : QuantityInfo<MassMomentOfInertia, MassMomentOfInertiaUnit>
         {
             /// <inheritdoc />
-            public MassMomentOfInertiaInfo(string name, MassMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<MassMomentOfInertiaUnit>> unitMappings, MassMomentOfInertia zero, BaseDimensions baseDimensions,
+            public MassMomentOfInertiaInfo(string name, MassMomentOfInertiaUnit baseUnit, MassMomentOfInertiaUnit siBaseUnit, IEnumerable<IUnitDefinition<MassMomentOfInertiaUnit>> unitMappings, MassMomentOfInertia zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MassMomentOfInertia, MassMomentOfInertiaUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MassMomentOfInertiaInfo(string name, MassMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<MassMomentOfInertiaUnit>> unitMappings, MassMomentOfInertia zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MassMomentOfInertia.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassMomentOfInertia", typeof(MassMomentOfInertia).Assembly))
+            public MassMomentOfInertiaInfo(string name, MassMomentOfInertiaUnit baseUnit, MassMomentOfInertiaUnit siBaseUnit, IEnumerable<IUnitDefinition<MassMomentOfInertiaUnit>> unitMappings, MassMomentOfInertia zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MassMomentOfInertia.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassMomentOfInertia", typeof(MassMomentOfInertia).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassMomentOfInertiaInfo"/> class with the default settings.</returns>
             public static MassMomentOfInertiaInfo CreateDefault()
-                => new(nameof(MassMomentOfInertia), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassMomentOfInertia), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassMomentOfInertiaInfo"/> class with the default settings for the MassMomentOfInertia quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassMomentOfInertiaInfo"/> class with the default settings.
             /// </returns>
             public static MassMomentOfInertiaInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassMomentOfInertiaUnit>>, IEnumerable<IUnitDefinition<MassMomentOfInertiaUnit>>> customizeUnits)
-                => new(nameof(MassMomentOfInertia), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassMomentOfInertia), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MassMomentOfInertia"/> is L^2M.
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of MassMomentOfInertia is KilogramSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MassMomentOfInertiaUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassMomentOfInertiaUnit.KilogramSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of MassMomentOfInertia is KilogramSquareMeter.
+            /// </summary>
+            public static MassMomentOfInertiaUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -270,6 +279,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of MassMomentOfInertia, which is KilogramSquareMeter.
+        /// </summary>
+        public static MassMomentOfInertiaUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MassMomentOfInertiaUnit.KilogramSquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the MassMomentOfInertia quantity.
         /// </summary>
         public static IReadOnlyCollection<MassMomentOfInertiaUnit> Units
@@ -365,9 +383,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MassMomentOfInertia,MassMomentOfInertiaUnit}.AsBaseValue"/>
         /// <returns><see cref="MassMomentOfInertiaUnit.KilogramSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassMomentOfInertia,MassMomentOfInertiaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassMomentOfInertiaUnit.KilogramSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MassMomentOfInertia AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassMomentOfInertia,MassMomentOfInertiaUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassMomentOfInertiaUnit.KilogramSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassMomentOfInertiaUnit.GramSquareCentimeter"/>
@@ -651,8 +682,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilogramSquareMeter.
         /// </summary>
-        public MassMomentOfInertia KilogramSquareMetersToMassMomentOfInertia()
+        public MassMomentOfInertia KilogramSquareMetersToBaseMassMomentOfInertia()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramSquareMeter.
+        /// </summary>
+        public MassMomentOfInertia KilogramSquareMetersToSiBaseMassMomentOfInertia()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MassMomentOfInertia"/> from <see cref="MassMomentOfInertiaUnit.GramSquareCentimeter"/>.

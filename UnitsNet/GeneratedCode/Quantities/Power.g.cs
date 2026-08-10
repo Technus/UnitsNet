@@ -85,15 +85,15 @@ namespace UnitsNet
         public sealed class PowerInfo : QuantityInfo<Power, PowerUnit>
         {
             /// <inheritdoc />
-            public PowerInfo(string name, PowerUnit baseUnit, IEnumerable<IUnitDefinition<PowerUnit>> unitMappings, Power zero, BaseDimensions baseDimensions,
+            public PowerInfo(string name, PowerUnit baseUnit, PowerUnit siBaseUnit, IEnumerable<IUnitDefinition<PowerUnit>> unitMappings, Power zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Power, PowerUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public PowerInfo(string name, PowerUnit baseUnit, IEnumerable<IUnitDefinition<PowerUnit>> unitMappings, Power zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Power.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Power", typeof(Power).Assembly))
+            public PowerInfo(string name, PowerUnit baseUnit, PowerUnit siBaseUnit, IEnumerable<IUnitDefinition<PowerUnit>> unitMappings, Power zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Power.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Power", typeof(Power).Assembly))
             {
             }
 
@@ -102,7 +102,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PowerInfo"/> class with the default settings.</returns>
             public static PowerInfo CreateDefault()
-                => new(nameof(Power), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Power), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PowerInfo"/> class with the default settings for the Power quantity and a callback for customizing the default unit mappings.
@@ -114,7 +114,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PowerInfo"/> class with the default settings.
             /// </returns>
             public static PowerInfo CreateDefault(Func<IEnumerable<UnitDefinition<PowerUnit>>, IEnumerable<IUnitDefinition<PowerUnit>>> customizeUnits)
-                => new(nameof(Power), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Power), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Power"/> is T^-3L^2M.
@@ -129,6 +129,15 @@ namespace UnitsNet
             ///     The default base unit of Power is Watt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static PowerUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PowerUnit.Watt;
+
+            /// <summary>
+            ///     The default base unit of Power is Watt.
+            /// </summary>
+            public static PowerUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -286,6 +295,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Power, which is Watt.
+        /// </summary>
+        public static PowerUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PowerUnit.Watt;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Power quantity.
         /// </summary>
         public static IReadOnlyCollection<PowerUnit> Units
@@ -381,9 +399,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Power,PowerUnit}.AsBaseValue"/>
         /// <returns><see cref="PowerUnit.Watt"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Power,PowerUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PowerUnit.Watt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Power AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Power,PowerUnit}.AsBaseValue"/>
+        /// <returns><see cref="PowerUnit.Watt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerUnit.BoilerHorsepower"/>
@@ -658,8 +689,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
-        public Power WattsToPower()
+        public Power WattsToBasePower()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Watt.
+        /// </summary>
+        public Power WattsToSiBasePower()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Power"/> from <see cref="PowerUnit.BoilerHorsepower"/>.

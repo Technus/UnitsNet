@@ -30,7 +30,7 @@ public class QuantitiesSelectorTest
     {
         var selector = new QuantitiesSelector(() => [Length.Info, Mass.Info]);
         var customLengthConfig =
-            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From);
+            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, LengthUnit.Meter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From);
 
         selector.Configure(() => customLengthConfig);
 
@@ -44,7 +44,7 @@ public class QuantitiesSelectorTest
     {
         QuantitiesSelector selector = new QuantitiesSelector(() => [Mass.Info]).WithAdditionalQuantities([Length.Info]);
         var customLengthConfig =
-            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From);
+            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, LengthUnit.Meter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From);
 
         selector.Configure(() => customLengthConfig);
 

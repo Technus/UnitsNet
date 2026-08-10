@@ -1,6 +1,7 @@
 {
   "Name": "ElectricConductivity",
   "BaseUnit": "SiemensPerMeter",
+  "SiBaseUnit": "SiemensPerMeter",
   "XmlDocSummary": "Electrical conductivity or specific conductance is the reciprocal of electrical resistivity, and measures a material's ability to conduct an electric current.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity",
   "BaseDimensions": {
@@ -57,7 +58,7 @@
       "PluralName": "SiemensPerCentimeter",
       "FromUnitToBaseFunc": "{x} * 1e2",
       "FromBaseToUnitFunc": "{x} / 1e2",
-      "Prefixes": ["Micro", "Milli"],
+      "Prefixes": [ "Micro", "Milli" ],
       "Localization": [
         {
           "Culture": "en-US",

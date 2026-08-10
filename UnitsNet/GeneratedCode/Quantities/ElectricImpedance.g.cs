@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricImpedanceInfo : QuantityInfo<ElectricImpedance, ElectricImpedanceUnit>
         {
             /// <inheritdoc />
-            public ElectricImpedanceInfo(string name, ElectricImpedanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricImpedanceUnit>> unitMappings, ElectricImpedance zero, BaseDimensions baseDimensions,
+            public ElectricImpedanceInfo(string name, ElectricImpedanceUnit baseUnit, ElectricImpedanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricImpedanceUnit>> unitMappings, ElectricImpedance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricImpedance, ElectricImpedanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricImpedanceInfo(string name, ElectricImpedanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricImpedanceUnit>> unitMappings, ElectricImpedance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricImpedance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricImpedance", typeof(ElectricImpedance).Assembly))
+            public ElectricImpedanceInfo(string name, ElectricImpedanceUnit baseUnit, ElectricImpedanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricImpedanceUnit>> unitMappings, ElectricImpedance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricImpedance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricImpedance", typeof(ElectricImpedance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricImpedanceInfo"/> class with the default settings.</returns>
             public static ElectricImpedanceInfo CreateDefault()
-                => new(nameof(ElectricImpedance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricImpedance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricImpedanceInfo"/> class with the default settings for the ElectricImpedance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricImpedanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricImpedanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricImpedanceUnit>>, IEnumerable<IUnitDefinition<ElectricImpedanceUnit>>> customizeUnits)
-                => new(nameof(ElectricImpedance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricImpedance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricImpedance"/> is T^-3L^2MI^-2.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricImpedance is Ohm. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricImpedanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricImpedanceUnit.Ohm;
+
+            /// <summary>
+            ///     The default base unit of ElectricImpedance is Ohm.
+            /// </summary>
+            public static ElectricImpedanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -214,6 +223,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricImpedance, which is Ohm.
+        /// </summary>
+        public static ElectricImpedanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricImpedanceUnit.Ohm;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricImpedance quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricImpedanceUnit> Units
@@ -309,9 +327,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricImpedance,ElectricImpedanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricImpedanceUnit.Ohm"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricImpedance,ElectricImpedanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricImpedanceUnit.Ohm"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricImpedance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricImpedance,ElectricImpedanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricImpedanceUnit.Ohm"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricImpedanceUnit.Gigaohm"/>
@@ -415,8 +446,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
-        public ElectricImpedance OhmsToElectricImpedance()
+        public ElectricImpedance OhmsToBaseElectricImpedance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        public ElectricImpedance OhmsToSiBaseElectricImpedance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricImpedance"/> from <see cref="ElectricImpedanceUnit.Gigaohm"/>.

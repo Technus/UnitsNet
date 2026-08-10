@@ -1,4 +1,5 @@
 GramsPerKilonewtonSecond=g/(kN·s)
 KilogramsPerKilogramForceHour=kg/(kgf·h)
 KilogramsPerKilonewtonSecond=kg/(kN·s)
+KilogramsPerNewtonSecond=kg/(N·s)
 PoundsMassPerPoundForceHour=lb/(lbf·h)

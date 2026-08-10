@@ -1,6 +1,7 @@
 {
   "Name": "CoefficientOfThermalExpansion",
   "BaseUnit": "PerKelvin",
+  "SiBaseUnit": "PerKelvin",
   "XmlDocSummary": "A unit that represents a fractional change in size in response to a change in temperature.",
   "BaseDimensions": {
     "Θ": -1

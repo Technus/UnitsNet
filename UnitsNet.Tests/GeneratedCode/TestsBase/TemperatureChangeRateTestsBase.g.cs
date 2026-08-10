@@ -192,7 +192,7 @@ namespace UnitsNet.Tests
         [Fact]
         public void TemperatureChangeRateInfo_CreateWithCustomUnitInfos()
         {
-            TemperatureChangeRateUnit[] expectedUnits = [TemperatureChangeRateUnit.DegreeCelsiusPerSecond];
+            TemperatureChangeRateUnit[] expectedUnits = [TemperatureChangeRateUnit.DegreeCelsiusPerSecond, TemperatureChangeRateUnit.DegreeKelvinPerSecond];
 
             TemperatureChangeRate.TemperatureChangeRateInfo quantityInfo = TemperatureChangeRate.TemperatureChangeRateInfo.CreateDefault(mappings => mappings.SelectUnits(expectedUnits));
 

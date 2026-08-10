@@ -1,6 +1,7 @@
 {
   "Name": "Speed",
   "BaseUnit": "MeterPerSecond",
+  "SiBaseUnit": "MeterPerSecond",
   "XmlDocSummary": "In everyday use and in kinematics, the speed of an object is the magnitude of its velocity (the rate of change of its position); it is thus a scalar quantity.[1] The average speed of an object in an interval of time is the distance travelled by the object divided by the duration of the interval;[2] the instantaneous speed is the limit of the average speed as the duration of the time interval approaches zero.",
   "BaseDimensions": {
     "L": 1,
@@ -22,7 +23,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "m/s" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "м/с" ]
         }
@@ -43,7 +44,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "m/min" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "м/мин" ]
         }
@@ -64,7 +65,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "m/h" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "м/ч" ]
         }
@@ -84,7 +85,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "ft/s" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "фут/с" ]
         }
@@ -104,7 +105,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "ft/min" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "фут/мин" ]
         }
@@ -124,7 +125,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "ft/h" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "фут/ч" ]
         }
@@ -290,9 +291,9 @@
           "Culture": "en-US",
           "Abbreviations": [ "kn", "kt", "knot", "knots" ]
         },
-		{
+        {
           "Culture": "ru-RU",
-          "Abbreviations": [ "уз."]
+          "Abbreviations": [ "уз." ]
         }
       ]
     },
@@ -310,7 +311,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "mph" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "миль/ч" ]
         }
@@ -326,7 +327,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "M", "Ma", "MN", "MACH" ]
         },
-		    {
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "мах" ]
         }

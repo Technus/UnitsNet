@@ -71,15 +71,15 @@ namespace UnitsNet
         public sealed class DoseAreaProductInfo : QuantityInfo<DoseAreaProduct, DoseAreaProductUnit>
         {
             /// <inheritdoc />
-            public DoseAreaProductInfo(string name, DoseAreaProductUnit baseUnit, IEnumerable<IUnitDefinition<DoseAreaProductUnit>> unitMappings, DoseAreaProduct zero, BaseDimensions baseDimensions,
+            public DoseAreaProductInfo(string name, DoseAreaProductUnit baseUnit, DoseAreaProductUnit siBaseUnit, IEnumerable<IUnitDefinition<DoseAreaProductUnit>> unitMappings, DoseAreaProduct zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<DoseAreaProduct, DoseAreaProductUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public DoseAreaProductInfo(string name, DoseAreaProductUnit baseUnit, IEnumerable<IUnitDefinition<DoseAreaProductUnit>> unitMappings, DoseAreaProduct zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, DoseAreaProduct.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.DoseAreaProduct", typeof(DoseAreaProduct).Assembly))
+            public DoseAreaProductInfo(string name, DoseAreaProductUnit baseUnit, DoseAreaProductUnit siBaseUnit, IEnumerable<IUnitDefinition<DoseAreaProductUnit>> unitMappings, DoseAreaProduct zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, DoseAreaProduct.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.DoseAreaProduct", typeof(DoseAreaProduct).Assembly))
             {
             }
 
@@ -88,7 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="DoseAreaProductInfo"/> class with the default settings.</returns>
             public static DoseAreaProductInfo CreateDefault()
-                => new(nameof(DoseAreaProduct), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(DoseAreaProduct), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="DoseAreaProductInfo"/> class with the default settings for the DoseAreaProduct quantity and a callback for customizing the default unit mappings.
@@ -100,7 +100,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="DoseAreaProductInfo"/> class with the default settings.
             /// </returns>
             public static DoseAreaProductInfo CreateDefault(Func<IEnumerable<UnitDefinition<DoseAreaProductUnit>>, IEnumerable<IUnitDefinition<DoseAreaProductUnit>>> customizeUnits)
-                => new(nameof(DoseAreaProduct), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(DoseAreaProduct), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="DoseAreaProduct"/> is T^-2L^4.
@@ -115,6 +115,15 @@ namespace UnitsNet
             ///     The default base unit of DoseAreaProduct is GraySquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static DoseAreaProductUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = DoseAreaProductUnit.GraySquareMeter;
+
+            /// <summary>
+            ///     The default base unit of DoseAreaProduct is GraySquareMeter.
+            /// </summary>
+            public static DoseAreaProductUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -266,6 +275,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of DoseAreaProduct, which is GraySquareMeter.
+        /// </summary>
+        public static DoseAreaProductUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => DoseAreaProductUnit.GraySquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the DoseAreaProduct quantity.
         /// </summary>
         public static IReadOnlyCollection<DoseAreaProductUnit> Units
@@ -361,9 +379,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{DoseAreaProduct,DoseAreaProductUnit}.AsBaseValue"/>
         /// <returns><see cref="DoseAreaProductUnit.GraySquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{DoseAreaProduct,DoseAreaProductUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="DoseAreaProductUnit.GraySquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public DoseAreaProduct AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{DoseAreaProduct,DoseAreaProductUnit}.AsBaseValue"/>
+        /// <returns><see cref="DoseAreaProductUnit.GraySquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DoseAreaProductUnit.CentigraySquareCentimeter"/>
@@ -620,8 +651,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of GraySquareMeter.
         /// </summary>
-        public DoseAreaProduct GraySquareMetersToDoseAreaProduct()
+        public DoseAreaProduct GraySquareMetersToBaseDoseAreaProduct()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of GraySquareMeter.
+        /// </summary>
+        public DoseAreaProduct GraySquareMetersToSiBaseDoseAreaProduct()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="DoseAreaProduct"/> from <see cref="DoseAreaProductUnit.CentigraySquareCentimeter"/>.

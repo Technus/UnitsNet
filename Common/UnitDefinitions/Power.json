@@ -1,6 +1,7 @@
 {
   "Name": "Power",
   "BaseUnit": "Watt",
+  "SiBaseUnit": "Watt",
   "XmlDocSummary": "In physics, power is the rate of doing work. It is equivalent to an amount of energy consumed per unit time.",
   "BaseDimensions": {
     "L": 2,
@@ -128,7 +129,7 @@
       "PluralName": "TonsOfRefrigeration",
       "FromUnitToBaseFunc": "{x} * 3516.853",
       "FromBaseToUnitFunc": "{x} / 3516.853",
-      "Prefixes": [ ],
+      "Prefixes": [],
       "Localization": [
         {
           "Culture": "en-US",

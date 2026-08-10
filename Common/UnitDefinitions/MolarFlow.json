@@ -1,6 +1,7 @@
 {
   "Name": "MolarFlow",
   "BaseUnit": "MolePerSecond",
+  "SiBaseUnit": "MolePerSecond",
   "XmlDocSummary": "Molar flow is the ratio of the amount of substance change to the time during which the change occurred (value of amount of substance changes per unit time).",
   "BaseDimensions": {
     "N": 1,

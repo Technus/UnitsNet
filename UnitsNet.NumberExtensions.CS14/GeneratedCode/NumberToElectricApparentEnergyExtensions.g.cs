@@ -50,6 +50,14 @@ namespace UnitsNet.NumberExtensions.NumberToElectricApparentEnergy
                 => ElectricApparentEnergy.FromKilovoltampereHours(value.ToQuantityValue());
 #endif
 
+            /// <inheritdoc cref="ElectricApparentEnergy.FromKilovoltampereSeconds(QuantityValue)" />
+            public ElectricApparentEnergy KilovoltampereSeconds
+#if NET7_0_OR_GREATER
+                => ElectricApparentEnergy.FromKilovoltampereSeconds(QuantityValue.CreateChecked(value));
+#else
+                => ElectricApparentEnergy.FromKilovoltampereSeconds(value.ToQuantityValue());
+#endif
+
             /// <inheritdoc cref="ElectricApparentEnergy.FromMegavoltampereHours(QuantityValue)" />
             public ElectricApparentEnergy MegavoltampereHours
 #if NET7_0_OR_GREATER
@@ -58,12 +66,28 @@ namespace UnitsNet.NumberExtensions.NumberToElectricApparentEnergy
                 => ElectricApparentEnergy.FromMegavoltampereHours(value.ToQuantityValue());
 #endif
 
+            /// <inheritdoc cref="ElectricApparentEnergy.FromMegavoltampereSeconds(QuantityValue)" />
+            public ElectricApparentEnergy MegavoltampereSeconds
+#if NET7_0_OR_GREATER
+                => ElectricApparentEnergy.FromMegavoltampereSeconds(QuantityValue.CreateChecked(value));
+#else
+                => ElectricApparentEnergy.FromMegavoltampereSeconds(value.ToQuantityValue());
+#endif
+
             /// <inheritdoc cref="ElectricApparentEnergy.FromVoltampereHours(QuantityValue)" />
             public ElectricApparentEnergy VoltampereHours
 #if NET7_0_OR_GREATER
                 => ElectricApparentEnergy.FromVoltampereHours(QuantityValue.CreateChecked(value));
 #else
                 => ElectricApparentEnergy.FromVoltampereHours(value.ToQuantityValue());
+#endif
+
+            /// <inheritdoc cref="ElectricApparentEnergy.FromVoltampereSeconds(QuantityValue)" />
+            public ElectricApparentEnergy VoltampereSeconds
+#if NET7_0_OR_GREATER
+                => ElectricApparentEnergy.FromVoltampereSeconds(QuantityValue.CreateChecked(value));
+#else
+                => ElectricApparentEnergy.FromVoltampereSeconds(value.ToQuantityValue());
 #endif
 
         }

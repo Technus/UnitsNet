@@ -73,15 +73,15 @@ namespace UnitsNet
         public sealed class AccelerationInfo : QuantityInfo<Acceleration, AccelerationUnit>
         {
             /// <inheritdoc />
-            public AccelerationInfo(string name, AccelerationUnit baseUnit, IEnumerable<IUnitDefinition<AccelerationUnit>> unitMappings, Acceleration zero, BaseDimensions baseDimensions,
+            public AccelerationInfo(string name, AccelerationUnit baseUnit, AccelerationUnit siBaseUnit, IEnumerable<IUnitDefinition<AccelerationUnit>> unitMappings, Acceleration zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Acceleration, AccelerationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AccelerationInfo(string name, AccelerationUnit baseUnit, IEnumerable<IUnitDefinition<AccelerationUnit>> unitMappings, Acceleration zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Acceleration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Acceleration", typeof(Acceleration).Assembly))
+            public AccelerationInfo(string name, AccelerationUnit baseUnit, AccelerationUnit siBaseUnit, IEnumerable<IUnitDefinition<AccelerationUnit>> unitMappings, Acceleration zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Acceleration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Acceleration", typeof(Acceleration).Assembly))
             {
             }
 
@@ -90,7 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AccelerationInfo"/> class with the default settings.</returns>
             public static AccelerationInfo CreateDefault()
-                => new(nameof(Acceleration), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Acceleration), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AccelerationInfo"/> class with the default settings for the Acceleration quantity and a callback for customizing the default unit mappings.
@@ -102,7 +102,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AccelerationInfo"/> class with the default settings.
             /// </returns>
             public static AccelerationInfo CreateDefault(Func<IEnumerable<UnitDefinition<AccelerationUnit>>, IEnumerable<IUnitDefinition<AccelerationUnit>>> customizeUnits)
-                => new(nameof(Acceleration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Acceleration), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Acceleration"/> is T^-2L.
@@ -117,6 +117,15 @@ namespace UnitsNet
             ///     The default base unit of Acceleration is MeterPerSecondSquared. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AccelerationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AccelerationUnit.MeterPerSecondSquared;
+
+            /// <summary>
+            ///     The default base unit of Acceleration is MeterPerSecondSquared.
+            /// </summary>
+            public static AccelerationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -235,6 +244,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Acceleration, which is MeterPerSecondSquared.
+        /// </summary>
+        public static AccelerationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AccelerationUnit.MeterPerSecondSquared;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Acceleration quantity.
         /// </summary>
         public static IReadOnlyCollection<AccelerationUnit> Units
@@ -330,9 +348,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Acceleration,AccelerationUnit}.AsBaseValue"/>
         /// <returns><see cref="AccelerationUnit.MeterPerSecondSquared"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Acceleration,AccelerationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AccelerationUnit.MeterPerSecondSquared"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Acceleration AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Acceleration,AccelerationUnit}.AsBaseValue"/>
+        /// <returns><see cref="AccelerationUnit.MeterPerSecondSquared"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AccelerationUnit.CentimeterPerSecondSquared"/>
@@ -490,8 +521,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondSquared.
         /// </summary>
-        public Acceleration MetersPerSecondSquaredToAcceleration()
+        public Acceleration MetersPerSecondSquaredToBaseAcceleration()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecondSquared.
+        /// </summary>
+        public Acceleration MetersPerSecondSquaredToSiBaseAcceleration()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Acceleration"/> from <see cref="AccelerationUnit.CentimeterPerSecondSquared"/>.

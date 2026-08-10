@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class VolumePerLengthInfo : QuantityInfo<VolumePerLength, VolumePerLengthUnit>
         {
             /// <inheritdoc />
-            public VolumePerLengthInfo(string name, VolumePerLengthUnit baseUnit, IEnumerable<IUnitDefinition<VolumePerLengthUnit>> unitMappings, VolumePerLength zero, BaseDimensions baseDimensions,
+            public VolumePerLengthInfo(string name, VolumePerLengthUnit baseUnit, VolumePerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumePerLengthUnit>> unitMappings, VolumePerLength zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<VolumePerLength, VolumePerLengthUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public VolumePerLengthInfo(string name, VolumePerLengthUnit baseUnit, IEnumerable<IUnitDefinition<VolumePerLengthUnit>> unitMappings, VolumePerLength zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, VolumePerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumePerLength", typeof(VolumePerLength).Assembly))
+            public VolumePerLengthInfo(string name, VolumePerLengthUnit baseUnit, VolumePerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumePerLengthUnit>> unitMappings, VolumePerLength zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, VolumePerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumePerLength", typeof(VolumePerLength).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumePerLengthInfo"/> class with the default settings.</returns>
             public static VolumePerLengthInfo CreateDefault()
-                => new(nameof(VolumePerLength), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumePerLength), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumePerLengthInfo"/> class with the default settings for the VolumePerLength quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumePerLengthInfo"/> class with the default settings.
             /// </returns>
             public static VolumePerLengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumePerLengthUnit>>, IEnumerable<IUnitDefinition<VolumePerLengthUnit>>> customizeUnits)
-                => new(nameof(VolumePerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumePerLength), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="VolumePerLength"/> is L^2.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of VolumePerLength is CubicMeterPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static VolumePerLengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumePerLengthUnit.CubicMeterPerMeter;
+
+            /// <summary>
+            ///     The default base unit of VolumePerLength is CubicMeterPerMeter.
+            /// </summary>
+            public static VolumePerLengthUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -214,6 +223,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of VolumePerLength, which is CubicMeterPerMeter.
+        /// </summary>
+        public static VolumePerLengthUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => VolumePerLengthUnit.CubicMeterPerMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the VolumePerLength quantity.
         /// </summary>
         public static IReadOnlyCollection<VolumePerLengthUnit> Units
@@ -309,9 +327,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{VolumePerLength,VolumePerLengthUnit}.AsBaseValue"/>
         /// <returns><see cref="VolumePerLengthUnit.CubicMeterPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumePerLength,VolumePerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumePerLengthUnit.CubicMeterPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VolumePerLength AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumePerLength,VolumePerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumePerLengthUnit.CubicMeterPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumePerLengthUnit.CubicMeterPerMeter"/>
@@ -424,8 +455,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerMeter.
         /// </summary>
-        public VolumePerLength CubicMetersPerMeterToVolumePerLength()
+        public VolumePerLength CubicMetersPerMeterToBaseVolumePerLength()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CubicMeterPerMeter.
+        /// </summary>
+        public VolumePerLength CubicMetersPerMeterToSiBaseVolumePerLength()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="VolumePerLength"/> from <see cref="VolumePerLengthUnit.CubicMeterPerMeter"/>.

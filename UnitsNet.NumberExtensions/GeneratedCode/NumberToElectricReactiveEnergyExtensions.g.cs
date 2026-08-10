@@ -43,6 +43,17 @@ namespace UnitsNet.NumberExtensions.NumberToElectricReactiveEnergy
             => ElectricReactiveEnergy.FromKilovoltampereReactiveHours(value.ToQuantityValue());
 #endif
 
+        /// <inheritdoc cref="ElectricReactiveEnergy.FromKilovoltampereReactiveSeconds(QuantityValue)" />
+        public static ElectricReactiveEnergy KilovoltampereReactiveSeconds<T>(this T value)
+            where T : notnull
+#if NET7_0_OR_GREATER
+            , INumber<T>
+            => ElectricReactiveEnergy.FromKilovoltampereReactiveSeconds(QuantityValue.CreateChecked(value));
+#else
+            , IConvertible
+            => ElectricReactiveEnergy.FromKilovoltampereReactiveSeconds(value.ToQuantityValue());
+#endif
+
         /// <inheritdoc cref="ElectricReactiveEnergy.FromMegavoltampereReactiveHours(QuantityValue)" />
         public static ElectricReactiveEnergy MegavoltampereReactiveHours<T>(this T value)
             where T : notnull
@@ -54,6 +65,17 @@ namespace UnitsNet.NumberExtensions.NumberToElectricReactiveEnergy
             => ElectricReactiveEnergy.FromMegavoltampereReactiveHours(value.ToQuantityValue());
 #endif
 
+        /// <inheritdoc cref="ElectricReactiveEnergy.FromMegavoltampereReactiveSeconds(QuantityValue)" />
+        public static ElectricReactiveEnergy MegavoltampereReactiveSeconds<T>(this T value)
+            where T : notnull
+#if NET7_0_OR_GREATER
+            , INumber<T>
+            => ElectricReactiveEnergy.FromMegavoltampereReactiveSeconds(QuantityValue.CreateChecked(value));
+#else
+            , IConvertible
+            => ElectricReactiveEnergy.FromMegavoltampereReactiveSeconds(value.ToQuantityValue());
+#endif
+
         /// <inheritdoc cref="ElectricReactiveEnergy.FromVoltampereReactiveHours(QuantityValue)" />
         public static ElectricReactiveEnergy VoltampereReactiveHours<T>(this T value)
             where T : notnull
@@ -63,6 +85,17 @@ namespace UnitsNet.NumberExtensions.NumberToElectricReactiveEnergy
 #else
             , IConvertible
             => ElectricReactiveEnergy.FromVoltampereReactiveHours(value.ToQuantityValue());
+#endif
+
+        /// <inheritdoc cref="ElectricReactiveEnergy.FromVoltampereReactiveSeconds(QuantityValue)" />
+        public static ElectricReactiveEnergy VoltampereReactiveSeconds<T>(this T value)
+            where T : notnull
+#if NET7_0_OR_GREATER
+            , INumber<T>
+            => ElectricReactiveEnergy.FromVoltampereReactiveSeconds(QuantityValue.CreateChecked(value));
+#else
+            , IConvertible
+            => ElectricReactiveEnergy.FromVoltampereReactiveSeconds(value.ToQuantityValue());
 #endif
 
     }

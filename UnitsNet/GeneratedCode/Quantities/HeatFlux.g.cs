@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class HeatFluxInfo : QuantityInfo<HeatFlux, HeatFluxUnit>
         {
             /// <inheritdoc />
-            public HeatFluxInfo(string name, HeatFluxUnit baseUnit, IEnumerable<IUnitDefinition<HeatFluxUnit>> unitMappings, HeatFlux zero, BaseDimensions baseDimensions,
+            public HeatFluxInfo(string name, HeatFluxUnit baseUnit, HeatFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<HeatFluxUnit>> unitMappings, HeatFlux zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<HeatFlux, HeatFluxUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public HeatFluxInfo(string name, HeatFluxUnit baseUnit, IEnumerable<IUnitDefinition<HeatFluxUnit>> unitMappings, HeatFlux zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, HeatFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.HeatFlux", typeof(HeatFlux).Assembly))
+            public HeatFluxInfo(string name, HeatFluxUnit baseUnit, HeatFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<HeatFluxUnit>> unitMappings, HeatFlux zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, HeatFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.HeatFlux", typeof(HeatFlux).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="HeatFluxInfo"/> class with the default settings.</returns>
             public static HeatFluxInfo CreateDefault()
-                => new(nameof(HeatFlux), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(HeatFlux), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="HeatFluxInfo"/> class with the default settings for the HeatFlux quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="HeatFluxInfo"/> class with the default settings.
             /// </returns>
             public static HeatFluxInfo CreateDefault(Func<IEnumerable<UnitDefinition<HeatFluxUnit>>, IEnumerable<IUnitDefinition<HeatFluxUnit>>> customizeUnits)
-                => new(nameof(HeatFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(HeatFlux), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="HeatFlux"/> is T^-3M.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of HeatFlux is WattPerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static HeatFluxUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = HeatFluxUnit.WattPerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of HeatFlux is WattPerSquareMeter.
+            /// </summary>
+            public static HeatFluxUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -265,6 +274,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of HeatFlux, which is WattPerSquareMeter.
+        /// </summary>
+        public static HeatFluxUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => HeatFluxUnit.WattPerSquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the HeatFlux quantity.
         /// </summary>
         public static IReadOnlyCollection<HeatFluxUnit> Units
@@ -360,9 +378,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{HeatFlux,HeatFluxUnit}.AsBaseValue"/>
         /// <returns><see cref="HeatFluxUnit.WattPerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{HeatFlux,HeatFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="HeatFluxUnit.WattPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public HeatFlux AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{HeatFlux,HeatFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="HeatFluxUnit.WattPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="HeatFluxUnit.BtuPerHourSquareFoot"/>
@@ -619,8 +650,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
-        public HeatFlux WattsPerSquareMeterToHeatFlux()
+        public HeatFlux WattsPerSquareMeterToBaseHeatFlux()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeter.
+        /// </summary>
+        public HeatFlux WattsPerSquareMeterToSiBaseHeatFlux()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="HeatFlux"/> from <see cref="HeatFluxUnit.BtuPerHourSquareFoot"/>.

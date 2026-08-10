@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class ElectricInductanceInfo : QuantityInfo<ElectricInductance, ElectricInductanceUnit>
         {
             /// <inheritdoc />
-            public ElectricInductanceInfo(string name, ElectricInductanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricInductanceUnit>> unitMappings, ElectricInductance zero, BaseDimensions baseDimensions,
+            public ElectricInductanceInfo(string name, ElectricInductanceUnit baseUnit, ElectricInductanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricInductanceUnit>> unitMappings, ElectricInductance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricInductance, ElectricInductanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricInductanceInfo(string name, ElectricInductanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricInductanceUnit>> unitMappings, ElectricInductance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricInductance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricInductance", typeof(ElectricInductance).Assembly))
+            public ElectricInductanceInfo(string name, ElectricInductanceUnit baseUnit, ElectricInductanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricInductanceUnit>> unitMappings, ElectricInductance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricInductance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricInductance", typeof(ElectricInductance).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricInductanceInfo"/> class with the default settings.</returns>
             public static ElectricInductanceInfo CreateDefault()
-                => new(nameof(ElectricInductance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricInductance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricInductanceInfo"/> class with the default settings for the ElectricInductance quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricInductanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricInductanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricInductanceUnit>>, IEnumerable<IUnitDefinition<ElectricInductanceUnit>>> customizeUnits)
-                => new(nameof(ElectricInductance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricInductance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricInductance"/> is T^-2L^2MI^-2.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricInductance is Henry. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricInductanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricInductanceUnit.Henry;
+
+            /// <summary>
+            ///     The default base unit of ElectricInductance is Henry.
+            /// </summary>
+            public static ElectricInductanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -201,6 +210,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricInductance, which is Henry.
+        /// </summary>
+        public static ElectricInductanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricInductanceUnit.Henry;
         }
 
         /// <summary>
@@ -299,9 +317,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricInductance,ElectricInductanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricInductanceUnit.Henry"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricInductance,ElectricInductanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricInductanceUnit.Henry"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricInductance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricInductance,ElectricInductanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricInductanceUnit.Henry"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricInductanceUnit.Henry"/>
@@ -378,8 +409,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Henry.
         /// </summary>
-        public ElectricInductance HenriesToElectricInductance()
+        public ElectricInductance HenriesToBaseElectricInductance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Henry.
+        /// </summary>
+        public ElectricInductance HenriesToSiBaseElectricInductance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricInductance"/> from <see cref="ElectricInductanceUnit.Henry"/>.

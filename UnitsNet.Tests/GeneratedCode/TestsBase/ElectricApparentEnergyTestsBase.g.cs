@@ -41,13 +41,19 @@ namespace UnitsNet.Tests
     public abstract partial class ElectricApparentEnergyTestsBase : QuantityTestsBase
     {
         protected abstract double KilovoltampereHoursInOneVoltampereHour { get; }
+        protected abstract double KilovoltampereSecondsInOneVoltampereHour { get; }
         protected abstract double MegavoltampereHoursInOneVoltampereHour { get; }
+        protected abstract double MegavoltampereSecondsInOneVoltampereHour { get; }
         protected abstract double VoltampereHoursInOneVoltampereHour { get; }
+        protected abstract double VoltampereSecondsInOneVoltampereHour { get; }
 
 // ReSharper disable VirtualMemberNeverOverriden.Global
         protected virtual double KilovoltampereHoursTolerance { get { return 1e-5; } }
+        protected virtual double KilovoltampereSecondsTolerance { get { return 1e-5; } }
         protected virtual double MegavoltampereHoursTolerance { get { return 1e-5; } }
+        protected virtual double MegavoltampereSecondsTolerance { get { return 1e-5; } }
         protected virtual double VoltampereHoursTolerance { get { return 1e-5; } }
+        protected virtual double VoltampereSecondsTolerance { get { return 1e-5; } }
 // ReSharper restore VirtualMemberNeverOverriden.Global
 
         protected (double UnitsInBaseUnit, double Tolerence) GetConversionFactor(ElectricApparentEnergyUnit unit)
@@ -55,8 +61,11 @@ namespace UnitsNet.Tests
             return unit switch
             {
                 ElectricApparentEnergyUnit.KilovoltampereHour => (KilovoltampereHoursInOneVoltampereHour, KilovoltampereHoursTolerance),
+                ElectricApparentEnergyUnit.KilovoltampereSecond => (KilovoltampereSecondsInOneVoltampereHour, KilovoltampereSecondsTolerance),
                 ElectricApparentEnergyUnit.MegavoltampereHour => (MegavoltampereHoursInOneVoltampereHour, MegavoltampereHoursTolerance),
+                ElectricApparentEnergyUnit.MegavoltampereSecond => (MegavoltampereSecondsInOneVoltampereHour, MegavoltampereSecondsTolerance),
                 ElectricApparentEnergyUnit.VoltampereHour => (VoltampereHoursInOneVoltampereHour, VoltampereHoursTolerance),
+                ElectricApparentEnergyUnit.VoltampereSecond => (VoltampereSecondsInOneVoltampereHour, VoltampereSecondsTolerance),
                 _ => throw new NotSupportedException()
             };
         }
@@ -64,8 +73,11 @@ namespace UnitsNet.Tests
         public static IEnumerable<object[]> UnitTypes = new List<object[]>
         {
             new object[] { ElectricApparentEnergyUnit.KilovoltampereHour },
+            new object[] { ElectricApparentEnergyUnit.KilovoltampereSecond },
             new object[] { ElectricApparentEnergyUnit.MegavoltampereHour },
+            new object[] { ElectricApparentEnergyUnit.MegavoltampereSecond },
             new object[] { ElectricApparentEnergyUnit.VoltampereHour },
+            new object[] { ElectricApparentEnergyUnit.VoltampereSecond },
         };
 
         [Fact]
@@ -136,7 +148,7 @@ namespace UnitsNet.Tests
         [Fact]
         public void ElectricApparentEnergyInfo_CreateWithCustomUnitInfos()
         {
-            ElectricApparentEnergyUnit[] expectedUnits = [ElectricApparentEnergyUnit.VoltampereHour];
+            ElectricApparentEnergyUnit[] expectedUnits = [ElectricApparentEnergyUnit.VoltampereHour, ElectricApparentEnergyUnit.VoltampereSecond];
 
             ElectricApparentEnergy.ElectricApparentEnergyInfo quantityInfo = ElectricApparentEnergy.ElectricApparentEnergyInfo.CreateDefault(mappings => mappings.SelectUnits(expectedUnits));
 
@@ -152,8 +164,11 @@ namespace UnitsNet.Tests
         {
             ElectricApparentEnergy voltamperehour = ElectricApparentEnergy.FromVoltampereHours(1);
             AssertEx.EqualTolerance(KilovoltampereHoursInOneVoltampereHour, voltamperehour.KilovoltampereHours, KilovoltampereHoursTolerance);
+            AssertEx.EqualTolerance(KilovoltampereSecondsInOneVoltampereHour, voltamperehour.KilovoltampereSeconds, KilovoltampereSecondsTolerance);
             AssertEx.EqualTolerance(MegavoltampereHoursInOneVoltampereHour, voltamperehour.MegavoltampereHours, MegavoltampereHoursTolerance);
+            AssertEx.EqualTolerance(MegavoltampereSecondsInOneVoltampereHour, voltamperehour.MegavoltampereSeconds, MegavoltampereSecondsTolerance);
             AssertEx.EqualTolerance(VoltampereHoursInOneVoltampereHour, voltamperehour.VoltampereHours, VoltampereHoursTolerance);
+            AssertEx.EqualTolerance(VoltampereSecondsInOneVoltampereHour, voltamperehour.VoltampereSeconds, VoltampereSecondsTolerance);
         }
 
         [Fact]
@@ -190,8 +205,11 @@ namespace UnitsNet.Tests
         {
             var voltamperehour = ElectricApparentEnergy.FromVoltampereHours(1);
             AssertEx.EqualTolerance(KilovoltampereHoursInOneVoltampereHour, voltamperehour.As(ElectricApparentEnergyUnit.KilovoltampereHour), KilovoltampereHoursTolerance);
+            AssertEx.EqualTolerance(KilovoltampereSecondsInOneVoltampereHour, voltamperehour.As(ElectricApparentEnergyUnit.KilovoltampereSecond), KilovoltampereSecondsTolerance);
             AssertEx.EqualTolerance(MegavoltampereHoursInOneVoltampereHour, voltamperehour.As(ElectricApparentEnergyUnit.MegavoltampereHour), MegavoltampereHoursTolerance);
+            AssertEx.EqualTolerance(MegavoltampereSecondsInOneVoltampereHour, voltamperehour.As(ElectricApparentEnergyUnit.MegavoltampereSecond), MegavoltampereSecondsTolerance);
             AssertEx.EqualTolerance(VoltampereHoursInOneVoltampereHour, voltamperehour.As(ElectricApparentEnergyUnit.VoltampereHour), VoltampereHoursTolerance);
+            AssertEx.EqualTolerance(VoltampereSecondsInOneVoltampereHour, voltamperehour.As(ElectricApparentEnergyUnit.VoltampereSecond), VoltampereSecondsTolerance);
         }
 
         [Fact]
@@ -302,8 +320,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("en-US", "4.2 kVAh", ElectricApparentEnergyUnit.KilovoltampereHour, 4.2)]
+        [InlineData("en-US", "4.2 kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond, 4.2)]
         [InlineData("en-US", "4.2 MVAh", ElectricApparentEnergyUnit.MegavoltampereHour, 4.2)]
+        [InlineData("en-US", "4.2 MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond, 4.2)]
         [InlineData("en-US", "4.2 VAh", ElectricApparentEnergyUnit.VoltampereHour, 4.2)]
+        [InlineData("en-US", "4.2 VAs", ElectricApparentEnergyUnit.VoltampereSecond, 4.2)]
         public void Parse(string culture, string quantityString, ElectricApparentEnergyUnit expectedUnit, decimal expectedValue)
         {
             using var _ = new CultureScope(culture);
@@ -314,8 +335,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("en-US", "4.2 kVAh", ElectricApparentEnergyUnit.KilovoltampereHour, 4.2)]
+        [InlineData("en-US", "4.2 kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond, 4.2)]
         [InlineData("en-US", "4.2 MVAh", ElectricApparentEnergyUnit.MegavoltampereHour, 4.2)]
+        [InlineData("en-US", "4.2 MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond, 4.2)]
         [InlineData("en-US", "4.2 VAh", ElectricApparentEnergyUnit.VoltampereHour, 4.2)]
+        [InlineData("en-US", "4.2 VAs", ElectricApparentEnergyUnit.VoltampereSecond, 4.2)]
         public void TryParse(string culture, string quantityString, ElectricApparentEnergyUnit expectedUnit, decimal expectedValue)
         {
             using var _ = new CultureScope(culture);
@@ -326,8 +350,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void ParseUnit_WithUsEnglishCurrentCulture(string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             // Fallback culture "en-US" is always localized
@@ -338,8 +365,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void ParseUnit_WithUnsupportedCurrentCulture_FallsBackToUsEnglish(string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             // Currently, no abbreviations are localized for Icelandic, so it should fall back to "en-US" when parsing.
@@ -350,8 +380,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("en-US", "kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("en-US", "kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("en-US", "MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("en-US", "MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("en-US", "VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("en-US", "VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void ParseUnit_WithCurrentCulture(string culture, string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             using var _ = new CultureScope(culture);
@@ -361,8 +394,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("en-US", "kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("en-US", "kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("en-US", "MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("en-US", "MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("en-US", "VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("en-US", "VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void ParseUnit_WithCulture(string culture, string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             ElectricApparentEnergyUnit parsedUnit = ElectricApparentEnergy.ParseUnit(abbreviation, CultureInfo.GetCultureInfo(culture));
@@ -371,8 +407,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void TryParseUnit_WithUsEnglishCurrentCulture(string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             // Fallback culture "en-US" is always localized
@@ -383,8 +422,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void TryParseUnit_WithUnsupportedCurrentCulture_FallsBackToUsEnglish(string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             // Currently, no abbreviations are localized for Icelandic, so it should fall back to "en-US" when parsing.
@@ -395,8 +437,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("en-US", "kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("en-US", "kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("en-US", "MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("en-US", "MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("en-US", "VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("en-US", "VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void TryParseUnit_WithCurrentCulture(string culture, string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             using var _ = new CultureScope(culture);
@@ -406,8 +451,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("en-US", "kVAh", ElectricApparentEnergyUnit.KilovoltampereHour)]
+        [InlineData("en-US", "kVAs", ElectricApparentEnergyUnit.KilovoltampereSecond)]
         [InlineData("en-US", "MVAh", ElectricApparentEnergyUnit.MegavoltampereHour)]
+        [InlineData("en-US", "MVAs", ElectricApparentEnergyUnit.MegavoltampereSecond)]
         [InlineData("en-US", "VAh", ElectricApparentEnergyUnit.VoltampereHour)]
+        [InlineData("en-US", "VAs", ElectricApparentEnergyUnit.VoltampereSecond)]
         public void TryParseUnit_WithCulture(string culture, string abbreviation, ElectricApparentEnergyUnit expectedUnit)
         {
             Assert.True(ElectricApparentEnergy.TryParseUnit(abbreviation, CultureInfo.GetCultureInfo(culture), out ElectricApparentEnergyUnit parsedUnit));
@@ -416,8 +464,11 @@ namespace UnitsNet.Tests
 
         [Theory]
         [InlineData("en-US", ElectricApparentEnergyUnit.KilovoltampereHour, "kVAh")]
+        [InlineData("en-US", ElectricApparentEnergyUnit.KilovoltampereSecond, "kVAs")]
         [InlineData("en-US", ElectricApparentEnergyUnit.MegavoltampereHour, "MVAh")]
+        [InlineData("en-US", ElectricApparentEnergyUnit.MegavoltampereSecond, "MVAs")]
         [InlineData("en-US", ElectricApparentEnergyUnit.VoltampereHour, "VAh")]
+        [InlineData("en-US", ElectricApparentEnergyUnit.VoltampereSecond, "VAs")]
         public void GetAbbreviationForCulture(string culture, ElectricApparentEnergyUnit unit, string expectedAbbreviation)
         {
             var defaultAbbreviation = ElectricApparentEnergy.GetAbbreviation(unit, CultureInfo.GetCultureInfo(culture));
@@ -506,8 +557,11 @@ namespace UnitsNet.Tests
         {
             ElectricApparentEnergy voltamperehour = ElectricApparentEnergy.FromVoltampereHours(3);
             Assert.Equal(3, ElectricApparentEnergy.FromKilovoltampereHours(voltamperehour.KilovoltampereHours).VoltampereHours);
+            Assert.Equal(3, ElectricApparentEnergy.FromKilovoltampereSeconds(voltamperehour.KilovoltampereSeconds).VoltampereHours);
             Assert.Equal(3, ElectricApparentEnergy.FromMegavoltampereHours(voltamperehour.MegavoltampereHours).VoltampereHours);
+            Assert.Equal(3, ElectricApparentEnergy.FromMegavoltampereSeconds(voltamperehour.MegavoltampereSeconds).VoltampereHours);
             Assert.Equal(3, ElectricApparentEnergy.FromVoltampereHours(voltamperehour.VoltampereHours).VoltampereHours);
+            Assert.Equal(3, ElectricApparentEnergy.FromVoltampereSeconds(voltamperehour.VoltampereSeconds).VoltampereHours);
         }
 
         [Fact]
@@ -675,8 +729,11 @@ namespace UnitsNet.Tests
         {
             using var _ = new CultureScope("en-US");
             Assert.Equal("1 kVAh", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.KilovoltampereHour).ToString());
+            Assert.Equal("1 kVAs", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.KilovoltampereSecond).ToString());
             Assert.Equal("1 MVAh", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.MegavoltampereHour).ToString());
+            Assert.Equal("1 MVAs", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.MegavoltampereSecond).ToString());
             Assert.Equal("1 VAh", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.VoltampereHour).ToString());
+            Assert.Equal("1 VAs", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.VoltampereSecond).ToString());
         }
 
         [Fact]
@@ -686,8 +743,11 @@ namespace UnitsNet.Tests
             var swedishCulture = CultureInfo.GetCultureInfo("sv-SE");
 
             Assert.Equal("1 kVAh", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.KilovoltampereHour).ToString(swedishCulture));
+            Assert.Equal("1 kVAs", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.KilovoltampereSecond).ToString(swedishCulture));
             Assert.Equal("1 MVAh", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.MegavoltampereHour).ToString(swedishCulture));
+            Assert.Equal("1 MVAs", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.MegavoltampereSecond).ToString(swedishCulture));
             Assert.Equal("1 VAh", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.VoltampereHour).ToString(swedishCulture));
+            Assert.Equal("1 VAs", new ElectricApparentEnergy(1, ElectricApparentEnergyUnit.VoltampereSecond).ToString(swedishCulture));
         }
 
         [Theory]

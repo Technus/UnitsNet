@@ -1,6 +1,7 @@
 {
   "Name": "AmountOfSubstance",
   "BaseUnit": "Mole",
+  "SiBaseUnit": "Mole",
   "XmlDocSummary": "Mole is the amount of substance containing Avagadro's Number (6.02 x 10 ^ 23) of real particles such as molecules,atoms, ions or radicals.",
   "BaseDimensions": {
     "N": 1
@@ -14,7 +15,7 @@
       "BaseUnits": {
         "N": "Mole"
       },
-      "Prefixes": [ "Femto", "Pico", "Nano", "Micro", "Milli", "Centi", "Deci", "Kilo", "Mega"],
+      "Prefixes": [ "Femto", "Pico", "Nano", "Micro", "Milli", "Centi", "Deci", "Kilo", "Mega" ],
       "Localization": [
         {
           "Culture": "en-US",

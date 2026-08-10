@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class PressureChangeRateInfo : QuantityInfo<PressureChangeRate, PressureChangeRateUnit>
         {
             /// <inheritdoc />
-            public PressureChangeRateInfo(string name, PressureChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<PressureChangeRateUnit>> unitMappings, PressureChangeRate zero, BaseDimensions baseDimensions,
+            public PressureChangeRateInfo(string name, PressureChangeRateUnit baseUnit, PressureChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<PressureChangeRateUnit>> unitMappings, PressureChangeRate zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<PressureChangeRate, PressureChangeRateUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public PressureChangeRateInfo(string name, PressureChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<PressureChangeRateUnit>> unitMappings, PressureChangeRate zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, PressureChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.PressureChangeRate", typeof(PressureChangeRate).Assembly))
+            public PressureChangeRateInfo(string name, PressureChangeRateUnit baseUnit, PressureChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<PressureChangeRateUnit>> unitMappings, PressureChangeRate zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, PressureChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.PressureChangeRate", typeof(PressureChangeRate).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PressureChangeRateInfo"/> class with the default settings.</returns>
             public static PressureChangeRateInfo CreateDefault()
-                => new(nameof(PressureChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(PressureChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PressureChangeRateInfo"/> class with the default settings for the PressureChangeRate quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PressureChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static PressureChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<PressureChangeRateUnit>>, IEnumerable<IUnitDefinition<PressureChangeRateUnit>>> customizeUnits)
-                => new(nameof(PressureChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(PressureChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="PressureChangeRate"/> is T^-3L^-1M.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of PressureChangeRate is PascalPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static PressureChangeRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PressureChangeRateUnit.PascalPerSecond;
+
+            /// <summary>
+            ///     The default base unit of PressureChangeRate is PascalPerSecond.
+            /// </summary>
+            public static PressureChangeRateUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -241,6 +250,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of PressureChangeRate, which is PascalPerSecond.
+        /// </summary>
+        public static PressureChangeRateUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PressureChangeRateUnit.PascalPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the PressureChangeRate quantity.
         /// </summary>
         public static IReadOnlyCollection<PressureChangeRateUnit> Units
@@ -336,9 +354,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{PressureChangeRate,PressureChangeRateUnit}.AsBaseValue"/>
         /// <returns><see cref="PressureChangeRateUnit.PascalPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{PressureChangeRate,PressureChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PressureChangeRateUnit.PascalPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public PressureChangeRate AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{PressureChangeRate,PressureChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="PressureChangeRateUnit.PascalPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureChangeRateUnit.AtmospherePerSecond"/>
@@ -532,8 +563,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of PascalPerSecond.
         /// </summary>
-        public PressureChangeRate PascalsPerSecondToPressureChangeRate()
+        public PressureChangeRate PascalsPerSecondToBasePressureChangeRate()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalPerSecond.
+        /// </summary>
+        public PressureChangeRate PascalsPerSecondToSiBasePressureChangeRate()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="PressureChangeRate"/> from <see cref="PressureChangeRateUnit.AtmospherePerSecond"/>.

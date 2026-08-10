@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class MolarMassInfo : QuantityInfo<MolarMass, MolarMassUnit>
         {
             /// <inheritdoc />
-            public MolarMassInfo(string name, MolarMassUnit baseUnit, IEnumerable<IUnitDefinition<MolarMassUnit>> unitMappings, MolarMass zero, BaseDimensions baseDimensions,
+            public MolarMassInfo(string name, MolarMassUnit baseUnit, MolarMassUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarMassUnit>> unitMappings, MolarMass zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MolarMass, MolarMassUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MolarMassInfo(string name, MolarMassUnit baseUnit, IEnumerable<IUnitDefinition<MolarMassUnit>> unitMappings, MolarMass zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MolarMass.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MolarMass", typeof(MolarMass).Assembly))
+            public MolarMassInfo(string name, MolarMassUnit baseUnit, MolarMassUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarMassUnit>> unitMappings, MolarMass zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MolarMass.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MolarMass", typeof(MolarMass).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MolarMassInfo"/> class with the default settings.</returns>
             public static MolarMassInfo CreateDefault()
-                => new(nameof(MolarMass), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MolarMass), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MolarMassInfo"/> class with the default settings for the MolarMass quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MolarMassInfo"/> class with the default settings.
             /// </returns>
             public static MolarMassInfo CreateDefault(Func<IEnumerable<UnitDefinition<MolarMassUnit>>, IEnumerable<IUnitDefinition<MolarMassUnit>>> customizeUnits)
-                => new(nameof(MolarMass), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MolarMass), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MolarMass"/> is MN^-1.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of MolarMass is KilogramPerMole. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MolarMassUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MolarMassUnit.KilogramPerMole;
+
+            /// <summary>
+            ///     The default base unit of MolarMass is KilogramPerMole.
+            /// </summary>
+            public static MolarMassUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -231,6 +240,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of MolarMass, which is KilogramPerMole.
+        /// </summary>
+        public static MolarMassUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MolarMassUnit.KilogramPerMole;
+        }
+
+        /// <summary>
         ///     All units of measurement for the MolarMass quantity.
         /// </summary>
         public static IReadOnlyCollection<MolarMassUnit> Units
@@ -326,9 +344,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MolarMass,MolarMassUnit}.AsBaseValue"/>
         /// <returns><see cref="MolarMassUnit.KilogramPerMole"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MolarMass,MolarMassUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarMassUnit.KilogramPerMole"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MolarMass AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MolarMass,MolarMassUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarMassUnit.KilogramPerMole"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarMassUnit.CentigramPerMole"/>
@@ -486,8 +517,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMole.
         /// </summary>
-        public MolarMass KilogramsPerMoleToMolarMass()
+        public MolarMass KilogramsPerMoleToBaseMolarMass()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerMole.
+        /// </summary>
+        public MolarMass KilogramsPerMoleToSiBaseMolarMass()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MolarMass"/> from <see cref="MolarMassUnit.CentigramPerMole"/>.

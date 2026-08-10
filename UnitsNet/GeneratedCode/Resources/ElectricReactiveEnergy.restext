@@ -1,3 +1,6 @@
 KilovoltampereReactiveHours=kvarh
+KilovoltampereReactiveSeconds=kvars
 MegavoltampereReactiveHours=Mvarh
+MegavoltampereReactiveSeconds=Mvars
 VoltampereReactiveHours=varh
+VoltampereReactiveSeconds=vars

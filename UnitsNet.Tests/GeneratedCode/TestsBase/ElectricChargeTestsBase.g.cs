@@ -349,18 +349,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("en-US", "4.2 A-h", ElectricChargeUnit.AmpereHour, 4.2)]
         [InlineData("en-US", "4.2 Ah", ElectricChargeUnit.AmpereHour, 4.2)]
+        [InlineData("en-US", "4.2 A-h", ElectricChargeUnit.AmpereHour, 4.2)]
         [InlineData("en-US", "4.2 C", ElectricChargeUnit.Coulomb, 4.2)]
-        [InlineData("en-US", "4.2 kA-h", ElectricChargeUnit.KiloampereHour, 4.2)]
         [InlineData("en-US", "4.2 kAh", ElectricChargeUnit.KiloampereHour, 4.2)]
+        [InlineData("en-US", "4.2 kA-h", ElectricChargeUnit.KiloampereHour, 4.2)]
         [InlineData("en-US", "4.2 kC", ElectricChargeUnit.Kilocoulomb, 4.2)]
-        [InlineData("en-US", "4.2 MA-h", ElectricChargeUnit.MegaampereHour, 4.2)]
         [InlineData("en-US", "4.2 MAh", ElectricChargeUnit.MegaampereHour, 4.2)]
+        [InlineData("en-US", "4.2 MA-h", ElectricChargeUnit.MegaampereHour, 4.2)]
         [InlineData("en-US", "4.2 MC", ElectricChargeUnit.Megacoulomb, 4.2)]
         [InlineData("en-US", "4.2 µC", ElectricChargeUnit.Microcoulomb, 4.2)]
-        [InlineData("en-US", "4.2 mA-h", ElectricChargeUnit.MilliampereHour, 4.2)]
         [InlineData("en-US", "4.2 mAh", ElectricChargeUnit.MilliampereHour, 4.2)]
+        [InlineData("en-US", "4.2 mA-h", ElectricChargeUnit.MilliampereHour, 4.2)]
         [InlineData("en-US", "4.2 mC", ElectricChargeUnit.Millicoulomb, 4.2)]
         [InlineData("en-US", "4.2 nC", ElectricChargeUnit.Nanocoulomb, 4.2)]
         [InlineData("en-US", "4.2 pC", ElectricChargeUnit.Picocoulomb, 4.2)]
@@ -373,18 +373,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("en-US", "4.2 A-h", ElectricChargeUnit.AmpereHour, 4.2)]
         [InlineData("en-US", "4.2 Ah", ElectricChargeUnit.AmpereHour, 4.2)]
+        [InlineData("en-US", "4.2 A-h", ElectricChargeUnit.AmpereHour, 4.2)]
         [InlineData("en-US", "4.2 C", ElectricChargeUnit.Coulomb, 4.2)]
-        [InlineData("en-US", "4.2 kA-h", ElectricChargeUnit.KiloampereHour, 4.2)]
         [InlineData("en-US", "4.2 kAh", ElectricChargeUnit.KiloampereHour, 4.2)]
+        [InlineData("en-US", "4.2 kA-h", ElectricChargeUnit.KiloampereHour, 4.2)]
         [InlineData("en-US", "4.2 kC", ElectricChargeUnit.Kilocoulomb, 4.2)]
-        [InlineData("en-US", "4.2 MA-h", ElectricChargeUnit.MegaampereHour, 4.2)]
         [InlineData("en-US", "4.2 MAh", ElectricChargeUnit.MegaampereHour, 4.2)]
+        [InlineData("en-US", "4.2 MA-h", ElectricChargeUnit.MegaampereHour, 4.2)]
         [InlineData("en-US", "4.2 MC", ElectricChargeUnit.Megacoulomb, 4.2)]
         [InlineData("en-US", "4.2 µC", ElectricChargeUnit.Microcoulomb, 4.2)]
-        [InlineData("en-US", "4.2 mA-h", ElectricChargeUnit.MilliampereHour, 4.2)]
         [InlineData("en-US", "4.2 mAh", ElectricChargeUnit.MilliampereHour, 4.2)]
+        [InlineData("en-US", "4.2 mA-h", ElectricChargeUnit.MilliampereHour, 4.2)]
         [InlineData("en-US", "4.2 mC", ElectricChargeUnit.Millicoulomb, 4.2)]
         [InlineData("en-US", "4.2 nC", ElectricChargeUnit.Nanocoulomb, 4.2)]
         [InlineData("en-US", "4.2 pC", ElectricChargeUnit.Picocoulomb, 4.2)]
@@ -397,18 +397,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("C", ElectricChargeUnit.Coulomb)]
-        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("pC", ElectricChargeUnit.Picocoulomb)]
@@ -421,18 +421,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("C", ElectricChargeUnit.Coulomb)]
-        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("pC", ElectricChargeUnit.Picocoulomb)]
@@ -445,18 +445,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "C", ElectricChargeUnit.Coulomb)]
-        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("en-US", "µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("en-US", "nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("en-US", "pC", ElectricChargeUnit.Picocoulomb)]
@@ -468,18 +468,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "C", ElectricChargeUnit.Coulomb)]
-        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("en-US", "µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("en-US", "nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("en-US", "pC", ElectricChargeUnit.Picocoulomb)]
@@ -490,18 +490,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("C", ElectricChargeUnit.Coulomb)]
-        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("pC", ElectricChargeUnit.Picocoulomb)]
@@ -514,18 +514,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("C", ElectricChargeUnit.Coulomb)]
-        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("pC", ElectricChargeUnit.Picocoulomb)]
@@ -538,18 +538,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "C", ElectricChargeUnit.Coulomb)]
-        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("en-US", "µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("en-US", "nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("en-US", "pC", ElectricChargeUnit.Picocoulomb)]
@@ -561,18 +561,18 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "Ah", ElectricChargeUnit.AmpereHour)]
+        [InlineData("en-US", "A-h", ElectricChargeUnit.AmpereHour)]
         [InlineData("en-US", "C", ElectricChargeUnit.Coulomb)]
-        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kAh", ElectricChargeUnit.KiloampereHour)]
+        [InlineData("en-US", "kA-h", ElectricChargeUnit.KiloampereHour)]
         [InlineData("en-US", "kC", ElectricChargeUnit.Kilocoulomb)]
-        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MAh", ElectricChargeUnit.MegaampereHour)]
+        [InlineData("en-US", "MA-h", ElectricChargeUnit.MegaampereHour)]
         [InlineData("en-US", "MC", ElectricChargeUnit.Megacoulomb)]
         [InlineData("en-US", "µC", ElectricChargeUnit.Microcoulomb)]
-        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mAh", ElectricChargeUnit.MilliampereHour)]
+        [InlineData("en-US", "mA-h", ElectricChargeUnit.MilliampereHour)]
         [InlineData("en-US", "mC", ElectricChargeUnit.Millicoulomb)]
         [InlineData("en-US", "nC", ElectricChargeUnit.Nanocoulomb)]
         [InlineData("en-US", "pC", ElectricChargeUnit.Picocoulomb)]
@@ -583,14 +583,14 @@ namespace UnitsNet.Tests
         }
 
         [Theory]
-        [InlineData("en-US", ElectricChargeUnit.AmpereHour, "A-h")]
+        [InlineData("en-US", ElectricChargeUnit.AmpereHour, "Ah")]
         [InlineData("en-US", ElectricChargeUnit.Coulomb, "C")]
-        [InlineData("en-US", ElectricChargeUnit.KiloampereHour, "kA-h")]
+        [InlineData("en-US", ElectricChargeUnit.KiloampereHour, "kAh")]
         [InlineData("en-US", ElectricChargeUnit.Kilocoulomb, "kC")]
-        [InlineData("en-US", ElectricChargeUnit.MegaampereHour, "MA-h")]
+        [InlineData("en-US", ElectricChargeUnit.MegaampereHour, "MAh")]
         [InlineData("en-US", ElectricChargeUnit.Megacoulomb, "MC")]
         [InlineData("en-US", ElectricChargeUnit.Microcoulomb, "µC")]
-        [InlineData("en-US", ElectricChargeUnit.MilliampereHour, "mA-h")]
+        [InlineData("en-US", ElectricChargeUnit.MilliampereHour, "mAh")]
         [InlineData("en-US", ElectricChargeUnit.Millicoulomb, "mC")]
         [InlineData("en-US", ElectricChargeUnit.Nanocoulomb, "nC")]
         [InlineData("en-US", ElectricChargeUnit.Picocoulomb, "pC")]
@@ -858,14 +858,14 @@ namespace UnitsNet.Tests
         public void ToString_ReturnsValueAndUnitAbbreviationInCurrentCulture()
         {
             using var _ = new CultureScope("en-US");
-            Assert.Equal("1 A-h", new ElectricCharge(1, ElectricChargeUnit.AmpereHour).ToString());
+            Assert.Equal("1 Ah", new ElectricCharge(1, ElectricChargeUnit.AmpereHour).ToString());
             Assert.Equal("1 C", new ElectricCharge(1, ElectricChargeUnit.Coulomb).ToString());
-            Assert.Equal("1 kA-h", new ElectricCharge(1, ElectricChargeUnit.KiloampereHour).ToString());
+            Assert.Equal("1 kAh", new ElectricCharge(1, ElectricChargeUnit.KiloampereHour).ToString());
             Assert.Equal("1 kC", new ElectricCharge(1, ElectricChargeUnit.Kilocoulomb).ToString());
-            Assert.Equal("1 MA-h", new ElectricCharge(1, ElectricChargeUnit.MegaampereHour).ToString());
+            Assert.Equal("1 MAh", new ElectricCharge(1, ElectricChargeUnit.MegaampereHour).ToString());
             Assert.Equal("1 MC", new ElectricCharge(1, ElectricChargeUnit.Megacoulomb).ToString());
             Assert.Equal("1 µC", new ElectricCharge(1, ElectricChargeUnit.Microcoulomb).ToString());
-            Assert.Equal("1 mA-h", new ElectricCharge(1, ElectricChargeUnit.MilliampereHour).ToString());
+            Assert.Equal("1 mAh", new ElectricCharge(1, ElectricChargeUnit.MilliampereHour).ToString());
             Assert.Equal("1 mC", new ElectricCharge(1, ElectricChargeUnit.Millicoulomb).ToString());
             Assert.Equal("1 nC", new ElectricCharge(1, ElectricChargeUnit.Nanocoulomb).ToString());
             Assert.Equal("1 pC", new ElectricCharge(1, ElectricChargeUnit.Picocoulomb).ToString());
@@ -877,14 +877,14 @@ namespace UnitsNet.Tests
             // Chose this culture, because we don't currently have any abbreviations mapped for that culture and we expect the en-US to be used as fallback.
             var swedishCulture = CultureInfo.GetCultureInfo("sv-SE");
 
-            Assert.Equal("1 A-h", new ElectricCharge(1, ElectricChargeUnit.AmpereHour).ToString(swedishCulture));
+            Assert.Equal("1 Ah", new ElectricCharge(1, ElectricChargeUnit.AmpereHour).ToString(swedishCulture));
             Assert.Equal("1 C", new ElectricCharge(1, ElectricChargeUnit.Coulomb).ToString(swedishCulture));
-            Assert.Equal("1 kA-h", new ElectricCharge(1, ElectricChargeUnit.KiloampereHour).ToString(swedishCulture));
+            Assert.Equal("1 kAh", new ElectricCharge(1, ElectricChargeUnit.KiloampereHour).ToString(swedishCulture));
             Assert.Equal("1 kC", new ElectricCharge(1, ElectricChargeUnit.Kilocoulomb).ToString(swedishCulture));
-            Assert.Equal("1 MA-h", new ElectricCharge(1, ElectricChargeUnit.MegaampereHour).ToString(swedishCulture));
+            Assert.Equal("1 MAh", new ElectricCharge(1, ElectricChargeUnit.MegaampereHour).ToString(swedishCulture));
             Assert.Equal("1 MC", new ElectricCharge(1, ElectricChargeUnit.Megacoulomb).ToString(swedishCulture));
             Assert.Equal("1 µC", new ElectricCharge(1, ElectricChargeUnit.Microcoulomb).ToString(swedishCulture));
-            Assert.Equal("1 mA-h", new ElectricCharge(1, ElectricChargeUnit.MilliampereHour).ToString(swedishCulture));
+            Assert.Equal("1 mAh", new ElectricCharge(1, ElectricChargeUnit.MilliampereHour).ToString(swedishCulture));
             Assert.Equal("1 mC", new ElectricCharge(1, ElectricChargeUnit.Millicoulomb).ToString(swedishCulture));
             Assert.Equal("1 nC", new ElectricCharge(1, ElectricChargeUnit.Nanocoulomb).ToString(swedishCulture));
             Assert.Equal("1 pC", new ElectricCharge(1, ElectricChargeUnit.Picocoulomb).ToString(swedishCulture));

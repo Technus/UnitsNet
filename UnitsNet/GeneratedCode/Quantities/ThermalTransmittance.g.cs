@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class ThermalTransmittanceInfo : QuantityInfo<ThermalTransmittance, ThermalTransmittanceUnit>
         {
             /// <inheritdoc />
-            public ThermalTransmittanceInfo(string name, ThermalTransmittanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalTransmittanceUnit>> unitMappings, ThermalTransmittance zero, BaseDimensions baseDimensions,
+            public ThermalTransmittanceInfo(string name, ThermalTransmittanceUnit baseUnit, ThermalTransmittanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalTransmittanceUnit>> unitMappings, ThermalTransmittance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ThermalTransmittance, ThermalTransmittanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ThermalTransmittanceInfo(string name, ThermalTransmittanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalTransmittanceUnit>> unitMappings, ThermalTransmittance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ThermalTransmittance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalTransmittance", typeof(ThermalTransmittance).Assembly))
+            public ThermalTransmittanceInfo(string name, ThermalTransmittanceUnit baseUnit, ThermalTransmittanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalTransmittanceUnit>> unitMappings, ThermalTransmittance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ThermalTransmittance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalTransmittance", typeof(ThermalTransmittance).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ThermalTransmittanceInfo"/> class with the default settings.</returns>
             public static ThermalTransmittanceInfo CreateDefault()
-                => new(nameof(ThermalTransmittance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalTransmittance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ThermalTransmittanceInfo"/> class with the default settings for the ThermalTransmittance quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ThermalTransmittanceInfo"/> class with the default settings.
             /// </returns>
             public static ThermalTransmittanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ThermalTransmittanceUnit>>, IEnumerable<IUnitDefinition<ThermalTransmittanceUnit>>> customizeUnits)
-                => new(nameof(ThermalTransmittance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalTransmittance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ThermalTransmittance"/> is T^-3MΘ^-1.
@@ -117,6 +117,15 @@ namespace UnitsNet
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
             } = ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin;
+
+            /// <summary>
+            ///     The default base unit of ThermalTransmittance is WattPerSquareMeterKelvin.
+            /// </summary>
+            public static ThermalTransmittanceUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ThermalTransmittanceUnit.WattPerSquareMeterKelvin;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ThermalTransmittanceUnit"/>.
@@ -207,6 +216,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ThermalTransmittance, which is WattPerSquareMeterKelvin.
+        /// </summary>
+        public static ThermalTransmittanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ThermalTransmittanceUnit.WattPerSquareMeterKelvin;
         }
 
         /// <summary>
@@ -305,9 +323,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ThermalTransmittance,ThermalTransmittanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalTransmittance,ThermalTransmittanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalTransmittanceUnit.WattPerSquareMeterKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ThermalTransmittance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalTransmittance,ThermalTransmittanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalTransmittanceUnit.WattPerSquareMeterKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalTransmittanceUnit.BtuPerHourSquareFeetDegreeFahrenheit"/>
@@ -402,8 +433,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilowattPerSquareMeterKelvin.
         /// </summary>
-        public ThermalTransmittance KilowattsPerSquareMeterKelvinToThermalTransmittance()
+        public ThermalTransmittance KilowattsPerSquareMeterKelvinToBaseThermalTransmittance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
+        /// </summary>
+        public ThermalTransmittance WattsPerSquareMeterKelvinToSiBaseThermalTransmittance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ThermalTransmittance"/> from <see cref="ThermalTransmittanceUnit.BtuPerHourSquareFeetDegreeFahrenheit"/>.

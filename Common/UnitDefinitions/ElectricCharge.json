@@ -1,6 +1,7 @@
 {
   "Name": "ElectricCharge",
   "BaseUnit": "Coulomb",
+  "SiBaseUnit": "Coulomb",
   "XmlDocSummary": "Electric charge is the physical property of matter that causes it to experience a force when placed in an electromagnetic field.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Electric_charge",
   "BaseDimensions": {
@@ -30,7 +31,7 @@
       "PluralName": "AmpereHours",
       "BaseUnits": {
         "I": "Ampere",
-        "T":  "Hour"
+        "T": "Hour"
       },
       "FromUnitToBaseFunc": "{x} * 3600",
       "FromBaseToUnitFunc": "{x} / 3600",
@@ -38,7 +39,7 @@
       "Localization": [
         {
           "Culture": "en-US",
-          "Abbreviations": [ "A-h", "Ah" ]
+          "Abbreviations": [ "Ah", "A-h" ]
         }
       ]
     }

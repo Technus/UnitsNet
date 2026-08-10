@@ -37,6 +37,11 @@ interface IQuantityInfo
     UnitInfo BaseUnitInfo { get; }
 
     /// <summary>
+    ///     The base unit of this quantity.
+    /// </summary>
+    UnitInfo SiBaseUnitInfo { get; }
+
+    /// <summary>
     ///     Zero value of quantity, such as <see cref="Length.Zero" />.
     /// </summary>
     IQuantity Zero { get; }

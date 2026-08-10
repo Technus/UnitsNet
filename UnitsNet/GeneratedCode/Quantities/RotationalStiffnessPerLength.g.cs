@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class RotationalStiffnessPerLengthInfo : QuantityInfo<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit>
         {
             /// <inheritdoc />
-            public RotationalStiffnessPerLengthInfo(string name, RotationalStiffnessPerLengthUnit baseUnit, IEnumerable<IUnitDefinition<RotationalStiffnessPerLengthUnit>> unitMappings, RotationalStiffnessPerLength zero, BaseDimensions baseDimensions,
+            public RotationalStiffnessPerLengthInfo(string name, RotationalStiffnessPerLengthUnit baseUnit, RotationalStiffnessPerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<RotationalStiffnessPerLengthUnit>> unitMappings, RotationalStiffnessPerLength zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<RotationalStiffnessPerLength, RotationalStiffnessPerLengthUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public RotationalStiffnessPerLengthInfo(string name, RotationalStiffnessPerLengthUnit baseUnit, IEnumerable<IUnitDefinition<RotationalStiffnessPerLengthUnit>> unitMappings, RotationalStiffnessPerLength zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, RotationalStiffnessPerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RotationalStiffnessPerLength", typeof(RotationalStiffnessPerLength).Assembly))
+            public RotationalStiffnessPerLengthInfo(string name, RotationalStiffnessPerLengthUnit baseUnit, RotationalStiffnessPerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<RotationalStiffnessPerLengthUnit>> unitMappings, RotationalStiffnessPerLength zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, RotationalStiffnessPerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RotationalStiffnessPerLength", typeof(RotationalStiffnessPerLength).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RotationalStiffnessPerLengthInfo"/> class with the default settings.</returns>
             public static RotationalStiffnessPerLengthInfo CreateDefault()
-                => new(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RotationalStiffnessPerLengthInfo"/> class with the default settings for the RotationalStiffnessPerLength quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RotationalStiffnessPerLengthInfo"/> class with the default settings.
             /// </returns>
             public static RotationalStiffnessPerLengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<RotationalStiffnessPerLengthUnit>>, IEnumerable<IUnitDefinition<RotationalStiffnessPerLengthUnit>>> customizeUnits)
-                => new(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RotationalStiffnessPerLength), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RotationalStiffnessPerLength"/> is T^-2LM.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of RotationalStiffnessPerLength is NewtonMeterPerRadianPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static RotationalStiffnessPerLengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter;
+
+            /// <summary>
+            ///     The default base unit of RotationalStiffnessPerLength is NewtonMeterPerRadianPerMeter.
+            /// </summary>
+            public static RotationalStiffnessPerLengthUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -199,6 +208,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of RotationalStiffnessPerLength, which is NewtonMeterPerRadianPerMeter.
+        /// </summary>
+        public static RotationalStiffnessPerLengthUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter;
         }
 
         /// <summary>
@@ -297,9 +315,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{RotationalStiffnessPerLength,RotationalStiffnessPerLengthUnit}.AsBaseValue"/>
         /// <returns><see cref="RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RotationalStiffnessPerLength,RotationalStiffnessPerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RotationalStiffnessPerLength AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RotationalStiffnessPerLength,RotationalStiffnessPerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter"/>
@@ -376,8 +407,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
         /// </summary>
-        public RotationalStiffnessPerLength NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
+        public RotationalStiffnessPerLength NewtonMetersPerRadianPerMeterToBaseRotationalStiffnessPerLength()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
+        /// </summary>
+        public RotationalStiffnessPerLength NewtonMetersPerRadianPerMeterToSiBaseRotationalStiffnessPerLength()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="RotationalStiffnessPerLength"/> from <see cref="RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter"/>.

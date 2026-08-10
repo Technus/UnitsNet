@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class ThermalResistivityInfo : QuantityInfo<ThermalResistivity, ThermalResistivityUnit>
         {
             /// <inheritdoc />
-            public ThermalResistivityInfo(string name, ThermalResistivityUnit baseUnit, IEnumerable<IUnitDefinition<ThermalResistivityUnit>> unitMappings, ThermalResistivity zero, BaseDimensions baseDimensions,
+            public ThermalResistivityInfo(string name, ThermalResistivityUnit baseUnit, ThermalResistivityUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalResistivityUnit>> unitMappings, ThermalResistivity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ThermalResistivity, ThermalResistivityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ThermalResistivityInfo(string name, ThermalResistivityUnit baseUnit, IEnumerable<IUnitDefinition<ThermalResistivityUnit>> unitMappings, ThermalResistivity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ThermalResistivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalResistivity", typeof(ThermalResistivity).Assembly))
+            public ThermalResistivityInfo(string name, ThermalResistivityUnit baseUnit, ThermalResistivityUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalResistivityUnit>> unitMappings, ThermalResistivity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ThermalResistivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalResistivity", typeof(ThermalResistivity).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ThermalResistivityInfo"/> class with the default settings.</returns>
             public static ThermalResistivityInfo CreateDefault()
-                => new(nameof(ThermalResistivity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalResistivity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ThermalResistivityInfo"/> class with the default settings for the ThermalResistivity quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ThermalResistivityInfo"/> class with the default settings.
             /// </returns>
             public static ThermalResistivityInfo CreateDefault(Func<IEnumerable<UnitDefinition<ThermalResistivityUnit>>, IEnumerable<IUnitDefinition<ThermalResistivityUnit>>> customizeUnits)
-                => new(nameof(ThermalResistivity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalResistivity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ThermalResistivity"/> is T^3L^-1M^-1Θ.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of ThermalResistivity is KelvinMeterPerWatt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ThermalResistivityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ThermalResistivityUnit.KelvinMeterPerWatt;
+
+            /// <summary>
+            ///     The default base unit of ThermalResistivity is KelvinMeterPerWatt.
+            /// </summary>
+            public static ThermalResistivityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -195,6 +204,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ThermalResistivity, which is KelvinMeterPerWatt.
+        /// </summary>
+        public static ThermalResistivityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ThermalResistivityUnit.KelvinMeterPerWatt;
         }
 
         /// <summary>
@@ -293,9 +311,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ThermalResistivity,ThermalResistivityUnit}.AsBaseValue"/>
         /// <returns><see cref="ThermalResistivityUnit.KelvinMeterPerWatt"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalResistivity,ThermalResistivityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalResistivityUnit.KelvinMeterPerWatt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ThermalResistivity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalResistivity,ThermalResistivityUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalResistivityUnit.KelvinMeterPerWatt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalResistivityUnit.HourFootFahrenheitPerBtu"/>
@@ -354,8 +385,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KelvinMeterPerWatt.
         /// </summary>
-        public ThermalResistivity KelvinMetersPerWattToThermalResistivity()
+        public ThermalResistivity KelvinMetersPerWattToBaseThermalResistivity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinMeterPerWatt.
+        /// </summary>
+        public ThermalResistivity KelvinMetersPerWattToSiBaseThermalResistivity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ThermalResistivity"/> from <see cref="ThermalResistivityUnit.HourFootFahrenheitPerBtu"/>.

@@ -25,7 +25,7 @@ public enum ClassOfLogarithmicQuantityUnit
 public class ClassOfLogarithmicQuantity(QuantityValue value, ClassOfLogarithmicQuantityUnit unit) : ILogarithmicQuantity<ClassOfLogarithmicQuantity, ClassOfLogarithmicQuantityUnit>
 {
     public static QuantityInfo<ClassOfLogarithmicQuantity, ClassOfLogarithmicQuantityUnit> Info { get; } = new(
-        ClassOfLogarithmicQuantityUnit.Some,
+        ClassOfLogarithmicQuantityUnit.Some, ClassOfLogarithmicQuantityUnit.Some,
         new UnitDefinition<ClassOfLogarithmicQuantityUnit>[]
         {
             new(ClassOfLogarithmicQuantityUnit.Some, "Some", BaseUnits.Undefined),
@@ -100,6 +100,16 @@ public class ClassOfLogarithmicQuantity(QuantityValue value, ClassOfLogarithmicQ
     public ClassOfLogarithmicQuantity AsBaseQuantity()
     {
         return new ClassOfLogarithmicQuantity(AsBaseValue(), Info.BaseUnitInfo.Value);
+    }
+
+    public QuantityValue AsSiBaseValue()
+    {
+        return this.As(Info.SiBaseUnitInfo.Value);
+    }
+
+    public ClassOfLogarithmicQuantity AsSiBaseQuantity()
+    {
+        return new ClassOfLogarithmicQuantity(AsSiBaseValue(), Info.SiBaseUnitInfo.Value);
     }
 
     UnitKey IQuantity.UnitKey

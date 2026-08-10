@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class PowerRatioInfo : QuantityInfo<PowerRatio, PowerRatioUnit>
         {
             /// <inheritdoc />
-            public PowerRatioInfo(string name, PowerRatioUnit baseUnit, IEnumerable<IUnitDefinition<PowerRatioUnit>> unitMappings, PowerRatio zero, BaseDimensions baseDimensions,
+            public PowerRatioInfo(string name, PowerRatioUnit baseUnit, PowerRatioUnit siBaseUnit, IEnumerable<IUnitDefinition<PowerRatioUnit>> unitMappings, PowerRatio zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<PowerRatio, PowerRatioUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public PowerRatioInfo(string name, PowerRatioUnit baseUnit, IEnumerable<IUnitDefinition<PowerRatioUnit>> unitMappings, PowerRatio zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, PowerRatio.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.PowerRatio", typeof(PowerRatio).Assembly))
+            public PowerRatioInfo(string name, PowerRatioUnit baseUnit, PowerRatioUnit siBaseUnit, IEnumerable<IUnitDefinition<PowerRatioUnit>> unitMappings, PowerRatio zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, PowerRatio.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.PowerRatio", typeof(PowerRatio).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PowerRatioInfo"/> class with the default settings.</returns>
             public static PowerRatioInfo CreateDefault()
-                => new(nameof(PowerRatio), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(PowerRatio), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PowerRatioInfo"/> class with the default settings for the PowerRatio quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PowerRatioInfo"/> class with the default settings.
             /// </returns>
             public static PowerRatioInfo CreateDefault(Func<IEnumerable<UnitDefinition<PowerRatioUnit>>, IEnumerable<IUnitDefinition<PowerRatioUnit>>> customizeUnits)
-                => new(nameof(PowerRatio), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(PowerRatio), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="PowerRatio"/> is .
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of PowerRatio is DecibelWatt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static PowerRatioUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PowerRatioUnit.DecibelWatt;
+
+            /// <summary>
+            ///     The default base unit of PowerRatio is DecibelWatt.
+            /// </summary>
+            public static PowerRatioUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -176,6 +185,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of PowerRatio, which is DecibelWatt.
+        /// </summary>
+        public static PowerRatioUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PowerRatioUnit.DecibelWatt;
         }
 
         /// <summary>
@@ -289,9 +307,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{PowerRatio,PowerRatioUnit}.AsBaseValue"/>
         /// <returns><see cref="PowerRatioUnit.DecibelWatt"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{PowerRatio,PowerRatioUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PowerRatioUnit.DecibelWatt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public PowerRatio AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{PowerRatio,PowerRatioUnit}.AsBaseValue"/>
+        /// <returns><see cref="PowerRatioUnit.DecibelWatt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerRatioUnit.DecibelMilliwatt"/>
@@ -341,8 +372,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of DecibelWatt.
         /// </summary>
-        public PowerRatio DecibelWattsToPowerRatio()
+        public PowerRatio DecibelWattsToBasePowerRatio()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecibelWatt.
+        /// </summary>
+        public PowerRatio DecibelWattsToSiBasePowerRatio()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="PowerRatio"/> from <see cref="PowerRatioUnit.DecibelMilliwatt"/>.

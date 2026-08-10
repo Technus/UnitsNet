@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class AbsorbedDoseOfIonizingRadiationInfo : QuantityInfo<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit>
         {
             /// <inheritdoc />
-            public AbsorbedDoseOfIonizingRadiationInfo(string name, AbsorbedDoseOfIonizingRadiationUnit baseUnit, IEnumerable<IUnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>> unitMappings, AbsorbedDoseOfIonizingRadiation zero, BaseDimensions baseDimensions,
+            public AbsorbedDoseOfIonizingRadiationInfo(string name, AbsorbedDoseOfIonizingRadiationUnit baseUnit, AbsorbedDoseOfIonizingRadiationUnit siBaseUnit, IEnumerable<IUnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>> unitMappings, AbsorbedDoseOfIonizingRadiation zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<AbsorbedDoseOfIonizingRadiation, AbsorbedDoseOfIonizingRadiationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AbsorbedDoseOfIonizingRadiationInfo(string name, AbsorbedDoseOfIonizingRadiationUnit baseUnit, IEnumerable<IUnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>> unitMappings, AbsorbedDoseOfIonizingRadiation zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, AbsorbedDoseOfIonizingRadiation.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AbsorbedDoseOfIonizingRadiation", typeof(AbsorbedDoseOfIonizingRadiation).Assembly))
+            public AbsorbedDoseOfIonizingRadiationInfo(string name, AbsorbedDoseOfIonizingRadiationUnit baseUnit, AbsorbedDoseOfIonizingRadiationUnit siBaseUnit, IEnumerable<IUnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>> unitMappings, AbsorbedDoseOfIonizingRadiation zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, AbsorbedDoseOfIonizingRadiation.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AbsorbedDoseOfIonizingRadiation", typeof(AbsorbedDoseOfIonizingRadiation).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AbsorbedDoseOfIonizingRadiationInfo"/> class with the default settings.</returns>
             public static AbsorbedDoseOfIonizingRadiationInfo CreateDefault()
-                => new(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AbsorbedDoseOfIonizingRadiationInfo"/> class with the default settings for the AbsorbedDoseOfIonizingRadiation quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AbsorbedDoseOfIonizingRadiationInfo"/> class with the default settings.
             /// </returns>
             public static AbsorbedDoseOfIonizingRadiationInfo CreateDefault(Func<IEnumerable<UnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>>, IEnumerable<IUnitDefinition<AbsorbedDoseOfIonizingRadiationUnit>>> customizeUnits)
-                => new(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AbsorbedDoseOfIonizingRadiation), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AbsorbedDoseOfIonizingRadiation"/> is T^-2L^2.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of AbsorbedDoseOfIonizingRadiation is Gray. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AbsorbedDoseOfIonizingRadiationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AbsorbedDoseOfIonizingRadiationUnit.Gray;
+
+            /// <summary>
+            ///     The default base unit of AbsorbedDoseOfIonizingRadiation is Gray.
+            /// </summary>
+            public static AbsorbedDoseOfIonizingRadiationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -241,6 +250,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of AbsorbedDoseOfIonizingRadiation, which is Gray.
+        /// </summary>
+        public static AbsorbedDoseOfIonizingRadiationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AbsorbedDoseOfIonizingRadiationUnit.Gray;
+        }
+
+        /// <summary>
         ///     All units of measurement for the AbsorbedDoseOfIonizingRadiation quantity.
         /// </summary>
         public static IReadOnlyCollection<AbsorbedDoseOfIonizingRadiationUnit> Units
@@ -336,9 +354,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{AbsorbedDoseOfIonizingRadiation,AbsorbedDoseOfIonizingRadiationUnit}.AsBaseValue"/>
         /// <returns><see cref="AbsorbedDoseOfIonizingRadiationUnit.Gray"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AbsorbedDoseOfIonizingRadiation,AbsorbedDoseOfIonizingRadiationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AbsorbedDoseOfIonizingRadiationUnit.Gray"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AbsorbedDoseOfIonizingRadiation AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AbsorbedDoseOfIonizingRadiation,AbsorbedDoseOfIonizingRadiationUnit}.AsBaseValue"/>
+        /// <returns><see cref="AbsorbedDoseOfIonizingRadiationUnit.Gray"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AbsorbedDoseOfIonizingRadiationUnit.Centigray"/>
@@ -523,8 +554,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Gray.
         /// </summary>
-        public AbsorbedDoseOfIonizingRadiation GraysToAbsorbedDoseOfIonizingRadiation()
+        public AbsorbedDoseOfIonizingRadiation GraysToBaseAbsorbedDoseOfIonizingRadiation()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Gray.
+        /// </summary>
+        public AbsorbedDoseOfIonizingRadiation GraysToSiBaseAbsorbedDoseOfIonizingRadiation()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="AbsorbedDoseOfIonizingRadiation"/> from <see cref="AbsorbedDoseOfIonizingRadiationUnit.Centigray"/>.

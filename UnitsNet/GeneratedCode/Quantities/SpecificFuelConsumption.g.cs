@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class SpecificFuelConsumptionInfo : QuantityInfo<SpecificFuelConsumption, SpecificFuelConsumptionUnit>
         {
             /// <inheritdoc />
-            public SpecificFuelConsumptionInfo(string name, SpecificFuelConsumptionUnit baseUnit, IEnumerable<IUnitDefinition<SpecificFuelConsumptionUnit>> unitMappings, SpecificFuelConsumption zero, BaseDimensions baseDimensions,
+            public SpecificFuelConsumptionInfo(string name, SpecificFuelConsumptionUnit baseUnit, SpecificFuelConsumptionUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificFuelConsumptionUnit>> unitMappings, SpecificFuelConsumption zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<SpecificFuelConsumption, SpecificFuelConsumptionUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public SpecificFuelConsumptionInfo(string name, SpecificFuelConsumptionUnit baseUnit, IEnumerable<IUnitDefinition<SpecificFuelConsumptionUnit>> unitMappings, SpecificFuelConsumption zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, SpecificFuelConsumption.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificFuelConsumption", typeof(SpecificFuelConsumption).Assembly))
+            public SpecificFuelConsumptionInfo(string name, SpecificFuelConsumptionUnit baseUnit, SpecificFuelConsumptionUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificFuelConsumptionUnit>> unitMappings, SpecificFuelConsumption zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, SpecificFuelConsumption.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificFuelConsumption", typeof(SpecificFuelConsumption).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="SpecificFuelConsumptionInfo"/> class with the default settings.</returns>
             public static SpecificFuelConsumptionInfo CreateDefault()
-                => new(nameof(SpecificFuelConsumption), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificFuelConsumption), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="SpecificFuelConsumptionInfo"/> class with the default settings for the SpecificFuelConsumption quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="SpecificFuelConsumptionInfo"/> class with the default settings.
             /// </returns>
             public static SpecificFuelConsumptionInfo CreateDefault(Func<IEnumerable<UnitDefinition<SpecificFuelConsumptionUnit>>, IEnumerable<IUnitDefinition<SpecificFuelConsumptionUnit>>> customizeUnits)
-                => new(nameof(SpecificFuelConsumption), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificFuelConsumption), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="SpecificFuelConsumption"/> is TL^-1.
@@ -119,6 +119,15 @@ namespace UnitsNet
             } = SpecificFuelConsumptionUnit.GramPerKilonewtonSecond;
 
             /// <summary>
+            ///     The default base unit of SpecificFuelConsumption is KilogramPerNewtonSecond.
+            /// </summary>
+            public static SpecificFuelConsumptionUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = SpecificFuelConsumptionUnit.KilogramPerNewtonSecond;
+
+            /// <summary>
             ///     Retrieves the default mappings for <see cref="SpecificFuelConsumptionUnit"/>.
             /// </summary>
             /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="UnitDefinition{SpecificFuelConsumptionUnit}"/> representing the default unit mappings for SpecificFuelConsumption.</returns>
@@ -130,6 +139,9 @@ namespace UnitsNet
                 );
                 yield return new (SpecificFuelConsumptionUnit.KilogramPerKilonewtonSecond, "KilogramPerKilonewtonSecond", "KilogramsPerKilonewtonSecond", new BaseUnits(length: LengthUnit.Millimeter, time: DurationUnit.Second),
                      new QuantityValue(1, 1000)
+                );
+                yield return new (SpecificFuelConsumptionUnit.KilogramPerNewtonSecond, "KilogramPerNewtonSecond", "KilogramsPerNewtonSecond", new BaseUnits(length: LengthUnit.Meter, time: DurationUnit.Second),
+                     new QuantityValue(1, 1000000)
                 );
                 yield return new (SpecificFuelConsumptionUnit.PoundMassPerPoundForceHour, "PoundMassPerPoundForceHour", "PoundsMassPerPoundForceHour", BaseUnits.Undefined,
                      new QuantityValue(1765197, 50000000)
@@ -198,6 +210,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of SpecificFuelConsumption, which is KilogramPerNewtonSecond.
+        /// </summary>
+        public static SpecificFuelConsumptionUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => SpecificFuelConsumptionUnit.KilogramPerNewtonSecond;
         }
 
         /// <summary>
@@ -296,9 +317,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{SpecificFuelConsumption,SpecificFuelConsumptionUnit}.AsBaseValue"/>
         /// <returns><see cref="SpecificFuelConsumptionUnit.GramPerKilonewtonSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificFuelConsumption,SpecificFuelConsumptionUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificFuelConsumptionUnit.KilogramPerNewtonSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SpecificFuelConsumption AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificFuelConsumption,SpecificFuelConsumptionUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificFuelConsumptionUnit.KilogramPerNewtonSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificFuelConsumptionUnit.GramPerKilonewtonSecond"/>
@@ -325,6 +359,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => this.As(SpecificFuelConsumptionUnit.KilogramPerKilonewtonSecond);
+        }
+
+        /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificFuelConsumptionUnit.KilogramPerNewtonSecond"/>
+        /// </summary>
+        public QuantityValue KilogramsPerNewtonSecond
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(SpecificFuelConsumptionUnit.KilogramPerNewtonSecond);
         }
 
         /// <summary>
@@ -366,8 +409,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of GramPerKilonewtonSecond.
         /// </summary>
-        public SpecificFuelConsumption GramsPerKilonewtonSecondToSpecificFuelConsumption()
+        public SpecificFuelConsumption GramsPerKilonewtonSecondToBaseSpecificFuelConsumption()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerNewtonSecond.
+        /// </summary>
+        public SpecificFuelConsumption KilogramsPerNewtonSecondToSiBaseSpecificFuelConsumption()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="SpecificFuelConsumption"/> from <see cref="SpecificFuelConsumptionUnit.GramPerKilonewtonSecond"/>.
@@ -389,6 +438,13 @@ namespace UnitsNet
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SpecificFuelConsumption FromKilogramsPerKilonewtonSecond(QuantityValue value)
             => new(value, SpecificFuelConsumptionUnit.KilogramPerKilonewtonSecond);
+
+        /// <summary>
+        ///     Creates a <see cref="SpecificFuelConsumption"/> from <see cref="SpecificFuelConsumptionUnit.KilogramPerNewtonSecond"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SpecificFuelConsumption FromKilogramsPerNewtonSecond(QuantityValue value)
+            => new(value, SpecificFuelConsumptionUnit.KilogramPerNewtonSecond);
 
         /// <summary>
         ///     Creates a <see cref="SpecificFuelConsumption"/> from <see cref="SpecificFuelConsumptionUnit.PoundMassPerPoundForceHour"/>.

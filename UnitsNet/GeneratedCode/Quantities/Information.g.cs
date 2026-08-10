@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class InformationInfo : QuantityInfo<Information, InformationUnit>
         {
             /// <inheritdoc />
-            public InformationInfo(string name, InformationUnit baseUnit, IEnumerable<IUnitDefinition<InformationUnit>> unitMappings, Information zero, BaseDimensions baseDimensions,
+            public InformationInfo(string name, InformationUnit baseUnit, InformationUnit siBaseUnit, IEnumerable<IUnitDefinition<InformationUnit>> unitMappings, Information zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Information, InformationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public InformationInfo(string name, InformationUnit baseUnit, IEnumerable<IUnitDefinition<InformationUnit>> unitMappings, Information zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Information.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Information", typeof(Information).Assembly))
+            public InformationInfo(string name, InformationUnit baseUnit, InformationUnit siBaseUnit, IEnumerable<IUnitDefinition<InformationUnit>> unitMappings, Information zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Information.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Information", typeof(Information).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="InformationInfo"/> class with the default settings.</returns>
             public static InformationInfo CreateDefault()
-                => new(nameof(Information), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Information), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="InformationInfo"/> class with the default settings for the Information quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="InformationInfo"/> class with the default settings.
             /// </returns>
             public static InformationInfo CreateDefault(Func<IEnumerable<UnitDefinition<InformationUnit>>, IEnumerable<IUnitDefinition<InformationUnit>>> customizeUnits)
-                => new(nameof(Information), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Information), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Information"/> is .
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Information is Bit. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static InformationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = InformationUnit.Bit;
+
+            /// <summary>
+            ///     The default base unit of Information is Bit.
+            /// </summary>
+            public static InformationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -292,6 +301,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Information, which is Bit.
+        /// </summary>
+        public static InformationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => InformationUnit.Bit;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Information quantity.
         /// </summary>
         public static IReadOnlyCollection<InformationUnit> Units
@@ -387,9 +405,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Information,InformationUnit}.AsBaseValue"/>
         /// <returns><see cref="InformationUnit.Bit"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Information,InformationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="InformationUnit.Bit"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Information AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Information,InformationUnit}.AsBaseValue"/>
+        /// <returns><see cref="InformationUnit.Bit"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="InformationUnit.Bit"/>
@@ -772,8 +803,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Bit.
         /// </summary>
-        public Information BitsToInformation()
+        public Information BitsToBaseInformation()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Bit.
+        /// </summary>
+        public Information BitsToSiBaseInformation()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Information"/> from <see cref="InformationUnit.Bit"/>.

@@ -76,15 +76,15 @@ namespace UnitsNet
         public sealed class ReciprocalLengthInfo : QuantityInfo<ReciprocalLength, ReciprocalLengthUnit>
         {
             /// <inheritdoc />
-            public ReciprocalLengthInfo(string name, ReciprocalLengthUnit baseUnit, IEnumerable<IUnitDefinition<ReciprocalLengthUnit>> unitMappings, ReciprocalLength zero, BaseDimensions baseDimensions,
+            public ReciprocalLengthInfo(string name, ReciprocalLengthUnit baseUnit, ReciprocalLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<ReciprocalLengthUnit>> unitMappings, ReciprocalLength zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ReciprocalLength, ReciprocalLengthUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ReciprocalLengthInfo(string name, ReciprocalLengthUnit baseUnit, IEnumerable<IUnitDefinition<ReciprocalLengthUnit>> unitMappings, ReciprocalLength zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ReciprocalLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ReciprocalLength", typeof(ReciprocalLength).Assembly))
+            public ReciprocalLengthInfo(string name, ReciprocalLengthUnit baseUnit, ReciprocalLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<ReciprocalLengthUnit>> unitMappings, ReciprocalLength zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ReciprocalLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ReciprocalLength", typeof(ReciprocalLength).Assembly))
             {
             }
 
@@ -93,7 +93,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ReciprocalLengthInfo"/> class with the default settings.</returns>
             public static ReciprocalLengthInfo CreateDefault()
-                => new(nameof(ReciprocalLength), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ReciprocalLength), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ReciprocalLengthInfo"/> class with the default settings for the ReciprocalLength quantity and a callback for customizing the default unit mappings.
@@ -105,7 +105,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ReciprocalLengthInfo"/> class with the default settings.
             /// </returns>
             public static ReciprocalLengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<ReciprocalLengthUnit>>, IEnumerable<IUnitDefinition<ReciprocalLengthUnit>>> customizeUnits)
-                => new(nameof(ReciprocalLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ReciprocalLength), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ReciprocalLength"/> is L^-1.
@@ -120,6 +120,15 @@ namespace UnitsNet
             ///     The default base unit of ReciprocalLength is InverseMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ReciprocalLengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ReciprocalLengthUnit.InverseMeter;
+
+            /// <summary>
+            ///     The default base unit of ReciprocalLength is InverseMeter.
+            /// </summary>
+            public static ReciprocalLengthUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -226,6 +235,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ReciprocalLength, which is InverseMeter.
+        /// </summary>
+        public static ReciprocalLengthUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ReciprocalLengthUnit.InverseMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ReciprocalLength quantity.
         /// </summary>
         public static IReadOnlyCollection<ReciprocalLengthUnit> Units
@@ -321,9 +339,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ReciprocalLength,ReciprocalLengthUnit}.AsBaseValue"/>
         /// <returns><see cref="ReciprocalLengthUnit.InverseMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ReciprocalLength,ReciprocalLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ReciprocalLengthUnit.InverseMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReciprocalLength AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ReciprocalLength,ReciprocalLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="ReciprocalLengthUnit.InverseMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ReciprocalLengthUnit.InverseCentimeter"/>
@@ -445,8 +476,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of InverseMeter.
         /// </summary>
-        public ReciprocalLength InverseMetersToReciprocalLength()
+        public ReciprocalLength InverseMetersToBaseReciprocalLength()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of InverseMeter.
+        /// </summary>
+        public ReciprocalLength InverseMetersToSiBaseReciprocalLength()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ReciprocalLength"/> from <see cref="ReciprocalLengthUnit.InverseCentimeter"/>.

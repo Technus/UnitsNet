@@ -74,15 +74,15 @@ namespace UnitsNet
         public sealed class SpeedInfo : QuantityInfo<Speed, SpeedUnit>
         {
             /// <inheritdoc />
-            public SpeedInfo(string name, SpeedUnit baseUnit, IEnumerable<IUnitDefinition<SpeedUnit>> unitMappings, Speed zero, BaseDimensions baseDimensions,
+            public SpeedInfo(string name, SpeedUnit baseUnit, SpeedUnit siBaseUnit, IEnumerable<IUnitDefinition<SpeedUnit>> unitMappings, Speed zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Speed, SpeedUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public SpeedInfo(string name, SpeedUnit baseUnit, IEnumerable<IUnitDefinition<SpeedUnit>> unitMappings, Speed zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Speed.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Speed", typeof(Speed).Assembly))
+            public SpeedInfo(string name, SpeedUnit baseUnit, SpeedUnit siBaseUnit, IEnumerable<IUnitDefinition<SpeedUnit>> unitMappings, Speed zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Speed.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Speed", typeof(Speed).Assembly))
             {
             }
 
@@ -91,7 +91,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="SpeedInfo"/> class with the default settings.</returns>
             public static SpeedInfo CreateDefault()
-                => new(nameof(Speed), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Speed), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="SpeedInfo"/> class with the default settings for the Speed quantity and a callback for customizing the default unit mappings.
@@ -103,7 +103,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="SpeedInfo"/> class with the default settings.
             /// </returns>
             public static SpeedInfo CreateDefault(Func<IEnumerable<UnitDefinition<SpeedUnit>>, IEnumerable<IUnitDefinition<SpeedUnit>>> customizeUnits)
-                => new(nameof(Speed), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Speed), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Speed"/> is T^-1L.
@@ -118,6 +118,15 @@ namespace UnitsNet
             ///     The default base unit of Speed is MeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static SpeedUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = SpeedUnit.MeterPerSecond;
+
+            /// <summary>
+            ///     The default base unit of Speed is MeterPerSecond.
+            /// </summary>
+            public static SpeedUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -293,6 +302,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Speed, which is MeterPerSecond.
+        /// </summary>
+        public static SpeedUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => SpeedUnit.MeterPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Speed quantity.
         /// </summary>
         public static IReadOnlyCollection<SpeedUnit> Units
@@ -388,9 +406,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Speed,SpeedUnit}.AsBaseValue"/>
         /// <returns><see cref="SpeedUnit.MeterPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Speed,SpeedUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpeedUnit.MeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Speed AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Speed,SpeedUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpeedUnit.MeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpeedUnit.CentimeterPerHour"/>
@@ -719,8 +750,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecond.
         /// </summary>
-        public Speed MetersPerSecondToSpeed()
+        public Speed MetersPerSecondToBaseSpeed()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecond.
+        /// </summary>
+        public Speed MetersPerSecondToSiBaseSpeed()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Speed"/> from <see cref="SpeedUnit.CentimeterPerHour"/>.

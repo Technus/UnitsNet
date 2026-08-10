@@ -1,6 +1,7 @@
 {
   "Name": "AreaPerLength",
   "BaseUnit": "SquareMeterPerMeter",
+  "SiBaseUnit": "SquareMeterPerMeter",
   "XmlDocSummary": "The magnitude of area per unit length, typically used in structural engineering to specify distributed reinforcement.",
   "BaseDimensions": {
     "L": 1

@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricReactivePowerInfo : QuantityInfo<ElectricReactivePower, ElectricReactivePowerUnit>
         {
             /// <inheritdoc />
-            public ElectricReactivePowerInfo(string name, ElectricReactivePowerUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactivePowerUnit>> unitMappings, ElectricReactivePower zero, BaseDimensions baseDimensions,
+            public ElectricReactivePowerInfo(string name, ElectricReactivePowerUnit baseUnit, ElectricReactivePowerUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricReactivePowerUnit>> unitMappings, ElectricReactivePower zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricReactivePower, ElectricReactivePowerUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricReactivePowerInfo(string name, ElectricReactivePowerUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactivePowerUnit>> unitMappings, ElectricReactivePower zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricReactivePower.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricReactivePower", typeof(ElectricReactivePower).Assembly))
+            public ElectricReactivePowerInfo(string name, ElectricReactivePowerUnit baseUnit, ElectricReactivePowerUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricReactivePowerUnit>> unitMappings, ElectricReactivePower zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricReactivePower.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricReactivePower", typeof(ElectricReactivePower).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricReactivePowerInfo"/> class with the default settings.</returns>
             public static ElectricReactivePowerInfo CreateDefault()
-                => new(nameof(ElectricReactivePower), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricReactivePower), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricReactivePowerInfo"/> class with the default settings for the ElectricReactivePower quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricReactivePowerInfo"/> class with the default settings.
             /// </returns>
             public static ElectricReactivePowerInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricReactivePowerUnit>>, IEnumerable<IUnitDefinition<ElectricReactivePowerUnit>>> customizeUnits)
-                => new(nameof(ElectricReactivePower), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricReactivePower), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricReactivePower"/> is T^-3L^2M.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricReactivePower is VoltampereReactive. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricReactivePowerUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricReactivePowerUnit.VoltampereReactive;
+
+            /// <summary>
+            ///     The default base unit of ElectricReactivePower is VoltampereReactive.
+            /// </summary>
+            public static ElectricReactivePowerUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -199,6 +208,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricReactivePower, which is VoltampereReactive.
+        /// </summary>
+        public static ElectricReactivePowerUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricReactivePowerUnit.VoltampereReactive;
         }
 
         /// <summary>
@@ -297,9 +315,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricReactivePower,ElectricReactivePowerUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricReactivePowerUnit.VoltampereReactive"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricReactivePower,ElectricReactivePowerUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricReactivePowerUnit.VoltampereReactive"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricReactivePower AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricReactivePower,ElectricReactivePowerUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricReactivePowerUnit.VoltampereReactive"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactivePowerUnit.GigavoltampereReactive"/>
@@ -367,8 +398,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactive.
         /// </summary>
-        public ElectricReactivePower VoltamperesReactiveToElectricReactivePower()
+        public ElectricReactivePower VoltamperesReactiveToBaseElectricReactivePower()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereReactive.
+        /// </summary>
+        public ElectricReactivePower VoltamperesReactiveToSiBaseElectricReactivePower()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactivePower"/> from <see cref="ElectricReactivePowerUnit.GigavoltampereReactive"/>.

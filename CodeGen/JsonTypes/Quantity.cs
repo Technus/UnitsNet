@@ -14,6 +14,7 @@ namespace CodeGen.JsonTypes
 
         public BaseDimensions BaseDimensions = new(); // Default to empty
         public string BaseUnit = null!;
+        public string SiBaseUnit = null!;
         public string? AffineOffsetType;
         public bool IsAffine => !string.IsNullOrEmpty(AffineOffsetType);
         public bool Logarithmic = false;

@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricChargeDensityInfo : QuantityInfo<ElectricChargeDensity, ElectricChargeDensityUnit>
         {
             /// <inheritdoc />
-            public ElectricChargeDensityInfo(string name, ElectricChargeDensityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricChargeDensityUnit>> unitMappings, ElectricChargeDensity zero, BaseDimensions baseDimensions,
+            public ElectricChargeDensityInfo(string name, ElectricChargeDensityUnit baseUnit, ElectricChargeDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricChargeDensityUnit>> unitMappings, ElectricChargeDensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricChargeDensity, ElectricChargeDensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricChargeDensityInfo(string name, ElectricChargeDensityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricChargeDensityUnit>> unitMappings, ElectricChargeDensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricChargeDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricChargeDensity", typeof(ElectricChargeDensity).Assembly))
+            public ElectricChargeDensityInfo(string name, ElectricChargeDensityUnit baseUnit, ElectricChargeDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricChargeDensityUnit>> unitMappings, ElectricChargeDensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricChargeDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricChargeDensity", typeof(ElectricChargeDensity).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricChargeDensityInfo"/> class with the default settings.</returns>
             public static ElectricChargeDensityInfo CreateDefault()
-                => new(nameof(ElectricChargeDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricChargeDensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricChargeDensityInfo"/> class with the default settings for the ElectricChargeDensity quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricChargeDensityInfo"/> class with the default settings.
             /// </returns>
             public static ElectricChargeDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricChargeDensityUnit>>, IEnumerable<IUnitDefinition<ElectricChargeDensityUnit>>> customizeUnits)
-                => new(nameof(ElectricChargeDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricChargeDensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricChargeDensity"/> is TL^-3I.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricChargeDensity is CoulombPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricChargeDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricChargeDensityUnit.CoulombPerCubicMeter;
+
+            /// <summary>
+            ///     The default base unit of ElectricChargeDensity is CoulombPerCubicMeter.
+            /// </summary>
+            public static ElectricChargeDensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -190,6 +199,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricChargeDensity, which is CoulombPerCubicMeter.
+        /// </summary>
+        public static ElectricChargeDensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricChargeDensityUnit.CoulombPerCubicMeter;
         }
 
         /// <summary>
@@ -288,9 +306,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricChargeDensity,ElectricChargeDensityUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricChargeDensityUnit.CoulombPerCubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricChargeDensity,ElectricChargeDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricChargeDensityUnit.CoulombPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricChargeDensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricChargeDensity,ElectricChargeDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricChargeDensityUnit.CoulombPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricChargeDensityUnit.CoulombPerCubicMeter"/>
@@ -331,8 +362,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerCubicMeter.
         /// </summary>
-        public ElectricChargeDensity CoulombsPerCubicMeterToElectricChargeDensity()
+        public ElectricChargeDensity CoulombsPerCubicMeterToBaseElectricChargeDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of CoulombPerCubicMeter.
+        /// </summary>
+        public ElectricChargeDensity CoulombsPerCubicMeterToSiBaseElectricChargeDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricChargeDensity"/> from <see cref="ElectricChargeDensityUnit.CoulombPerCubicMeter"/>.

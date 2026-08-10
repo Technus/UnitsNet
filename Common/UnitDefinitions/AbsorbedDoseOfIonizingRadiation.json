@@ -1,6 +1,7 @@
 {
   "Name": "AbsorbedDoseOfIonizingRadiation",
   "BaseUnit": "Gray",
+  "SiBaseUnit": "Gray",
   "XmlDocSummary": "Absorbed dose is a dose quantity which is the measure of the energy deposited in matter by ionizing radiation per unit mass.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Absorbed_dose",
   "BaseDimensions": {

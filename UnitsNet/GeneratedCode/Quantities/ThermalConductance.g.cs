@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class ThermalConductanceInfo : QuantityInfo<ThermalConductance, ThermalConductanceUnit>
         {
             /// <inheritdoc />
-            public ThermalConductanceInfo(string name, ThermalConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalConductanceUnit>> unitMappings, ThermalConductance zero, BaseDimensions baseDimensions,
+            public ThermalConductanceInfo(string name, ThermalConductanceUnit baseUnit, ThermalConductanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalConductanceUnit>> unitMappings, ThermalConductance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ThermalConductance, ThermalConductanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ThermalConductanceInfo(string name, ThermalConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalConductanceUnit>> unitMappings, ThermalConductance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ThermalConductance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalConductance", typeof(ThermalConductance).Assembly))
+            public ThermalConductanceInfo(string name, ThermalConductanceUnit baseUnit, ThermalConductanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalConductanceUnit>> unitMappings, ThermalConductance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ThermalConductance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalConductance", typeof(ThermalConductance).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ThermalConductanceInfo"/> class with the default settings.</returns>
             public static ThermalConductanceInfo CreateDefault()
-                => new(nameof(ThermalConductance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalConductance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ThermalConductanceInfo"/> class with the default settings for the ThermalConductance quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ThermalConductanceInfo"/> class with the default settings.
             /// </returns>
             public static ThermalConductanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ThermalConductanceUnit>>, IEnumerable<IUnitDefinition<ThermalConductanceUnit>>> customizeUnits)
-                => new(nameof(ThermalConductance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalConductance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ThermalConductance"/> is T^-3L^2MΘ^-1.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of ThermalConductance is WattPerKelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ThermalConductanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ThermalConductanceUnit.WattPerKelvin;
+
+            /// <summary>
+            ///     The default base unit of ThermalConductance is WattPerKelvin.
+            /// </summary>
+            public static ThermalConductanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -192,6 +201,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ThermalConductance, which is WattPerKelvin.
+        /// </summary>
+        public static ThermalConductanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ThermalConductanceUnit.WattPerKelvin;
         }
 
         /// <summary>
@@ -290,9 +308,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ThermalConductance,ThermalConductanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ThermalConductanceUnit.WattPerKelvin"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalConductance,ThermalConductanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalConductanceUnit.WattPerKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ThermalConductance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalConductance,ThermalConductanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalConductanceUnit.WattPerKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalConductanceUnit.WattPerDegreeCelsius"/>
@@ -342,8 +373,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of WattPerKelvin.
         /// </summary>
-        public ThermalConductance WattsPerKelvinToThermalConductance()
+        public ThermalConductance WattsPerKelvinToBaseThermalConductance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerKelvin.
+        /// </summary>
+        public ThermalConductance WattsPerKelvinToSiBaseThermalConductance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ThermalConductance"/> from <see cref="ThermalConductanceUnit.WattPerDegreeCelsius"/>.

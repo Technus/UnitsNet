@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class IrradianceInfo : QuantityInfo<Irradiance, IrradianceUnit>
         {
             /// <inheritdoc />
-            public IrradianceInfo(string name, IrradianceUnit baseUnit, IEnumerable<IUnitDefinition<IrradianceUnit>> unitMappings, Irradiance zero, BaseDimensions baseDimensions,
+            public IrradianceInfo(string name, IrradianceUnit baseUnit, IrradianceUnit siBaseUnit, IEnumerable<IUnitDefinition<IrradianceUnit>> unitMappings, Irradiance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Irradiance, IrradianceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public IrradianceInfo(string name, IrradianceUnit baseUnit, IEnumerable<IUnitDefinition<IrradianceUnit>> unitMappings, Irradiance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Irradiance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Irradiance", typeof(Irradiance).Assembly))
+            public IrradianceInfo(string name, IrradianceUnit baseUnit, IrradianceUnit siBaseUnit, IEnumerable<IUnitDefinition<IrradianceUnit>> unitMappings, Irradiance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Irradiance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Irradiance", typeof(Irradiance).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="IrradianceInfo"/> class with the default settings.</returns>
             public static IrradianceInfo CreateDefault()
-                => new(nameof(Irradiance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Irradiance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="IrradianceInfo"/> class with the default settings for the Irradiance quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="IrradianceInfo"/> class with the default settings.
             /// </returns>
             public static IrradianceInfo CreateDefault(Func<IEnumerable<UnitDefinition<IrradianceUnit>>, IEnumerable<IUnitDefinition<IrradianceUnit>>> customizeUnits)
-                => new(nameof(Irradiance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Irradiance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Irradiance"/> is T^-3M.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of Irradiance is WattPerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static IrradianceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = IrradianceUnit.WattPerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of Irradiance is WattPerSquareMeter.
+            /// </summary>
+            public static IrradianceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -229,6 +238,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Irradiance, which is WattPerSquareMeter.
+        /// </summary>
+        public static IrradianceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => IrradianceUnit.WattPerSquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Irradiance quantity.
         /// </summary>
         public static IReadOnlyCollection<IrradianceUnit> Units
@@ -324,9 +342,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Irradiance,IrradianceUnit}.AsBaseValue"/>
         /// <returns><see cref="IrradianceUnit.WattPerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Irradiance,IrradianceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="IrradianceUnit.WattPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Irradiance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Irradiance,IrradianceUnit}.AsBaseValue"/>
+        /// <returns><see cref="IrradianceUnit.WattPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="IrradianceUnit.KilowattPerSquareCentimeter"/>
@@ -484,8 +515,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
-        public Irradiance WattsPerSquareMeterToIrradiance()
+        public Irradiance WattsPerSquareMeterToBaseIrradiance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerSquareMeter.
+        /// </summary>
+        public Irradiance WattsPerSquareMeterToSiBaseIrradiance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Irradiance"/> from <see cref="IrradianceUnit.KilowattPerSquareCentimeter"/>.

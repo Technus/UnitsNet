@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class ForceChangeRateInfo : QuantityInfo<ForceChangeRate, ForceChangeRateUnit>
         {
             /// <inheritdoc />
-            public ForceChangeRateInfo(string name, ForceChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<ForceChangeRateUnit>> unitMappings, ForceChangeRate zero, BaseDimensions baseDimensions,
+            public ForceChangeRateInfo(string name, ForceChangeRateUnit baseUnit, ForceChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<ForceChangeRateUnit>> unitMappings, ForceChangeRate zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ForceChangeRate, ForceChangeRateUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ForceChangeRateInfo(string name, ForceChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<ForceChangeRateUnit>> unitMappings, ForceChangeRate zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ForceChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ForceChangeRate", typeof(ForceChangeRate).Assembly))
+            public ForceChangeRateInfo(string name, ForceChangeRateUnit baseUnit, ForceChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<ForceChangeRateUnit>> unitMappings, ForceChangeRate zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ForceChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ForceChangeRate", typeof(ForceChangeRate).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ForceChangeRateInfo"/> class with the default settings.</returns>
             public static ForceChangeRateInfo CreateDefault()
-                => new(nameof(ForceChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ForceChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ForceChangeRateInfo"/> class with the default settings for the ForceChangeRate quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ForceChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static ForceChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<ForceChangeRateUnit>>, IEnumerable<IUnitDefinition<ForceChangeRateUnit>>> customizeUnits)
-                => new(nameof(ForceChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ForceChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ForceChangeRate"/> is T^-3LM.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of ForceChangeRate is NewtonPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ForceChangeRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ForceChangeRateUnit.NewtonPerSecond;
+
+            /// <summary>
+            ///     The default base unit of ForceChangeRate is NewtonPerSecond.
+            /// </summary>
+            public static ForceChangeRateUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -232,6 +241,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ForceChangeRate, which is NewtonPerSecond.
+        /// </summary>
+        public static ForceChangeRateUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ForceChangeRateUnit.NewtonPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ForceChangeRate quantity.
         /// </summary>
         public static IReadOnlyCollection<ForceChangeRateUnit> Units
@@ -327,9 +345,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ForceChangeRate,ForceChangeRateUnit}.AsBaseValue"/>
         /// <returns><see cref="ForceChangeRateUnit.NewtonPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ForceChangeRate,ForceChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ForceChangeRateUnit.NewtonPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ForceChangeRate AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ForceChangeRate,ForceChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="ForceChangeRateUnit.NewtonPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceChangeRateUnit.CentinewtonPerSecond"/>
@@ -496,8 +527,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerSecond.
         /// </summary>
-        public ForceChangeRate NewtonsPerSecondToForceChangeRate()
+        public ForceChangeRate NewtonsPerSecondToBaseForceChangeRate()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerSecond.
+        /// </summary>
+        public ForceChangeRate NewtonsPerSecondToSiBaseForceChangeRate()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ForceChangeRate"/> from <see cref="ForceChangeRateUnit.CentinewtonPerSecond"/>.

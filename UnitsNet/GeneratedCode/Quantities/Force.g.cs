@@ -81,15 +81,15 @@ namespace UnitsNet
         public sealed class ForceInfo : QuantityInfo<Force, ForceUnit>
         {
             /// <inheritdoc />
-            public ForceInfo(string name, ForceUnit baseUnit, IEnumerable<IUnitDefinition<ForceUnit>> unitMappings, Force zero, BaseDimensions baseDimensions,
+            public ForceInfo(string name, ForceUnit baseUnit, ForceUnit siBaseUnit, IEnumerable<IUnitDefinition<ForceUnit>> unitMappings, Force zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Force, ForceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ForceInfo(string name, ForceUnit baseUnit, IEnumerable<IUnitDefinition<ForceUnit>> unitMappings, Force zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Force.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Force", typeof(Force).Assembly))
+            public ForceInfo(string name, ForceUnit baseUnit, ForceUnit siBaseUnit, IEnumerable<IUnitDefinition<ForceUnit>> unitMappings, Force zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Force.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Force", typeof(Force).Assembly))
             {
             }
 
@@ -98,7 +98,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ForceInfo"/> class with the default settings.</returns>
             public static ForceInfo CreateDefault()
-                => new(nameof(Force), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Force), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ForceInfo"/> class with the default settings for the Force quantity and a callback for customizing the default unit mappings.
@@ -110,7 +110,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ForceInfo"/> class with the default settings.
             /// </returns>
             public static ForceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ForceUnit>>, IEnumerable<IUnitDefinition<ForceUnit>>> customizeUnits)
-                => new(nameof(Force), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Force), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Force"/> is T^-2LM.
@@ -125,6 +125,15 @@ namespace UnitsNet
             ///     The default base unit of Force is Newton. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ForceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ForceUnit.Newton;
+
+            /// <summary>
+            ///     The default base unit of Force is Newton.
+            /// </summary>
+            public static ForceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -249,6 +258,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Force, which is Newton.
+        /// </summary>
+        public static ForceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ForceUnit.Newton;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Force quantity.
         /// </summary>
         public static IReadOnlyCollection<ForceUnit> Units
@@ -344,9 +362,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Force,ForceUnit}.AsBaseValue"/>
         /// <returns><see cref="ForceUnit.Newton"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Force,ForceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ForceUnit.Newton"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Force AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Force,ForceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ForceUnit.Newton"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForceUnit.Decanewton"/>
@@ -522,8 +553,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Newton.
         /// </summary>
-        public Force NewtonsToForce()
+        public Force NewtonsToBaseForce()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Newton.
+        /// </summary>
+        public Force NewtonsToSiBaseForce()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Force"/> from <see cref="ForceUnit.Decanewton"/>.

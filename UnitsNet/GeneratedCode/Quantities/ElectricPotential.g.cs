@@ -79,15 +79,15 @@ namespace UnitsNet
         public sealed class ElectricPotentialInfo : QuantityInfo<ElectricPotential, ElectricPotentialUnit>
         {
             /// <inheritdoc />
-            public ElectricPotentialInfo(string name, ElectricPotentialUnit baseUnit, IEnumerable<IUnitDefinition<ElectricPotentialUnit>> unitMappings, ElectricPotential zero, BaseDimensions baseDimensions,
+            public ElectricPotentialInfo(string name, ElectricPotentialUnit baseUnit, ElectricPotentialUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricPotentialUnit>> unitMappings, ElectricPotential zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricPotential, ElectricPotentialUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricPotentialInfo(string name, ElectricPotentialUnit baseUnit, IEnumerable<IUnitDefinition<ElectricPotentialUnit>> unitMappings, ElectricPotential zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricPotential.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricPotential", typeof(ElectricPotential).Assembly))
+            public ElectricPotentialInfo(string name, ElectricPotentialUnit baseUnit, ElectricPotentialUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricPotentialUnit>> unitMappings, ElectricPotential zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricPotential.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricPotential", typeof(ElectricPotential).Assembly))
             {
             }
 
@@ -96,7 +96,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricPotentialInfo"/> class with the default settings.</returns>
             public static ElectricPotentialInfo CreateDefault()
-                => new(nameof(ElectricPotential), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricPotential), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricPotentialInfo"/> class with the default settings for the ElectricPotential quantity and a callback for customizing the default unit mappings.
@@ -108,7 +108,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricPotentialInfo"/> class with the default settings.
             /// </returns>
             public static ElectricPotentialInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricPotentialUnit>>, IEnumerable<IUnitDefinition<ElectricPotentialUnit>>> customizeUnits)
-                => new(nameof(ElectricPotential), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricPotential), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricPotential"/> is T^-3L^2MI^-1.
@@ -123,6 +123,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricPotential is Volt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricPotentialUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricPotentialUnit.Volt;
+
+            /// <summary>
+            ///     The default base unit of ElectricPotential is Volt.
+            /// </summary>
+            public static ElectricPotentialUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -214,6 +223,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricPotential, which is Volt.
+        /// </summary>
+        public static ElectricPotentialUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricPotentialUnit.Volt;
         }
 
         /// <summary>
@@ -312,9 +330,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricPotential,ElectricPotentialUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricPotentialUnit.Volt"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricPotential,ElectricPotentialUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricPotentialUnit.Volt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricPotential AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricPotential,ElectricPotentialUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricPotentialUnit.Volt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialUnit.Kilovolt"/>
@@ -400,8 +431,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Volt.
         /// </summary>
-        public ElectricPotential VoltsToElectricPotential()
+        public ElectricPotential VoltsToBaseElectricPotential()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Volt.
+        /// </summary>
+        public ElectricPotential VoltsToSiBaseElectricPotential()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotential"/> from <see cref="ElectricPotentialUnit.Kilovolt"/>.

@@ -71,15 +71,15 @@ namespace UnitsNet
         public sealed class IrradiationInfo : QuantityInfo<Irradiation, IrradiationUnit>
         {
             /// <inheritdoc />
-            public IrradiationInfo(string name, IrradiationUnit baseUnit, IEnumerable<IUnitDefinition<IrradiationUnit>> unitMappings, Irradiation zero, BaseDimensions baseDimensions,
+            public IrradiationInfo(string name, IrradiationUnit baseUnit, IrradiationUnit siBaseUnit, IEnumerable<IUnitDefinition<IrradiationUnit>> unitMappings, Irradiation zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Irradiation, IrradiationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public IrradiationInfo(string name, IrradiationUnit baseUnit, IEnumerable<IUnitDefinition<IrradiationUnit>> unitMappings, Irradiation zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Irradiation.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Irradiation", typeof(Irradiation).Assembly))
+            public IrradiationInfo(string name, IrradiationUnit baseUnit, IrradiationUnit siBaseUnit, IEnumerable<IUnitDefinition<IrradiationUnit>> unitMappings, Irradiation zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Irradiation.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Irradiation", typeof(Irradiation).Assembly))
             {
             }
 
@@ -88,7 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="IrradiationInfo"/> class with the default settings.</returns>
             public static IrradiationInfo CreateDefault()
-                => new(nameof(Irradiation), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Irradiation), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="IrradiationInfo"/> class with the default settings for the Irradiation quantity and a callback for customizing the default unit mappings.
@@ -100,7 +100,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="IrradiationInfo"/> class with the default settings.
             /// </returns>
             public static IrradiationInfo CreateDefault(Func<IEnumerable<UnitDefinition<IrradiationUnit>>, IEnumerable<IUnitDefinition<IrradiationUnit>>> customizeUnits)
-                => new(nameof(Irradiation), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Irradiation), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Irradiation"/> is T^-2M.
@@ -115,6 +115,15 @@ namespace UnitsNet
             ///     The default base unit of Irradiation is JoulePerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static IrradiationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = IrradiationUnit.JoulePerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of Irradiation is JoulePerSquareMeter.
+            /// </summary>
+            public static IrradiationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -218,6 +227,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Irradiation, which is JoulePerSquareMeter.
+        /// </summary>
+        public static IrradiationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => IrradiationUnit.JoulePerSquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Irradiation quantity.
         /// </summary>
         public static IReadOnlyCollection<IrradiationUnit> Units
@@ -313,9 +331,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Irradiation,IrradiationUnit}.AsBaseValue"/>
         /// <returns><see cref="IrradiationUnit.JoulePerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Irradiation,IrradiationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="IrradiationUnit.JoulePerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Irradiation AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Irradiation,IrradiationUnit}.AsBaseValue"/>
+        /// <returns><see cref="IrradiationUnit.JoulePerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="IrradiationUnit.BtuPerSquareFoot"/>
@@ -428,8 +459,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of JoulePerSquareMeter.
         /// </summary>
-        public Irradiation JoulesPerSquareMeterToIrradiation()
+        public Irradiation JoulesPerSquareMeterToBaseIrradiation()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerSquareMeter.
+        /// </summary>
+        public Irradiation JoulesPerSquareMeterToSiBaseIrradiation()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Irradiation"/> from <see cref="IrradiationUnit.BtuPerSquareFoot"/>.

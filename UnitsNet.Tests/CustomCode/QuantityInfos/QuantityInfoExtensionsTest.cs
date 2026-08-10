@@ -293,7 +293,7 @@ public class QuantityInfoExtensionsTest
         QuantityValue valueToConvert = QuantityValue.One;
         UnitInfo fromUnitInfo = TemperatureChangeRate.Info[fromUnit];
         // we simulate a different quantity type, having a non-standard base unit (note: the "official" TemperatureChangeRate is currently using DegreeCelsiusPerSecond)
-        var customQuantityInfo = new TemperatureChangeRate.TemperatureChangeRateInfo("TestTemperature", TemperatureChangeRateUnit.DegreeKelvinPerSecond,
+        var customQuantityInfo = new TemperatureChangeRate.TemperatureChangeRateInfo("TestTemperature", TemperatureChangeRateUnit.DegreeKelvinPerSecond, TemperatureChangeRateUnit.DegreeKelvinPerSecond,
             TemperatureChangeRate.TemperatureChangeRateInfo.GetDefaultMappings(), TemperatureChangeRate.Zero, TemperatureChangeRate.BaseDimensions);
 
         var success = customQuantityInfo.TryConvertFrom(valueToConvert, fromUnitInfo, out TemperatureChangeRate result);
@@ -314,7 +314,7 @@ public class QuantityInfoExtensionsTest
         QuantityValue valueToConvert = QuantityValue.One;
         UnitInfo fromUnitInfo = TemperatureChangeRate.Info[fromUnit];
         // we simulate a different quantity type, having a non-standard base unit (note: the "official" TemperatureChangeRate is currently using DegreeCelsiusPerSecond)
-        QuantityInfo customQuantityInfo = new TemperatureChangeRate.TemperatureChangeRateInfo("TestTemperature", TemperatureChangeRateUnit.DegreeKelvinPerSecond,
+        QuantityInfo customQuantityInfo = new TemperatureChangeRate.TemperatureChangeRateInfo("TestTemperature", TemperatureChangeRateUnit.DegreeKelvinPerSecond, TemperatureChangeRateUnit.DegreeKelvinPerSecond,
             TemperatureChangeRate.TemperatureChangeRateInfo.GetDefaultMappings(), TemperatureChangeRate.Zero, TemperatureChangeRate.BaseDimensions);
 
         var success = customQuantityInfo.TryConvertFrom(valueToConvert, fromUnitInfo, out IQuantity? result);

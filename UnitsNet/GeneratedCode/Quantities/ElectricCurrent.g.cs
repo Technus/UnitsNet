@@ -78,15 +78,15 @@ namespace UnitsNet
         public sealed class ElectricCurrentInfo : QuantityInfo<ElectricCurrent, ElectricCurrentUnit>
         {
             /// <inheritdoc />
-            public ElectricCurrentInfo(string name, ElectricCurrentUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentUnit>> unitMappings, ElectricCurrent zero, BaseDimensions baseDimensions,
+            public ElectricCurrentInfo(string name, ElectricCurrentUnit baseUnit, ElectricCurrentUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCurrentUnit>> unitMappings, ElectricCurrent zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricCurrent, ElectricCurrentUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricCurrentInfo(string name, ElectricCurrentUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentUnit>> unitMappings, ElectricCurrent zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricCurrent.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCurrent", typeof(ElectricCurrent).Assembly))
+            public ElectricCurrentInfo(string name, ElectricCurrentUnit baseUnit, ElectricCurrentUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCurrentUnit>> unitMappings, ElectricCurrent zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricCurrent.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCurrent", typeof(ElectricCurrent).Assembly))
             {
             }
 
@@ -95,7 +95,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricCurrentInfo"/> class with the default settings.</returns>
             public static ElectricCurrentInfo CreateDefault()
-                => new(nameof(ElectricCurrent), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCurrent), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricCurrentInfo"/> class with the default settings for the ElectricCurrent quantity and a callback for customizing the default unit mappings.
@@ -107,7 +107,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricCurrentInfo"/> class with the default settings.
             /// </returns>
             public static ElectricCurrentInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricCurrentUnit>>, IEnumerable<IUnitDefinition<ElectricCurrentUnit>>> customizeUnits)
-                => new(nameof(ElectricCurrent), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCurrent), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricCurrent"/> is I.
@@ -122,6 +122,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricCurrent is Ampere. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricCurrentUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricCurrentUnit.Ampere;
+
+            /// <summary>
+            ///     The default base unit of ElectricCurrent is Ampere.
+            /// </summary>
+            public static ElectricCurrentUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -225,6 +234,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricCurrent, which is Ampere.
+        /// </summary>
+        public static ElectricCurrentUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricCurrentUnit.Ampere;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricCurrent quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricCurrentUnit> Units
@@ -320,9 +338,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricCurrent,ElectricCurrentUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricCurrentUnit.Ampere"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCurrent,ElectricCurrentUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCurrentUnit.Ampere"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricCurrent AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCurrent,ElectricCurrentUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCurrentUnit.Ampere"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCurrentUnit.Ampere"/>
@@ -435,8 +466,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Ampere.
         /// </summary>
-        public ElectricCurrent AmperesToElectricCurrent()
+        public ElectricCurrent AmperesToBaseElectricCurrent()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ampere.
+        /// </summary>
+        public ElectricCurrent AmperesToSiBaseElectricCurrent()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCurrent"/> from <see cref="ElectricCurrentUnit.Ampere"/>.

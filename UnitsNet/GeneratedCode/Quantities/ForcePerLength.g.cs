@@ -77,15 +77,15 @@ namespace UnitsNet
         public sealed class ForcePerLengthInfo : QuantityInfo<ForcePerLength, ForcePerLengthUnit>
         {
             /// <inheritdoc />
-            public ForcePerLengthInfo(string name, ForcePerLengthUnit baseUnit, IEnumerable<IUnitDefinition<ForcePerLengthUnit>> unitMappings, ForcePerLength zero, BaseDimensions baseDimensions,
+            public ForcePerLengthInfo(string name, ForcePerLengthUnit baseUnit, ForcePerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<ForcePerLengthUnit>> unitMappings, ForcePerLength zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ForcePerLength, ForcePerLengthUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ForcePerLengthInfo(string name, ForcePerLengthUnit baseUnit, IEnumerable<IUnitDefinition<ForcePerLengthUnit>> unitMappings, ForcePerLength zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ForcePerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ForcePerLength", typeof(ForcePerLength).Assembly))
+            public ForcePerLengthInfo(string name, ForcePerLengthUnit baseUnit, ForcePerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<ForcePerLengthUnit>> unitMappings, ForcePerLength zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ForcePerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ForcePerLength", typeof(ForcePerLength).Assembly))
             {
             }
 
@@ -94,7 +94,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ForcePerLengthInfo"/> class with the default settings.</returns>
             public static ForcePerLengthInfo CreateDefault()
-                => new(nameof(ForcePerLength), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ForcePerLength), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ForcePerLengthInfo"/> class with the default settings for the ForcePerLength quantity and a callback for customizing the default unit mappings.
@@ -106,7 +106,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ForcePerLengthInfo"/> class with the default settings.
             /// </returns>
             public static ForcePerLengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<ForcePerLengthUnit>>, IEnumerable<IUnitDefinition<ForcePerLengthUnit>>> customizeUnits)
-                => new(nameof(ForcePerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ForcePerLength), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ForcePerLength"/> is T^-2M.
@@ -121,6 +121,15 @@ namespace UnitsNet
             ///     The default base unit of ForcePerLength is NewtonPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ForcePerLengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ForcePerLengthUnit.NewtonPerMeter;
+
+            /// <summary>
+            ///     The default base unit of ForcePerLength is NewtonPerMeter.
+            /// </summary>
+            public static ForcePerLengthUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -311,6 +320,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ForcePerLength, which is NewtonPerMeter.
+        /// </summary>
+        public static ForcePerLengthUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ForcePerLengthUnit.NewtonPerMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ForcePerLength quantity.
         /// </summary>
         public static IReadOnlyCollection<ForcePerLengthUnit> Units
@@ -406,9 +424,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ForcePerLength,ForcePerLengthUnit}.AsBaseValue"/>
         /// <returns><see cref="ForcePerLengthUnit.NewtonPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ForcePerLength,ForcePerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ForcePerLengthUnit.NewtonPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ForcePerLength AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ForcePerLength,ForcePerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="ForcePerLengthUnit.NewtonPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ForcePerLengthUnit.CentinewtonPerCentimeter"/>
@@ -782,8 +813,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerMeter.
         /// </summary>
-        public ForcePerLength NewtonsPerMeterToForcePerLength()
+        public ForcePerLength NewtonsPerMeterToBaseForcePerLength()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonPerMeter.
+        /// </summary>
+        public ForcePerLength NewtonsPerMeterToSiBaseForcePerLength()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ForcePerLength"/> from <see cref="ForcePerLengthUnit.CentinewtonPerCentimeter"/>.

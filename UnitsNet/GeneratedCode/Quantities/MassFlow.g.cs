@@ -76,15 +76,15 @@ namespace UnitsNet
         public sealed class MassFlowInfo : QuantityInfo<MassFlow, MassFlowUnit>
         {
             /// <inheritdoc />
-            public MassFlowInfo(string name, MassFlowUnit baseUnit, IEnumerable<IUnitDefinition<MassFlowUnit>> unitMappings, MassFlow zero, BaseDimensions baseDimensions,
+            public MassFlowInfo(string name, MassFlowUnit baseUnit, MassFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<MassFlowUnit>> unitMappings, MassFlow zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MassFlow, MassFlowUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MassFlowInfo(string name, MassFlowUnit baseUnit, IEnumerable<IUnitDefinition<MassFlowUnit>> unitMappings, MassFlow zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MassFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassFlow", typeof(MassFlow).Assembly))
+            public MassFlowInfo(string name, MassFlowUnit baseUnit, MassFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<MassFlowUnit>> unitMappings, MassFlow zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MassFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassFlow", typeof(MassFlow).Assembly))
             {
             }
 
@@ -93,7 +93,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassFlowInfo"/> class with the default settings.</returns>
             public static MassFlowInfo CreateDefault()
-                => new(nameof(MassFlow), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassFlow), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassFlowInfo"/> class with the default settings for the MassFlow quantity and a callback for customizing the default unit mappings.
@@ -105,7 +105,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassFlowInfo"/> class with the default settings.
             /// </returns>
             public static MassFlowInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassFlowUnit>>, IEnumerable<IUnitDefinition<MassFlowUnit>>> customizeUnits)
-                => new(nameof(MassFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassFlow), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MassFlow"/> is T^-1M.
@@ -124,6 +124,15 @@ namespace UnitsNet
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
             } = MassFlowUnit.GramPerSecond;
+
+            /// <summary>
+            ///     The default base unit of MassFlow is KilogramPerSecond.
+            /// </summary>
+            public static MassFlowUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassFlowUnit.KilogramPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="MassFlowUnit"/>.
@@ -295,6 +304,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of MassFlow, which is KilogramPerSecond.
+        /// </summary>
+        public static MassFlowUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MassFlowUnit.KilogramPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the MassFlow quantity.
         /// </summary>
         public static IReadOnlyCollection<MassFlowUnit> Units
@@ -390,9 +408,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MassFlow,MassFlowUnit}.AsBaseValue"/>
         /// <returns><see cref="MassFlowUnit.GramPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassFlow,MassFlowUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassFlowUnit.KilogramPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MassFlow AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassFlow,MassFlowUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassFlowUnit.KilogramPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFlowUnit.CentigramPerDay"/>
@@ -721,8 +752,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of GramPerSecond.
         /// </summary>
-        public MassFlow GramsPerSecondToMassFlow()
+        public MassFlow GramsPerSecondToBaseMassFlow()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSecond.
+        /// </summary>
+        public MassFlow KilogramsPerSecondToSiBaseMassFlow()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MassFlow"/> from <see cref="MassFlowUnit.CentigramPerDay"/>.

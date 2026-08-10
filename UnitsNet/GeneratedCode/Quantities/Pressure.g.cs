@@ -82,15 +82,15 @@ namespace UnitsNet
         public sealed class PressureInfo : QuantityInfo<Pressure, PressureUnit>
         {
             /// <inheritdoc />
-            public PressureInfo(string name, PressureUnit baseUnit, IEnumerable<IUnitDefinition<PressureUnit>> unitMappings, Pressure zero, BaseDimensions baseDimensions,
+            public PressureInfo(string name, PressureUnit baseUnit, PressureUnit siBaseUnit, IEnumerable<IUnitDefinition<PressureUnit>> unitMappings, Pressure zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Pressure, PressureUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public PressureInfo(string name, PressureUnit baseUnit, IEnumerable<IUnitDefinition<PressureUnit>> unitMappings, Pressure zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Pressure.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Pressure", typeof(Pressure).Assembly))
+            public PressureInfo(string name, PressureUnit baseUnit, PressureUnit siBaseUnit, IEnumerable<IUnitDefinition<PressureUnit>> unitMappings, Pressure zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Pressure.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Pressure", typeof(Pressure).Assembly))
             {
             }
 
@@ -99,7 +99,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PressureInfo"/> class with the default settings.</returns>
             public static PressureInfo CreateDefault()
-                => new(nameof(Pressure), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Pressure), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PressureInfo"/> class with the default settings for the Pressure quantity and a callback for customizing the default unit mappings.
@@ -111,7 +111,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PressureInfo"/> class with the default settings.
             /// </returns>
             public static PressureInfo CreateDefault(Func<IEnumerable<UnitDefinition<PressureUnit>>, IEnumerable<IUnitDefinition<PressureUnit>>> customizeUnits)
-                => new(nameof(Pressure), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Pressure), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Pressure"/> is T^-2L^-1M.
@@ -126,6 +126,15 @@ namespace UnitsNet
             ///     The default base unit of Pressure is Pascal. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static PressureUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PressureUnit.Pascal;
+
+            /// <summary>
+            ///     The default base unit of Pressure is Pascal.
+            /// </summary>
+            public static PressureUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -352,6 +361,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Pressure, which is Pascal.
+        /// </summary>
+        public static PressureUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PressureUnit.Pascal;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Pressure quantity.
         /// </summary>
         public static IReadOnlyCollection<PressureUnit> Units
@@ -447,9 +465,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Pressure,PressureUnit}.AsBaseValue"/>
         /// <returns><see cref="PressureUnit.Pascal"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Pressure,PressureUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PressureUnit.Pascal"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Pressure AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Pressure,PressureUnit}.AsBaseValue"/>
+        /// <returns><see cref="PressureUnit.Pascal"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PressureUnit.Atmosphere"/>
@@ -931,8 +962,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Pascal.
         /// </summary>
-        public Pressure PascalsToPressure()
+        public Pressure PascalsToBasePressure()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Pascal.
+        /// </summary>
+        public Pressure PascalsToSiBasePressure()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Pressure"/> from <see cref="PressureUnit.Atmosphere"/>.

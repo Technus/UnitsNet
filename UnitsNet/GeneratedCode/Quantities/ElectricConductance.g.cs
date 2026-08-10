@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricConductanceInfo : QuantityInfo<ElectricConductance, ElectricConductanceUnit>
         {
             /// <inheritdoc />
-            public ElectricConductanceInfo(string name, ElectricConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricConductanceUnit>> unitMappings, ElectricConductance zero, BaseDimensions baseDimensions,
+            public ElectricConductanceInfo(string name, ElectricConductanceUnit baseUnit, ElectricConductanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricConductanceUnit>> unitMappings, ElectricConductance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricConductance, ElectricConductanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricConductanceInfo(string name, ElectricConductanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricConductanceUnit>> unitMappings, ElectricConductance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricConductance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricConductance", typeof(ElectricConductance).Assembly))
+            public ElectricConductanceInfo(string name, ElectricConductanceUnit baseUnit, ElectricConductanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricConductanceUnit>> unitMappings, ElectricConductance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricConductance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricConductance", typeof(ElectricConductance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricConductanceInfo"/> class with the default settings.</returns>
             public static ElectricConductanceInfo CreateDefault()
-                => new(nameof(ElectricConductance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricConductance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricConductanceInfo"/> class with the default settings for the ElectricConductance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricConductanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricConductanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricConductanceUnit>>, IEnumerable<IUnitDefinition<ElectricConductanceUnit>>> customizeUnits)
-                => new(nameof(ElectricConductance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricConductance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricConductance"/> is T^3L^-2M^-1I^2.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricConductance is Siemens. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricConductanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricConductanceUnit.Siemens;
+
+            /// <summary>
+            ///     The default base unit of ElectricConductance is Siemens.
+            /// </summary>
+            public static ElectricConductanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -238,6 +247,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricConductance, which is Siemens.
+        /// </summary>
+        public static ElectricConductanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricConductanceUnit.Siemens;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricConductance quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricConductanceUnit> Units
@@ -333,9 +351,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricConductance,ElectricConductanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricConductanceUnit.Siemens"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricConductance,ElectricConductanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricConductanceUnit.Siemens"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricConductance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricConductance,ElectricConductanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricConductanceUnit.Siemens"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricConductanceUnit.Gigamho"/>
@@ -511,8 +542,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
-        public ElectricConductance SiemensToElectricConductance()
+        public ElectricConductance SiemensToBaseElectricConductance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        public ElectricConductance SiemensToSiBaseElectricConductance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricConductance"/> from <see cref="ElectricConductanceUnit.Gigamho"/>.

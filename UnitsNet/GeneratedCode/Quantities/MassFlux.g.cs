@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class MassFluxInfo : QuantityInfo<MassFlux, MassFluxUnit>
         {
             /// <inheritdoc />
-            public MassFluxInfo(string name, MassFluxUnit baseUnit, IEnumerable<IUnitDefinition<MassFluxUnit>> unitMappings, MassFlux zero, BaseDimensions baseDimensions,
+            public MassFluxInfo(string name, MassFluxUnit baseUnit, MassFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<MassFluxUnit>> unitMappings, MassFlux zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MassFlux, MassFluxUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MassFluxInfo(string name, MassFluxUnit baseUnit, IEnumerable<IUnitDefinition<MassFluxUnit>> unitMappings, MassFlux zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MassFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassFlux", typeof(MassFlux).Assembly))
+            public MassFluxInfo(string name, MassFluxUnit baseUnit, MassFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<MassFluxUnit>> unitMappings, MassFlux zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MassFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassFlux", typeof(MassFlux).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassFluxInfo"/> class with the default settings.</returns>
             public static MassFluxInfo CreateDefault()
-                => new(nameof(MassFlux), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassFlux), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassFluxInfo"/> class with the default settings for the MassFlux quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassFluxInfo"/> class with the default settings.
             /// </returns>
             public static MassFluxInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassFluxUnit>>, IEnumerable<IUnitDefinition<MassFluxUnit>>> customizeUnits)
-                => new(nameof(MassFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassFlux), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MassFlux"/> is T^-1L^-2M.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of MassFlux is KilogramPerSecondPerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MassFluxUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassFluxUnit.KilogramPerSecondPerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of MassFlux is KilogramPerSecondPerSquareMeter.
+            /// </summary>
+            public static MassFluxUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -225,6 +234,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of MassFlux, which is KilogramPerSecondPerSquareMeter.
+        /// </summary>
+        public static MassFluxUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MassFluxUnit.KilogramPerSecondPerSquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the MassFlux quantity.
         /// </summary>
         public static IReadOnlyCollection<MassFluxUnit> Units
@@ -320,9 +338,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MassFlux,MassFluxUnit}.AsBaseValue"/>
         /// <returns><see cref="MassFluxUnit.KilogramPerSecondPerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassFlux,MassFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassFluxUnit.KilogramPerSecondPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MassFlux AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassFlux,MassFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassFluxUnit.KilogramPerSecondPerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFluxUnit.GramPerHourPerSquareCentimeter"/>
@@ -462,8 +493,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
         /// </summary>
-        public MassFlux KilogramsPerSecondPerSquareMeterToMassFlux()
+        public MassFlux KilogramsPerSecondPerSquareMeterToBaseMassFlux()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
+        /// </summary>
+        public MassFlux KilogramsPerSecondPerSquareMeterToSiBaseMassFlux()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MassFlux"/> from <see cref="MassFluxUnit.GramPerHourPerSquareCentimeter"/>.

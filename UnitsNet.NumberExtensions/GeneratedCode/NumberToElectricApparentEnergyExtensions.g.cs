@@ -43,6 +43,17 @@ namespace UnitsNet.NumberExtensions.NumberToElectricApparentEnergy
             => ElectricApparentEnergy.FromKilovoltampereHours(value.ToQuantityValue());
 #endif
 
+        /// <inheritdoc cref="ElectricApparentEnergy.FromKilovoltampereSeconds(QuantityValue)" />
+        public static ElectricApparentEnergy KilovoltampereSeconds<T>(this T value)
+            where T : notnull
+#if NET7_0_OR_GREATER
+            , INumber<T>
+            => ElectricApparentEnergy.FromKilovoltampereSeconds(QuantityValue.CreateChecked(value));
+#else
+            , IConvertible
+            => ElectricApparentEnergy.FromKilovoltampereSeconds(value.ToQuantityValue());
+#endif
+
         /// <inheritdoc cref="ElectricApparentEnergy.FromMegavoltampereHours(QuantityValue)" />
         public static ElectricApparentEnergy MegavoltampereHours<T>(this T value)
             where T : notnull
@@ -54,6 +65,17 @@ namespace UnitsNet.NumberExtensions.NumberToElectricApparentEnergy
             => ElectricApparentEnergy.FromMegavoltampereHours(value.ToQuantityValue());
 #endif
 
+        /// <inheritdoc cref="ElectricApparentEnergy.FromMegavoltampereSeconds(QuantityValue)" />
+        public static ElectricApparentEnergy MegavoltampereSeconds<T>(this T value)
+            where T : notnull
+#if NET7_0_OR_GREATER
+            , INumber<T>
+            => ElectricApparentEnergy.FromMegavoltampereSeconds(QuantityValue.CreateChecked(value));
+#else
+            , IConvertible
+            => ElectricApparentEnergy.FromMegavoltampereSeconds(value.ToQuantityValue());
+#endif
+
         /// <inheritdoc cref="ElectricApparentEnergy.FromVoltampereHours(QuantityValue)" />
         public static ElectricApparentEnergy VoltampereHours<T>(this T value)
             where T : notnull
@@ -63,6 +85,17 @@ namespace UnitsNet.NumberExtensions.NumberToElectricApparentEnergy
 #else
             , IConvertible
             => ElectricApparentEnergy.FromVoltampereHours(value.ToQuantityValue());
+#endif
+
+        /// <inheritdoc cref="ElectricApparentEnergy.FromVoltampereSeconds(QuantityValue)" />
+        public static ElectricApparentEnergy VoltampereSeconds<T>(this T value)
+            where T : notnull
+#if NET7_0_OR_GREATER
+            , INumber<T>
+            => ElectricApparentEnergy.FromVoltampereSeconds(QuantityValue.CreateChecked(value));
+#else
+            , IConvertible
+            => ElectricApparentEnergy.FromVoltampereSeconds(value.ToQuantityValue());
 #endif
 
     }

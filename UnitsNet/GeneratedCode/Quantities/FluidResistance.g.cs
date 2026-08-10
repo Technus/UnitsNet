@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class FluidResistanceInfo : QuantityInfo<FluidResistance, FluidResistanceUnit>
         {
             /// <inheritdoc />
-            public FluidResistanceInfo(string name, FluidResistanceUnit baseUnit, IEnumerable<IUnitDefinition<FluidResistanceUnit>> unitMappings, FluidResistance zero, BaseDimensions baseDimensions,
+            public FluidResistanceInfo(string name, FluidResistanceUnit baseUnit, FluidResistanceUnit siBaseUnit, IEnumerable<IUnitDefinition<FluidResistanceUnit>> unitMappings, FluidResistance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<FluidResistance, FluidResistanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public FluidResistanceInfo(string name, FluidResistanceUnit baseUnit, IEnumerable<IUnitDefinition<FluidResistanceUnit>> unitMappings, FluidResistance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, FluidResistance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.FluidResistance", typeof(FluidResistance).Assembly))
+            public FluidResistanceInfo(string name, FluidResistanceUnit baseUnit, FluidResistanceUnit siBaseUnit, IEnumerable<IUnitDefinition<FluidResistanceUnit>> unitMappings, FluidResistance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, FluidResistance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.FluidResistance", typeof(FluidResistance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="FluidResistanceInfo"/> class with the default settings.</returns>
             public static FluidResistanceInfo CreateDefault()
-                => new(nameof(FluidResistance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(FluidResistance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="FluidResistanceInfo"/> class with the default settings for the FluidResistance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="FluidResistanceInfo"/> class with the default settings.
             /// </returns>
             public static FluidResistanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<FluidResistanceUnit>>, IEnumerable<IUnitDefinition<FluidResistanceUnit>>> customizeUnits)
-                => new(nameof(FluidResistance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(FluidResistance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="FluidResistance"/> is T^-1L^-4M.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of FluidResistance is PascalSecondPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static FluidResistanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = FluidResistanceUnit.PascalSecondPerCubicMeter;
+
+            /// <summary>
+            ///     The default base unit of FluidResistance is PascalSecondPerCubicMeter.
+            /// </summary>
+            public static FluidResistanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -247,6 +256,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of FluidResistance, which is PascalSecondPerCubicMeter.
+        /// </summary>
+        public static FluidResistanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => FluidResistanceUnit.PascalSecondPerCubicMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the FluidResistance quantity.
         /// </summary>
         public static IReadOnlyCollection<FluidResistanceUnit> Units
@@ -342,9 +360,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{FluidResistance,FluidResistanceUnit}.AsBaseValue"/>
         /// <returns><see cref="FluidResistanceUnit.PascalSecondPerCubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{FluidResistance,FluidResistanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="FluidResistanceUnit.PascalSecondPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public FluidResistance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{FluidResistance,FluidResistanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="FluidResistanceUnit.PascalSecondPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth"/>
@@ -547,8 +578,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
         /// </summary>
-        public FluidResistance PascalSecondsPerCubicMeterToFluidResistance()
+        public FluidResistance PascalSecondsPerCubicMeterToBaseFluidResistance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
+        /// </summary>
+        public FluidResistance PascalSecondsPerCubicMeterToSiBaseFluidResistance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="FluidResistance"/> from <see cref="FluidResistanceUnit.DyneSecondPerCentimeterToTheFifth"/>.

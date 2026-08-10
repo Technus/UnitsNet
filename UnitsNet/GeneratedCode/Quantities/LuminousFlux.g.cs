@@ -73,15 +73,15 @@ namespace UnitsNet
         public sealed class LuminousFluxInfo : QuantityInfo<LuminousFlux, LuminousFluxUnit>
         {
             /// <inheritdoc />
-            public LuminousFluxInfo(string name, LuminousFluxUnit baseUnit, IEnumerable<IUnitDefinition<LuminousFluxUnit>> unitMappings, LuminousFlux zero, BaseDimensions baseDimensions,
+            public LuminousFluxInfo(string name, LuminousFluxUnit baseUnit, LuminousFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminousFluxUnit>> unitMappings, LuminousFlux zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<LuminousFlux, LuminousFluxUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LuminousFluxInfo(string name, LuminousFluxUnit baseUnit, IEnumerable<IUnitDefinition<LuminousFluxUnit>> unitMappings, LuminousFlux zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, LuminousFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LuminousFlux", typeof(LuminousFlux).Assembly))
+            public LuminousFluxInfo(string name, LuminousFluxUnit baseUnit, LuminousFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminousFluxUnit>> unitMappings, LuminousFlux zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, LuminousFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LuminousFlux", typeof(LuminousFlux).Assembly))
             {
             }
 
@@ -90,7 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LuminousFluxInfo"/> class with the default settings.</returns>
             public static LuminousFluxInfo CreateDefault()
-                => new(nameof(LuminousFlux), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LuminousFlux), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LuminousFluxInfo"/> class with the default settings for the LuminousFlux quantity and a callback for customizing the default unit mappings.
@@ -102,7 +102,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LuminousFluxInfo"/> class with the default settings.
             /// </returns>
             public static LuminousFluxInfo CreateDefault(Func<IEnumerable<UnitDefinition<LuminousFluxUnit>>, IEnumerable<IUnitDefinition<LuminousFluxUnit>>> customizeUnits)
-                => new(nameof(LuminousFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LuminousFlux), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="LuminousFlux"/> is J.
@@ -117,6 +117,15 @@ namespace UnitsNet
             ///     The default base unit of LuminousFlux is Lumen. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LuminousFluxUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LuminousFluxUnit.Lumen;
+
+            /// <summary>
+            ///     The default base unit of LuminousFlux is Lumen.
+            /// </summary>
+            public static LuminousFluxUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -193,6 +202,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of LuminousFlux, which is Lumen.
+        /// </summary>
+        public static LuminousFluxUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LuminousFluxUnit.Lumen;
         }
 
         /// <summary>
@@ -291,9 +309,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{LuminousFlux,LuminousFluxUnit}.AsBaseValue"/>
         /// <returns><see cref="LuminousFluxUnit.Lumen"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LuminousFlux,LuminousFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LuminousFluxUnit.Lumen"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public LuminousFlux AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LuminousFlux,LuminousFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="LuminousFluxUnit.Lumen"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminousFluxUnit.Lumen"/>
@@ -334,8 +365,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Lumen.
         /// </summary>
-        public LuminousFlux LumensToLuminousFlux()
+        public LuminousFlux LumensToBaseLuminousFlux()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Lumen.
+        /// </summary>
+        public LuminousFlux LumensToSiBaseLuminousFlux()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="LuminousFlux"/> from <see cref="LuminousFluxUnit.Lumen"/>.

@@ -29,12 +29,24 @@ namespace UnitsNet.Tests
             Assert.Equal(ElectricApparentEnergy.FromKilovoltampereHours(2), 2.KilovoltampereHours());
 
         [Fact]
+        public void NumberToKilovoltampereSecondsTest() =>
+            Assert.Equal(ElectricApparentEnergy.FromKilovoltampereSeconds(2), 2.KilovoltampereSeconds());
+
+        [Fact]
         public void NumberToMegavoltampereHoursTest() =>
             Assert.Equal(ElectricApparentEnergy.FromMegavoltampereHours(2), 2.MegavoltampereHours());
 
         [Fact]
+        public void NumberToMegavoltampereSecondsTest() =>
+            Assert.Equal(ElectricApparentEnergy.FromMegavoltampereSeconds(2), 2.MegavoltampereSeconds());
+
+        [Fact]
         public void NumberToVoltampereHoursTest() =>
             Assert.Equal(ElectricApparentEnergy.FromVoltampereHours(2), 2.VoltampereHours());
+
+        [Fact]
+        public void NumberToVoltampereSecondsTest() =>
+            Assert.Equal(ElectricApparentEnergy.FromVoltampereSeconds(2), 2.VoltampereSeconds());
 
     }
 }

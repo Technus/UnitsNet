@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class ElectricPotentialChangeRateInfo : QuantityInfo<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit>
         {
             /// <inheritdoc />
-            public ElectricPotentialChangeRateInfo(string name, ElectricPotentialChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<ElectricPotentialChangeRateUnit>> unitMappings, ElectricPotentialChangeRate zero, BaseDimensions baseDimensions,
+            public ElectricPotentialChangeRateInfo(string name, ElectricPotentialChangeRateUnit baseUnit, ElectricPotentialChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricPotentialChangeRateUnit>> unitMappings, ElectricPotentialChangeRate zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricPotentialChangeRate, ElectricPotentialChangeRateUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricPotentialChangeRateInfo(string name, ElectricPotentialChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<ElectricPotentialChangeRateUnit>> unitMappings, ElectricPotentialChangeRate zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricPotentialChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricPotentialChangeRate", typeof(ElectricPotentialChangeRate).Assembly))
+            public ElectricPotentialChangeRateInfo(string name, ElectricPotentialChangeRateUnit baseUnit, ElectricPotentialChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricPotentialChangeRateUnit>> unitMappings, ElectricPotentialChangeRate zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricPotentialChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricPotentialChangeRate", typeof(ElectricPotentialChangeRate).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricPotentialChangeRateInfo"/> class with the default settings.</returns>
             public static ElectricPotentialChangeRateInfo CreateDefault()
-                => new(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricPotentialChangeRateInfo"/> class with the default settings for the ElectricPotentialChangeRate quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricPotentialChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static ElectricPotentialChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricPotentialChangeRateUnit>>, IEnumerable<IUnitDefinition<ElectricPotentialChangeRateUnit>>> customizeUnits)
-                => new(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricPotentialChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricPotentialChangeRate"/> is T^-4L^2MI^-1.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricPotentialChangeRate is VoltPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricPotentialChangeRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricPotentialChangeRateUnit.VoltPerSecond;
+
+            /// <summary>
+            ///     The default base unit of ElectricPotentialChangeRate is VoltPerSecond.
+            /// </summary>
+            public static ElectricPotentialChangeRateUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -247,6 +256,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricPotentialChangeRate, which is VoltPerSecond.
+        /// </summary>
+        public static ElectricPotentialChangeRateUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricPotentialChangeRateUnit.VoltPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricPotentialChangeRate quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricPotentialChangeRateUnit> Units
@@ -342,9 +360,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricPotentialChangeRate,ElectricPotentialChangeRateUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricPotentialChangeRateUnit.VoltPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricPotentialChangeRate,ElectricPotentialChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricPotentialChangeRateUnit.VoltPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricPotentialChangeRate AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricPotentialChangeRate,ElectricPotentialChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricPotentialChangeRateUnit.VoltPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricPotentialChangeRateUnit.KilovoltPerHour"/>
@@ -556,8 +587,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of VoltPerSecond.
         /// </summary>
-        public ElectricPotentialChangeRate VoltsPerSecondToElectricPotentialChangeRate()
+        public ElectricPotentialChangeRate VoltsPerSecondToBaseElectricPotentialChangeRate()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltPerSecond.
+        /// </summary>
+        public ElectricPotentialChangeRate VoltsPerSecondToSiBaseElectricPotentialChangeRate()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricPotentialChangeRate"/> from <see cref="ElectricPotentialChangeRateUnit.KilovoltPerHour"/>.

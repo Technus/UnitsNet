@@ -1,6 +1,7 @@
 {
   "Name": "ThermalConductance",
   "BaseUnit": "WattPerKelvin",
+  "SiBaseUnit": "WattPerKelvin",
   "XmlDocSummary": "Thermal conductance (U) measures the inverse of opposition to the heat current in a material or system. ",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Thermal_conductance_and_resistance",
   "BaseDimensions": {

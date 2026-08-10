@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class RelativeHumidityInfo : QuantityInfo<RelativeHumidity, RelativeHumidityUnit>
         {
             /// <inheritdoc />
-            public RelativeHumidityInfo(string name, RelativeHumidityUnit baseUnit, IEnumerable<IUnitDefinition<RelativeHumidityUnit>> unitMappings, RelativeHumidity zero, BaseDimensions baseDimensions,
+            public RelativeHumidityInfo(string name, RelativeHumidityUnit baseUnit, RelativeHumidityUnit siBaseUnit, IEnumerable<IUnitDefinition<RelativeHumidityUnit>> unitMappings, RelativeHumidity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<RelativeHumidity, RelativeHumidityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public RelativeHumidityInfo(string name, RelativeHumidityUnit baseUnit, IEnumerable<IUnitDefinition<RelativeHumidityUnit>> unitMappings, RelativeHumidity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, RelativeHumidity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RelativeHumidity", typeof(RelativeHumidity).Assembly))
+            public RelativeHumidityInfo(string name, RelativeHumidityUnit baseUnit, RelativeHumidityUnit siBaseUnit, IEnumerable<IUnitDefinition<RelativeHumidityUnit>> unitMappings, RelativeHumidity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, RelativeHumidity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RelativeHumidity", typeof(RelativeHumidity).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RelativeHumidityInfo"/> class with the default settings.</returns>
             public static RelativeHumidityInfo CreateDefault()
-                => new(nameof(RelativeHumidity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RelativeHumidity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RelativeHumidityInfo"/> class with the default settings for the RelativeHumidity quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RelativeHumidityInfo"/> class with the default settings.
             /// </returns>
             public static RelativeHumidityInfo CreateDefault(Func<IEnumerable<UnitDefinition<RelativeHumidityUnit>>, IEnumerable<IUnitDefinition<RelativeHumidityUnit>>> customizeUnits)
-                => new(nameof(RelativeHumidity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RelativeHumidity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RelativeHumidity"/> is .
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of RelativeHumidity is Percent. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static RelativeHumidityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RelativeHumidityUnit.Percent;
+
+            /// <summary>
+            ///     The default base unit of RelativeHumidity is Percent.
+            /// </summary>
+            public static RelativeHumidityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -172,6 +181,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of RelativeHumidity, which is Percent.
+        /// </summary>
+        public static RelativeHumidityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => RelativeHumidityUnit.Percent;
         }
 
         /// <summary>
@@ -270,9 +288,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{RelativeHumidity,RelativeHumidityUnit}.AsBaseValue"/>
         /// <returns><see cref="RelativeHumidityUnit.Percent"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RelativeHumidity,RelativeHumidityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RelativeHumidityUnit.Percent"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RelativeHumidity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RelativeHumidity,RelativeHumidityUnit}.AsBaseValue"/>
+        /// <returns><see cref="RelativeHumidityUnit.Percent"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RelativeHumidityUnit.Percent"/>
@@ -313,8 +344,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Percent.
         /// </summary>
-        public RelativeHumidity PercentToRelativeHumidity()
+        public RelativeHumidity PercentToBaseRelativeHumidity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Percent.
+        /// </summary>
+        public RelativeHumidity PercentToSiBaseRelativeHumidity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="RelativeHumidity"/> from <see cref="RelativeHumidityUnit.Percent"/>.

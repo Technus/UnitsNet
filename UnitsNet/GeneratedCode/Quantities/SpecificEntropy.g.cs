@@ -68,15 +68,15 @@ namespace UnitsNet
         public sealed class SpecificEntropyInfo : QuantityInfo<SpecificEntropy, SpecificEntropyUnit>
         {
             /// <inheritdoc />
-            public SpecificEntropyInfo(string name, SpecificEntropyUnit baseUnit, IEnumerable<IUnitDefinition<SpecificEntropyUnit>> unitMappings, SpecificEntropy zero, BaseDimensions baseDimensions,
+            public SpecificEntropyInfo(string name, SpecificEntropyUnit baseUnit, SpecificEntropyUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificEntropyUnit>> unitMappings, SpecificEntropy zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<SpecificEntropy, SpecificEntropyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public SpecificEntropyInfo(string name, SpecificEntropyUnit baseUnit, IEnumerable<IUnitDefinition<SpecificEntropyUnit>> unitMappings, SpecificEntropy zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, SpecificEntropy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificEntropy", typeof(SpecificEntropy).Assembly))
+            public SpecificEntropyInfo(string name, SpecificEntropyUnit baseUnit, SpecificEntropyUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificEntropyUnit>> unitMappings, SpecificEntropy zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, SpecificEntropy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificEntropy", typeof(SpecificEntropy).Assembly))
             {
             }
 
@@ -85,7 +85,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="SpecificEntropyInfo"/> class with the default settings.</returns>
             public static SpecificEntropyInfo CreateDefault()
-                => new(nameof(SpecificEntropy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificEntropy), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="SpecificEntropyInfo"/> class with the default settings for the SpecificEntropy quantity and a callback for customizing the default unit mappings.
@@ -97,7 +97,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="SpecificEntropyInfo"/> class with the default settings.
             /// </returns>
             public static SpecificEntropyInfo CreateDefault(Func<IEnumerable<UnitDefinition<SpecificEntropyUnit>>, IEnumerable<IUnitDefinition<SpecificEntropyUnit>>> customizeUnits)
-                => new(nameof(SpecificEntropy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificEntropy), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="SpecificEntropy"/> is T^-2L^2Θ^-1.
@@ -112,6 +112,15 @@ namespace UnitsNet
             ///     The default base unit of SpecificEntropy is JoulePerKilogramKelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static SpecificEntropyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = SpecificEntropyUnit.JoulePerKilogramKelvin;
+
+            /// <summary>
+            ///     The default base unit of SpecificEntropy is JoulePerKilogramKelvin.
+            /// </summary>
+            public static SpecificEntropyUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -215,6 +224,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of SpecificEntropy, which is JoulePerKilogramKelvin.
+        /// </summary>
+        public static SpecificEntropyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => SpecificEntropyUnit.JoulePerKilogramKelvin;
+        }
+
+        /// <summary>
         ///     All units of measurement for the SpecificEntropy quantity.
         /// </summary>
         public static IReadOnlyCollection<SpecificEntropyUnit> Units
@@ -310,9 +328,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{SpecificEntropy,SpecificEntropyUnit}.AsBaseValue"/>
         /// <returns><see cref="SpecificEntropyUnit.JoulePerKilogramKelvin"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificEntropy,SpecificEntropyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificEntropyUnit.JoulePerKilogramKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SpecificEntropy AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificEntropy,SpecificEntropyUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificEntropyUnit.JoulePerKilogramKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificEntropyUnit.BtuPerPoundFahrenheit"/>
@@ -425,8 +456,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogramKelvin.
         /// </summary>
-        public SpecificEntropy JoulesPerKilogramKelvinToSpecificEntropy()
+        public SpecificEntropy JoulesPerKilogramKelvinToBaseSpecificEntropy()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKilogramKelvin.
+        /// </summary>
+        public SpecificEntropy JoulesPerKilogramKelvinToSiBaseSpecificEntropy()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="SpecificEntropy"/> from <see cref="SpecificEntropyUnit.BtuPerPoundFahrenheit"/>.

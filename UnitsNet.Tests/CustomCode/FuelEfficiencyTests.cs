@@ -29,7 +29,7 @@ namespace UnitsNet.Tests.CustomCode
         protected override double LitersPer100KilometersInOneKilometerPerLiter => 100;
         protected override double MilesPerUkGallonInOneKilometerPerLiter => 2.824809363318222;
         protected override double MilesPerUsGallonInOneKilometerPerLiter => 2.352145833333333;
-
+        protected override double MetersPerCubicMeterInOneKilometerPerLiter => 1000000;
 
         [Fact(Skip = "The SI unit would have to be MeterPerCubicMeter")]
         public override void BaseUnit_HasSIBase()

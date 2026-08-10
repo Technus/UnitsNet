@@ -1,6 +1,7 @@
 {
   "Name": "Acceleration",
   "BaseUnit": "MeterPerSecondSquared",
+  "SiBaseUnit": "MeterPerSecondSquared",
   "XmlDocSummary": "Acceleration, in physics, is the rate at which the velocity of an object changes over time. An object's acceleration is the net result of any and all forces acting on the object, as described by Newton's Second Law. The SI unit for acceleration is the Meter per second squared (m/s²). Accelerations are vector quantities (they have magnitude and direction) and add according to the parallelogram law. As a vector, the calculated net force is equal to the product of the object's mass (a scalar quantity) and the acceleration.",
   "BaseDimensions": {
     "L": 1,
@@ -22,7 +23,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "m/s²" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "м/с²" ]
         }
@@ -42,7 +43,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "in/s²" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "дюйм/с²" ]
         }
@@ -62,7 +63,7 @@
           "Culture": "en-US",
           "Abbreviations": [ "ft/s²" ]
         },
-		{
+        {
           "Culture": "ru-RU",
           "Abbreviations": [ "фут/с²" ]
         }
@@ -137,7 +138,7 @@
       "PluralName": "StandardGravity",
       "FromUnitToBaseFunc": "{x} * 9.80665",
       "FromBaseToUnitFunc": "{x} / 9.80665",
-      "Prefixes": [ "Milli"],
+      "Prefixes": [ "Milli" ],
       "Localization": [
         {
           "Culture": "en-US",

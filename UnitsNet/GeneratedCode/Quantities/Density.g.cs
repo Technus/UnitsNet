@@ -77,15 +77,15 @@ namespace UnitsNet
         public sealed class DensityInfo : QuantityInfo<Density, DensityUnit>
         {
             /// <inheritdoc />
-            public DensityInfo(string name, DensityUnit baseUnit, IEnumerable<IUnitDefinition<DensityUnit>> unitMappings, Density zero, BaseDimensions baseDimensions,
+            public DensityInfo(string name, DensityUnit baseUnit, DensityUnit siBaseUnit, IEnumerable<IUnitDefinition<DensityUnit>> unitMappings, Density zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Density, DensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public DensityInfo(string name, DensityUnit baseUnit, IEnumerable<IUnitDefinition<DensityUnit>> unitMappings, Density zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Density.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Density", typeof(Density).Assembly))
+            public DensityInfo(string name, DensityUnit baseUnit, DensityUnit siBaseUnit, IEnumerable<IUnitDefinition<DensityUnit>> unitMappings, Density zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Density.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Density", typeof(Density).Assembly))
             {
             }
 
@@ -94,7 +94,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="DensityInfo"/> class with the default settings.</returns>
             public static DensityInfo CreateDefault()
-                => new(nameof(Density), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Density), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="DensityInfo"/> class with the default settings for the Density quantity and a callback for customizing the default unit mappings.
@@ -106,7 +106,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="DensityInfo"/> class with the default settings.
             /// </returns>
             public static DensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<DensityUnit>>, IEnumerable<IUnitDefinition<DensityUnit>>> customizeUnits)
-                => new(nameof(Density), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Density), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Density"/> is L^-3M.
@@ -121,6 +121,15 @@ namespace UnitsNet
             ///     The default base unit of Density is KilogramPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static DensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = DensityUnit.KilogramPerCubicMeter;
+
+            /// <summary>
+            ///     The default base unit of Density is KilogramPerCubicMeter.
+            /// </summary>
+            public static DensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -365,6 +374,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Density, which is KilogramPerCubicMeter.
+        /// </summary>
+        public static DensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => DensityUnit.KilogramPerCubicMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Density quantity.
         /// </summary>
         public static IReadOnlyCollection<DensityUnit> Units
@@ -460,9 +478,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Density,DensityUnit}.AsBaseValue"/>
         /// <returns><see cref="DensityUnit.KilogramPerCubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Density,DensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="DensityUnit.KilogramPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Density AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Density,DensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="DensityUnit.KilogramPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DensityUnit.CentigramPerDeciliter"/>
@@ -998,8 +1029,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
-        public Density KilogramsPerCubicMeterToDensity()
+        public Density KilogramsPerCubicMeterToBaseDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerCubicMeter.
+        /// </summary>
+        public Density KilogramsPerCubicMeterToSiBaseDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Density"/> from <see cref="DensityUnit.CentigramPerDeciliter"/>.

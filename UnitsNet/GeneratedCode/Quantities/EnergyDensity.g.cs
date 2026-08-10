@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class EnergyDensityInfo : QuantityInfo<EnergyDensity, EnergyDensityUnit>
         {
             /// <inheritdoc />
-            public EnergyDensityInfo(string name, EnergyDensityUnit baseUnit, IEnumerable<IUnitDefinition<EnergyDensityUnit>> unitMappings, EnergyDensity zero, BaseDimensions baseDimensions,
+            public EnergyDensityInfo(string name, EnergyDensityUnit baseUnit, EnergyDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<EnergyDensityUnit>> unitMappings, EnergyDensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<EnergyDensity, EnergyDensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public EnergyDensityInfo(string name, EnergyDensityUnit baseUnit, IEnumerable<IUnitDefinition<EnergyDensityUnit>> unitMappings, EnergyDensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, EnergyDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.EnergyDensity", typeof(EnergyDensity).Assembly))
+            public EnergyDensityInfo(string name, EnergyDensityUnit baseUnit, EnergyDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<EnergyDensityUnit>> unitMappings, EnergyDensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, EnergyDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.EnergyDensity", typeof(EnergyDensity).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="EnergyDensityInfo"/> class with the default settings.</returns>
             public static EnergyDensityInfo CreateDefault()
-                => new(nameof(EnergyDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(EnergyDensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="EnergyDensityInfo"/> class with the default settings for the EnergyDensity quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="EnergyDensityInfo"/> class with the default settings.
             /// </returns>
             public static EnergyDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<EnergyDensityUnit>>, IEnumerable<IUnitDefinition<EnergyDensityUnit>>> customizeUnits)
-                => new(nameof(EnergyDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(EnergyDensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="EnergyDensity"/> is T^-2L^-1M.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of EnergyDensity is JoulePerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static EnergyDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = EnergyDensityUnit.JoulePerCubicMeter;
+
+            /// <summary>
+            ///     The default base unit of EnergyDensity is JoulePerCubicMeter.
+            /// </summary>
+            public static EnergyDensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -225,6 +234,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of EnergyDensity, which is JoulePerCubicMeter.
+        /// </summary>
+        public static EnergyDensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => EnergyDensityUnit.JoulePerCubicMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the EnergyDensity quantity.
         /// </summary>
         public static IReadOnlyCollection<EnergyDensityUnit> Units
@@ -320,9 +338,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{EnergyDensity,EnergyDensityUnit}.AsBaseValue"/>
         /// <returns><see cref="EnergyDensityUnit.JoulePerCubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{EnergyDensity,EnergyDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="EnergyDensityUnit.JoulePerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public EnergyDensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{EnergyDensity,EnergyDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="EnergyDensityUnit.JoulePerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="EnergyDensityUnit.GigajoulePerCubicMeter"/>
@@ -462,8 +493,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeter.
         /// </summary>
-        public EnergyDensity JoulesPerCubicMeterToEnergyDensity()
+        public EnergyDensity JoulesPerCubicMeterToBaseEnergyDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerCubicMeter.
+        /// </summary>
+        public EnergyDensity JoulesPerCubicMeterToSiBaseEnergyDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="EnergyDensity"/> from <see cref="EnergyDensityUnit.GigajoulePerCubicMeter"/>.

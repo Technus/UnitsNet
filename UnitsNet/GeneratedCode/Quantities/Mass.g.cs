@@ -82,15 +82,15 @@ namespace UnitsNet
         public sealed class MassInfo : QuantityInfo<Mass, MassUnit>
         {
             /// <inheritdoc />
-            public MassInfo(string name, MassUnit baseUnit, IEnumerable<IUnitDefinition<MassUnit>> unitMappings, Mass zero, BaseDimensions baseDimensions,
+            public MassInfo(string name, MassUnit baseUnit, MassUnit siBaseUnit, IEnumerable<IUnitDefinition<MassUnit>> unitMappings, Mass zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Mass, MassUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MassInfo(string name, MassUnit baseUnit, IEnumerable<IUnitDefinition<MassUnit>> unitMappings, Mass zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Mass.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Mass", typeof(Mass).Assembly))
+            public MassInfo(string name, MassUnit baseUnit, MassUnit siBaseUnit, IEnumerable<IUnitDefinition<MassUnit>> unitMappings, Mass zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Mass.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Mass", typeof(Mass).Assembly))
             {
             }
 
@@ -99,7 +99,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassInfo"/> class with the default settings.</returns>
             public static MassInfo CreateDefault()
-                => new(nameof(Mass), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Mass), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassInfo"/> class with the default settings for the Mass quantity and a callback for customizing the default unit mappings.
@@ -111,7 +111,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassInfo"/> class with the default settings.
             /// </returns>
             public static MassInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassUnit>>, IEnumerable<IUnitDefinition<MassUnit>>> customizeUnits)
-                => new(nameof(Mass), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Mass), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Mass"/> is M.
@@ -126,6 +126,15 @@ namespace UnitsNet
             ///     The default base unit of Mass is Kilogram. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MassUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassUnit.Kilogram;
+
+            /// <summary>
+            ///     The default base unit of Mass is Kilogram.
+            /// </summary>
+            public static MassUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -295,6 +304,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Mass, which is Kilogram.
+        /// </summary>
+        public static MassUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MassUnit.Kilogram;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Mass quantity.
         /// </summary>
         public static IReadOnlyCollection<MassUnit> Units
@@ -390,9 +408,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Mass,MassUnit}.AsBaseValue"/>
         /// <returns><see cref="MassUnit.Kilogram"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Mass,MassUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassUnit.Kilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Mass AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Mass,MassUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassUnit.Kilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassUnit.Centigram"/>
@@ -703,8 +734,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Kilogram.
         /// </summary>
-        public Mass KilogramsToMass()
+        public Mass KilogramsToBaseMass()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kilogram.
+        /// </summary>
+        public Mass KilogramsToSiBaseMass()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Mass"/> from <see cref="MassUnit.Centigram"/>.

@@ -68,15 +68,15 @@ namespace UnitsNet
         public sealed class ElectricApparentEnergyInfo : QuantityInfo<ElectricApparentEnergy, ElectricApparentEnergyUnit>
         {
             /// <inheritdoc />
-            public ElectricApparentEnergyInfo(string name, ElectricApparentEnergyUnit baseUnit, IEnumerable<IUnitDefinition<ElectricApparentEnergyUnit>> unitMappings, ElectricApparentEnergy zero, BaseDimensions baseDimensions,
+            public ElectricApparentEnergyInfo(string name, ElectricApparentEnergyUnit baseUnit, ElectricApparentEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricApparentEnergyUnit>> unitMappings, ElectricApparentEnergy zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricApparentEnergy, ElectricApparentEnergyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricApparentEnergyInfo(string name, ElectricApparentEnergyUnit baseUnit, IEnumerable<IUnitDefinition<ElectricApparentEnergyUnit>> unitMappings, ElectricApparentEnergy zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricApparentEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricApparentEnergy", typeof(ElectricApparentEnergy).Assembly))
+            public ElectricApparentEnergyInfo(string name, ElectricApparentEnergyUnit baseUnit, ElectricApparentEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricApparentEnergyUnit>> unitMappings, ElectricApparentEnergy zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricApparentEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricApparentEnergy", typeof(ElectricApparentEnergy).Assembly))
             {
             }
 
@@ -85,7 +85,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricApparentEnergyInfo"/> class with the default settings.</returns>
             public static ElectricApparentEnergyInfo CreateDefault()
-                => new(nameof(ElectricApparentEnergy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricApparentEnergy), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricApparentEnergyInfo"/> class with the default settings for the ElectricApparentEnergy quantity and a callback for customizing the default unit mappings.
@@ -97,7 +97,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricApparentEnergyInfo"/> class with the default settings.
             /// </returns>
             public static ElectricApparentEnergyInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricApparentEnergyUnit>>, IEnumerable<IUnitDefinition<ElectricApparentEnergyUnit>>> customizeUnits)
-                => new(nameof(ElectricApparentEnergy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricApparentEnergy), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricApparentEnergy"/> is T^-2L^2M.
@@ -118,6 +118,15 @@ namespace UnitsNet
             } = ElectricApparentEnergyUnit.VoltampereHour;
 
             /// <summary>
+            ///     The default base unit of ElectricApparentEnergy is VoltampereSecond.
+            /// </summary>
+            public static ElectricApparentEnergyUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricApparentEnergyUnit.VoltampereSecond;
+
+            /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricApparentEnergyUnit"/>.
             /// </summary>
             /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="UnitDefinition{ElectricApparentEnergyUnit}"/> representing the default unit mappings for ElectricApparentEnergy.</returns>
@@ -126,10 +135,19 @@ namespace UnitsNet
                 yield return new (ElectricApparentEnergyUnit.KilovoltampereHour, "KilovoltampereHour", "KilovoltampereHours", BaseUnits.Undefined,
                      new QuantityValue(1, 1000)
                 );
+                yield return new (ElectricApparentEnergyUnit.KilovoltampereSecond, "KilovoltampereSecond", "KilovoltampereSeconds", BaseUnits.Undefined,
+                     new QuantityValue(18, 5)
+                );
                 yield return new (ElectricApparentEnergyUnit.MegavoltampereHour, "MegavoltampereHour", "MegavoltampereHours", BaseUnits.Undefined,
                      new QuantityValue(1, 1000000)
                 );
+                yield return new (ElectricApparentEnergyUnit.MegavoltampereSecond, "MegavoltampereSecond", "MegavoltampereSeconds", new BaseUnits(length: LengthUnit.Kilometer, mass: MassUnit.Kilogram, time: DurationUnit.Second),
+                     new QuantityValue(9, 2500)
+                );
                 yield return new (ElectricApparentEnergyUnit.VoltampereHour, "VoltampereHour", "VoltampereHours", BaseUnits.Undefined);
+                yield return new (ElectricApparentEnergyUnit.VoltampereSecond, "VoltampereSecond", "VoltampereSeconds", new BaseUnits(length: LengthUnit.Meter, mass: MassUnit.Kilogram, time: DurationUnit.Second),
+                     3600
+                );
             }
         }
 
@@ -194,6 +212,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricApparentEnergy, which is VoltampereSecond.
+        /// </summary>
+        public static ElectricApparentEnergyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricApparentEnergyUnit.VoltampereSecond;
         }
 
         /// <summary>
@@ -292,9 +319,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricApparentEnergy,ElectricApparentEnergyUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricApparentEnergyUnit.VoltampereHour"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricApparentEnergy,ElectricApparentEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricApparentEnergyUnit.VoltampereSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricApparentEnergy AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricApparentEnergy,ElectricApparentEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricApparentEnergyUnit.VoltampereSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricApparentEnergyUnit.KilovoltampereHour"/>
@@ -303,6 +343,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => this.As(ElectricApparentEnergyUnit.KilovoltampereHour);
+        }
+
+        /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricApparentEnergyUnit.KilovoltampereSecond"/>
+        /// </summary>
+        public QuantityValue KilovoltampereSeconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricApparentEnergyUnit.KilovoltampereSecond);
         }
 
         /// <summary>
@@ -315,12 +364,30 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricApparentEnergyUnit.MegavoltampereSecond"/>
+        /// </summary>
+        public QuantityValue MegavoltampereSeconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricApparentEnergyUnit.MegavoltampereSecond);
+        }
+
+        /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricApparentEnergyUnit.VoltampereHour"/>
         /// </summary>
         public QuantityValue VoltampereHours
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => this.As(ElectricApparentEnergyUnit.VoltampereHour);
+        }
+
+        /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricApparentEnergyUnit.VoltampereSecond"/>
+        /// </summary>
+        public QuantityValue VoltampereSeconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricApparentEnergyUnit.VoltampereSecond);
         }
 
         #endregion
@@ -353,8 +420,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of VoltampereHour.
         /// </summary>
-        public ElectricApparentEnergy VoltampereHoursToElectricApparentEnergy()
+        public ElectricApparentEnergy VoltampereHoursToBaseElectricApparentEnergy()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereSecond.
+        /// </summary>
+        public ElectricApparentEnergy VoltampereSecondsToSiBaseElectricApparentEnergy()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricApparentEnergy"/> from <see cref="ElectricApparentEnergyUnit.KilovoltampereHour"/>.
@@ -364,6 +437,13 @@ namespace UnitsNet
             => new(value, ElectricApparentEnergyUnit.KilovoltampereHour);
 
         /// <summary>
+        ///     Creates a <see cref="ElectricApparentEnergy"/> from <see cref="ElectricApparentEnergyUnit.KilovoltampereSecond"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ElectricApparentEnergy FromKilovoltampereSeconds(QuantityValue value)
+            => new(value, ElectricApparentEnergyUnit.KilovoltampereSecond);
+
+        /// <summary>
         ///     Creates a <see cref="ElectricApparentEnergy"/> from <see cref="ElectricApparentEnergyUnit.MegavoltampereHour"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -371,11 +451,25 @@ namespace UnitsNet
             => new(value, ElectricApparentEnergyUnit.MegavoltampereHour);
 
         /// <summary>
+        ///     Creates a <see cref="ElectricApparentEnergy"/> from <see cref="ElectricApparentEnergyUnit.MegavoltampereSecond"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ElectricApparentEnergy FromMegavoltampereSeconds(QuantityValue value)
+            => new(value, ElectricApparentEnergyUnit.MegavoltampereSecond);
+
+        /// <summary>
         ///     Creates a <see cref="ElectricApparentEnergy"/> from <see cref="ElectricApparentEnergyUnit.VoltampereHour"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricApparentEnergy FromVoltampereHours(QuantityValue value)
             => new(value, ElectricApparentEnergyUnit.VoltampereHour);
+
+        /// <summary>
+        ///     Creates a <see cref="ElectricApparentEnergy"/> from <see cref="ElectricApparentEnergyUnit.VoltampereSecond"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ElectricApparentEnergy FromVoltampereSeconds(QuantityValue value)
+            => new(value, ElectricApparentEnergyUnit.VoltampereSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricApparentEnergyUnit" /> to <see cref="ElectricApparentEnergy" />.

@@ -75,15 +75,15 @@ namespace UnitsNet
         public sealed class LinearDensityInfo : QuantityInfo<LinearDensity, LinearDensityUnit>
         {
             /// <inheritdoc />
-            public LinearDensityInfo(string name, LinearDensityUnit baseUnit, IEnumerable<IUnitDefinition<LinearDensityUnit>> unitMappings, LinearDensity zero, BaseDimensions baseDimensions,
+            public LinearDensityInfo(string name, LinearDensityUnit baseUnit, LinearDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<LinearDensityUnit>> unitMappings, LinearDensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<LinearDensity, LinearDensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LinearDensityInfo(string name, LinearDensityUnit baseUnit, IEnumerable<IUnitDefinition<LinearDensityUnit>> unitMappings, LinearDensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, LinearDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LinearDensity", typeof(LinearDensity).Assembly))
+            public LinearDensityInfo(string name, LinearDensityUnit baseUnit, LinearDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<LinearDensityUnit>> unitMappings, LinearDensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, LinearDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LinearDensity", typeof(LinearDensity).Assembly))
             {
             }
 
@@ -92,7 +92,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LinearDensityInfo"/> class with the default settings.</returns>
             public static LinearDensityInfo CreateDefault()
-                => new(nameof(LinearDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LinearDensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LinearDensityInfo"/> class with the default settings for the LinearDensity quantity and a callback for customizing the default unit mappings.
@@ -104,7 +104,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LinearDensityInfo"/> class with the default settings.
             /// </returns>
             public static LinearDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<LinearDensityUnit>>, IEnumerable<IUnitDefinition<LinearDensityUnit>>> customizeUnits)
-                => new(nameof(LinearDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LinearDensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="LinearDensity"/> is L^-1M.
@@ -119,6 +119,15 @@ namespace UnitsNet
             ///     The default base unit of LinearDensity is KilogramPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LinearDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LinearDensityUnit.KilogramPerMeter;
+
+            /// <summary>
+            ///     The default base unit of LinearDensity is KilogramPerMeter.
+            /// </summary>
+            public static LinearDensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -249,6 +258,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of LinearDensity, which is KilogramPerMeter.
+        /// </summary>
+        public static LinearDensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LinearDensityUnit.KilogramPerMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the LinearDensity quantity.
         /// </summary>
         public static IReadOnlyCollection<LinearDensityUnit> Units
@@ -344,9 +362,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{LinearDensity,LinearDensityUnit}.AsBaseValue"/>
         /// <returns><see cref="LinearDensityUnit.KilogramPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LinearDensity,LinearDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LinearDensityUnit.KilogramPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public LinearDensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LinearDensity,LinearDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="LinearDensityUnit.KilogramPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LinearDensityUnit.GramPerCentimeter"/>
@@ -540,8 +571,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMeter.
         /// </summary>
-        public LinearDensity KilogramsPerMeterToLinearDensity()
+        public LinearDensity KilogramsPerMeterToBaseLinearDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerMeter.
+        /// </summary>
+        public LinearDensity KilogramsPerMeterToSiBaseLinearDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="LinearDensity"/> from <see cref="LinearDensityUnit.GramPerCentimeter"/>.

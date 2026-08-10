@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class AngleInfo : QuantityInfo<Angle, AngleUnit>
         {
             /// <inheritdoc />
-            public AngleInfo(string name, AngleUnit baseUnit, IEnumerable<IUnitDefinition<AngleUnit>> unitMappings, Angle zero, BaseDimensions baseDimensions,
+            public AngleInfo(string name, AngleUnit baseUnit, AngleUnit siBaseUnit, IEnumerable<IUnitDefinition<AngleUnit>> unitMappings, Angle zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Angle, AngleUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AngleInfo(string name, AngleUnit baseUnit, IEnumerable<IUnitDefinition<AngleUnit>> unitMappings, Angle zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Angle.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Angle", typeof(Angle).Assembly))
+            public AngleInfo(string name, AngleUnit baseUnit, AngleUnit siBaseUnit, IEnumerable<IUnitDefinition<AngleUnit>> unitMappings, Angle zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Angle.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Angle", typeof(Angle).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AngleInfo"/> class with the default settings.</returns>
             public static AngleInfo CreateDefault()
-                => new(nameof(Angle), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Angle), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AngleInfo"/> class with the default settings for the Angle quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AngleInfo"/> class with the default settings.
             /// </returns>
             public static AngleInfo CreateDefault(Func<IEnumerable<UnitDefinition<AngleUnit>>, IEnumerable<IUnitDefinition<AngleUnit>>> customizeUnits)
-                => new(nameof(Angle), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Angle), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Angle"/> is .
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Angle is Radian. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AngleUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AngleUnit.Radian;
+
+            /// <summary>
+            ///     The default base unit of Angle is Radian.
+            /// </summary>
+            public static AngleUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -220,6 +229,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Angle, which is Radian.
+        /// </summary>
+        public static AngleUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AngleUnit.Radian;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Angle quantity.
         /// </summary>
         public static IReadOnlyCollection<AngleUnit> Units
@@ -315,9 +333,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Angle,AngleUnit}.AsBaseValue"/>
         /// <returns><see cref="AngleUnit.Radian"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Angle,AngleUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AngleUnit.Radian"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Angle AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Angle,AngleUnit}.AsBaseValue"/>
+        /// <returns><see cref="AngleUnit.Radian"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AngleUnit.Arcminute"/>
@@ -484,8 +515,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Radian.
         /// </summary>
-        public Angle RadiansToAngle()
+        public Angle RadiansToBaseAngle()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Radian.
+        /// </summary>
+        public Angle RadiansToSiBaseAngle()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Angle"/> from <see cref="AngleUnit.Arcminute"/>.

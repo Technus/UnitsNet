@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class ScalarInfo : QuantityInfo<Scalar, ScalarUnit>
         {
             /// <inheritdoc />
-            public ScalarInfo(string name, ScalarUnit baseUnit, IEnumerable<IUnitDefinition<ScalarUnit>> unitMappings, Scalar zero, BaseDimensions baseDimensions,
+            public ScalarInfo(string name, ScalarUnit baseUnit, ScalarUnit siBaseUnit, IEnumerable<IUnitDefinition<ScalarUnit>> unitMappings, Scalar zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Scalar, ScalarUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ScalarInfo(string name, ScalarUnit baseUnit, IEnumerable<IUnitDefinition<ScalarUnit>> unitMappings, Scalar zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Scalar.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Scalar", typeof(Scalar).Assembly))
+            public ScalarInfo(string name, ScalarUnit baseUnit, ScalarUnit siBaseUnit, IEnumerable<IUnitDefinition<ScalarUnit>> unitMappings, Scalar zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Scalar.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Scalar", typeof(Scalar).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ScalarInfo"/> class with the default settings.</returns>
             public static ScalarInfo CreateDefault()
-                => new(nameof(Scalar), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Scalar), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ScalarInfo"/> class with the default settings for the Scalar quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ScalarInfo"/> class with the default settings.
             /// </returns>
             public static ScalarInfo CreateDefault(Func<IEnumerable<UnitDefinition<ScalarUnit>>, IEnumerable<IUnitDefinition<ScalarUnit>>> customizeUnits)
-                => new(nameof(Scalar), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Scalar), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Scalar"/> is .
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of Scalar is Amount. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ScalarUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ScalarUnit.Amount;
+
+            /// <summary>
+            ///     The default base unit of Scalar is Amount.
+            /// </summary>
+            public static ScalarUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -172,6 +181,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Scalar, which is Amount.
+        /// </summary>
+        public static ScalarUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ScalarUnit.Amount;
         }
 
         /// <summary>
@@ -270,9 +288,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Scalar,ScalarUnit}.AsBaseValue"/>
         /// <returns><see cref="ScalarUnit.Amount"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Scalar,ScalarUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ScalarUnit.Amount"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Scalar AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Scalar,ScalarUnit}.AsBaseValue"/>
+        /// <returns><see cref="ScalarUnit.Amount"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ScalarUnit.Amount"/>
@@ -313,8 +344,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Amount.
         /// </summary>
-        public Scalar AmountToScalar()
+        public Scalar AmountToBaseScalar()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Amount.
+        /// </summary>
+        public Scalar AmountToSiBaseScalar()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Scalar"/> from <see cref="ScalarUnit.Amount"/>.

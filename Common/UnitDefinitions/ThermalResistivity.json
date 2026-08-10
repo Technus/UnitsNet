@@ -1,6 +1,7 @@
 {
   "Name": "ThermalResistivity",
   "BaseUnit": "KelvinMeterPerWatt",
+  "SiBaseUnit": "KelvinMeterPerWatt",
   "XmlDocSummary": "Thermal resistivity is the property of a material to resist heat.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity",
   "BaseDimensions": {

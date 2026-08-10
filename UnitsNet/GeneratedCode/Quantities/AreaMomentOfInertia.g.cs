@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class AreaMomentOfInertiaInfo : QuantityInfo<AreaMomentOfInertia, AreaMomentOfInertiaUnit>
         {
             /// <inheritdoc />
-            public AreaMomentOfInertiaInfo(string name, AreaMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<AreaMomentOfInertiaUnit>> unitMappings, AreaMomentOfInertia zero, BaseDimensions baseDimensions,
+            public AreaMomentOfInertiaInfo(string name, AreaMomentOfInertiaUnit baseUnit, AreaMomentOfInertiaUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaMomentOfInertiaUnit>> unitMappings, AreaMomentOfInertia zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<AreaMomentOfInertia, AreaMomentOfInertiaUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AreaMomentOfInertiaInfo(string name, AreaMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<AreaMomentOfInertiaUnit>> unitMappings, AreaMomentOfInertia zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, AreaMomentOfInertia.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AreaMomentOfInertia", typeof(AreaMomentOfInertia).Assembly))
+            public AreaMomentOfInertiaInfo(string name, AreaMomentOfInertiaUnit baseUnit, AreaMomentOfInertiaUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaMomentOfInertiaUnit>> unitMappings, AreaMomentOfInertia zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, AreaMomentOfInertia.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AreaMomentOfInertia", typeof(AreaMomentOfInertia).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AreaMomentOfInertiaInfo"/> class with the default settings.</returns>
             public static AreaMomentOfInertiaInfo CreateDefault()
-                => new(nameof(AreaMomentOfInertia), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AreaMomentOfInertia), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AreaMomentOfInertiaInfo"/> class with the default settings for the AreaMomentOfInertia quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AreaMomentOfInertiaInfo"/> class with the default settings.
             /// </returns>
             public static AreaMomentOfInertiaInfo CreateDefault(Func<IEnumerable<UnitDefinition<AreaMomentOfInertiaUnit>>, IEnumerable<IUnitDefinition<AreaMomentOfInertiaUnit>>> customizeUnits)
-                => new(nameof(AreaMomentOfInertia), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AreaMomentOfInertia), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AreaMomentOfInertia"/> is L^4.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of AreaMomentOfInertia is MeterToTheFourth. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AreaMomentOfInertiaUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AreaMomentOfInertiaUnit.MeterToTheFourth;
+
+            /// <summary>
+            ///     The default base unit of AreaMomentOfInertia is MeterToTheFourth.
+            /// </summary>
+            public static AreaMomentOfInertiaUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -204,6 +213,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of AreaMomentOfInertia, which is MeterToTheFourth.
+        /// </summary>
+        public static AreaMomentOfInertiaUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AreaMomentOfInertiaUnit.MeterToTheFourth;
         }
 
         /// <summary>
@@ -302,9 +320,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{AreaMomentOfInertia,AreaMomentOfInertiaUnit}.AsBaseValue"/>
         /// <returns><see cref="AreaMomentOfInertiaUnit.MeterToTheFourth"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AreaMomentOfInertia,AreaMomentOfInertiaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaMomentOfInertiaUnit.MeterToTheFourth"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AreaMomentOfInertia AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AreaMomentOfInertia,AreaMomentOfInertiaUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaMomentOfInertiaUnit.MeterToTheFourth"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaMomentOfInertiaUnit.CentimeterToTheFourth"/>
@@ -390,8 +421,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheFourth.
         /// </summary>
-        public AreaMomentOfInertia MetersToTheFourthToAreaMomentOfInertia()
+        public AreaMomentOfInertia MetersToTheFourthToBaseAreaMomentOfInertia()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterToTheFourth.
+        /// </summary>
+        public AreaMomentOfInertia MetersToTheFourthToSiBaseAreaMomentOfInertia()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="AreaMomentOfInertia"/> from <see cref="AreaMomentOfInertiaUnit.CentimeterToTheFourth"/>.

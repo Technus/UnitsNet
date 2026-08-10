@@ -1,6 +1,7 @@
 {
   "Name": "ForcePerLength",
   "BaseUnit": "NewtonPerMeter",
+  "SiBaseUnit": "NewtonPerMeter",
   "XmlDocSummary": "The magnitude of force per unit length.",
   "BaseDimensions": {
     "M": 1,
@@ -24,7 +25,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "NewtonPerCentimeter",
       "PluralName": "NewtonsPerCentimeter",
       "FromUnitToBaseFunc": "{x} * 1e2",
@@ -66,7 +67,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "KilogramForcePerCentimeter",
       "PluralName": "KilogramsForcePerCentimeter",
       "FromUnitToBaseFunc": "{x} * 980.665",
@@ -82,7 +83,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "KilogramForcePerMillimeter",
       "PluralName": "KilogramsForcePerMillimeter",
       "FromUnitToBaseFunc": "{x} * 9.80665e3",
@@ -98,7 +99,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "TonneForcePerMeter",
       "PluralName": "TonnesForcePerMeter",
       "FromUnitToBaseFunc": "{x} * 9.80665e3",
@@ -114,7 +115,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "TonneForcePerCentimeter",
       "PluralName": "TonnesForcePerCentimeter",
       "FromUnitToBaseFunc": "{x} * 9.80665e5",
@@ -130,7 +131,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "TonneForcePerMillimeter",
       "PluralName": "TonnesForcePerMillimeter",
       "FromUnitToBaseFunc": "{x} * 9.80665e6",

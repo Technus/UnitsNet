@@ -1,6 +1,7 @@
 {
   "Name": "Length",
   "BaseUnit": "Meter",
+  "SiBaseUnit": "Meter",
   "XmlDocSummary": "Many different units of length have been used around the world. The main units in modern use are U.S. customary units in the United States and the Metric system elsewhere. British Imperial units are still used for some purposes in the United Kingdom and some other countries. The metric system is sub-divided into SI and non-SI units.",
   "BaseDimensions": {
     "L": 1
@@ -63,7 +64,7 @@
       },
       "FromUnitToBaseFunc": "{x} * 0.9144",
       "FromBaseToUnitFunc": "{x} / 0.9144",
-      "Prefixes":  [ "Kilo" ],
+      "Prefixes": [ "Kilo" ],
       "XmlDocSummary": "The yard (symbol: yd) is an English unit of length in both the British imperial and US customary systems of measurement equalling 3 feet (or 36 inches). Since 1959 the yard has been by international agreement standardized as exactly 0.9144 meter. A distance of 1,760 yards is equal to 1 mile.",
       "XmlDocRemarks": "https://en.wikipedia.org/wiki/Yard",
       "Localization": [

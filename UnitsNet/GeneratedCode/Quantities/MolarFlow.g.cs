@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class MolarFlowInfo : QuantityInfo<MolarFlow, MolarFlowUnit>
         {
             /// <inheritdoc />
-            public MolarFlowInfo(string name, MolarFlowUnit baseUnit, IEnumerable<IUnitDefinition<MolarFlowUnit>> unitMappings, MolarFlow zero, BaseDimensions baseDimensions,
+            public MolarFlowInfo(string name, MolarFlowUnit baseUnit, MolarFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarFlowUnit>> unitMappings, MolarFlow zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MolarFlow, MolarFlowUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MolarFlowInfo(string name, MolarFlowUnit baseUnit, IEnumerable<IUnitDefinition<MolarFlowUnit>> unitMappings, MolarFlow zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MolarFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MolarFlow", typeof(MolarFlow).Assembly))
+            public MolarFlowInfo(string name, MolarFlowUnit baseUnit, MolarFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarFlowUnit>> unitMappings, MolarFlow zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MolarFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MolarFlow", typeof(MolarFlow).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MolarFlowInfo"/> class with the default settings.</returns>
             public static MolarFlowInfo CreateDefault()
-                => new(nameof(MolarFlow), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MolarFlow), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MolarFlowInfo"/> class with the default settings for the MolarFlow quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MolarFlowInfo"/> class with the default settings.
             /// </returns>
             public static MolarFlowInfo CreateDefault(Func<IEnumerable<UnitDefinition<MolarFlowUnit>>, IEnumerable<IUnitDefinition<MolarFlowUnit>>> customizeUnits)
-                => new(nameof(MolarFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MolarFlow), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MolarFlow"/> is T^-1N.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of MolarFlow is MolePerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MolarFlowUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MolarFlowUnit.MolePerSecond;
+
+            /// <summary>
+            ///     The default base unit of MolarFlow is MolePerSecond.
+            /// </summary>
+            public static MolarFlowUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -217,6 +226,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of MolarFlow, which is MolePerSecond.
+        /// </summary>
+        public static MolarFlowUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MolarFlowUnit.MolePerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the MolarFlow quantity.
         /// </summary>
         public static IReadOnlyCollection<MolarFlowUnit> Units
@@ -312,9 +330,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MolarFlow,MolarFlowUnit}.AsBaseValue"/>
         /// <returns><see cref="MolarFlowUnit.MolePerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MolarFlow,MolarFlowUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarFlowUnit.MolePerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MolarFlow AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MolarFlow,MolarFlowUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarFlowUnit.MolePerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarFlowUnit.KilomolePerHour"/>
@@ -427,8 +458,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MolePerSecond.
         /// </summary>
-        public MolarFlow MolesPerSecondToMolarFlow()
+        public MolarFlow MolesPerSecondToBaseMolarFlow()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerSecond.
+        /// </summary>
+        public MolarFlow MolesPerSecondToSiBaseMolarFlow()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MolarFlow"/> from <see cref="MolarFlowUnit.KilomolePerHour"/>.

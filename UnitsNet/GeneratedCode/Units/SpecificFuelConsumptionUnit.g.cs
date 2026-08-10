@@ -28,6 +28,7 @@ namespace UnitsNet.Units
         GramPerKilonewtonSecond = 1,
         KilogramPerKilogramForceHour = 2,
         KilogramPerKilonewtonSecond = 3,
+        KilogramPerNewtonSecond = 8,
         PoundMassPerPoundForceHour = 4,
     }
 

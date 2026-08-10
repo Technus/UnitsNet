@@ -1,6 +1,7 @@
 {
   "Name": "PorousMediumPermeability",
   "BaseUnit": "SquareMeter",
+  "SiBaseUnit": "SquareMeter",
   "XmlDoc": "In fluid mechanics, permeability is the measure of the ability of a porous material to allow fluids to pass through it.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Permeability_(Earth_sciences)",
   "BaseDimensions": {

@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class VolumetricHeatCapacityInfo : QuantityInfo<VolumetricHeatCapacity, VolumetricHeatCapacityUnit>
         {
             /// <inheritdoc />
-            public VolumetricHeatCapacityInfo(string name, VolumetricHeatCapacityUnit baseUnit, IEnumerable<IUnitDefinition<VolumetricHeatCapacityUnit>> unitMappings, VolumetricHeatCapacity zero, BaseDimensions baseDimensions,
+            public VolumetricHeatCapacityInfo(string name, VolumetricHeatCapacityUnit baseUnit, VolumetricHeatCapacityUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumetricHeatCapacityUnit>> unitMappings, VolumetricHeatCapacity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<VolumetricHeatCapacity, VolumetricHeatCapacityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public VolumetricHeatCapacityInfo(string name, VolumetricHeatCapacityUnit baseUnit, IEnumerable<IUnitDefinition<VolumetricHeatCapacityUnit>> unitMappings, VolumetricHeatCapacity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, VolumetricHeatCapacity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumetricHeatCapacity", typeof(VolumetricHeatCapacity).Assembly))
+            public VolumetricHeatCapacityInfo(string name, VolumetricHeatCapacityUnit baseUnit, VolumetricHeatCapacityUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumetricHeatCapacityUnit>> unitMappings, VolumetricHeatCapacity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, VolumetricHeatCapacity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumetricHeatCapacity", typeof(VolumetricHeatCapacity).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumetricHeatCapacityInfo"/> class with the default settings.</returns>
             public static VolumetricHeatCapacityInfo CreateDefault()
-                => new(nameof(VolumetricHeatCapacity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumetricHeatCapacity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumetricHeatCapacityInfo"/> class with the default settings for the VolumetricHeatCapacity quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumetricHeatCapacityInfo"/> class with the default settings.
             /// </returns>
             public static VolumetricHeatCapacityInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumetricHeatCapacityUnit>>, IEnumerable<IUnitDefinition<VolumetricHeatCapacityUnit>>> customizeUnits)
-                => new(nameof(VolumetricHeatCapacity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumetricHeatCapacity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="VolumetricHeatCapacity"/> is T^-2L^-1MΘ^-1.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of VolumetricHeatCapacity is JoulePerCubicMeterKelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static VolumetricHeatCapacityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin;
+
+            /// <summary>
+            ///     The default base unit of VolumetricHeatCapacity is JoulePerCubicMeterKelvin.
+            /// </summary>
+            public static VolumetricHeatCapacityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -217,6 +226,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of VolumetricHeatCapacity, which is JoulePerCubicMeterKelvin.
+        /// </summary>
+        public static VolumetricHeatCapacityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin;
+        }
+
+        /// <summary>
         ///     All units of measurement for the VolumetricHeatCapacity quantity.
         /// </summary>
         public static IReadOnlyCollection<VolumetricHeatCapacityUnit> Units
@@ -312,9 +330,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{VolumetricHeatCapacity,VolumetricHeatCapacityUnit}.AsBaseValue"/>
         /// <returns><see cref="VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumetricHeatCapacity,VolumetricHeatCapacityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VolumetricHeatCapacity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumetricHeatCapacity,VolumetricHeatCapacityUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumetricHeatCapacityUnit.BtuPerCubicFootDegreeFahrenheit"/>
@@ -427,8 +458,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
         /// </summary>
-        public VolumetricHeatCapacity JoulesPerCubicMeterKelvinToVolumetricHeatCapacity()
+        public VolumetricHeatCapacity JoulesPerCubicMeterKelvinToBaseVolumetricHeatCapacity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
+        /// </summary>
+        public VolumetricHeatCapacity JoulesPerCubicMeterKelvinToSiBaseVolumetricHeatCapacity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="VolumetricHeatCapacity"/> from <see cref="VolumetricHeatCapacityUnit.BtuPerCubicFootDegreeFahrenheit"/>.

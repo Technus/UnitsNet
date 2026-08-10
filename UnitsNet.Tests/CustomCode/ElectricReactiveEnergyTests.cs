@@ -31,6 +31,12 @@ namespace UnitsNet.Tests.CustomCode
 
         protected override double MegavoltampereReactiveHoursInOneVoltampereReactiveHour => 1E-6;
 
+        protected override double KilovoltampereReactiveSecondsInOneVoltampereReactiveHour => 3.6;
+
+        protected override double MegavoltampereReactiveSecondsInOneVoltampereReactiveHour => 0.0036;
+
+        protected override double VoltampereReactiveSecondsInOneVoltampereReactiveHour => 3600;
+
         [Fact(Skip = "See about adding an SI unit (VoltampereReactiveSecond, Joules?)")]
         public override void Ctor_SIUnitSystem_ReturnsQuantityWithSIUnits()
         {

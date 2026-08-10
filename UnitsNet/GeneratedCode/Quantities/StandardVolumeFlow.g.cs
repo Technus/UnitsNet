@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class StandardVolumeFlowInfo : QuantityInfo<StandardVolumeFlow, StandardVolumeFlowUnit>
         {
             /// <inheritdoc />
-            public StandardVolumeFlowInfo(string name, StandardVolumeFlowUnit baseUnit, IEnumerable<IUnitDefinition<StandardVolumeFlowUnit>> unitMappings, StandardVolumeFlow zero, BaseDimensions baseDimensions,
+            public StandardVolumeFlowInfo(string name, StandardVolumeFlowUnit baseUnit, StandardVolumeFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<StandardVolumeFlowUnit>> unitMappings, StandardVolumeFlow zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<StandardVolumeFlow, StandardVolumeFlowUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public StandardVolumeFlowInfo(string name, StandardVolumeFlowUnit baseUnit, IEnumerable<IUnitDefinition<StandardVolumeFlowUnit>> unitMappings, StandardVolumeFlow zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, StandardVolumeFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.StandardVolumeFlow", typeof(StandardVolumeFlow).Assembly))
+            public StandardVolumeFlowInfo(string name, StandardVolumeFlowUnit baseUnit, StandardVolumeFlowUnit siBaseUnit, IEnumerable<IUnitDefinition<StandardVolumeFlowUnit>> unitMappings, StandardVolumeFlow zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, StandardVolumeFlow.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.StandardVolumeFlow", typeof(StandardVolumeFlow).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="StandardVolumeFlowInfo"/> class with the default settings.</returns>
             public static StandardVolumeFlowInfo CreateDefault()
-                => new(nameof(StandardVolumeFlow), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(StandardVolumeFlow), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="StandardVolumeFlowInfo"/> class with the default settings for the StandardVolumeFlow quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="StandardVolumeFlowInfo"/> class with the default settings.
             /// </returns>
             public static StandardVolumeFlowInfo CreateDefault(Func<IEnumerable<UnitDefinition<StandardVolumeFlowUnit>>, IEnumerable<IUnitDefinition<StandardVolumeFlowUnit>>> customizeUnits)
-                => new(nameof(StandardVolumeFlow), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(StandardVolumeFlow), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="StandardVolumeFlow"/> is T^-1M.
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of StandardVolumeFlow is StandardCubicMeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static StandardVolumeFlowUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = StandardVolumeFlowUnit.StandardCubicMeterPerSecond;
+
+            /// <summary>
+            ///     The default base unit of StandardVolumeFlow is StandardCubicMeterPerSecond.
+            /// </summary>
+            public static StandardVolumeFlowUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -213,6 +222,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of StandardVolumeFlow, which is StandardCubicMeterPerSecond.
+        /// </summary>
+        public static StandardVolumeFlowUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => StandardVolumeFlowUnit.StandardCubicMeterPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the StandardVolumeFlow quantity.
         /// </summary>
         public static IReadOnlyCollection<StandardVolumeFlowUnit> Units
@@ -308,9 +326,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{StandardVolumeFlow,StandardVolumeFlowUnit}.AsBaseValue"/>
         /// <returns><see cref="StandardVolumeFlowUnit.StandardCubicMeterPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{StandardVolumeFlow,StandardVolumeFlowUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="StandardVolumeFlowUnit.StandardCubicMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StandardVolumeFlow AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{StandardVolumeFlow,StandardVolumeFlowUnit}.AsBaseValue"/>
+        /// <returns><see cref="StandardVolumeFlowUnit.StandardCubicMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute"/>
@@ -423,8 +454,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
         /// </summary>
-        public StandardVolumeFlow StandardCubicMetersPerSecondToStandardVolumeFlow()
+        public StandardVolumeFlow StandardCubicMetersPerSecondToBaseStandardVolumeFlow()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
+        /// </summary>
+        public StandardVolumeFlow StandardCubicMetersPerSecondToSiBaseStandardVolumeFlow()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="StandardVolumeFlow"/> from <see cref="StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute"/>.

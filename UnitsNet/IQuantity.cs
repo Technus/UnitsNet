@@ -146,7 +146,20 @@ namespace UnitsNet
         /// Get the value as <see cref="QuantityValue"/> of the base unit
         /// </summary>
         /// <remarks>Usually equal to: this.As(BaseUnit)</remarks>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         QuantityValue AsBaseValue();
+
+        /// <summary>
+        /// Get the quantity as quantity of the SI base unit
+        /// </summary>
+        /// <remarks>Usually equal to: new(this.As(SiBaseUnit), SiBaseUnit) or From(this.As(SiBaseUnit), SiBaseUnit)</remarks>
+        TSelf AsSiBaseQuantity();
+
+        /// <summary>
+        /// Get the value as <see cref="QuantityValue"/> of the SI base unit
+        /// </summary>
+        /// <remarks>Usually equal to: this.As(SiBaseUnit)</remarks>
+        QuantityValue AsSiBaseValue();
 #else
         /// <summary>
         /// Get the quantity as quantity of the base unit
@@ -163,12 +176,35 @@ namespace UnitsNet
             => UnitConverter.Default.ConvertValue(Value, Unit, TSelf.BaseUnit);
 
         /// <summary>
+        /// Get the quantity as quantity of the base unit
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public virtual TSelf AsSiBaseQuantity()
+            => TSelf.From(AsSiBaseValue(), TSelf.SiBaseUnit);
+
+        /// <summary>
+        /// Get the value as <see cref="QuantityValue"/> of the base unit
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public virtual QuantityValue AsSiBaseValue()
+            => UnitConverter.Default.ConvertValue(Value, Unit, TSelf.SiBaseUnit);
+
+        /// <summary>
         /// Gets the base dimensions
         /// </summary>
         public static virtual BaseDimensions BaseDimensions
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => TSelf.Info.BaseDimensions;
+        }
+
+        /// <summary>
+        /// Get the base unit
+        /// </summary>
+        public static virtual TUnitType SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => TSelf.Info.SiBaseUnitInfo.Value;
         }
 
         /// <summary>

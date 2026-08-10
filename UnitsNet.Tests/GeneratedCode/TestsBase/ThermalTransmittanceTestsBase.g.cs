@@ -152,7 +152,7 @@ namespace UnitsNet.Tests
         [Fact]
         public void ThermalTransmittanceInfo_CreateWithCustomUnitInfos()
         {
-            ThermalTransmittanceUnit[] expectedUnits = [ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin];
+            ThermalTransmittanceUnit[] expectedUnits = [ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin, ThermalTransmittanceUnit.WattPerSquareMeterKelvin];
 
             ThermalTransmittance.ThermalTransmittanceInfo quantityInfo = ThermalTransmittance.ThermalTransmittanceInfo.CreateDefault(mappings => mappings.SelectUnits(expectedUnits));
 

@@ -1,6 +1,7 @@
 {
   "Name": "ElectricImpedance",
   "BaseUnit": "Ohm",
+  "SiBaseUnit": "Ohm",
   "XmlDocSummary": "Electric impedance is the opposition to alternating current presented by the combined effect of resistance and reactance in a circuit. It is defined as the inverse of admittance. The SI unit of impedance is the ohm (symbol Ω).",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Electrical_impedance",
   "ObsoleteText": "Impedance is a complex number, which is not currently supported by UnitsNet. Please use either ElectricResistance or ElectricReactance instead.",

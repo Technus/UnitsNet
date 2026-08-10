@@ -1,6 +1,7 @@
 {
   "Name": "Luminance",
   "BaseUnit": "CandelaPerSquareMeter",
+  "SiBaseUnit": "CandelaPerSquareMeter",
   "BaseType": "double",
   "XmlDoc": "Luminance is a photometric measure of the luminous intensity per unit area of light travelling in a given direction.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Luminance",
@@ -14,11 +15,11 @@
       "PluralName": "CandelasPerSquareMeter",
       "FromUnitToBaseFunc": "{x}",
       "FromBaseToUnitFunc": "{x}",
-	   "BaseUnits": {
+      "BaseUnits": {
         "J": "Candela",
         "L": "Meter"
       },
-	  "Prefixes": [ "Nano", "Micro", "Milli", "Centi", "Deci", "Kilo" ],
+      "Prefixes": [ "Nano", "Micro", "Milli", "Centi", "Deci", "Kilo" ],
       "Localization": [
         {
           "Culture": "en-US",
@@ -50,7 +51,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "Nit",
       "PluralName": "Nits",
       "FromUnitToBaseFunc": "{x}",

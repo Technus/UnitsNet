@@ -17,7 +17,7 @@ namespace CodeGen.Generators.UnitsNetGen
 
         private readonly bool _isDimensionless;
         private readonly string _unitEnumName;
-        private readonly Unit _baseUnit;
+        private readonly Unit _baseUnit, _siBaseUnit;
 
         public QuantityGenerator(Quantity quantity)
         {
@@ -25,6 +25,10 @@ namespace CodeGen.Generators.UnitsNetGen
 
             _baseUnit = quantity.Units.FirstOrDefault(u => u.SingularName == _quantity.BaseUnit) ??
                         throw new ArgumentException($"No unit found with SingularName equal to BaseUnit [{_quantity.BaseUnit}]. This unit must be defined.",
+                            nameof(quantity));
+
+            _siBaseUnit = quantity.Units.FirstOrDefault(u => u.SingularName == _quantity.SiBaseUnit)
+                ?? throw new ArgumentException($"No SI unit found with SingularName equal to BaseUnit [{_quantity.SiBaseUnit}]. This unit must be defined.",
                             nameof(quantity));
 
             _unitEnumName = $"{quantity.Name}Unit";
@@ -179,15 +183,15 @@ namespace UnitsNet
         {{");
             Writer.WL($@"
             /// <inheritdoc />
-            public {quantityInfoClassName}(string name, {_unitEnumName} baseUnit, IEnumerable<IUnitDefinition<{_unitEnumName}>> unitMappings, {_quantity.Name} zero, BaseDimensions baseDimensions,
+            public {quantityInfoClassName}(string name, {_unitEnumName} baseUnit, {_unitEnumName} siBaseUnit, IEnumerable<IUnitDefinition<{_unitEnumName}>> unitMappings, {_quantity.Name} zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<{_quantity.Name}, {_unitEnumName}> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {{
             }}
 
             /// <inheritdoc />
-            public {quantityInfoClassName}(string name, {_unitEnumName} baseUnit, IEnumerable<IUnitDefinition<{_unitEnumName}>> unitMappings, {_quantity.Name} zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, {_quantity.Name}.From, new ResourceManager(""UnitsNet.GeneratedCode.Resources.{_quantity.Name}"", typeof({_quantity.Name}).Assembly))
+            public {quantityInfoClassName}(string name, {_unitEnumName} baseUnit, {_unitEnumName} siBaseUnit, IEnumerable<IUnitDefinition<{_unitEnumName}>> unitMappings, {_quantity.Name} zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, {_quantity.Name}.From, new ResourceManager(""UnitsNet.GeneratedCode.Resources.{_quantity.Name}"", typeof({_quantity.Name}).Assembly))
             {{
             }}
 
@@ -196,7 +200,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref=""{quantityInfoClassName}""/> class with the default settings.</returns>
             public static {quantityInfoClassName} CreateDefault()
-                => new(nameof({_quantity.Name}), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof({_quantity.Name}), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref=""{quantityInfoClassName}""/> class with the default settings for the {_quantity.Name} quantity and a callback for customizing the default unit mappings.
@@ -208,7 +212,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref=""{quantityInfoClassName}""/> class with the default settings.
             /// </returns>
             public static {quantityInfoClassName} CreateDefault(Func<IEnumerable<UnitDefinition<{_unitEnumName}>>, IEnumerable<IUnitDefinition<{_unitEnumName}>>> customizeUnits)
-                => new(nameof({_quantity.Name}), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof({_quantity.Name}), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref=""BaseDimensions"" /> for <see cref=""{_quantity.Name}""/> is {_quantity.BaseDimensions}.
@@ -227,6 +231,15 @@ namespace UnitsNet
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
             }} = {_unitEnumName}.{_baseUnit.SingularName};
+
+            /// <summary>
+            ///     The default base unit of {_quantity.Name} is {_siBaseUnit.SingularName}.
+            /// </summary>
+            public static {_unitEnumName} DefaultSiBaseUnit
+            {{
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            }} = {_unitEnumName}.{_siBaseUnit.SingularName};
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref=""{_unitEnumName}""/>.
@@ -379,6 +392,15 @@ namespace UnitsNet
         }}
 
         /// <summary>
+        ///     The SI base unit of {_quantity.Name}, which is {_quantity.SiBaseUnit}.
+        /// </summary>
+        public static {_unitEnumName} SiBaseUnit
+        {{
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => {_unitEnumName}.{_quantity.SiBaseUnit};
+        }}
+
+        /// <summary>
         ///     All units of measurement for the {_quantity.Name} quantity.
         /// </summary>
         public static IReadOnlyCollection<{_unitEnumName}> Units
@@ -512,9 +534,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref=""IQuantity{{{_quantity.Name},{_unitEnumName}}}.AsBaseValue""/>
         /// <returns><see cref=""{_unitEnumName}.{_quantity.BaseUnit}""/></returns>
+        [Obsolete(""Yields unpredictable results with non bare SI based units"")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref=""IQuantity{{{_quantity.Name},{_unitEnumName}}}.AsBaseQuantity""/>
+        /// <returns><see cref=""{_unitEnumName}.{_quantity.SiBaseUnit}""/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public {_quantity.Name} AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref=""IQuantity{{{_quantity.Name},{_unitEnumName}}}.AsBaseValue""/>
+        /// <returns><see cref=""{_unitEnumName}.{_quantity.SiBaseUnit}""/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 ");
             foreach (Unit unit in _quantity.Units)
             {
@@ -578,8 +613,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of {_quantity.BaseUnit}.
         /// </summary>
-        public {_quantity.Name} {_quantity.Units.First(u => u.SingularName == _quantity.BaseUnit).PluralName}To{_quantity.Name}()
+        public {_quantity.Name} {_quantity.Units.First(u => u.SingularName == _quantity.BaseUnit).PluralName}ToBase{_quantity.Name}()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of {_quantity.SiBaseUnit}.
+        /// </summary>
+        public {_quantity.Name} {_quantity.Units.First(u => u.SingularName == _quantity.SiBaseUnit).PluralName}ToSiBase{_quantity.Name}()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 ");
 
             foreach (Unit unit in _quantity.Units)

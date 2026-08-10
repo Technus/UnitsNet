@@ -1,11 +1,11 @@
-AmpereHours=A-h,Ah
+AmpereHours=Ah,A-h
 Coulombs=C
-KiloampereHours=kA-h,kAh
+KiloampereHours=kAh,kA-h
 Kilocoulombs=kC
-MegaampereHours=MA-h,MAh
+MegaampereHours=MAh,MA-h
 Megacoulombs=MC
 Microcoulombs=µC
-MilliampereHours=mA-h,mAh
+MilliampereHours=mAh,mA-h
 Millicoulombs=mC
 Nanocoulombs=nC
 Picocoulombs=pC

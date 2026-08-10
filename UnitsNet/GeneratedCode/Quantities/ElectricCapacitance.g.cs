@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricCapacitanceInfo : QuantityInfo<ElectricCapacitance, ElectricCapacitanceUnit>
         {
             /// <inheritdoc />
-            public ElectricCapacitanceInfo(string name, ElectricCapacitanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCapacitanceUnit>> unitMappings, ElectricCapacitance zero, BaseDimensions baseDimensions,
+            public ElectricCapacitanceInfo(string name, ElectricCapacitanceUnit baseUnit, ElectricCapacitanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCapacitanceUnit>> unitMappings, ElectricCapacitance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricCapacitance, ElectricCapacitanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricCapacitanceInfo(string name, ElectricCapacitanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCapacitanceUnit>> unitMappings, ElectricCapacitance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricCapacitance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCapacitance", typeof(ElectricCapacitance).Assembly))
+            public ElectricCapacitanceInfo(string name, ElectricCapacitanceUnit baseUnit, ElectricCapacitanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCapacitanceUnit>> unitMappings, ElectricCapacitance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricCapacitance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCapacitance", typeof(ElectricCapacitance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricCapacitanceInfo"/> class with the default settings.</returns>
             public static ElectricCapacitanceInfo CreateDefault()
-                => new(nameof(ElectricCapacitance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCapacitance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricCapacitanceInfo"/> class with the default settings for the ElectricCapacitance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricCapacitanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricCapacitanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricCapacitanceUnit>>, IEnumerable<IUnitDefinition<ElectricCapacitanceUnit>>> customizeUnits)
-                => new(nameof(ElectricCapacitance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCapacitance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricCapacitance"/> is T^4L^-2M^-1I^2.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricCapacitance is Farad. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricCapacitanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricCapacitanceUnit.Farad;
+
+            /// <summary>
+            ///     The default base unit of ElectricCapacitance is Farad.
+            /// </summary>
+            public static ElectricCapacitanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -208,6 +217,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricCapacitance, which is Farad.
+        /// </summary>
+        public static ElectricCapacitanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricCapacitanceUnit.Farad;
         }
 
         /// <summary>
@@ -306,9 +324,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricCapacitance,ElectricCapacitanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricCapacitanceUnit.Farad"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCapacitance,ElectricCapacitanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCapacitanceUnit.Farad"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricCapacitance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCapacitance,ElectricCapacitanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCapacitanceUnit.Farad"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCapacitanceUnit.Farad"/>
@@ -403,8 +434,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Farad.
         /// </summary>
-        public ElectricCapacitance FaradsToElectricCapacitance()
+        public ElectricCapacitance FaradsToBaseElectricCapacitance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Farad.
+        /// </summary>
+        public ElectricCapacitance FaradsToSiBaseElectricCapacitance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCapacitance"/> from <see cref="ElectricCapacitanceUnit.Farad"/>.

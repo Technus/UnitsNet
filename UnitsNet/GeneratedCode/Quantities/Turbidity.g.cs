@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class TurbidityInfo : QuantityInfo<Turbidity, TurbidityUnit>
         {
             /// <inheritdoc />
-            public TurbidityInfo(string name, TurbidityUnit baseUnit, IEnumerable<IUnitDefinition<TurbidityUnit>> unitMappings, Turbidity zero, BaseDimensions baseDimensions,
+            public TurbidityInfo(string name, TurbidityUnit baseUnit, TurbidityUnit siBaseUnit, IEnumerable<IUnitDefinition<TurbidityUnit>> unitMappings, Turbidity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Turbidity, TurbidityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public TurbidityInfo(string name, TurbidityUnit baseUnit, IEnumerable<IUnitDefinition<TurbidityUnit>> unitMappings, Turbidity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Turbidity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Turbidity", typeof(Turbidity).Assembly))
+            public TurbidityInfo(string name, TurbidityUnit baseUnit, TurbidityUnit siBaseUnit, IEnumerable<IUnitDefinition<TurbidityUnit>> unitMappings, Turbidity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Turbidity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Turbidity", typeof(Turbidity).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TurbidityInfo"/> class with the default settings.</returns>
             public static TurbidityInfo CreateDefault()
-                => new(nameof(Turbidity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Turbidity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TurbidityInfo"/> class with the default settings for the Turbidity quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TurbidityInfo"/> class with the default settings.
             /// </returns>
             public static TurbidityInfo CreateDefault(Func<IEnumerable<UnitDefinition<TurbidityUnit>>, IEnumerable<IUnitDefinition<TurbidityUnit>>> customizeUnits)
-                => new(nameof(Turbidity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Turbidity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Turbidity"/> is .
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Turbidity is NTU. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static TurbidityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TurbidityUnit.NTU;
+
+            /// <summary>
+            ///     The default base unit of Turbidity is NTU.
+            /// </summary>
+            public static TurbidityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -175,6 +184,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Turbidity, which is NTU.
+        /// </summary>
+        public static TurbidityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => TurbidityUnit.NTU;
         }
 
         /// <summary>
@@ -273,9 +291,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Turbidity,TurbidityUnit}.AsBaseValue"/>
         /// <returns><see cref="TurbidityUnit.NTU"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Turbidity,TurbidityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TurbidityUnit.NTU"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Turbidity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Turbidity,TurbidityUnit}.AsBaseValue"/>
+        /// <returns><see cref="TurbidityUnit.NTU"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TurbidityUnit.NTU"/>
@@ -316,8 +347,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of NTU.
         /// </summary>
-        public Turbidity NTUToTurbidity()
+        public Turbidity NTUToBaseTurbidity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of NTU.
+        /// </summary>
+        public Turbidity NTUToSiBaseTurbidity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Turbidity"/> from <see cref="TurbidityUnit.NTU"/>.

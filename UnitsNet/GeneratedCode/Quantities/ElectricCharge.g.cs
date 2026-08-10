@@ -78,15 +78,15 @@ namespace UnitsNet
         public sealed class ElectricChargeInfo : QuantityInfo<ElectricCharge, ElectricChargeUnit>
         {
             /// <inheritdoc />
-            public ElectricChargeInfo(string name, ElectricChargeUnit baseUnit, IEnumerable<IUnitDefinition<ElectricChargeUnit>> unitMappings, ElectricCharge zero, BaseDimensions baseDimensions,
+            public ElectricChargeInfo(string name, ElectricChargeUnit baseUnit, ElectricChargeUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricChargeUnit>> unitMappings, ElectricCharge zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricCharge, ElectricChargeUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricChargeInfo(string name, ElectricChargeUnit baseUnit, IEnumerable<IUnitDefinition<ElectricChargeUnit>> unitMappings, ElectricCharge zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricCharge.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCharge", typeof(ElectricCharge).Assembly))
+            public ElectricChargeInfo(string name, ElectricChargeUnit baseUnit, ElectricChargeUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricChargeUnit>> unitMappings, ElectricCharge zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricCharge.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCharge", typeof(ElectricCharge).Assembly))
             {
             }
 
@@ -95,7 +95,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricChargeInfo"/> class with the default settings.</returns>
             public static ElectricChargeInfo CreateDefault()
-                => new(nameof(ElectricCharge), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCharge), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricChargeInfo"/> class with the default settings for the ElectricCharge quantity and a callback for customizing the default unit mappings.
@@ -107,7 +107,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricChargeInfo"/> class with the default settings.
             /// </returns>
             public static ElectricChargeInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricChargeUnit>>, IEnumerable<IUnitDefinition<ElectricChargeUnit>>> customizeUnits)
-                => new(nameof(ElectricCharge), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCharge), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricCharge"/> is TI.
@@ -122,6 +122,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricCharge is Coulomb. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricChargeUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricChargeUnit.Coulomb;
+
+            /// <summary>
+            ///     The default base unit of ElectricCharge is Coulomb.
+            /// </summary>
+            public static ElectricChargeUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -231,6 +240,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricCharge, which is Coulomb.
+        /// </summary>
+        public static ElectricChargeUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricChargeUnit.Coulomb;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricCharge quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricChargeUnit> Units
@@ -326,9 +344,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricCharge,ElectricChargeUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricChargeUnit.Coulomb"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCharge,ElectricChargeUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricChargeUnit.Coulomb"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricCharge AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCharge,ElectricChargeUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricChargeUnit.Coulomb"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricChargeUnit.AmpereHour"/>
@@ -459,8 +490,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Coulomb.
         /// </summary>
-        public ElectricCharge CoulombsToElectricCharge()
+        public ElectricCharge CoulombsToBaseElectricCharge()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Coulomb.
+        /// </summary>
+        public ElectricCharge CoulombsToSiBaseElectricCharge()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCharge"/> from <see cref="ElectricChargeUnit.AmpereHour"/>.

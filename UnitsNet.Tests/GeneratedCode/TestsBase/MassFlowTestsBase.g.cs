@@ -256,7 +256,7 @@ namespace UnitsNet.Tests
         [Fact]
         public void MassFlowInfo_CreateWithCustomUnitInfos()
         {
-            MassFlowUnit[] expectedUnits = [MassFlowUnit.GramPerSecond];
+            MassFlowUnit[] expectedUnits = [MassFlowUnit.GramPerSecond, MassFlowUnit.KilogramPerSecond];
 
             MassFlow.MassFlowInfo quantityInfo = MassFlow.MassFlowInfo.CreateDefault(mappings => mappings.SelectUnits(expectedUnits));
 

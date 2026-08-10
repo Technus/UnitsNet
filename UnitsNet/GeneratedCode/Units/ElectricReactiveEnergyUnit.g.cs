@@ -26,8 +26,11 @@ namespace UnitsNet.Units
     public enum ElectricReactiveEnergyUnit
     {
         KilovoltampereReactiveHour = 10,
+        KilovoltampereReactiveSecond = 5,
         MegavoltampereReactiveHour = 4,
+        MegavoltampereReactiveSecond = 8,
         VoltampereReactiveHour = 7,
+        VoltampereReactiveSecond = 13,
     }
 
     #pragma warning restore 1591

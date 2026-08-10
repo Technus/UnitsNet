@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class ElectricSusceptanceInfo : QuantityInfo<ElectricSusceptance, ElectricSusceptanceUnit>
         {
             /// <inheritdoc />
-            public ElectricSusceptanceInfo(string name, ElectricSusceptanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricSusceptanceUnit>> unitMappings, ElectricSusceptance zero, BaseDimensions baseDimensions,
+            public ElectricSusceptanceInfo(string name, ElectricSusceptanceUnit baseUnit, ElectricSusceptanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricSusceptanceUnit>> unitMappings, ElectricSusceptance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricSusceptance, ElectricSusceptanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricSusceptanceInfo(string name, ElectricSusceptanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricSusceptanceUnit>> unitMappings, ElectricSusceptance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricSusceptance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricSusceptance", typeof(ElectricSusceptance).Assembly))
+            public ElectricSusceptanceInfo(string name, ElectricSusceptanceUnit baseUnit, ElectricSusceptanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricSusceptanceUnit>> unitMappings, ElectricSusceptance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricSusceptance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricSusceptance", typeof(ElectricSusceptance).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricSusceptanceInfo"/> class with the default settings.</returns>
             public static ElectricSusceptanceInfo CreateDefault()
-                => new(nameof(ElectricSusceptance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricSusceptance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricSusceptanceInfo"/> class with the default settings for the ElectricSusceptance quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricSusceptanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricSusceptanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricSusceptanceUnit>>, IEnumerable<IUnitDefinition<ElectricSusceptanceUnit>>> customizeUnits)
-                => new(nameof(ElectricSusceptance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricSusceptance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricSusceptance"/> is T^3L^-2M^-1I^2.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricSusceptance is Siemens. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricSusceptanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricSusceptanceUnit.Siemens;
+
+            /// <summary>
+            ///     The default base unit of ElectricSusceptance is Siemens.
+            /// </summary>
+            public static ElectricSusceptanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -237,6 +246,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricSusceptance, which is Siemens.
+        /// </summary>
+        public static ElectricSusceptanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricSusceptanceUnit.Siemens;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricSusceptance quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricSusceptanceUnit> Units
@@ -332,9 +350,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricSusceptance,ElectricSusceptanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricSusceptanceUnit.Siemens"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricSusceptance,ElectricSusceptanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricSusceptanceUnit.Siemens"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricSusceptance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricSusceptance,ElectricSusceptanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricSusceptanceUnit.Siemens"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricSusceptanceUnit.Gigamho"/>
@@ -510,8 +541,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
-        public ElectricSusceptance SiemensToElectricSusceptance()
+        public ElectricSusceptance SiemensToBaseElectricSusceptance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        public ElectricSusceptance SiemensToSiBaseElectricSusceptance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricSusceptance"/> from <see cref="ElectricSusceptanceUnit.Gigamho"/>.

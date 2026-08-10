@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ThermalInsulanceInfo : QuantityInfo<ThermalInsulance, ThermalInsulanceUnit>
         {
             /// <inheritdoc />
-            public ThermalInsulanceInfo(string name, ThermalInsulanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalInsulanceUnit>> unitMappings, ThermalInsulance zero, BaseDimensions baseDimensions,
+            public ThermalInsulanceInfo(string name, ThermalInsulanceUnit baseUnit, ThermalInsulanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalInsulanceUnit>> unitMappings, ThermalInsulance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ThermalInsulance, ThermalInsulanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ThermalInsulanceInfo(string name, ThermalInsulanceUnit baseUnit, IEnumerable<IUnitDefinition<ThermalInsulanceUnit>> unitMappings, ThermalInsulance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ThermalInsulance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalInsulance", typeof(ThermalInsulance).Assembly))
+            public ThermalInsulanceInfo(string name, ThermalInsulanceUnit baseUnit, ThermalInsulanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ThermalInsulanceUnit>> unitMappings, ThermalInsulance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ThermalInsulance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ThermalInsulance", typeof(ThermalInsulance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ThermalInsulanceInfo"/> class with the default settings.</returns>
             public static ThermalInsulanceInfo CreateDefault()
-                => new(nameof(ThermalInsulance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalInsulance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ThermalInsulanceInfo"/> class with the default settings for the ThermalInsulance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ThermalInsulanceInfo"/> class with the default settings.
             /// </returns>
             public static ThermalInsulanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ThermalInsulanceUnit>>, IEnumerable<IUnitDefinition<ThermalInsulanceUnit>>> customizeUnits)
-                => new(nameof(ThermalInsulance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ThermalInsulance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ThermalInsulance"/> is T^3M^-1Θ.
@@ -118,6 +118,15 @@ namespace UnitsNet
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
             } = ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt;
+
+            /// <summary>
+            ///     The default base unit of ThermalInsulance is SquareMeterKelvinPerWatt.
+            /// </summary>
+            public static ThermalInsulanceUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ThermalInsulanceUnit.SquareMeterKelvinPerWatt;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="ThermalInsulanceUnit"/>.
@@ -208,6 +217,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ThermalInsulance, which is SquareMeterKelvinPerWatt.
+        /// </summary>
+        public static ThermalInsulanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ThermalInsulanceUnit.SquareMeterKelvinPerWatt;
         }
 
         /// <summary>
@@ -306,9 +324,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ThermalInsulance,ThermalInsulanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalInsulance,ThermalInsulanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ThermalInsulanceUnit.SquareMeterKelvinPerWatt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ThermalInsulance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ThermalInsulance,ThermalInsulanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ThermalInsulanceUnit.SquareMeterKelvinPerWatt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu"/>
@@ -403,8 +434,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterKelvinPerKilowatt.
         /// </summary>
-        public ThermalInsulance SquareMeterKelvinsPerKilowattToThermalInsulance()
+        public ThermalInsulance SquareMeterKelvinsPerKilowattToBaseThermalInsulance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterKelvinPerWatt.
+        /// </summary>
+        public ThermalInsulance SquareMeterKelvinsPerWattToSiBaseThermalInsulance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ThermalInsulance"/> from <see cref="ThermalInsulanceUnit.HourSquareFeetDegreeFahrenheitPerBtu"/>.

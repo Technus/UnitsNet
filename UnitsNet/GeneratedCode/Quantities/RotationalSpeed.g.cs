@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class RotationalSpeedInfo : QuantityInfo<RotationalSpeed, RotationalSpeedUnit>
         {
             /// <inheritdoc />
-            public RotationalSpeedInfo(string name, RotationalSpeedUnit baseUnit, IEnumerable<IUnitDefinition<RotationalSpeedUnit>> unitMappings, RotationalSpeed zero, BaseDimensions baseDimensions,
+            public RotationalSpeedInfo(string name, RotationalSpeedUnit baseUnit, RotationalSpeedUnit siBaseUnit, IEnumerable<IUnitDefinition<RotationalSpeedUnit>> unitMappings, RotationalSpeed zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<RotationalSpeed, RotationalSpeedUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public RotationalSpeedInfo(string name, RotationalSpeedUnit baseUnit, IEnumerable<IUnitDefinition<RotationalSpeedUnit>> unitMappings, RotationalSpeed zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, RotationalSpeed.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RotationalSpeed", typeof(RotationalSpeed).Assembly))
+            public RotationalSpeedInfo(string name, RotationalSpeedUnit baseUnit, RotationalSpeedUnit siBaseUnit, IEnumerable<IUnitDefinition<RotationalSpeedUnit>> unitMappings, RotationalSpeed zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, RotationalSpeed.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.RotationalSpeed", typeof(RotationalSpeed).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RotationalSpeedInfo"/> class with the default settings.</returns>
             public static RotationalSpeedInfo CreateDefault()
-                => new(nameof(RotationalSpeed), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RotationalSpeed), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RotationalSpeedInfo"/> class with the default settings for the RotationalSpeed quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RotationalSpeedInfo"/> class with the default settings.
             /// </returns>
             public static RotationalSpeedInfo CreateDefault(Func<IEnumerable<UnitDefinition<RotationalSpeedUnit>>, IEnumerable<IUnitDefinition<RotationalSpeedUnit>>> customizeUnits)
-                => new(nameof(RotationalSpeed), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(RotationalSpeed), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="RotationalSpeed"/> is T^-1.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of RotationalSpeed is RadianPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static RotationalSpeedUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RotationalSpeedUnit.RadianPerSecond;
+
+            /// <summary>
+            ///     The default base unit of RotationalSpeed is RadianPerSecond.
+            /// </summary>
+            public static RotationalSpeedUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -229,6 +238,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of RotationalSpeed, which is RadianPerSecond.
+        /// </summary>
+        public static RotationalSpeedUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => RotationalSpeedUnit.RadianPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the RotationalSpeed quantity.
         /// </summary>
         public static IReadOnlyCollection<RotationalSpeedUnit> Units
@@ -324,9 +342,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{RotationalSpeed,RotationalSpeedUnit}.AsBaseValue"/>
         /// <returns><see cref="RotationalSpeedUnit.RadianPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RotationalSpeed,RotationalSpeedUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RotationalSpeedUnit.RadianPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RotationalSpeed AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{RotationalSpeed,RotationalSpeedUnit}.AsBaseValue"/>
+        /// <returns><see cref="RotationalSpeedUnit.RadianPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RotationalSpeedUnit.CentiradianPerSecond"/>
@@ -475,8 +506,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecond.
         /// </summary>
-        public RotationalSpeed RadiansPerSecondToRotationalSpeed()
+        public RotationalSpeed RadiansPerSecondToBaseRotationalSpeed()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of RadianPerSecond.
+        /// </summary>
+        public RotationalSpeed RadiansPerSecondToSiBaseRotationalSpeed()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="RotationalSpeed"/> from <see cref="RotationalSpeedUnit.CentiradianPerSecond"/>.

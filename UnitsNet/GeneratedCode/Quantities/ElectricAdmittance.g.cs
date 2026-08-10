@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricAdmittanceInfo : QuantityInfo<ElectricAdmittance, ElectricAdmittanceUnit>
         {
             /// <inheritdoc />
-            public ElectricAdmittanceInfo(string name, ElectricAdmittanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricAdmittanceUnit>> unitMappings, ElectricAdmittance zero, BaseDimensions baseDimensions,
+            public ElectricAdmittanceInfo(string name, ElectricAdmittanceUnit baseUnit, ElectricAdmittanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricAdmittanceUnit>> unitMappings, ElectricAdmittance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricAdmittance, ElectricAdmittanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricAdmittanceInfo(string name, ElectricAdmittanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricAdmittanceUnit>> unitMappings, ElectricAdmittance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricAdmittance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricAdmittance", typeof(ElectricAdmittance).Assembly))
+            public ElectricAdmittanceInfo(string name, ElectricAdmittanceUnit baseUnit, ElectricAdmittanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricAdmittanceUnit>> unitMappings, ElectricAdmittance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricAdmittance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricAdmittance", typeof(ElectricAdmittance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricAdmittanceInfo"/> class with the default settings.</returns>
             public static ElectricAdmittanceInfo CreateDefault()
-                => new(nameof(ElectricAdmittance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricAdmittance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricAdmittanceInfo"/> class with the default settings for the ElectricAdmittance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricAdmittanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricAdmittanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricAdmittanceUnit>>, IEnumerable<IUnitDefinition<ElectricAdmittanceUnit>>> customizeUnits)
-                => new(nameof(ElectricAdmittance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricAdmittance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricAdmittance"/> is T^3L^-2M^-1I^2.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricAdmittance is Siemens. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricAdmittanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricAdmittanceUnit.Siemens;
+
+            /// <summary>
+            ///     The default base unit of ElectricAdmittance is Siemens.
+            /// </summary>
+            public static ElectricAdmittanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -238,6 +247,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricAdmittance, which is Siemens.
+        /// </summary>
+        public static ElectricAdmittanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricAdmittanceUnit.Siemens;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricAdmittance quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricAdmittanceUnit> Units
@@ -333,9 +351,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricAdmittance,ElectricAdmittanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricAdmittanceUnit.Siemens"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricAdmittance,ElectricAdmittanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricAdmittanceUnit.Siemens"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricAdmittance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricAdmittance,ElectricAdmittanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricAdmittanceUnit.Siemens"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricAdmittanceUnit.Gigamho"/>
@@ -511,8 +542,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
-        public ElectricAdmittance SiemensToElectricAdmittance()
+        public ElectricAdmittance SiemensToBaseElectricAdmittance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Siemens.
+        /// </summary>
+        public ElectricAdmittance SiemensToSiBaseElectricAdmittance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricAdmittance"/> from <see cref="ElectricAdmittanceUnit.Gigamho"/>.

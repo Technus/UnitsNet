@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class MolarEnergyInfo : QuantityInfo<MolarEnergy, MolarEnergyUnit>
         {
             /// <inheritdoc />
-            public MolarEnergyInfo(string name, MolarEnergyUnit baseUnit, IEnumerable<IUnitDefinition<MolarEnergyUnit>> unitMappings, MolarEnergy zero, BaseDimensions baseDimensions,
+            public MolarEnergyInfo(string name, MolarEnergyUnit baseUnit, MolarEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarEnergyUnit>> unitMappings, MolarEnergy zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MolarEnergy, MolarEnergyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MolarEnergyInfo(string name, MolarEnergyUnit baseUnit, IEnumerable<IUnitDefinition<MolarEnergyUnit>> unitMappings, MolarEnergy zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MolarEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MolarEnergy", typeof(MolarEnergy).Assembly))
+            public MolarEnergyInfo(string name, MolarEnergyUnit baseUnit, MolarEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarEnergyUnit>> unitMappings, MolarEnergy zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MolarEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MolarEnergy", typeof(MolarEnergy).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MolarEnergyInfo"/> class with the default settings.</returns>
             public static MolarEnergyInfo CreateDefault()
-                => new(nameof(MolarEnergy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MolarEnergy), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MolarEnergyInfo"/> class with the default settings for the MolarEnergy quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MolarEnergyInfo"/> class with the default settings.
             /// </returns>
             public static MolarEnergyInfo CreateDefault(Func<IEnumerable<UnitDefinition<MolarEnergyUnit>>, IEnumerable<IUnitDefinition<MolarEnergyUnit>>> customizeUnits)
-                => new(nameof(MolarEnergy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MolarEnergy), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MolarEnergy"/> is T^-2L^2MN^-1.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of MolarEnergy is JoulePerMole. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MolarEnergyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MolarEnergyUnit.JoulePerMole;
+
+            /// <summary>
+            ///     The default base unit of MolarEnergy is JoulePerMole.
+            /// </summary>
+            public static MolarEnergyUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -193,6 +202,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of MolarEnergy, which is JoulePerMole.
+        /// </summary>
+        public static MolarEnergyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MolarEnergyUnit.JoulePerMole;
         }
 
         /// <summary>
@@ -291,9 +309,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MolarEnergy,MolarEnergyUnit}.AsBaseValue"/>
         /// <returns><see cref="MolarEnergyUnit.JoulePerMole"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MolarEnergy,MolarEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarEnergyUnit.JoulePerMole"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MolarEnergy AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MolarEnergy,MolarEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarEnergyUnit.JoulePerMole"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarEnergyUnit.JoulePerMole"/>
@@ -352,8 +383,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMole.
         /// </summary>
-        public MolarEnergy JoulesPerMoleToMolarEnergy()
+        public MolarEnergy JoulesPerMoleToBaseMolarEnergy()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerMole.
+        /// </summary>
+        public MolarEnergy JoulesPerMoleToSiBaseMolarEnergy()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MolarEnergy"/> from <see cref="MolarEnergyUnit.JoulePerMole"/>.

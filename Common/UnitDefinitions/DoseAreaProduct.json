@@ -1,6 +1,7 @@
 {
   "Name": "DoseAreaProduct",
   "BaseUnit": "GraySquareMeter",
+  "SiBaseUnit": "GraySquareMeter",
   "XmlDocSummary": "It is defined as the absorbed dose multiplied by the area irradiated.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Dose_area_product",
   "BaseDimensions": {
@@ -17,24 +18,15 @@
       },
       "FromUnitToBaseFunc": "{x}",
       "FromBaseToUnitFunc": "{x}",
-      "Prefixes": [
-        "Micro",
-        "Milli",
-        "Centi",
-        "Deci"
-      ],
+      "Prefixes": [ "Micro", "Milli", "Centi", "Deci" ],
       "Localization": [
         {
           "Culture": "en-US",
-          "Abbreviations": [
-            "Gy·m²"
-          ]
+          "Abbreviations": [ "Gy·m²" ]
         },
         {
           "Culture": "ru-RU",
-          "Abbreviations": [
-            "Гр·м²"
-          ]
+          "Abbreviations": [ "Гр·м²" ]
         }
       ]
     },
@@ -43,24 +35,15 @@
       "PluralName": "GraySquareDecimeters",
       "FromUnitToBaseFunc": "{x} / 100",
       "FromBaseToUnitFunc": "{x} * 100",
-      "Prefixes": [
-        "Micro",
-        "Milli",
-        "Centi",
-        "Deci"
-      ],
+      "Prefixes": [ "Micro", "Milli", "Centi", "Deci" ],
       "Localization": [
         {
           "Culture": "en-US",
-          "Abbreviations": [
-            "Gy·dm²"
-          ]
+          "Abbreviations": [ "Gy·dm²" ]
         },
         {
           "Culture": "ru-RU",
-          "Abbreviations": [
-            "Гр·дм²"
-          ]
+          "Abbreviations": [ "Гр·дм²" ]
         }
       ]
     },
@@ -69,24 +52,15 @@
       "PluralName": "GraySquareCentimeters",
       "FromUnitToBaseFunc": "{x} / 10000",
       "FromBaseToUnitFunc": "{x} * 10000",
-      "Prefixes": [
-        "Micro",
-        "Milli",
-        "Centi",
-        "Deci"
-      ],
+      "Prefixes": [ "Micro", "Milli", "Centi", "Deci" ],
       "Localization": [
         {
           "Culture": "en-US",
-          "Abbreviations": [
-            "Gy·cm²"
-          ]
+          "Abbreviations": [ "Gy·cm²" ]
         },
         {
           "Culture": "ru-RU",
-          "Abbreviations": [
-            "Гр·см²"
-          ]
+          "Abbreviations": [ "Гр·см²" ]
         }
       ]
     },
@@ -95,24 +69,15 @@
       "PluralName": "GraySquareMillimeters",
       "FromUnitToBaseFunc": "{x} / 1000000",
       "FromBaseToUnitFunc": "{x} * 1000000",
-      "Prefixes": [
-        "Micro",
-        "Milli",
-        "Centi",
-        "Deci"
-      ],
+      "Prefixes": [ "Micro", "Milli", "Centi", "Deci" ],
       "Localization": [
         {
           "Culture": "en-US",
-          "Abbreviations": [
-            "Gy·mm²"
-          ]
+          "Abbreviations": [ "Gy·mm²" ]
         },
         {
           "Culture": "ru-RU",
-          "Abbreviations": [
-            "Гр·мм²"
-          ]
+          "Abbreviations": [ "Гр·мм²" ]
         }
       ]
     },
@@ -121,24 +86,15 @@
       "PluralName": "GraySquareMicrometers",
       "FromUnitToBaseFunc": "{x} / 1000000000000",
       "FromBaseToUnitFunc": "{x} * 1000000000000",
-      "Prefixes": [
-        "Micro",
-        "Milli",
-        "Centi",
-        "Deci"
-      ],
+      "Prefixes": [ "Micro", "Milli", "Centi", "Deci" ],
       "Localization": [
         {
           "Culture": "en-US",
-          "Abbreviations": [
-            "Gy·μm²"
-          ]
+          "Abbreviations": [ "Gy·μm²" ]
         },
         {
           "Culture": "ru-RU",
-          "Abbreviations": [
-            "Гр·мкм²"
-          ]
+          "Abbreviations": [ "Гр·мкм²" ]
         }
       ]
     }

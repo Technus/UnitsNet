@@ -1,6 +1,7 @@
 {
   "Name": "ElectricSusceptance",
   "BaseUnit": "Siemens",
+  "SiBaseUnit": "Siemens",
   "XmlDocSummary": "Electrical susceptance is the imaginary part of admittance, where the real part is conductance.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Electrical_susceptance",
   "BaseDimensions": {

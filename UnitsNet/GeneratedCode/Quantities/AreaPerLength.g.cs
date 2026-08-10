@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class AreaPerLengthInfo : QuantityInfo<AreaPerLength, AreaPerLengthUnit>
         {
             /// <inheritdoc />
-            public AreaPerLengthInfo(string name, AreaPerLengthUnit baseUnit, IEnumerable<IUnitDefinition<AreaPerLengthUnit>> unitMappings, AreaPerLength zero, BaseDimensions baseDimensions,
+            public AreaPerLengthInfo(string name, AreaPerLengthUnit baseUnit, AreaPerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaPerLengthUnit>> unitMappings, AreaPerLength zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<AreaPerLength, AreaPerLengthUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AreaPerLengthInfo(string name, AreaPerLengthUnit baseUnit, IEnumerable<IUnitDefinition<AreaPerLengthUnit>> unitMappings, AreaPerLength zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, AreaPerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AreaPerLength", typeof(AreaPerLength).Assembly))
+            public AreaPerLengthInfo(string name, AreaPerLengthUnit baseUnit, AreaPerLengthUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaPerLengthUnit>> unitMappings, AreaPerLength zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, AreaPerLength.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.AreaPerLength", typeof(AreaPerLength).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AreaPerLengthInfo"/> class with the default settings.</returns>
             public static AreaPerLengthInfo CreateDefault()
-                => new(nameof(AreaPerLength), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AreaPerLength), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AreaPerLengthInfo"/> class with the default settings for the AreaPerLength quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AreaPerLengthInfo"/> class with the default settings.
             /// </returns>
             public static AreaPerLengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<AreaPerLengthUnit>>, IEnumerable<IUnitDefinition<AreaPerLengthUnit>>> customizeUnits)
-                => new(nameof(AreaPerLength), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(AreaPerLength), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="AreaPerLength"/> is L.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of AreaPerLength is SquareMeterPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AreaPerLengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AreaPerLengthUnit.SquareMeterPerMeter;
+
+            /// <summary>
+            ///     The default base unit of AreaPerLength is SquareMeterPerMeter.
+            /// </summary>
+            public static AreaPerLengthUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -202,6 +211,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of AreaPerLength, which is SquareMeterPerMeter.
+        /// </summary>
+        public static AreaPerLengthUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AreaPerLengthUnit.SquareMeterPerMeter;
         }
 
         /// <summary>
@@ -300,9 +318,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{AreaPerLength,AreaPerLengthUnit}.AsBaseValue"/>
         /// <returns><see cref="AreaPerLengthUnit.SquareMeterPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AreaPerLength,AreaPerLengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaPerLengthUnit.SquareMeterPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AreaPerLength AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{AreaPerLength,AreaPerLengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaPerLengthUnit.SquareMeterPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaPerLengthUnit.SquareCentimeterPerMeter"/>
@@ -388,8 +419,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerMeter.
         /// </summary>
-        public AreaPerLength SquareMetersPerMeterToAreaPerLength()
+        public AreaPerLength SquareMetersPerMeterToBaseAreaPerLength()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterPerMeter.
+        /// </summary>
+        public AreaPerLength SquareMetersPerMeterToSiBaseAreaPerLength()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="AreaPerLength"/> from <see cref="AreaPerLengthUnit.SquareCentimeterPerMeter"/>.

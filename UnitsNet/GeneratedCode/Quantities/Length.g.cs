@@ -90,15 +90,15 @@ namespace UnitsNet
         public sealed class LengthInfo : QuantityInfo<Length, LengthUnit>
         {
             /// <inheritdoc />
-            public LengthInfo(string name, LengthUnit baseUnit, IEnumerable<IUnitDefinition<LengthUnit>> unitMappings, Length zero, BaseDimensions baseDimensions,
+            public LengthInfo(string name, LengthUnit baseUnit, LengthUnit siBaseUnit, IEnumerable<IUnitDefinition<LengthUnit>> unitMappings, Length zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Length, LengthUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LengthInfo(string name, LengthUnit baseUnit, IEnumerable<IUnitDefinition<LengthUnit>> unitMappings, Length zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Length.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Length", typeof(Length).Assembly))
+            public LengthInfo(string name, LengthUnit baseUnit, LengthUnit siBaseUnit, IEnumerable<IUnitDefinition<LengthUnit>> unitMappings, Length zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Length.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Length", typeof(Length).Assembly))
             {
             }
 
@@ -107,7 +107,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LengthInfo"/> class with the default settings.</returns>
             public static LengthInfo CreateDefault()
-                => new(nameof(Length), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Length), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LengthInfo"/> class with the default settings for the Length quantity and a callback for customizing the default unit mappings.
@@ -119,7 +119,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LengthInfo"/> class with the default settings.
             /// </returns>
             public static LengthInfo CreateDefault(Func<IEnumerable<UnitDefinition<LengthUnit>>, IEnumerable<IUnitDefinition<LengthUnit>>> customizeUnits)
-                => new(nameof(Length), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Length), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Length"/> is L.
@@ -134,6 +134,15 @@ namespace UnitsNet
             ///     The default base unit of Length is Meter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LengthUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LengthUnit.Meter;
+
+            /// <summary>
+            ///     The default base unit of Length is Meter.
+            /// </summary>
+            public static LengthUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -336,6 +345,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Length, which is Meter.
+        /// </summary>
+        public static LengthUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LengthUnit.Meter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Length quantity.
         /// </summary>
         public static IReadOnlyCollection<LengthUnit> Units
@@ -431,9 +449,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Length,LengthUnit}.AsBaseValue"/>
         /// <returns><see cref="LengthUnit.Meter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Length,LengthUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LengthUnit.Meter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Length AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Length,LengthUnit}.AsBaseValue"/>
+        /// <returns><see cref="LengthUnit.Meter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LengthUnit.Angstrom"/>
@@ -843,8 +874,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Meter.
         /// </summary>
-        public Length MetersToLength()
+        public Length MetersToBaseLength()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Meter.
+        /// </summary>
+        public Length MetersToSiBaseLength()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Length"/> from <see cref="LengthUnit.Angstrom"/>.

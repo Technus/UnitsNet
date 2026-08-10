@@ -25,7 +25,7 @@ public enum ClassOfAffineQuantityUnit
 public class ClassOfAffineQuantity(QuantityValue value, ClassOfAffineQuantityUnit unit) : IAffineQuantity<ClassOfAffineQuantity, ClassOfAffineQuantityUnit, ClassOfLinearQuantity>
 {
     public static QuantityInfo<ClassOfAffineQuantity, ClassOfAffineQuantityUnit> Info { get; } = new(
-        ClassOfAffineQuantityUnit.Some,
+        ClassOfAffineQuantityUnit.Some, ClassOfAffineQuantityUnit.Some,
         new UnitDefinition<ClassOfAffineQuantityUnit>[]
         {
             new(ClassOfAffineQuantityUnit.Some, "Some", BaseUnits.Undefined),
@@ -81,6 +81,16 @@ public class ClassOfAffineQuantity(QuantityValue value, ClassOfAffineQuantityUni
     public ClassOfAffineQuantity AsBaseQuantity()
     {
         return new ClassOfAffineQuantity(AsBaseValue(), Info.BaseUnitInfo.Value);
+    }
+
+    public QuantityValue AsSiBaseValue()
+    {
+        return this.As(Info.SiBaseUnitInfo.Value);
+    }
+
+    public ClassOfAffineQuantity AsSiBaseQuantity()
+    {
+        return new ClassOfAffineQuantity(AsSiBaseValue(), Info.SiBaseUnitInfo.Value);
     }
 
     UnitKey IQuantity.UnitKey

@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class WarpingMomentOfInertiaInfo : QuantityInfo<WarpingMomentOfInertia, WarpingMomentOfInertiaUnit>
         {
             /// <inheritdoc />
-            public WarpingMomentOfInertiaInfo(string name, WarpingMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<WarpingMomentOfInertiaUnit>> unitMappings, WarpingMomentOfInertia zero, BaseDimensions baseDimensions,
+            public WarpingMomentOfInertiaInfo(string name, WarpingMomentOfInertiaUnit baseUnit, WarpingMomentOfInertiaUnit siBaseUnit, IEnumerable<IUnitDefinition<WarpingMomentOfInertiaUnit>> unitMappings, WarpingMomentOfInertia zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<WarpingMomentOfInertia, WarpingMomentOfInertiaUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public WarpingMomentOfInertiaInfo(string name, WarpingMomentOfInertiaUnit baseUnit, IEnumerable<IUnitDefinition<WarpingMomentOfInertiaUnit>> unitMappings, WarpingMomentOfInertia zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, WarpingMomentOfInertia.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.WarpingMomentOfInertia", typeof(WarpingMomentOfInertia).Assembly))
+            public WarpingMomentOfInertiaInfo(string name, WarpingMomentOfInertiaUnit baseUnit, WarpingMomentOfInertiaUnit siBaseUnit, IEnumerable<IUnitDefinition<WarpingMomentOfInertiaUnit>> unitMappings, WarpingMomentOfInertia zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, WarpingMomentOfInertia.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.WarpingMomentOfInertia", typeof(WarpingMomentOfInertia).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="WarpingMomentOfInertiaInfo"/> class with the default settings.</returns>
             public static WarpingMomentOfInertiaInfo CreateDefault()
-                => new(nameof(WarpingMomentOfInertia), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(WarpingMomentOfInertia), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="WarpingMomentOfInertiaInfo"/> class with the default settings for the WarpingMomentOfInertia quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="WarpingMomentOfInertiaInfo"/> class with the default settings.
             /// </returns>
             public static WarpingMomentOfInertiaInfo CreateDefault(Func<IEnumerable<UnitDefinition<WarpingMomentOfInertiaUnit>>, IEnumerable<IUnitDefinition<WarpingMomentOfInertiaUnit>>> customizeUnits)
-                => new(nameof(WarpingMomentOfInertia), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(WarpingMomentOfInertia), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="WarpingMomentOfInertia"/> is L^6.
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of WarpingMomentOfInertia is MeterToTheSixth. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static WarpingMomentOfInertiaUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = WarpingMomentOfInertiaUnit.MeterToTheSixth;
+
+            /// <summary>
+            ///     The default base unit of WarpingMomentOfInertia is MeterToTheSixth.
+            /// </summary>
+            public static WarpingMomentOfInertiaUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -201,6 +210,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of WarpingMomentOfInertia, which is MeterToTheSixth.
+        /// </summary>
+        public static WarpingMomentOfInertiaUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => WarpingMomentOfInertiaUnit.MeterToTheSixth;
         }
 
         /// <summary>
@@ -299,9 +317,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{WarpingMomentOfInertia,WarpingMomentOfInertiaUnit}.AsBaseValue"/>
         /// <returns><see cref="WarpingMomentOfInertiaUnit.MeterToTheSixth"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{WarpingMomentOfInertia,WarpingMomentOfInertiaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="WarpingMomentOfInertiaUnit.MeterToTheSixth"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public WarpingMomentOfInertia AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{WarpingMomentOfInertia,WarpingMomentOfInertiaUnit}.AsBaseValue"/>
+        /// <returns><see cref="WarpingMomentOfInertiaUnit.MeterToTheSixth"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="WarpingMomentOfInertiaUnit.CentimeterToTheSixth"/>
@@ -387,8 +418,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheSixth.
         /// </summary>
-        public WarpingMomentOfInertia MetersToTheSixthToWarpingMomentOfInertia()
+        public WarpingMomentOfInertia MetersToTheSixthToBaseWarpingMomentOfInertia()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterToTheSixth.
+        /// </summary>
+        public WarpingMomentOfInertia MetersToTheSixthToSiBaseWarpingMomentOfInertia()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="WarpingMomentOfInertia"/> from <see cref="WarpingMomentOfInertiaUnit.CentimeterToTheSixth"/>.

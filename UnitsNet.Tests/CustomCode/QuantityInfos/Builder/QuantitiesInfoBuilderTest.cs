@@ -15,7 +15,7 @@ public class QuantitiesInfoBuilderTest
         var builder = new QuantitiesInfoBuilder();
 
         builder.ConfigureQuantity(() =>
-            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From));
+            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, LengthUnit.Meter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From));
 
         QuantityInfo result = builder.CreateOrDefault(Length.Info);
 
@@ -59,7 +59,7 @@ public class QuantitiesInfoBuilderTest
         var builder = new QuantitiesInfoBuilder();
         
         builder.ConfigureQuantity(() =>
-            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From));
+            new QuantityInfo<Length, LengthUnit>(LengthUnit.Centimeter, LengthUnit.Meter, Length.LengthInfo.GetDefaultMappings(), BaseDimensions.Dimensionless, Length.From));
 
         QuantityInfo<Length, LengthUnit> result = builder.CreateOrDefault(() => Length.Info);
 

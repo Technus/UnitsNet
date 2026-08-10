@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class LuminosityInfo : QuantityInfo<Luminosity, LuminosityUnit>
         {
             /// <inheritdoc />
-            public LuminosityInfo(string name, LuminosityUnit baseUnit, IEnumerable<IUnitDefinition<LuminosityUnit>> unitMappings, Luminosity zero, BaseDimensions baseDimensions,
+            public LuminosityInfo(string name, LuminosityUnit baseUnit, LuminosityUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminosityUnit>> unitMappings, Luminosity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Luminosity, LuminosityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LuminosityInfo(string name, LuminosityUnit baseUnit, IEnumerable<IUnitDefinition<LuminosityUnit>> unitMappings, Luminosity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Luminosity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Luminosity", typeof(Luminosity).Assembly))
+            public LuminosityInfo(string name, LuminosityUnit baseUnit, LuminosityUnit siBaseUnit, IEnumerable<IUnitDefinition<LuminosityUnit>> unitMappings, Luminosity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Luminosity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Luminosity", typeof(Luminosity).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LuminosityInfo"/> class with the default settings.</returns>
             public static LuminosityInfo CreateDefault()
-                => new(nameof(Luminosity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Luminosity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LuminosityInfo"/> class with the default settings for the Luminosity quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LuminosityInfo"/> class with the default settings.
             /// </returns>
             public static LuminosityInfo CreateDefault(Func<IEnumerable<UnitDefinition<LuminosityUnit>>, IEnumerable<IUnitDefinition<LuminosityUnit>>> customizeUnits)
-                => new(nameof(Luminosity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Luminosity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Luminosity"/> is T^-3L^2M.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Luminosity is Watt. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LuminosityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LuminosityUnit.Watt;
+
+            /// <summary>
+            ///     The default base unit of Luminosity is Watt.
+            /// </summary>
+            public static LuminosityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -231,6 +240,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Luminosity, which is Watt.
+        /// </summary>
+        public static LuminosityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LuminosityUnit.Watt;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Luminosity quantity.
         /// </summary>
         public static IReadOnlyCollection<LuminosityUnit> Units
@@ -326,9 +344,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Luminosity,LuminosityUnit}.AsBaseValue"/>
         /// <returns><see cref="LuminosityUnit.Watt"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Luminosity,LuminosityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LuminosityUnit.Watt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Luminosity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Luminosity,LuminosityUnit}.AsBaseValue"/>
+        /// <returns><see cref="LuminosityUnit.Watt"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LuminosityUnit.Decawatt"/>
@@ -486,8 +517,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
-        public Luminosity WattsToLuminosity()
+        public Luminosity WattsToBaseLuminosity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Watt.
+        /// </summary>
+        public Luminosity WattsToSiBaseLuminosity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Luminosity"/> from <see cref="LuminosityUnit.Decawatt"/>.

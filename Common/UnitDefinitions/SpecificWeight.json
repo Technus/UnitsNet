@@ -1,6 +1,7 @@
 {
   "Name": "SpecificWeight",
   "BaseUnit": "NewtonPerCubicMeter",
+  "SiBaseUnit": "NewtonPerCubicMeter",
   "XmlDocSummary": "The SpecificWeight, or more precisely, the volumetric weight density, of a substance is its weight per unit volume.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Specific_weight",
   "BaseDimensions": {

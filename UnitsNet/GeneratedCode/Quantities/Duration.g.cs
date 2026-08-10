@@ -89,15 +89,15 @@ namespace UnitsNet
         public sealed class DurationInfo : QuantityInfo<Duration, DurationUnit>
         {
             /// <inheritdoc />
-            public DurationInfo(string name, DurationUnit baseUnit, IEnumerable<IUnitDefinition<DurationUnit>> unitMappings, Duration zero, BaseDimensions baseDimensions,
+            public DurationInfo(string name, DurationUnit baseUnit, DurationUnit siBaseUnit, IEnumerable<IUnitDefinition<DurationUnit>> unitMappings, Duration zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Duration, DurationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public DurationInfo(string name, DurationUnit baseUnit, IEnumerable<IUnitDefinition<DurationUnit>> unitMappings, Duration zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Duration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Duration", typeof(Duration).Assembly))
+            public DurationInfo(string name, DurationUnit baseUnit, DurationUnit siBaseUnit, IEnumerable<IUnitDefinition<DurationUnit>> unitMappings, Duration zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Duration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Duration", typeof(Duration).Assembly))
             {
             }
 
@@ -106,7 +106,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="DurationInfo"/> class with the default settings.</returns>
             public static DurationInfo CreateDefault()
-                => new(nameof(Duration), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Duration), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="DurationInfo"/> class with the default settings for the Duration quantity and a callback for customizing the default unit mappings.
@@ -118,7 +118,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="DurationInfo"/> class with the default settings.
             /// </returns>
             public static DurationInfo CreateDefault(Func<IEnumerable<UnitDefinition<DurationUnit>>, IEnumerable<IUnitDefinition<DurationUnit>>> customizeUnits)
-                => new(nameof(Duration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Duration), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Duration"/> is T.
@@ -133,6 +133,15 @@ namespace UnitsNet
             ///     The default base unit of Duration is Second. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static DurationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = DurationUnit.Second;
+
+            /// <summary>
+            ///     The default base unit of Duration is Second.
+            /// </summary>
+            public static DurationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -248,6 +257,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Duration, which is Second.
+        /// </summary>
+        public static DurationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => DurationUnit.Second;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Duration quantity.
         /// </summary>
         public static IReadOnlyCollection<DurationUnit> Units
@@ -343,9 +361,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Duration,DurationUnit}.AsBaseValue"/>
         /// <returns><see cref="DurationUnit.Second"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Duration,DurationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="DurationUnit.Second"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Duration AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Duration,DurationUnit}.AsBaseValue"/>
+        /// <returns><see cref="DurationUnit.Second"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="DurationUnit.Day"/>
@@ -494,8 +525,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Second.
         /// </summary>
-        public Duration SecondsToDuration()
+        public Duration SecondsToBaseDuration()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Second.
+        /// </summary>
+        public Duration SecondsToSiBaseDuration()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Duration"/> from <see cref="DurationUnit.Day"/>.

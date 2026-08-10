@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class MassFractionInfo : QuantityInfo<MassFraction, MassFractionUnit>
         {
             /// <inheritdoc />
-            public MassFractionInfo(string name, MassFractionUnit baseUnit, IEnumerable<IUnitDefinition<MassFractionUnit>> unitMappings, MassFraction zero, BaseDimensions baseDimensions,
+            public MassFractionInfo(string name, MassFractionUnit baseUnit, MassFractionUnit siBaseUnit, IEnumerable<IUnitDefinition<MassFractionUnit>> unitMappings, MassFraction zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MassFraction, MassFractionUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MassFractionInfo(string name, MassFractionUnit baseUnit, IEnumerable<IUnitDefinition<MassFractionUnit>> unitMappings, MassFraction zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MassFraction.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassFraction", typeof(MassFraction).Assembly))
+            public MassFractionInfo(string name, MassFractionUnit baseUnit, MassFractionUnit siBaseUnit, IEnumerable<IUnitDefinition<MassFractionUnit>> unitMappings, MassFraction zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MassFraction.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassFraction", typeof(MassFraction).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassFractionInfo"/> class with the default settings.</returns>
             public static MassFractionInfo CreateDefault()
-                => new(nameof(MassFraction), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassFraction), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassFractionInfo"/> class with the default settings for the MassFraction quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassFractionInfo"/> class with the default settings.
             /// </returns>
             public static MassFractionInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassFractionUnit>>, IEnumerable<IUnitDefinition<MassFractionUnit>>> customizeUnits)
-                => new(nameof(MassFraction), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassFraction), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MassFraction"/> is .
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of MassFraction is DecimalFraction. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MassFractionUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassFractionUnit.DecimalFraction;
+
+            /// <summary>
+            ///     The default base unit of MassFraction is DecimalFraction.
+            /// </summary>
+            public static MassFractionUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -248,6 +257,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of MassFraction, which is DecimalFraction.
+        /// </summary>
+        public static MassFractionUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MassFractionUnit.DecimalFraction;
+        }
+
+        /// <summary>
         ///     All units of measurement for the MassFraction quantity.
         /// </summary>
         public static IReadOnlyCollection<MassFractionUnit> Units
@@ -343,9 +361,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MassFraction,MassFractionUnit}.AsBaseValue"/>
         /// <returns><see cref="MassFractionUnit.DecimalFraction"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassFraction,MassFractionUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassFractionUnit.DecimalFraction"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MassFraction AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassFraction,MassFractionUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassFractionUnit.DecimalFraction"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassFractionUnit.CentigramPerGram"/>
@@ -593,8 +624,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
-        public MassFraction DecimalFractionsToMassFraction()
+        public MassFraction DecimalFractionsToBaseMassFraction()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        public MassFraction DecimalFractionsToSiBaseMassFraction()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MassFraction"/> from <see cref="MassFractionUnit.CentigramPerGram"/>.

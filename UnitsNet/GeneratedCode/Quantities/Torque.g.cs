@@ -73,15 +73,15 @@ namespace UnitsNet
         public sealed class TorqueInfo : QuantityInfo<Torque, TorqueUnit>
         {
             /// <inheritdoc />
-            public TorqueInfo(string name, TorqueUnit baseUnit, IEnumerable<IUnitDefinition<TorqueUnit>> unitMappings, Torque zero, BaseDimensions baseDimensions,
+            public TorqueInfo(string name, TorqueUnit baseUnit, TorqueUnit siBaseUnit, IEnumerable<IUnitDefinition<TorqueUnit>> unitMappings, Torque zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Torque, TorqueUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public TorqueInfo(string name, TorqueUnit baseUnit, IEnumerable<IUnitDefinition<TorqueUnit>> unitMappings, Torque zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Torque.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Torque", typeof(Torque).Assembly))
+            public TorqueInfo(string name, TorqueUnit baseUnit, TorqueUnit siBaseUnit, IEnumerable<IUnitDefinition<TorqueUnit>> unitMappings, Torque zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Torque.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Torque", typeof(Torque).Assembly))
             {
             }
 
@@ -90,7 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TorqueInfo"/> class with the default settings.</returns>
             public static TorqueInfo CreateDefault()
-                => new(nameof(Torque), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Torque), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TorqueInfo"/> class with the default settings for the Torque quantity and a callback for customizing the default unit mappings.
@@ -102,7 +102,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TorqueInfo"/> class with the default settings.
             /// </returns>
             public static TorqueInfo CreateDefault(Func<IEnumerable<UnitDefinition<TorqueUnit>>, IEnumerable<IUnitDefinition<TorqueUnit>>> customizeUnits)
-                => new(nameof(Torque), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Torque), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Torque"/> is T^-2L^2M.
@@ -117,6 +117,15 @@ namespace UnitsNet
             ///     The default base unit of Torque is NewtonMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static TorqueUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TorqueUnit.NewtonMeter;
+
+            /// <summary>
+            ///     The default base unit of Torque is NewtonMeter.
+            /// </summary>
+            public static TorqueUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -274,6 +283,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Torque, which is NewtonMeter.
+        /// </summary>
+        public static TorqueUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => TorqueUnit.NewtonMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Torque quantity.
         /// </summary>
         public static IReadOnlyCollection<TorqueUnit> Units
@@ -369,9 +387,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Torque,TorqueUnit}.AsBaseValue"/>
         /// <returns><see cref="TorqueUnit.NewtonMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Torque,TorqueUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TorqueUnit.NewtonMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Torque AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Torque,TorqueUnit}.AsBaseValue"/>
+        /// <returns><see cref="TorqueUnit.NewtonMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TorqueUnit.GramForceCentimeter"/>
@@ -646,8 +677,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeter.
         /// </summary>
-        public Torque NewtonMetersToTorque()
+        public Torque NewtonMetersToBaseTorque()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of NewtonMeter.
+        /// </summary>
+        public Torque NewtonMetersToSiBaseTorque()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Torque"/> from <see cref="TorqueUnit.GramForceCentimeter"/>.

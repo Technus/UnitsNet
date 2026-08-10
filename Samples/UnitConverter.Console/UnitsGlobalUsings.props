@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="UnitsExtensions.cs"/>
-    <Using Include="UnitConverter.Console"/>
+    <!--<Compile Include="UnitsExtensions.cs"/> In case the file would be shared from parent/solution directory add it here-->
+    <Using Include="UnitConverter.Console.Units"/>
   </ItemGroup>
 
   <ItemGroup Condition="'$(RefUnits)' == 'true'">

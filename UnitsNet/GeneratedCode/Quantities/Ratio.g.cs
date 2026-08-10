@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class RatioInfo : QuantityInfo<Ratio, RatioUnit>
         {
             /// <inheritdoc />
-            public RatioInfo(string name, RatioUnit baseUnit, IEnumerable<IUnitDefinition<RatioUnit>> unitMappings, Ratio zero, BaseDimensions baseDimensions,
+            public RatioInfo(string name, RatioUnit baseUnit, RatioUnit siBaseUnit, IEnumerable<IUnitDefinition<RatioUnit>> unitMappings, Ratio zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Ratio, RatioUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public RatioInfo(string name, RatioUnit baseUnit, IEnumerable<IUnitDefinition<RatioUnit>> unitMappings, Ratio zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Ratio.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Ratio", typeof(Ratio).Assembly))
+            public RatioInfo(string name, RatioUnit baseUnit, RatioUnit siBaseUnit, IEnumerable<IUnitDefinition<RatioUnit>> unitMappings, Ratio zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Ratio.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Ratio", typeof(Ratio).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RatioInfo"/> class with the default settings.</returns>
             public static RatioInfo CreateDefault()
-                => new(nameof(Ratio), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Ratio), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RatioInfo"/> class with the default settings for the Ratio quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RatioInfo"/> class with the default settings.
             /// </returns>
             public static RatioInfo CreateDefault(Func<IEnumerable<UnitDefinition<RatioUnit>>, IEnumerable<IUnitDefinition<RatioUnit>>> customizeUnits)
-                => new(nameof(Ratio), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Ratio), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Ratio"/> is .
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of Ratio is DecimalFraction. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static RatioUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RatioUnit.DecimalFraction;
+
+            /// <summary>
+            ///     The default base unit of Ratio is DecimalFraction.
+            /// </summary>
+            public static RatioUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -191,6 +200,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Ratio, which is DecimalFraction.
+        /// </summary>
+        public static RatioUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => RatioUnit.DecimalFraction;
         }
 
         /// <summary>
@@ -289,9 +307,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Ratio,RatioUnit}.AsBaseValue"/>
         /// <returns><see cref="RatioUnit.DecimalFraction"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Ratio,RatioUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RatioUnit.DecimalFraction"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Ratio AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Ratio,RatioUnit}.AsBaseValue"/>
+        /// <returns><see cref="RatioUnit.DecimalFraction"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RatioUnit.DecimalFraction"/>
@@ -377,8 +408,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
-        public Ratio DecimalFractionsToRatio()
+        public Ratio DecimalFractionsToBaseRatio()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        public Ratio DecimalFractionsToSiBaseRatio()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Ratio"/> from <see cref="RatioUnit.DecimalFraction"/>.

@@ -1,6 +1,7 @@
 {
   "Name": "TemperatureDelta",
   "BaseUnit": "Kelvin",
+  "SiBaseUnit": "Kelvin",
   "XmlDocSummary": "Difference between two temperatures. The conversions are different than for Temperature.",
   "BaseDimensions": {
     "Θ": 1

@@ -74,15 +74,15 @@ namespace UnitsNet
         public sealed class MolarityInfo : QuantityInfo<Molarity, MolarityUnit>
         {
             /// <inheritdoc />
-            public MolarityInfo(string name, MolarityUnit baseUnit, IEnumerable<IUnitDefinition<MolarityUnit>> unitMappings, Molarity zero, BaseDimensions baseDimensions,
+            public MolarityInfo(string name, MolarityUnit baseUnit, MolarityUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarityUnit>> unitMappings, Molarity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Molarity, MolarityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MolarityInfo(string name, MolarityUnit baseUnit, IEnumerable<IUnitDefinition<MolarityUnit>> unitMappings, Molarity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Molarity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Molarity", typeof(Molarity).Assembly))
+            public MolarityInfo(string name, MolarityUnit baseUnit, MolarityUnit siBaseUnit, IEnumerable<IUnitDefinition<MolarityUnit>> unitMappings, Molarity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Molarity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Molarity", typeof(Molarity).Assembly))
             {
             }
 
@@ -91,7 +91,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MolarityInfo"/> class with the default settings.</returns>
             public static MolarityInfo CreateDefault()
-                => new(nameof(Molarity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Molarity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MolarityInfo"/> class with the default settings for the Molarity quantity and a callback for customizing the default unit mappings.
@@ -103,7 +103,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MolarityInfo"/> class with the default settings.
             /// </returns>
             public static MolarityInfo CreateDefault(Func<IEnumerable<UnitDefinition<MolarityUnit>>, IEnumerable<IUnitDefinition<MolarityUnit>>> customizeUnits)
-                => new(nameof(Molarity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Molarity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Molarity"/> is L^-3N.
@@ -118,6 +118,15 @@ namespace UnitsNet
             ///     The default base unit of Molarity is MolePerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MolarityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MolarityUnit.MolePerCubicMeter;
+
+            /// <summary>
+            ///     The default base unit of Molarity is MolePerCubicMeter.
+            /// </summary>
+            public static MolarityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -227,6 +236,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Molarity, which is MolePerCubicMeter.
+        /// </summary>
+        public static MolarityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MolarityUnit.MolePerCubicMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Molarity quantity.
         /// </summary>
         public static IReadOnlyCollection<MolarityUnit> Units
@@ -322,9 +340,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Molarity,MolarityUnit}.AsBaseValue"/>
         /// <returns><see cref="MolarityUnit.MolePerCubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Molarity,MolarityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolarityUnit.MolePerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Molarity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Molarity,MolarityUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolarityUnit.MolePerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolarityUnit.CentimolePerLiter"/>
@@ -455,8 +486,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MolePerCubicMeter.
         /// </summary>
-        public Molarity MolesPerCubicMeterToMolarity()
+        public Molarity MolesPerCubicMeterToBaseMolarity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerCubicMeter.
+        /// </summary>
+        public Molarity MolesPerCubicMeterToSiBaseMolarity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Molarity"/> from <see cref="MolarityUnit.CentimolePerLiter"/>.

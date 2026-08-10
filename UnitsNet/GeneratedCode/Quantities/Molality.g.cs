@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class MolalityInfo : QuantityInfo<Molality, MolalityUnit>
         {
             /// <inheritdoc />
-            public MolalityInfo(string name, MolalityUnit baseUnit, IEnumerable<IUnitDefinition<MolalityUnit>> unitMappings, Molality zero, BaseDimensions baseDimensions,
+            public MolalityInfo(string name, MolalityUnit baseUnit, MolalityUnit siBaseUnit, IEnumerable<IUnitDefinition<MolalityUnit>> unitMappings, Molality zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Molality, MolalityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MolalityInfo(string name, MolalityUnit baseUnit, IEnumerable<IUnitDefinition<MolalityUnit>> unitMappings, Molality zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Molality.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Molality", typeof(Molality).Assembly))
+            public MolalityInfo(string name, MolalityUnit baseUnit, MolalityUnit siBaseUnit, IEnumerable<IUnitDefinition<MolalityUnit>> unitMappings, Molality zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Molality.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Molality", typeof(Molality).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MolalityInfo"/> class with the default settings.</returns>
             public static MolalityInfo CreateDefault()
-                => new(nameof(Molality), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Molality), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MolalityInfo"/> class with the default settings for the Molality quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MolalityInfo"/> class with the default settings.
             /// </returns>
             public static MolalityInfo CreateDefault(Func<IEnumerable<UnitDefinition<MolalityUnit>>, IEnumerable<IUnitDefinition<MolalityUnit>>> customizeUnits)
-                => new(nameof(Molality), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Molality), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Molality"/> is M^-1N.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Molality is MolePerKilogram. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MolalityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MolalityUnit.MolePerKilogram;
+
+            /// <summary>
+            ///     The default base unit of Molality is MolePerKilogram.
+            /// </summary>
+            public static MolalityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -195,6 +204,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Molality, which is MolePerKilogram.
+        /// </summary>
+        public static MolalityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MolalityUnit.MolePerKilogram;
         }
 
         /// <summary>
@@ -293,9 +311,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Molality,MolalityUnit}.AsBaseValue"/>
         /// <returns><see cref="MolalityUnit.MolePerKilogram"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Molality,MolalityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MolalityUnit.MolePerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Molality AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Molality,MolalityUnit}.AsBaseValue"/>
+        /// <returns><see cref="MolalityUnit.MolePerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MolalityUnit.MillimolePerKilogram"/>
@@ -354,8 +385,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MolePerKilogram.
         /// </summary>
-        public Molality MolesPerKilogramToMolality()
+        public Molality MolesPerKilogramToBaseMolality()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MolePerKilogram.
+        /// </summary>
+        public Molality MolesPerKilogramToSiBaseMolality()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Molality"/> from <see cref="MolalityUnit.MillimolePerKilogram"/>.

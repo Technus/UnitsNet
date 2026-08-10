@@ -65,15 +65,15 @@ namespace UnitsNet
         public sealed class TemperatureInfo : QuantityInfo<Temperature, TemperatureUnit>
         {
             /// <inheritdoc />
-            public TemperatureInfo(string name, TemperatureUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureUnit>> unitMappings, Temperature zero, BaseDimensions baseDimensions,
+            public TemperatureInfo(string name, TemperatureUnit baseUnit, TemperatureUnit siBaseUnit, IEnumerable<IUnitDefinition<TemperatureUnit>> unitMappings, Temperature zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Temperature, TemperatureUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public TemperatureInfo(string name, TemperatureUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureUnit>> unitMappings, Temperature zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Temperature.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Temperature", typeof(Temperature).Assembly))
+            public TemperatureInfo(string name, TemperatureUnit baseUnit, TemperatureUnit siBaseUnit, IEnumerable<IUnitDefinition<TemperatureUnit>> unitMappings, Temperature zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Temperature.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Temperature", typeof(Temperature).Assembly))
             {
             }
 
@@ -82,7 +82,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TemperatureInfo"/> class with the default settings.</returns>
             public static TemperatureInfo CreateDefault()
-                => new(nameof(Temperature), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Temperature), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TemperatureInfo"/> class with the default settings for the Temperature quantity and a callback for customizing the default unit mappings.
@@ -94,7 +94,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TemperatureInfo"/> class with the default settings.
             /// </returns>
             public static TemperatureInfo CreateDefault(Func<IEnumerable<UnitDefinition<TemperatureUnit>>, IEnumerable<IUnitDefinition<TemperatureUnit>>> customizeUnits)
-                => new(nameof(Temperature), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Temperature), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Temperature"/> is Θ.
@@ -109,6 +109,15 @@ namespace UnitsNet
             ///     The default base unit of Temperature is Kelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static TemperatureUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TemperatureUnit.Kelvin;
+
+            /// <summary>
+            ///     The default base unit of Temperature is Kelvin.
+            /// </summary>
+            public static TemperatureUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -222,6 +231,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Temperature, which is Kelvin.
+        /// </summary>
+        public static TemperatureUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => TemperatureUnit.Kelvin;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Temperature quantity.
         /// </summary>
         public static IReadOnlyCollection<TemperatureUnit> Units
@@ -317,9 +335,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Temperature,TemperatureUnit}.AsBaseValue"/>
         /// <returns><see cref="TemperatureUnit.Kelvin"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Temperature,TemperatureUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TemperatureUnit.Kelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Temperature AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Temperature,TemperatureUnit}.AsBaseValue"/>
+        /// <returns><see cref="TemperatureUnit.Kelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureUnit.DegreeCelsius"/>
@@ -441,8 +472,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
-        public Temperature KelvinsToTemperature()
+        public Temperature KelvinsToBaseTemperature()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Kelvin.
+        /// </summary>
+        public Temperature KelvinsToSiBaseTemperature()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Temperature"/> from <see cref="TemperatureUnit.DegreeCelsius"/>.

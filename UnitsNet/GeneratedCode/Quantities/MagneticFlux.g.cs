@@ -71,15 +71,15 @@ namespace UnitsNet
         public sealed class MagneticFluxInfo : QuantityInfo<MagneticFlux, MagneticFluxUnit>
         {
             /// <inheritdoc />
-            public MagneticFluxInfo(string name, MagneticFluxUnit baseUnit, IEnumerable<IUnitDefinition<MagneticFluxUnit>> unitMappings, MagneticFlux zero, BaseDimensions baseDimensions,
+            public MagneticFluxInfo(string name, MagneticFluxUnit baseUnit, MagneticFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<MagneticFluxUnit>> unitMappings, MagneticFlux zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MagneticFlux, MagneticFluxUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MagneticFluxInfo(string name, MagneticFluxUnit baseUnit, IEnumerable<IUnitDefinition<MagneticFluxUnit>> unitMappings, MagneticFlux zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MagneticFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MagneticFlux", typeof(MagneticFlux).Assembly))
+            public MagneticFluxInfo(string name, MagneticFluxUnit baseUnit, MagneticFluxUnit siBaseUnit, IEnumerable<IUnitDefinition<MagneticFluxUnit>> unitMappings, MagneticFlux zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MagneticFlux.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MagneticFlux", typeof(MagneticFlux).Assembly))
             {
             }
 
@@ -88,7 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MagneticFluxInfo"/> class with the default settings.</returns>
             public static MagneticFluxInfo CreateDefault()
-                => new(nameof(MagneticFlux), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MagneticFlux), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MagneticFluxInfo"/> class with the default settings for the MagneticFlux quantity and a callback for customizing the default unit mappings.
@@ -100,7 +100,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MagneticFluxInfo"/> class with the default settings.
             /// </returns>
             public static MagneticFluxInfo CreateDefault(Func<IEnumerable<UnitDefinition<MagneticFluxUnit>>, IEnumerable<IUnitDefinition<MagneticFluxUnit>>> customizeUnits)
-                => new(nameof(MagneticFlux), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MagneticFlux), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MagneticFlux"/> is T^-2L^2MI^-1.
@@ -115,6 +115,15 @@ namespace UnitsNet
             ///     The default base unit of MagneticFlux is Weber. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MagneticFluxUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MagneticFluxUnit.Weber;
+
+            /// <summary>
+            ///     The default base unit of MagneticFlux is Weber.
+            /// </summary>
+            public static MagneticFluxUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -191,6 +200,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of MagneticFlux, which is Weber.
+        /// </summary>
+        public static MagneticFluxUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MagneticFluxUnit.Weber;
         }
 
         /// <summary>
@@ -289,9 +307,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MagneticFlux,MagneticFluxUnit}.AsBaseValue"/>
         /// <returns><see cref="MagneticFluxUnit.Weber"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MagneticFlux,MagneticFluxUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MagneticFluxUnit.Weber"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MagneticFlux AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MagneticFlux,MagneticFluxUnit}.AsBaseValue"/>
+        /// <returns><see cref="MagneticFluxUnit.Weber"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFluxUnit.Weber"/>
@@ -332,8 +363,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Weber.
         /// </summary>
-        public MagneticFlux WebersToMagneticFlux()
+        public MagneticFlux WebersToBaseMagneticFlux()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Weber.
+        /// </summary>
+        public MagneticFlux WebersToSiBaseMagneticFlux()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MagneticFlux"/> from <see cref="MagneticFluxUnit.Weber"/>.

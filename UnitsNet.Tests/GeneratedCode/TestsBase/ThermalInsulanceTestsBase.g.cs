@@ -152,7 +152,7 @@ namespace UnitsNet.Tests
         [Fact]
         public void ThermalInsulanceInfo_CreateWithCustomUnitInfos()
         {
-            ThermalInsulanceUnit[] expectedUnits = [ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt];
+            ThermalInsulanceUnit[] expectedUnits = [ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt, ThermalInsulanceUnit.SquareMeterKelvinPerWatt];
 
             ThermalInsulance.ThermalInsulanceInfo quantityInfo = ThermalInsulance.ThermalInsulanceInfo.CreateDefault(mappings => mappings.SelectUnits(expectedUnits));
 

@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class JerkInfo : QuantityInfo<Jerk, JerkUnit>
         {
             /// <inheritdoc />
-            public JerkInfo(string name, JerkUnit baseUnit, IEnumerable<IUnitDefinition<JerkUnit>> unitMappings, Jerk zero, BaseDimensions baseDimensions,
+            public JerkInfo(string name, JerkUnit baseUnit, JerkUnit siBaseUnit, IEnumerable<IUnitDefinition<JerkUnit>> unitMappings, Jerk zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Jerk, JerkUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public JerkInfo(string name, JerkUnit baseUnit, IEnumerable<IUnitDefinition<JerkUnit>> unitMappings, Jerk zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Jerk.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Jerk", typeof(Jerk).Assembly))
+            public JerkInfo(string name, JerkUnit baseUnit, JerkUnit siBaseUnit, IEnumerable<IUnitDefinition<JerkUnit>> unitMappings, Jerk zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Jerk.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Jerk", typeof(Jerk).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="JerkInfo"/> class with the default settings.</returns>
             public static JerkInfo CreateDefault()
-                => new(nameof(Jerk), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Jerk), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="JerkInfo"/> class with the default settings for the Jerk quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="JerkInfo"/> class with the default settings.
             /// </returns>
             public static JerkInfo CreateDefault(Func<IEnumerable<UnitDefinition<JerkUnit>>, IEnumerable<IUnitDefinition<JerkUnit>>> customizeUnits)
-                => new(nameof(Jerk), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Jerk), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Jerk"/> is T^-3L.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of Jerk is MeterPerSecondCubed. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static JerkUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = JerkUnit.MeterPerSecondCubed;
+
+            /// <summary>
+            ///     The default base unit of Jerk is MeterPerSecondCubed.
+            /// </summary>
+            public static JerkUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -220,6 +229,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Jerk, which is MeterPerSecondCubed.
+        /// </summary>
+        public static JerkUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => JerkUnit.MeterPerSecondCubed;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Jerk quantity.
         /// </summary>
         public static IReadOnlyCollection<JerkUnit> Units
@@ -315,9 +333,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Jerk,JerkUnit}.AsBaseValue"/>
         /// <returns><see cref="JerkUnit.MeterPerSecondCubed"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Jerk,JerkUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="JerkUnit.MeterPerSecondCubed"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Jerk AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Jerk,JerkUnit}.AsBaseValue"/>
+        /// <returns><see cref="JerkUnit.MeterPerSecondCubed"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="JerkUnit.CentimeterPerSecondCubed"/>
@@ -448,8 +479,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondCubed.
         /// </summary>
-        public Jerk MetersPerSecondCubedToJerk()
+        public Jerk MetersPerSecondCubedToBaseJerk()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of MeterPerSecondCubed.
+        /// </summary>
+        public Jerk MetersPerSecondCubedToSiBaseJerk()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Jerk"/> from <see cref="JerkUnit.CentimeterPerSecondCubed"/>.

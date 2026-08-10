@@ -71,15 +71,15 @@ namespace UnitsNet
         public sealed class VolumeConcentrationInfo : QuantityInfo<VolumeConcentration, VolumeConcentrationUnit>
         {
             /// <inheritdoc />
-            public VolumeConcentrationInfo(string name, VolumeConcentrationUnit baseUnit, IEnumerable<IUnitDefinition<VolumeConcentrationUnit>> unitMappings, VolumeConcentration zero, BaseDimensions baseDimensions,
+            public VolumeConcentrationInfo(string name, VolumeConcentrationUnit baseUnit, VolumeConcentrationUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeConcentrationUnit>> unitMappings, VolumeConcentration zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<VolumeConcentration, VolumeConcentrationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public VolumeConcentrationInfo(string name, VolumeConcentrationUnit baseUnit, IEnumerable<IUnitDefinition<VolumeConcentrationUnit>> unitMappings, VolumeConcentration zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, VolumeConcentration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumeConcentration", typeof(VolumeConcentration).Assembly))
+            public VolumeConcentrationInfo(string name, VolumeConcentrationUnit baseUnit, VolumeConcentrationUnit siBaseUnit, IEnumerable<IUnitDefinition<VolumeConcentrationUnit>> unitMappings, VolumeConcentration zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, VolumeConcentration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.VolumeConcentration", typeof(VolumeConcentration).Assembly))
             {
             }
 
@@ -88,7 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="VolumeConcentrationInfo"/> class with the default settings.</returns>
             public static VolumeConcentrationInfo CreateDefault()
-                => new(nameof(VolumeConcentration), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumeConcentration), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="VolumeConcentrationInfo"/> class with the default settings for the VolumeConcentration quantity and a callback for customizing the default unit mappings.
@@ -100,7 +100,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="VolumeConcentrationInfo"/> class with the default settings.
             /// </returns>
             public static VolumeConcentrationInfo CreateDefault(Func<IEnumerable<UnitDefinition<VolumeConcentrationUnit>>, IEnumerable<IUnitDefinition<VolumeConcentrationUnit>>> customizeUnits)
-                => new(nameof(VolumeConcentration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(VolumeConcentration), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="VolumeConcentration"/> is .
@@ -115,6 +115,15 @@ namespace UnitsNet
             ///     The default base unit of VolumeConcentration is DecimalFraction. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static VolumeConcentrationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = VolumeConcentrationUnit.DecimalFraction;
+
+            /// <summary>
+            ///     The default base unit of VolumeConcentration is DecimalFraction.
+            /// </summary>
+            public static VolumeConcentrationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -237,6 +246,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of VolumeConcentration, which is DecimalFraction.
+        /// </summary>
+        public static VolumeConcentrationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => VolumeConcentrationUnit.DecimalFraction;
+        }
+
+        /// <summary>
         ///     All units of measurement for the VolumeConcentration quantity.
         /// </summary>
         public static IReadOnlyCollection<VolumeConcentrationUnit> Units
@@ -332,9 +350,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{VolumeConcentration,VolumeConcentrationUnit}.AsBaseValue"/>
         /// <returns><see cref="VolumeConcentrationUnit.DecimalFraction"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumeConcentration,VolumeConcentrationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="VolumeConcentrationUnit.DecimalFraction"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VolumeConcentration AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{VolumeConcentration,VolumeConcentrationUnit}.AsBaseValue"/>
+        /// <returns><see cref="VolumeConcentrationUnit.DecimalFraction"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="VolumeConcentrationUnit.CentiliterPerLiter"/>
@@ -546,8 +577,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
-        public VolumeConcentration DecimalFractionsToVolumeConcentration()
+        public VolumeConcentration DecimalFractionsToBaseVolumeConcentration()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of DecimalFraction.
+        /// </summary>
+        public VolumeConcentration DecimalFractionsToSiBaseVolumeConcentration()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="VolumeConcentration"/> from <see cref="VolumeConcentrationUnit.CentiliterPerLiter"/>.

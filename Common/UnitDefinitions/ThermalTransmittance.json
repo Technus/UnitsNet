@@ -1,6 +1,7 @@
 {
   "Name": "ThermalTransmittance",
   "BaseUnit": "KilowattPerSquareMeterKelvin",
+  "SiBaseUnit": "WattPerSquareMeterKelvin",
   "XmlDocSummary": "Thermal transmittance (U-value) is a measure of a material's conductance to the heat current.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Thermal_transmittance",
   "BaseDimensions": {

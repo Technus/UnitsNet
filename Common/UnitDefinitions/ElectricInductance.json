@@ -1,6 +1,7 @@
 {
   "Name": "ElectricInductance",
   "BaseUnit": "Henry",
+  "SiBaseUnit": "Henry",
   "XmlDocSummary": "Inductance is a property of an electrical conductor which opposes a change in current.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Inductance",
   "BaseDimensions": {

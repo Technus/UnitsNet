@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class PowerDensityInfo : QuantityInfo<PowerDensity, PowerDensityUnit>
         {
             /// <inheritdoc />
-            public PowerDensityInfo(string name, PowerDensityUnit baseUnit, IEnumerable<IUnitDefinition<PowerDensityUnit>> unitMappings, PowerDensity zero, BaseDimensions baseDimensions,
+            public PowerDensityInfo(string name, PowerDensityUnit baseUnit, PowerDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<PowerDensityUnit>> unitMappings, PowerDensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<PowerDensity, PowerDensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public PowerDensityInfo(string name, PowerDensityUnit baseUnit, IEnumerable<IUnitDefinition<PowerDensityUnit>> unitMappings, PowerDensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, PowerDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.PowerDensity", typeof(PowerDensity).Assembly))
+            public PowerDensityInfo(string name, PowerDensityUnit baseUnit, PowerDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<PowerDensityUnit>> unitMappings, PowerDensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, PowerDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.PowerDensity", typeof(PowerDensity).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PowerDensityInfo"/> class with the default settings.</returns>
             public static PowerDensityInfo CreateDefault()
-                => new(nameof(PowerDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(PowerDensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PowerDensityInfo"/> class with the default settings for the PowerDensity quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PowerDensityInfo"/> class with the default settings.
             /// </returns>
             public static PowerDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<PowerDensityUnit>>, IEnumerable<IUnitDefinition<PowerDensityUnit>>> customizeUnits)
-                => new(nameof(PowerDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(PowerDensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="PowerDensity"/> is T^-3L^-1M.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of PowerDensity is WattPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static PowerDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PowerDensityUnit.WattPerCubicMeter;
+
+            /// <summary>
+            ///     The default base unit of PowerDensity is WattPerCubicMeter.
+            /// </summary>
+            public static PowerDensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -325,6 +334,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of PowerDensity, which is WattPerCubicMeter.
+        /// </summary>
+        public static PowerDensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PowerDensityUnit.WattPerCubicMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the PowerDensity quantity.
         /// </summary>
         public static IReadOnlyCollection<PowerDensityUnit> Units
@@ -420,9 +438,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{PowerDensity,PowerDensityUnit}.AsBaseValue"/>
         /// <returns><see cref="PowerDensityUnit.WattPerCubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{PowerDensity,PowerDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PowerDensityUnit.WattPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public PowerDensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{PowerDensity,PowerDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="PowerDensityUnit.WattPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PowerDensityUnit.BtuPerSecondCubicFoot"/>
@@ -868,8 +899,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of WattPerCubicMeter.
         /// </summary>
-        public PowerDensity WattsPerCubicMeterToPowerDensity()
+        public PowerDensity WattsPerCubicMeterToBasePowerDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of WattPerCubicMeter.
+        /// </summary>
+        public PowerDensity WattsPerCubicMeterToSiBasePowerDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="PowerDensity"/> from <see cref="PowerDensityUnit.BtuPerSecondCubicFoot"/>.

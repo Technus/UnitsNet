@@ -1,6 +1,7 @@
 {
   "Name": "RadiationEquivalentDoseRate",
   "BaseUnit": "SievertPerSecond",
+  "SiBaseUnit": "SievertPerSecond",
   "XmlDocSummary": "A dose rate is quantity of radiation absorbed or delivered per unit time.",
   "XmlDocsRemarks": "https://en.wikipedia.org/wiki/Dose_rate",
   "BaseDimensions": {

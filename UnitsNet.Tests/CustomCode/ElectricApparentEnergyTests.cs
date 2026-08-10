@@ -32,6 +32,12 @@ namespace UnitsNet.Tests.CustomCode
 
         protected override double MegavoltampereHoursInOneVoltampereHour => 1E-6;
 
+        protected override double KilovoltampereSecondsInOneVoltampereHour => 3.6;
+
+        protected override double MegavoltampereSecondsInOneVoltampereHour => 0.0036;
+
+        protected override double VoltampereSecondsInOneVoltampereHour => 3600;
+
         [Fact(Skip = "See about adding an SI unit (VoltampereSecond, Joules?)")]
         public override void Ctor_SIUnitSystem_ReturnsQuantityWithSIUnits()
         {

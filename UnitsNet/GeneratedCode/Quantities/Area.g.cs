@@ -88,15 +88,15 @@ namespace UnitsNet
         public sealed class AreaInfo : QuantityInfo<Area, AreaUnit>
         {
             /// <inheritdoc />
-            public AreaInfo(string name, AreaUnit baseUnit, IEnumerable<IUnitDefinition<AreaUnit>> unitMappings, Area zero, BaseDimensions baseDimensions,
+            public AreaInfo(string name, AreaUnit baseUnit, AreaUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaUnit>> unitMappings, Area zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Area, AreaUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public AreaInfo(string name, AreaUnit baseUnit, IEnumerable<IUnitDefinition<AreaUnit>> unitMappings, Area zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Area.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Area", typeof(Area).Assembly))
+            public AreaInfo(string name, AreaUnit baseUnit, AreaUnit siBaseUnit, IEnumerable<IUnitDefinition<AreaUnit>> unitMappings, Area zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Area.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Area", typeof(Area).Assembly))
             {
             }
 
@@ -105,7 +105,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="AreaInfo"/> class with the default settings.</returns>
             public static AreaInfo CreateDefault()
-                => new(nameof(Area), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Area), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="AreaInfo"/> class with the default settings for the Area quantity and a callback for customizing the default unit mappings.
@@ -117,7 +117,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="AreaInfo"/> class with the default settings.
             /// </returns>
             public static AreaInfo CreateDefault(Func<IEnumerable<UnitDefinition<AreaUnit>>, IEnumerable<IUnitDefinition<AreaUnit>>> customizeUnits)
-                => new(nameof(Area), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Area), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Area"/> is L^2.
@@ -132,6 +132,15 @@ namespace UnitsNet
             ///     The default base unit of Area is SquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static AreaUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = AreaUnit.SquareMeter;
+
+            /// <summary>
+            ///     The default base unit of Area is SquareMeter.
+            /// </summary>
+            public static AreaUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -250,6 +259,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Area, which is SquareMeter.
+        /// </summary>
+        public static AreaUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => AreaUnit.SquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Area quantity.
         /// </summary>
         public static IReadOnlyCollection<AreaUnit> Units
@@ -345,9 +363,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Area,AreaUnit}.AsBaseValue"/>
         /// <returns><see cref="AreaUnit.SquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Area,AreaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="AreaUnit.SquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Area AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Area,AreaUnit}.AsBaseValue"/>
+        /// <returns><see cref="AreaUnit.SquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="AreaUnit.Acre"/>
@@ -505,8 +536,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
-        public Area SquareMetersToArea()
+        public Area SquareMetersToBaseArea()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeter.
+        /// </summary>
+        public Area SquareMetersToSiBaseArea()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Area"/> from <see cref="AreaUnit.Acre"/>.

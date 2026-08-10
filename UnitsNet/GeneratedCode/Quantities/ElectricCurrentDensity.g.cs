@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricCurrentDensityInfo : QuantityInfo<ElectricCurrentDensity, ElectricCurrentDensityUnit>
         {
             /// <inheritdoc />
-            public ElectricCurrentDensityInfo(string name, ElectricCurrentDensityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentDensityUnit>> unitMappings, ElectricCurrentDensity zero, BaseDimensions baseDimensions,
+            public ElectricCurrentDensityInfo(string name, ElectricCurrentDensityUnit baseUnit, ElectricCurrentDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCurrentDensityUnit>> unitMappings, ElectricCurrentDensity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricCurrentDensity, ElectricCurrentDensityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricCurrentDensityInfo(string name, ElectricCurrentDensityUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentDensityUnit>> unitMappings, ElectricCurrentDensity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricCurrentDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCurrentDensity", typeof(ElectricCurrentDensity).Assembly))
+            public ElectricCurrentDensityInfo(string name, ElectricCurrentDensityUnit baseUnit, ElectricCurrentDensityUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCurrentDensityUnit>> unitMappings, ElectricCurrentDensity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricCurrentDensity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCurrentDensity", typeof(ElectricCurrentDensity).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricCurrentDensityInfo"/> class with the default settings.</returns>
             public static ElectricCurrentDensityInfo CreateDefault()
-                => new(nameof(ElectricCurrentDensity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCurrentDensity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricCurrentDensityInfo"/> class with the default settings for the ElectricCurrentDensity quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricCurrentDensityInfo"/> class with the default settings.
             /// </returns>
             public static ElectricCurrentDensityInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricCurrentDensityUnit>>, IEnumerable<IUnitDefinition<ElectricCurrentDensityUnit>>> customizeUnits)
-                => new(nameof(ElectricCurrentDensity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCurrentDensity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricCurrentDensity"/> is L^-2I.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricCurrentDensity is AmperePerSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricCurrentDensityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricCurrentDensityUnit.AmperePerSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of ElectricCurrentDensity is AmperePerSquareMeter.
+            /// </summary>
+            public static ElectricCurrentDensityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -196,6 +205,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricCurrentDensity, which is AmperePerSquareMeter.
+        /// </summary>
+        public static ElectricCurrentDensityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricCurrentDensityUnit.AmperePerSquareMeter;
         }
 
         /// <summary>
@@ -294,9 +312,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricCurrentDensity,ElectricCurrentDensityUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricCurrentDensityUnit.AmperePerSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCurrentDensity,ElectricCurrentDensityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCurrentDensityUnit.AmperePerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricCurrentDensity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCurrentDensity,ElectricCurrentDensityUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCurrentDensityUnit.AmperePerSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCurrentDensityUnit.AmperePerSquareFoot"/>
@@ -355,8 +386,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSquareMeter.
         /// </summary>
-        public ElectricCurrentDensity AmperesPerSquareMeterToElectricCurrentDensity()
+        public ElectricCurrentDensity AmperesPerSquareMeterToBaseElectricCurrentDensity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerSquareMeter.
+        /// </summary>
+        public ElectricCurrentDensity AmperesPerSquareMeterToSiBaseElectricCurrentDensity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCurrentDensity"/> from <see cref="ElectricCurrentDensityUnit.AmperePerSquareFoot"/>.

@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class ElectricCurrentGradientInfo : QuantityInfo<ElectricCurrentGradient, ElectricCurrentGradientUnit>
         {
             /// <inheritdoc />
-            public ElectricCurrentGradientInfo(string name, ElectricCurrentGradientUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentGradientUnit>> unitMappings, ElectricCurrentGradient zero, BaseDimensions baseDimensions,
+            public ElectricCurrentGradientInfo(string name, ElectricCurrentGradientUnit baseUnit, ElectricCurrentGradientUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCurrentGradientUnit>> unitMappings, ElectricCurrentGradient zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricCurrentGradient, ElectricCurrentGradientUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricCurrentGradientInfo(string name, ElectricCurrentGradientUnit baseUnit, IEnumerable<IUnitDefinition<ElectricCurrentGradientUnit>> unitMappings, ElectricCurrentGradient zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricCurrentGradient.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCurrentGradient", typeof(ElectricCurrentGradient).Assembly))
+            public ElectricCurrentGradientInfo(string name, ElectricCurrentGradientUnit baseUnit, ElectricCurrentGradientUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricCurrentGradientUnit>> unitMappings, ElectricCurrentGradient zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricCurrentGradient.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricCurrentGradient", typeof(ElectricCurrentGradient).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricCurrentGradientInfo"/> class with the default settings.</returns>
             public static ElectricCurrentGradientInfo CreateDefault()
-                => new(nameof(ElectricCurrentGradient), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCurrentGradient), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricCurrentGradientInfo"/> class with the default settings for the ElectricCurrentGradient quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricCurrentGradientInfo"/> class with the default settings.
             /// </returns>
             public static ElectricCurrentGradientInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricCurrentGradientUnit>>, IEnumerable<IUnitDefinition<ElectricCurrentGradientUnit>>> customizeUnits)
-                => new(nameof(ElectricCurrentGradient), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricCurrentGradient), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricCurrentGradient"/> is T^-1I.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricCurrentGradient is AmperePerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricCurrentGradientUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricCurrentGradientUnit.AmperePerSecond;
+
+            /// <summary>
+            ///     The default base unit of ElectricCurrentGradient is AmperePerSecond.
+            /// </summary>
+            public static ElectricCurrentGradientUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -205,6 +214,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricCurrentGradient, which is AmperePerSecond.
+        /// </summary>
+        public static ElectricCurrentGradientUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricCurrentGradientUnit.AmperePerSecond;
         }
 
         /// <summary>
@@ -303,9 +321,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricCurrentGradient,ElectricCurrentGradientUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricCurrentGradientUnit.AmperePerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCurrentGradient,ElectricCurrentGradientUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricCurrentGradientUnit.AmperePerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricCurrentGradient AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricCurrentGradient,ElectricCurrentGradientUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricCurrentGradientUnit.AmperePerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricCurrentGradientUnit.AmperePerMicrosecond"/>
@@ -400,8 +431,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSecond.
         /// </summary>
-        public ElectricCurrentGradient AmperesPerSecondToElectricCurrentGradient()
+        public ElectricCurrentGradient AmperesPerSecondToBaseElectricCurrentGradient()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of AmperePerSecond.
+        /// </summary>
+        public ElectricCurrentGradient AmperesPerSecondToSiBaseElectricCurrentGradient()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricCurrentGradient"/> from <see cref="ElectricCurrentGradientUnit.AmperePerMicrosecond"/>.

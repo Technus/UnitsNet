@@ -1,6 +1,7 @@
 {
   "Name": "TemperatureGradient",
   "BaseUnit": "KelvinPerMeter",
+  "SiBaseUnit": "KelvinPerMeter",
   "XmlDoc": "The rate of change of temperature with displacement in a given direction (as with increase of height)",
   "BaseDimensions": {
     "L": -1,

@@ -71,15 +71,15 @@ namespace UnitsNet
         public sealed class LeakRateInfo : QuantityInfo<LeakRate, LeakRateUnit>
         {
             /// <inheritdoc />
-            public LeakRateInfo(string name, LeakRateUnit baseUnit, IEnumerable<IUnitDefinition<LeakRateUnit>> unitMappings, LeakRate zero, BaseDimensions baseDimensions,
+            public LeakRateInfo(string name, LeakRateUnit baseUnit, LeakRateUnit siBaseUnit, IEnumerable<IUnitDefinition<LeakRateUnit>> unitMappings, LeakRate zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<LeakRate, LeakRateUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LeakRateInfo(string name, LeakRateUnit baseUnit, IEnumerable<IUnitDefinition<LeakRateUnit>> unitMappings, LeakRate zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, LeakRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LeakRate", typeof(LeakRate).Assembly))
+            public LeakRateInfo(string name, LeakRateUnit baseUnit, LeakRateUnit siBaseUnit, IEnumerable<IUnitDefinition<LeakRateUnit>> unitMappings, LeakRate zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, LeakRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.LeakRate", typeof(LeakRate).Assembly))
             {
             }
 
@@ -88,7 +88,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LeakRateInfo"/> class with the default settings.</returns>
             public static LeakRateInfo CreateDefault()
-                => new(nameof(LeakRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LeakRate), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LeakRateInfo"/> class with the default settings for the LeakRate quantity and a callback for customizing the default unit mappings.
@@ -100,7 +100,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LeakRateInfo"/> class with the default settings.
             /// </returns>
             public static LeakRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<LeakRateUnit>>, IEnumerable<IUnitDefinition<LeakRateUnit>>> customizeUnits)
-                => new(nameof(LeakRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(LeakRate), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="LeakRate"/> is T^-3L^2M.
@@ -115,6 +115,15 @@ namespace UnitsNet
             ///     The default base unit of LeakRate is PascalCubicMeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LeakRateUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LeakRateUnit.PascalCubicMeterPerSecond;
+
+            /// <summary>
+            ///     The default base unit of LeakRate is PascalCubicMeterPerSecond.
+            /// </summary>
+            public static LeakRateUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -200,6 +209,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of LeakRate, which is PascalCubicMeterPerSecond.
+        /// </summary>
+        public static LeakRateUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LeakRateUnit.PascalCubicMeterPerSecond;
         }
 
         /// <summary>
@@ -298,9 +316,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{LeakRate,LeakRateUnit}.AsBaseValue"/>
         /// <returns><see cref="LeakRateUnit.PascalCubicMeterPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LeakRate,LeakRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LeakRateUnit.PascalCubicMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public LeakRate AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{LeakRate,LeakRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="LeakRateUnit.PascalCubicMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LeakRateUnit.AtmCubicCentimeterPerSecond"/>
@@ -368,8 +399,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
         /// </summary>
-        public LeakRate PascalCubicMetersPerSecondToLeakRate()
+        public LeakRate PascalCubicMetersPerSecondToBaseLeakRate()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
+        /// </summary>
+        public LeakRate PascalCubicMetersPerSecondToSiBaseLeakRate()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="LeakRate"/> from <see cref="LeakRateUnit.AtmCubicCentimeterPerSecond"/>.

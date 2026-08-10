@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricApparentPowerInfo : QuantityInfo<ElectricApparentPower, ElectricApparentPowerUnit>
         {
             /// <inheritdoc />
-            public ElectricApparentPowerInfo(string name, ElectricApparentPowerUnit baseUnit, IEnumerable<IUnitDefinition<ElectricApparentPowerUnit>> unitMappings, ElectricApparentPower zero, BaseDimensions baseDimensions,
+            public ElectricApparentPowerInfo(string name, ElectricApparentPowerUnit baseUnit, ElectricApparentPowerUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricApparentPowerUnit>> unitMappings, ElectricApparentPower zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricApparentPower, ElectricApparentPowerUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricApparentPowerInfo(string name, ElectricApparentPowerUnit baseUnit, IEnumerable<IUnitDefinition<ElectricApparentPowerUnit>> unitMappings, ElectricApparentPower zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricApparentPower.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricApparentPower", typeof(ElectricApparentPower).Assembly))
+            public ElectricApparentPowerInfo(string name, ElectricApparentPowerUnit baseUnit, ElectricApparentPowerUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricApparentPowerUnit>> unitMappings, ElectricApparentPower zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricApparentPower.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricApparentPower", typeof(ElectricApparentPower).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricApparentPowerInfo"/> class with the default settings.</returns>
             public static ElectricApparentPowerInfo CreateDefault()
-                => new(nameof(ElectricApparentPower), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricApparentPower), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricApparentPowerInfo"/> class with the default settings for the ElectricApparentPower quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricApparentPowerInfo"/> class with the default settings.
             /// </returns>
             public static ElectricApparentPowerInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricApparentPowerUnit>>, IEnumerable<IUnitDefinition<ElectricApparentPowerUnit>>> customizeUnits)
-                => new(nameof(ElectricApparentPower), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricApparentPower), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricApparentPower"/> is T^-3L^2M.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricApparentPower is Voltampere. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricApparentPowerUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricApparentPowerUnit.Voltampere;
+
+            /// <summary>
+            ///     The default base unit of ElectricApparentPower is Voltampere.
+            /// </summary>
+            public static ElectricApparentPowerUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -205,6 +214,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricApparentPower, which is Voltampere.
+        /// </summary>
+        public static ElectricApparentPowerUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricApparentPowerUnit.Voltampere;
         }
 
         /// <summary>
@@ -303,9 +321,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricApparentPower,ElectricApparentPowerUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricApparentPowerUnit.Voltampere"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricApparentPower,ElectricApparentPowerUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricApparentPowerUnit.Voltampere"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricApparentPower AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricApparentPower,ElectricApparentPowerUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricApparentPowerUnit.Voltampere"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricApparentPowerUnit.Gigavoltampere"/>
@@ -391,8 +422,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Voltampere.
         /// </summary>
-        public ElectricApparentPower VoltamperesToElectricApparentPower()
+        public ElectricApparentPower VoltamperesToBaseElectricApparentPower()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Voltampere.
+        /// </summary>
+        public ElectricApparentPower VoltamperesToSiBaseElectricApparentPower()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricApparentPower"/> from <see cref="ElectricApparentPowerUnit.Gigavoltampere"/>.

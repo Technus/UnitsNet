@@ -74,15 +74,15 @@ namespace UnitsNet
         public sealed class ReciprocalAreaInfo : QuantityInfo<ReciprocalArea, ReciprocalAreaUnit>
         {
             /// <inheritdoc />
-            public ReciprocalAreaInfo(string name, ReciprocalAreaUnit baseUnit, IEnumerable<IUnitDefinition<ReciprocalAreaUnit>> unitMappings, ReciprocalArea zero, BaseDimensions baseDimensions,
+            public ReciprocalAreaInfo(string name, ReciprocalAreaUnit baseUnit, ReciprocalAreaUnit siBaseUnit, IEnumerable<IUnitDefinition<ReciprocalAreaUnit>> unitMappings, ReciprocalArea zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ReciprocalArea, ReciprocalAreaUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ReciprocalAreaInfo(string name, ReciprocalAreaUnit baseUnit, IEnumerable<IUnitDefinition<ReciprocalAreaUnit>> unitMappings, ReciprocalArea zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ReciprocalArea.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ReciprocalArea", typeof(ReciprocalArea).Assembly))
+            public ReciprocalAreaInfo(string name, ReciprocalAreaUnit baseUnit, ReciprocalAreaUnit siBaseUnit, IEnumerable<IUnitDefinition<ReciprocalAreaUnit>> unitMappings, ReciprocalArea zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ReciprocalArea.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ReciprocalArea", typeof(ReciprocalArea).Assembly))
             {
             }
 
@@ -91,7 +91,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ReciprocalAreaInfo"/> class with the default settings.</returns>
             public static ReciprocalAreaInfo CreateDefault()
-                => new(nameof(ReciprocalArea), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ReciprocalArea), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ReciprocalAreaInfo"/> class with the default settings for the ReciprocalArea quantity and a callback for customizing the default unit mappings.
@@ -103,7 +103,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ReciprocalAreaInfo"/> class with the default settings.
             /// </returns>
             public static ReciprocalAreaInfo CreateDefault(Func<IEnumerable<UnitDefinition<ReciprocalAreaUnit>>, IEnumerable<IUnitDefinition<ReciprocalAreaUnit>>> customizeUnits)
-                => new(nameof(ReciprocalArea), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ReciprocalArea), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ReciprocalArea"/> is L^-2.
@@ -118,6 +118,15 @@ namespace UnitsNet
             ///     The default base unit of ReciprocalArea is InverseSquareMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ReciprocalAreaUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ReciprocalAreaUnit.InverseSquareMeter;
+
+            /// <summary>
+            ///     The default base unit of ReciprocalArea is InverseSquareMeter.
+            /// </summary>
+            public static ReciprocalAreaUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -227,6 +236,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ReciprocalArea, which is InverseSquareMeter.
+        /// </summary>
+        public static ReciprocalAreaUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ReciprocalAreaUnit.InverseSquareMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ReciprocalArea quantity.
         /// </summary>
         public static IReadOnlyCollection<ReciprocalAreaUnit> Units
@@ -322,9 +340,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ReciprocalArea,ReciprocalAreaUnit}.AsBaseValue"/>
         /// <returns><see cref="ReciprocalAreaUnit.InverseSquareMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ReciprocalArea,ReciprocalAreaUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ReciprocalAreaUnit.InverseSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReciprocalArea AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ReciprocalArea,ReciprocalAreaUnit}.AsBaseValue"/>
+        /// <returns><see cref="ReciprocalAreaUnit.InverseSquareMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ReciprocalAreaUnit.InverseSquareCentimeter"/>
@@ -455,8 +486,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of InverseSquareMeter.
         /// </summary>
-        public ReciprocalArea InverseSquareMetersToReciprocalArea()
+        public ReciprocalArea InverseSquareMetersToBaseReciprocalArea()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of InverseSquareMeter.
+        /// </summary>
+        public ReciprocalArea InverseSquareMetersToSiBaseReciprocalArea()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ReciprocalArea"/> from <see cref="ReciprocalAreaUnit.InverseSquareCentimeter"/>.

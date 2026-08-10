@@ -73,15 +73,15 @@ namespace UnitsNet
         public sealed class KinematicViscosityInfo : QuantityInfo<KinematicViscosity, KinematicViscosityUnit>
         {
             /// <inheritdoc />
-            public KinematicViscosityInfo(string name, KinematicViscosityUnit baseUnit, IEnumerable<IUnitDefinition<KinematicViscosityUnit>> unitMappings, KinematicViscosity zero, BaseDimensions baseDimensions,
+            public KinematicViscosityInfo(string name, KinematicViscosityUnit baseUnit, KinematicViscosityUnit siBaseUnit, IEnumerable<IUnitDefinition<KinematicViscosityUnit>> unitMappings, KinematicViscosity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<KinematicViscosity, KinematicViscosityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public KinematicViscosityInfo(string name, KinematicViscosityUnit baseUnit, IEnumerable<IUnitDefinition<KinematicViscosityUnit>> unitMappings, KinematicViscosity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, KinematicViscosity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.KinematicViscosity", typeof(KinematicViscosity).Assembly))
+            public KinematicViscosityInfo(string name, KinematicViscosityUnit baseUnit, KinematicViscosityUnit siBaseUnit, IEnumerable<IUnitDefinition<KinematicViscosityUnit>> unitMappings, KinematicViscosity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, KinematicViscosity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.KinematicViscosity", typeof(KinematicViscosity).Assembly))
             {
             }
 
@@ -90,7 +90,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="KinematicViscosityInfo"/> class with the default settings.</returns>
             public static KinematicViscosityInfo CreateDefault()
-                => new(nameof(KinematicViscosity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(KinematicViscosity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="KinematicViscosityInfo"/> class with the default settings for the KinematicViscosity quantity and a callback for customizing the default unit mappings.
@@ -102,7 +102,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="KinematicViscosityInfo"/> class with the default settings.
             /// </returns>
             public static KinematicViscosityInfo CreateDefault(Func<IEnumerable<UnitDefinition<KinematicViscosityUnit>>, IEnumerable<IUnitDefinition<KinematicViscosityUnit>>> customizeUnits)
-                => new(nameof(KinematicViscosity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(KinematicViscosity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="KinematicViscosity"/> is T^-1L^2.
@@ -117,6 +117,15 @@ namespace UnitsNet
             ///     The default base unit of KinematicViscosity is SquareMeterPerSecond. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static KinematicViscosityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = KinematicViscosityUnit.SquareMeterPerSecond;
+
+            /// <summary>
+            ///     The default base unit of KinematicViscosity is SquareMeterPerSecond.
+            /// </summary>
+            public static KinematicViscosityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -220,6 +229,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of KinematicViscosity, which is SquareMeterPerSecond.
+        /// </summary>
+        public static KinematicViscosityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => KinematicViscosityUnit.SquareMeterPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the KinematicViscosity quantity.
         /// </summary>
         public static IReadOnlyCollection<KinematicViscosityUnit> Units
@@ -315,9 +333,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{KinematicViscosity,KinematicViscosityUnit}.AsBaseValue"/>
         /// <returns><see cref="KinematicViscosityUnit.SquareMeterPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{KinematicViscosity,KinematicViscosityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="KinematicViscosityUnit.SquareMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public KinematicViscosity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{KinematicViscosity,KinematicViscosityUnit}.AsBaseValue"/>
+        /// <returns><see cref="KinematicViscosityUnit.SquareMeterPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="KinematicViscosityUnit.Centistokes"/>
@@ -430,8 +461,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerSecond.
         /// </summary>
-        public KinematicViscosity SquareMetersPerSecondToKinematicViscosity()
+        public KinematicViscosity SquareMetersPerSecondToBaseKinematicViscosity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of SquareMeterPerSecond.
+        /// </summary>
+        public KinematicViscosity SquareMetersPerSecondToSiBaseKinematicViscosity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="KinematicViscosity"/> from <see cref="KinematicViscosityUnit.Centistokes"/>.

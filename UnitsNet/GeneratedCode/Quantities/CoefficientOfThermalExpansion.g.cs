@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class CoefficientOfThermalExpansionInfo : QuantityInfo<CoefficientOfThermalExpansion, CoefficientOfThermalExpansionUnit>
         {
             /// <inheritdoc />
-            public CoefficientOfThermalExpansionInfo(string name, CoefficientOfThermalExpansionUnit baseUnit, IEnumerable<IUnitDefinition<CoefficientOfThermalExpansionUnit>> unitMappings, CoefficientOfThermalExpansion zero, BaseDimensions baseDimensions,
+            public CoefficientOfThermalExpansionInfo(string name, CoefficientOfThermalExpansionUnit baseUnit, CoefficientOfThermalExpansionUnit siBaseUnit, IEnumerable<IUnitDefinition<CoefficientOfThermalExpansionUnit>> unitMappings, CoefficientOfThermalExpansion zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<CoefficientOfThermalExpansion, CoefficientOfThermalExpansionUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public CoefficientOfThermalExpansionInfo(string name, CoefficientOfThermalExpansionUnit baseUnit, IEnumerable<IUnitDefinition<CoefficientOfThermalExpansionUnit>> unitMappings, CoefficientOfThermalExpansion zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, CoefficientOfThermalExpansion.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.CoefficientOfThermalExpansion", typeof(CoefficientOfThermalExpansion).Assembly))
+            public CoefficientOfThermalExpansionInfo(string name, CoefficientOfThermalExpansionUnit baseUnit, CoefficientOfThermalExpansionUnit siBaseUnit, IEnumerable<IUnitDefinition<CoefficientOfThermalExpansionUnit>> unitMappings, CoefficientOfThermalExpansion zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, CoefficientOfThermalExpansion.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.CoefficientOfThermalExpansion", typeof(CoefficientOfThermalExpansion).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="CoefficientOfThermalExpansionInfo"/> class with the default settings.</returns>
             public static CoefficientOfThermalExpansionInfo CreateDefault()
-                => new(nameof(CoefficientOfThermalExpansion), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(CoefficientOfThermalExpansion), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="CoefficientOfThermalExpansionInfo"/> class with the default settings for the CoefficientOfThermalExpansion quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="CoefficientOfThermalExpansionInfo"/> class with the default settings.
             /// </returns>
             public static CoefficientOfThermalExpansionInfo CreateDefault(Func<IEnumerable<UnitDefinition<CoefficientOfThermalExpansionUnit>>, IEnumerable<IUnitDefinition<CoefficientOfThermalExpansionUnit>>> customizeUnits)
-                => new(nameof(CoefficientOfThermalExpansion), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(CoefficientOfThermalExpansion), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="CoefficientOfThermalExpansion"/> is Θ^-1.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of CoefficientOfThermalExpansion is PerKelvin. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static CoefficientOfThermalExpansionUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = CoefficientOfThermalExpansionUnit.PerKelvin;
+
+            /// <summary>
+            ///     The default base unit of CoefficientOfThermalExpansion is PerKelvin.
+            /// </summary>
+            public static CoefficientOfThermalExpansionUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -202,6 +211,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of CoefficientOfThermalExpansion, which is PerKelvin.
+        /// </summary>
+        public static CoefficientOfThermalExpansionUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => CoefficientOfThermalExpansionUnit.PerKelvin;
         }
 
         /// <summary>
@@ -300,9 +318,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{CoefficientOfThermalExpansion,CoefficientOfThermalExpansionUnit}.AsBaseValue"/>
         /// <returns><see cref="CoefficientOfThermalExpansionUnit.PerKelvin"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{CoefficientOfThermalExpansion,CoefficientOfThermalExpansionUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="CoefficientOfThermalExpansionUnit.PerKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public CoefficientOfThermalExpansion AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{CoefficientOfThermalExpansion,CoefficientOfThermalExpansionUnit}.AsBaseValue"/>
+        /// <returns><see cref="CoefficientOfThermalExpansionUnit.PerKelvin"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="CoefficientOfThermalExpansionUnit.PerDegreeCelsius"/>
@@ -388,8 +419,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of PerKelvin.
         /// </summary>
-        public CoefficientOfThermalExpansion PerKelvinToCoefficientOfThermalExpansion()
+        public CoefficientOfThermalExpansion PerKelvinToBaseCoefficientOfThermalExpansion()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of PerKelvin.
+        /// </summary>
+        public CoefficientOfThermalExpansion PerKelvinToSiBaseCoefficientOfThermalExpansion()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="CoefficientOfThermalExpansion"/> from <see cref="CoefficientOfThermalExpansionUnit.PerDegreeCelsius"/>.

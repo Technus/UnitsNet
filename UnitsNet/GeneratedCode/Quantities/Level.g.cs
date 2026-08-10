@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class LevelInfo : QuantityInfo<Level, LevelUnit>
         {
             /// <inheritdoc />
-            public LevelInfo(string name, LevelUnit baseUnit, IEnumerable<IUnitDefinition<LevelUnit>> unitMappings, Level zero, BaseDimensions baseDimensions,
+            public LevelInfo(string name, LevelUnit baseUnit, LevelUnit siBaseUnit, IEnumerable<IUnitDefinition<LevelUnit>> unitMappings, Level zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Level, LevelUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public LevelInfo(string name, LevelUnit baseUnit, IEnumerable<IUnitDefinition<LevelUnit>> unitMappings, Level zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Level.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Level", typeof(Level).Assembly))
+            public LevelInfo(string name, LevelUnit baseUnit, LevelUnit siBaseUnit, IEnumerable<IUnitDefinition<LevelUnit>> unitMappings, Level zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Level.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Level", typeof(Level).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="LevelInfo"/> class with the default settings.</returns>
             public static LevelInfo CreateDefault()
-                => new(nameof(Level), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Level), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="LevelInfo"/> class with the default settings for the Level quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="LevelInfo"/> class with the default settings.
             /// </returns>
             public static LevelInfo CreateDefault(Func<IEnumerable<UnitDefinition<LevelUnit>>, IEnumerable<IUnitDefinition<LevelUnit>>> customizeUnits)
-                => new(nameof(Level), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Level), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Level"/> is .
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of Level is Decibel. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static LevelUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = LevelUnit.Decibel;
+
+            /// <summary>
+            ///     The default base unit of Level is Decibel.
+            /// </summary>
+            public static LevelUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -175,6 +184,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Level, which is Decibel.
+        /// </summary>
+        public static LevelUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LevelUnit.Decibel;
         }
 
         /// <summary>
@@ -288,9 +306,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Level,LevelUnit}.AsBaseValue"/>
         /// <returns><see cref="LevelUnit.Decibel"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Level,LevelUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="LevelUnit.Decibel"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Level AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Level,LevelUnit}.AsBaseValue"/>
+        /// <returns><see cref="LevelUnit.Decibel"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="LevelUnit.Decibel"/>
@@ -340,8 +371,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Decibel.
         /// </summary>
-        public Level DecibelsToLevel()
+        public Level DecibelsToBaseLevel()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Decibel.
+        /// </summary>
+        public Level DecibelsToSiBaseLevel()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Level"/> from <see cref="LevelUnit.Decibel"/>.

@@ -25,7 +25,7 @@ public enum ClassOfLinearQuantityUnit
 public class ClassOfLinearQuantity(QuantityValue value, ClassOfLinearQuantityUnit unit) : ILinearQuantity<ClassOfLinearQuantity, ClassOfLinearQuantityUnit>
 {
     public static QuantityInfo<ClassOfLinearQuantity, ClassOfLinearQuantityUnit> Info { get; } = new(
-        ClassOfLinearQuantityUnit.Some,
+        ClassOfLinearQuantityUnit.Some, ClassOfLinearQuantityUnit.Some,
         new UnitDefinition<ClassOfLinearQuantityUnit>[]
         {
             new(ClassOfLinearQuantityUnit.Some, "Some", BaseUnits.Undefined),
@@ -96,6 +96,16 @@ public class ClassOfLinearQuantity(QuantityValue value, ClassOfLinearQuantityUni
     public ClassOfLinearQuantity AsBaseQuantity()
     {
         return new ClassOfLinearQuantity(AsBaseValue(), Info.BaseUnitInfo.Value);
+    }
+
+    public QuantityValue AsSiBaseValue()
+    {
+        return this.As(Info.SiBaseUnitInfo.Value);
+    }
+
+    public ClassOfLinearQuantity AsSiBaseQuantity()
+    {
+        return new ClassOfLinearQuantity(AsSiBaseValue(), Info.SiBaseUnitInfo.Value);
     }
 
     UnitKey IQuantity.UnitKey

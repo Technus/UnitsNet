@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class MagneticFieldInfo : QuantityInfo<MagneticField, MagneticFieldUnit>
         {
             /// <inheritdoc />
-            public MagneticFieldInfo(string name, MagneticFieldUnit baseUnit, IEnumerable<IUnitDefinition<MagneticFieldUnit>> unitMappings, MagneticField zero, BaseDimensions baseDimensions,
+            public MagneticFieldInfo(string name, MagneticFieldUnit baseUnit, MagneticFieldUnit siBaseUnit, IEnumerable<IUnitDefinition<MagneticFieldUnit>> unitMappings, MagneticField zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MagneticField, MagneticFieldUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MagneticFieldInfo(string name, MagneticFieldUnit baseUnit, IEnumerable<IUnitDefinition<MagneticFieldUnit>> unitMappings, MagneticField zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MagneticField.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MagneticField", typeof(MagneticField).Assembly))
+            public MagneticFieldInfo(string name, MagneticFieldUnit baseUnit, MagneticFieldUnit siBaseUnit, IEnumerable<IUnitDefinition<MagneticFieldUnit>> unitMappings, MagneticField zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MagneticField.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MagneticField", typeof(MagneticField).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MagneticFieldInfo"/> class with the default settings.</returns>
             public static MagneticFieldInfo CreateDefault()
-                => new(nameof(MagneticField), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MagneticField), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MagneticFieldInfo"/> class with the default settings for the MagneticField quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MagneticFieldInfo"/> class with the default settings.
             /// </returns>
             public static MagneticFieldInfo CreateDefault(Func<IEnumerable<UnitDefinition<MagneticFieldUnit>>, IEnumerable<IUnitDefinition<MagneticFieldUnit>>> customizeUnits)
-                => new(nameof(MagneticField), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MagneticField), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MagneticField"/> is T^-2MI^-1.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of MagneticField is Tesla. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MagneticFieldUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MagneticFieldUnit.Tesla;
+
+            /// <summary>
+            ///     The default base unit of MagneticField is Tesla.
+            /// </summary>
+            public static MagneticFieldUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -205,6 +214,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of MagneticField, which is Tesla.
+        /// </summary>
+        public static MagneticFieldUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MagneticFieldUnit.Tesla;
         }
 
         /// <summary>
@@ -303,9 +321,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MagneticField,MagneticFieldUnit}.AsBaseValue"/>
         /// <returns><see cref="MagneticFieldUnit.Tesla"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MagneticField,MagneticFieldUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MagneticFieldUnit.Tesla"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MagneticField AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MagneticField,MagneticFieldUnit}.AsBaseValue"/>
+        /// <returns><see cref="MagneticFieldUnit.Tesla"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MagneticFieldUnit.Gauss"/>
@@ -391,8 +422,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Tesla.
         /// </summary>
-        public MagneticField TeslasToMagneticField()
+        public MagneticField TeslasToBaseMagneticField()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Tesla.
+        /// </summary>
+        public MagneticField TeslasToSiBaseMagneticField()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MagneticField"/> from <see cref="MagneticFieldUnit.Gauss"/>.

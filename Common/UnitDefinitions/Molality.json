@@ -1,10 +1,11 @@
 {
   "Name": "Molality",
   "BaseUnit": "MolePerKilogram",
+  "SiBaseUnit": "MolePerKilogram",
   "XmlDocSummary": "Molality is a measure of the amount of solute in a solution relative to a given mass of solvent.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Molality",
   "BaseDimensions": {
-	"N": 1,
+    "N": 1,
     "M": -1
   },
   "Units": [
@@ -29,7 +30,7 @@
       "SingularName": "MolePerGram",
       "PluralName": "MolesPerGram",
       "BaseUnits": {
-		"N": "Mole",
+        "N": "Mole",
         "M": "Gram"
       },
       "FromUnitToBaseFunc": "{x} / 1e-3",

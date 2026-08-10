@@ -66,15 +66,15 @@ namespace UnitsNet
         public sealed class RadioactivityInfo : QuantityInfo<Radioactivity, RadioactivityUnit>
         {
             /// <inheritdoc />
-            public RadioactivityInfo(string name, RadioactivityUnit baseUnit, IEnumerable<IUnitDefinition<RadioactivityUnit>> unitMappings, Radioactivity zero, BaseDimensions baseDimensions,
+            public RadioactivityInfo(string name, RadioactivityUnit baseUnit, RadioactivityUnit siBaseUnit, IEnumerable<IUnitDefinition<RadioactivityUnit>> unitMappings, Radioactivity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Radioactivity, RadioactivityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public RadioactivityInfo(string name, RadioactivityUnit baseUnit, IEnumerable<IUnitDefinition<RadioactivityUnit>> unitMappings, Radioactivity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Radioactivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Radioactivity", typeof(Radioactivity).Assembly))
+            public RadioactivityInfo(string name, RadioactivityUnit baseUnit, RadioactivityUnit siBaseUnit, IEnumerable<IUnitDefinition<RadioactivityUnit>> unitMappings, Radioactivity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Radioactivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Radioactivity", typeof(Radioactivity).Assembly))
             {
             }
 
@@ -83,7 +83,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="RadioactivityInfo"/> class with the default settings.</returns>
             public static RadioactivityInfo CreateDefault()
-                => new(nameof(Radioactivity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Radioactivity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="RadioactivityInfo"/> class with the default settings for the Radioactivity quantity and a callback for customizing the default unit mappings.
@@ -95,7 +95,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="RadioactivityInfo"/> class with the default settings.
             /// </returns>
             public static RadioactivityInfo CreateDefault(Func<IEnumerable<UnitDefinition<RadioactivityUnit>>, IEnumerable<IUnitDefinition<RadioactivityUnit>>> customizeUnits)
-                => new(nameof(Radioactivity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Radioactivity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Radioactivity"/> is T^-1.
@@ -110,6 +110,15 @@ namespace UnitsNet
             ///     The default base unit of Radioactivity is Becquerel. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static RadioactivityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = RadioactivityUnit.Becquerel;
+
+            /// <summary>
+            ///     The default base unit of Radioactivity is Becquerel.
+            /// </summary>
+            public static RadioactivityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -273,6 +282,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of Radioactivity, which is Becquerel.
+        /// </summary>
+        public static RadioactivityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => RadioactivityUnit.Becquerel;
+        }
+
+        /// <summary>
         ///     All units of measurement for the Radioactivity quantity.
         /// </summary>
         public static IReadOnlyCollection<RadioactivityUnit> Units
@@ -368,9 +386,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Radioactivity,RadioactivityUnit}.AsBaseValue"/>
         /// <returns><see cref="RadioactivityUnit.Becquerel"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Radioactivity,RadioactivityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="RadioactivityUnit.Becquerel"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Radioactivity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Radioactivity,RadioactivityUnit}.AsBaseValue"/>
+        /// <returns><see cref="RadioactivityUnit.Becquerel"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="RadioactivityUnit.Becquerel"/>
@@ -663,8 +694,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Becquerel.
         /// </summary>
-        public Radioactivity BecquerelsToRadioactivity()
+        public Radioactivity BecquerelsToBaseRadioactivity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Becquerel.
+        /// </summary>
+        public Radioactivity BecquerelsToSiBaseRadioactivity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Radioactivity"/> from <see cref="RadioactivityUnit.Becquerel"/>.

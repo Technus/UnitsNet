@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class TemperatureChangeRateInfo : QuantityInfo<TemperatureChangeRate, TemperatureChangeRateUnit>
         {
             /// <inheritdoc />
-            public TemperatureChangeRateInfo(string name, TemperatureChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureChangeRateUnit>> unitMappings, TemperatureChangeRate zero, BaseDimensions baseDimensions,
+            public TemperatureChangeRateInfo(string name, TemperatureChangeRateUnit baseUnit, TemperatureChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<TemperatureChangeRateUnit>> unitMappings, TemperatureChangeRate zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<TemperatureChangeRate, TemperatureChangeRateUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public TemperatureChangeRateInfo(string name, TemperatureChangeRateUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureChangeRateUnit>> unitMappings, TemperatureChangeRate zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, TemperatureChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.TemperatureChangeRate", typeof(TemperatureChangeRate).Assembly))
+            public TemperatureChangeRateInfo(string name, TemperatureChangeRateUnit baseUnit, TemperatureChangeRateUnit siBaseUnit, IEnumerable<IUnitDefinition<TemperatureChangeRateUnit>> unitMappings, TemperatureChangeRate zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, TemperatureChangeRate.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.TemperatureChangeRate", typeof(TemperatureChangeRate).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TemperatureChangeRateInfo"/> class with the default settings.</returns>
             public static TemperatureChangeRateInfo CreateDefault()
-                => new(nameof(TemperatureChangeRate), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(TemperatureChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TemperatureChangeRateInfo"/> class with the default settings for the TemperatureChangeRate quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TemperatureChangeRateInfo"/> class with the default settings.
             /// </returns>
             public static TemperatureChangeRateInfo CreateDefault(Func<IEnumerable<UnitDefinition<TemperatureChangeRateUnit>>, IEnumerable<IUnitDefinition<TemperatureChangeRateUnit>>> customizeUnits)
-                => new(nameof(TemperatureChangeRate), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(TemperatureChangeRate), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="TemperatureChangeRate"/> is T^-1Θ.
@@ -115,6 +115,15 @@ namespace UnitsNet
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
             } = TemperatureChangeRateUnit.DegreeCelsiusPerSecond;
+
+            /// <summary>
+            ///     The default base unit of TemperatureChangeRate is DegreeKelvinPerSecond.
+            /// </summary>
+            public static TemperatureChangeRateUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TemperatureChangeRateUnit.DegreeKelvinPerSecond;
 
             /// <summary>
             ///     Retrieves the default mappings for <see cref="TemperatureChangeRateUnit"/>.
@@ -238,6 +247,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of TemperatureChangeRate, which is DegreeKelvinPerSecond.
+        /// </summary>
+        public static TemperatureChangeRateUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => TemperatureChangeRateUnit.DegreeKelvinPerSecond;
+        }
+
+        /// <summary>
         ///     All units of measurement for the TemperatureChangeRate quantity.
         /// </summary>
         public static IReadOnlyCollection<TemperatureChangeRateUnit> Units
@@ -333,9 +351,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{TemperatureChangeRate,TemperatureChangeRateUnit}.AsBaseValue"/>
         /// <returns><see cref="TemperatureChangeRateUnit.DegreeCelsiusPerSecond"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{TemperatureChangeRate,TemperatureChangeRateUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TemperatureChangeRateUnit.DegreeKelvinPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TemperatureChangeRate AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{TemperatureChangeRate,TemperatureChangeRateUnit}.AsBaseValue"/>
+        /// <returns><see cref="TemperatureChangeRateUnit.DegreeKelvinPerSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond"/>
@@ -520,8 +551,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of DegreeCelsiusPerSecond.
         /// </summary>
-        public TemperatureChangeRate DegreesCelsiusPerSecondToTemperatureChangeRate()
+        public TemperatureChangeRate DegreesCelsiusPerSecondToBaseTemperatureChangeRate()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of DegreeKelvinPerSecond.
+        /// </summary>
+        public TemperatureChangeRate DegreesKelvinPerSecondToSiBaseTemperatureChangeRate()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureChangeRate"/> from <see cref="TemperatureChangeRateUnit.CentidegreeCelsiusPerSecond"/>.

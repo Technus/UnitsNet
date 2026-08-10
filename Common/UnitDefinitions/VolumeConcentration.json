@@ -1,10 +1,11 @@
 {
   "Name": "VolumeConcentration",
   "BaseUnit": "DecimalFraction",
+  "SiBaseUnit": "DecimalFraction",
   "XmlDocSummary": "The volume concentration (not to be confused with volume fraction) is defined as the volume of a constituent divided by the total volume of the mixture.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Concentration#Volume_concentration",
   "Units": [
-      {
+    {
       "SingularName": "DecimalFraction",
       "PluralName": "DecimalFractions",
       "FromUnitToBaseFunc": "{x}",
@@ -16,7 +17,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "LiterPerLiter",
       "PluralName": "LitersPerLiter",
       "FromUnitToBaseFunc": "{x}",
@@ -29,7 +30,7 @@
         }
       ]
     },
-	{
+    {
       "SingularName": "LiterPerMilliliter",
       "PluralName": "LitersPerMilliliter",
       "FromUnitToBaseFunc": "{x} / 1e-3",

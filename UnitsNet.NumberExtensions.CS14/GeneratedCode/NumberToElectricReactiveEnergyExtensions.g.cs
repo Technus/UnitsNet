@@ -50,6 +50,14 @@ namespace UnitsNet.NumberExtensions.NumberToElectricReactiveEnergy
                 => ElectricReactiveEnergy.FromKilovoltampereReactiveHours(value.ToQuantityValue());
 #endif
 
+            /// <inheritdoc cref="ElectricReactiveEnergy.FromKilovoltampereReactiveSeconds(QuantityValue)" />
+            public ElectricReactiveEnergy KilovoltampereReactiveSeconds
+#if NET7_0_OR_GREATER
+                => ElectricReactiveEnergy.FromKilovoltampereReactiveSeconds(QuantityValue.CreateChecked(value));
+#else
+                => ElectricReactiveEnergy.FromKilovoltampereReactiveSeconds(value.ToQuantityValue());
+#endif
+
             /// <inheritdoc cref="ElectricReactiveEnergy.FromMegavoltampereReactiveHours(QuantityValue)" />
             public ElectricReactiveEnergy MegavoltampereReactiveHours
 #if NET7_0_OR_GREATER
@@ -58,12 +66,28 @@ namespace UnitsNet.NumberExtensions.NumberToElectricReactiveEnergy
                 => ElectricReactiveEnergy.FromMegavoltampereReactiveHours(value.ToQuantityValue());
 #endif
 
+            /// <inheritdoc cref="ElectricReactiveEnergy.FromMegavoltampereReactiveSeconds(QuantityValue)" />
+            public ElectricReactiveEnergy MegavoltampereReactiveSeconds
+#if NET7_0_OR_GREATER
+                => ElectricReactiveEnergy.FromMegavoltampereReactiveSeconds(QuantityValue.CreateChecked(value));
+#else
+                => ElectricReactiveEnergy.FromMegavoltampereReactiveSeconds(value.ToQuantityValue());
+#endif
+
             /// <inheritdoc cref="ElectricReactiveEnergy.FromVoltampereReactiveHours(QuantityValue)" />
             public ElectricReactiveEnergy VoltampereReactiveHours
 #if NET7_0_OR_GREATER
                 => ElectricReactiveEnergy.FromVoltampereReactiveHours(QuantityValue.CreateChecked(value));
 #else
                 => ElectricReactiveEnergy.FromVoltampereReactiveHours(value.ToQuantityValue());
+#endif
+
+            /// <inheritdoc cref="ElectricReactiveEnergy.FromVoltampereReactiveSeconds(QuantityValue)" />
+            public ElectricReactiveEnergy VoltampereReactiveSeconds
+#if NET7_0_OR_GREATER
+                => ElectricReactiveEnergy.FromVoltampereReactiveSeconds(QuantityValue.CreateChecked(value));
+#else
+                => ElectricReactiveEnergy.FromVoltampereReactiveSeconds(value.ToQuantityValue());
 #endif
 
         }

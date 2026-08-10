@@ -75,15 +75,15 @@ namespace UnitsNet
         public sealed class SpecificEnergyInfo : QuantityInfo<SpecificEnergy, SpecificEnergyUnit>
         {
             /// <inheritdoc />
-            public SpecificEnergyInfo(string name, SpecificEnergyUnit baseUnit, IEnumerable<IUnitDefinition<SpecificEnergyUnit>> unitMappings, SpecificEnergy zero, BaseDimensions baseDimensions,
+            public SpecificEnergyInfo(string name, SpecificEnergyUnit baseUnit, SpecificEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificEnergyUnit>> unitMappings, SpecificEnergy zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<SpecificEnergy, SpecificEnergyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public SpecificEnergyInfo(string name, SpecificEnergyUnit baseUnit, IEnumerable<IUnitDefinition<SpecificEnergyUnit>> unitMappings, SpecificEnergy zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, SpecificEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificEnergy", typeof(SpecificEnergy).Assembly))
+            public SpecificEnergyInfo(string name, SpecificEnergyUnit baseUnit, SpecificEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<SpecificEnergyUnit>> unitMappings, SpecificEnergy zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, SpecificEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.SpecificEnergy", typeof(SpecificEnergy).Assembly))
             {
             }
 
@@ -92,7 +92,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="SpecificEnergyInfo"/> class with the default settings.</returns>
             public static SpecificEnergyInfo CreateDefault()
-                => new(nameof(SpecificEnergy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificEnergy), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="SpecificEnergyInfo"/> class with the default settings for the SpecificEnergy quantity and a callback for customizing the default unit mappings.
@@ -104,7 +104,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="SpecificEnergyInfo"/> class with the default settings.
             /// </returns>
             public static SpecificEnergyInfo CreateDefault(Func<IEnumerable<UnitDefinition<SpecificEnergyUnit>>, IEnumerable<IUnitDefinition<SpecificEnergyUnit>>> customizeUnits)
-                => new(nameof(SpecificEnergy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(SpecificEnergy), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="SpecificEnergy"/> is T^-2L^2.
@@ -119,6 +119,15 @@ namespace UnitsNet
             ///     The default base unit of SpecificEnergy is JoulePerKilogram. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static SpecificEnergyUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = SpecificEnergyUnit.JoulePerKilogram;
+
+            /// <summary>
+            ///     The default base unit of SpecificEnergy is JoulePerKilogram.
+            /// </summary>
+            public static SpecificEnergyUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -285,6 +294,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of SpecificEnergy, which is JoulePerKilogram.
+        /// </summary>
+        public static SpecificEnergyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => SpecificEnergyUnit.JoulePerKilogram;
+        }
+
+        /// <summary>
         ///     All units of measurement for the SpecificEnergy quantity.
         /// </summary>
         public static IReadOnlyCollection<SpecificEnergyUnit> Units
@@ -380,9 +398,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{SpecificEnergy,SpecificEnergyUnit}.AsBaseValue"/>
         /// <returns><see cref="SpecificEnergyUnit.JoulePerKilogram"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificEnergy,SpecificEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="SpecificEnergyUnit.JoulePerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SpecificEnergy AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{SpecificEnergy,SpecificEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="SpecificEnergyUnit.JoulePerKilogram"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="SpecificEnergyUnit.BtuPerPound"/>
@@ -684,8 +715,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogram.
         /// </summary>
-        public SpecificEnergy JoulesPerKilogramToSpecificEnergy()
+        public SpecificEnergy JoulesPerKilogramToBaseSpecificEnergy()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of JoulePerKilogram.
+        /// </summary>
+        public SpecificEnergy JoulesPerKilogramToSiBaseSpecificEnergy()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="SpecificEnergy"/> from <see cref="SpecificEnergyUnit.BtuPerPound"/>.

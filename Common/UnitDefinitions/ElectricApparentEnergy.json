@@ -1,6 +1,7 @@
 {
   "Name": "ElectricApparentEnergy",
   "BaseUnit": "VoltampereHour",
+  "SiBaseUnit": "VoltampereSecond",
   "XmlDocSummary": "A unit for expressing the integral of apparent power over time, equal to the product of 1 volt-ampere and 1 hour, or to 3600 joules.",
   "BaseDimensions": {
     "L": 2,
@@ -18,6 +19,24 @@
         {
           "Culture": "en-US",
           "Abbreviations": [ "VAh" ]
+        }
+      ]
+    },
+    {
+      "SingularName": "VoltampereSecond",
+      "PluralName": "VoltampereSeconds",
+      "BaseUnits": {
+        "L": "Meter",
+        "M": "Kilogram",
+        "T": "Second"
+      },
+      "FromUnitToBaseFunc": "{x} / 3600",
+      "FromBaseToUnitFunc": "{x} * 3600",
+      "Prefixes": [ "Kilo", "Mega" ],
+      "Localization": [
+        {
+          "Culture": "en-US",
+          "Abbreviations": [ "VAs" ]
         }
       ]
     }

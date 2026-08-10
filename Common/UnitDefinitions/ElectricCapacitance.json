@@ -1,6 +1,7 @@
 {
   "Name": "ElectricCapacitance",
   "BaseUnit": "Farad",
+  "SiBaseUnit": "Farad",
   "XmlDocSummary": "Capacitance is the capacity of a material object or device to store electric charge.",
   "XmlDocRemarks": "https://en.wikipedia.org/wiki/Capacitance",
   "BaseDimensions": {

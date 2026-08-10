@@ -70,15 +70,15 @@ namespace UnitsNet
         public sealed class ElectricResistanceInfo : QuantityInfo<ElectricResistance, ElectricResistanceUnit>
         {
             /// <inheritdoc />
-            public ElectricResistanceInfo(string name, ElectricResistanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricResistanceUnit>> unitMappings, ElectricResistance zero, BaseDimensions baseDimensions,
+            public ElectricResistanceInfo(string name, ElectricResistanceUnit baseUnit, ElectricResistanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricResistanceUnit>> unitMappings, ElectricResistance zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricResistance, ElectricResistanceUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricResistanceInfo(string name, ElectricResistanceUnit baseUnit, IEnumerable<IUnitDefinition<ElectricResistanceUnit>> unitMappings, ElectricResistance zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricResistance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricResistance", typeof(ElectricResistance).Assembly))
+            public ElectricResistanceInfo(string name, ElectricResistanceUnit baseUnit, ElectricResistanceUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricResistanceUnit>> unitMappings, ElectricResistance zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricResistance.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricResistance", typeof(ElectricResistance).Assembly))
             {
             }
 
@@ -87,7 +87,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricResistanceInfo"/> class with the default settings.</returns>
             public static ElectricResistanceInfo CreateDefault()
-                => new(nameof(ElectricResistance), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricResistance), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricResistanceInfo"/> class with the default settings for the ElectricResistance quantity and a callback for customizing the default unit mappings.
@@ -99,7 +99,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricResistanceInfo"/> class with the default settings.
             /// </returns>
             public static ElectricResistanceInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricResistanceUnit>>, IEnumerable<IUnitDefinition<ElectricResistanceUnit>>> customizeUnits)
-                => new(nameof(ElectricResistance), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricResistance), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricResistance"/> is T^-3L^2MI^-2.
@@ -114,6 +114,15 @@ namespace UnitsNet
             ///     The default base unit of ElectricResistance is Ohm. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static ElectricResistanceUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricResistanceUnit.Ohm;
+
+            /// <summary>
+            ///     The default base unit of ElectricResistance is Ohm.
+            /// </summary>
+            public static ElectricResistanceUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -214,6 +223,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of ElectricResistance, which is Ohm.
+        /// </summary>
+        public static ElectricResistanceUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricResistanceUnit.Ohm;
+        }
+
+        /// <summary>
         ///     All units of measurement for the ElectricResistance quantity.
         /// </summary>
         public static IReadOnlyCollection<ElectricResistanceUnit> Units
@@ -309,9 +327,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricResistance,ElectricResistanceUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricResistanceUnit.Ohm"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricResistance,ElectricResistanceUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricResistanceUnit.Ohm"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricResistance AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricResistance,ElectricResistanceUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricResistanceUnit.Ohm"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricResistanceUnit.Gigaohm"/>
@@ -415,8 +446,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
-        public ElectricResistance OhmsToElectricResistance()
+        public ElectricResistance OhmsToBaseElectricResistance()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        public ElectricResistance OhmsToSiBaseElectricResistance()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricResistance"/> from <see cref="ElectricResistanceUnit.Gigaohm"/>.

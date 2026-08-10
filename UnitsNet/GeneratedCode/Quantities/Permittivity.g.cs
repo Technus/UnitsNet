@@ -69,15 +69,15 @@ namespace UnitsNet
         public sealed class PermittivityInfo : QuantityInfo<Permittivity, PermittivityUnit>
         {
             /// <inheritdoc />
-            public PermittivityInfo(string name, PermittivityUnit baseUnit, IEnumerable<IUnitDefinition<PermittivityUnit>> unitMappings, Permittivity zero, BaseDimensions baseDimensions,
+            public PermittivityInfo(string name, PermittivityUnit baseUnit, PermittivityUnit siBaseUnit, IEnumerable<IUnitDefinition<PermittivityUnit>> unitMappings, Permittivity zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<Permittivity, PermittivityUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public PermittivityInfo(string name, PermittivityUnit baseUnit, IEnumerable<IUnitDefinition<PermittivityUnit>> unitMappings, Permittivity zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, Permittivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Permittivity", typeof(Permittivity).Assembly))
+            public PermittivityInfo(string name, PermittivityUnit baseUnit, PermittivityUnit siBaseUnit, IEnumerable<IUnitDefinition<PermittivityUnit>> unitMappings, Permittivity zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, Permittivity.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.Permittivity", typeof(Permittivity).Assembly))
             {
             }
 
@@ -86,7 +86,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="PermittivityInfo"/> class with the default settings.</returns>
             public static PermittivityInfo CreateDefault()
-                => new(nameof(Permittivity), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Permittivity), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="PermittivityInfo"/> class with the default settings for the Permittivity quantity and a callback for customizing the default unit mappings.
@@ -98,7 +98,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="PermittivityInfo"/> class with the default settings.
             /// </returns>
             public static PermittivityInfo CreateDefault(Func<IEnumerable<UnitDefinition<PermittivityUnit>>, IEnumerable<IUnitDefinition<PermittivityUnit>>> customizeUnits)
-                => new(nameof(Permittivity), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(Permittivity), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="Permittivity"/> is T^4L^-3M^-1I^2.
@@ -113,6 +113,15 @@ namespace UnitsNet
             ///     The default base unit of Permittivity is FaradPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static PermittivityUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = PermittivityUnit.FaradPerMeter;
+
+            /// <summary>
+            ///     The default base unit of Permittivity is FaradPerMeter.
+            /// </summary>
+            public static PermittivityUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -189,6 +198,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of Permittivity, which is FaradPerMeter.
+        /// </summary>
+        public static PermittivityUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PermittivityUnit.FaradPerMeter;
         }
 
         /// <summary>
@@ -287,9 +305,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{Permittivity,PermittivityUnit}.AsBaseValue"/>
         /// <returns><see cref="PermittivityUnit.FaradPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Permittivity,PermittivityUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="PermittivityUnit.FaradPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Permittivity AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{Permittivity,PermittivityUnit}.AsBaseValue"/>
+        /// <returns><see cref="PermittivityUnit.FaradPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="PermittivityUnit.FaradPerMeter"/>
@@ -330,8 +361,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of FaradPerMeter.
         /// </summary>
-        public Permittivity FaradsPerMeterToPermittivity()
+        public Permittivity FaradsPerMeterToBasePermittivity()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of FaradPerMeter.
+        /// </summary>
+        public Permittivity FaradsPerMeterToSiBasePermittivity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="Permittivity"/> from <see cref="PermittivityUnit.FaradPerMeter"/>.

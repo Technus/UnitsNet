@@ -1,6 +1,7 @@
 {
   "Name": "PressureChangeRate",
   "BaseUnit": "PascalPerSecond",
+  "SiBaseUnit": "PascalPerSecond",
   "XmlDocSummary": "Pressure change rate is the ratio of the pressure change to the time during which the change occurred (value of pressure changes per unit time).",
   "BaseDimensions": {
     "L": -1,
@@ -99,12 +100,12 @@
         {
           "Culture": "en-US",
           "Abbreviations": [ "psi/s", "lb/in²/s" ],
-          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/s", "kipf/in²/s" ]}
+          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/s", "kipf/in²/s" ] }
         },
         {
           "Culture": "ru-RU",
           "Abbreviations": [ "psi/с", "lb/in²/с" ],
-          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/с", "kipf/in²/с" ]}
+          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/с", "kipf/in²/с" ] }
         }
       ]
     },
@@ -123,12 +124,12 @@
         {
           "Culture": "en-US",
           "Abbreviations": [ "psi/min", "lb/in²/min" ],
-          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/min", "kipf/in²/min" ]}
+          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/min", "kipf/in²/min" ] }
         },
         {
           "Culture": "ru-RU",
           "Abbreviations": [ "psi/мин", "lb/in²/мин" ],
-          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/мин", "kipf/in²/мин" ]}
+          "AbbreviationsForPrefixes": { "Kilo": [ "ksi/мин", "kipf/in²/мин" ] }
         }
       ]
     },

@@ -74,15 +74,15 @@ namespace UnitsNet
         public sealed class MassConcentrationInfo : QuantityInfo<MassConcentration, MassConcentrationUnit>
         {
             /// <inheritdoc />
-            public MassConcentrationInfo(string name, MassConcentrationUnit baseUnit, IEnumerable<IUnitDefinition<MassConcentrationUnit>> unitMappings, MassConcentration zero, BaseDimensions baseDimensions,
+            public MassConcentrationInfo(string name, MassConcentrationUnit baseUnit, MassConcentrationUnit siBaseUnit, IEnumerable<IUnitDefinition<MassConcentrationUnit>> unitMappings, MassConcentration zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<MassConcentration, MassConcentrationUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public MassConcentrationInfo(string name, MassConcentrationUnit baseUnit, IEnumerable<IUnitDefinition<MassConcentrationUnit>> unitMappings, MassConcentration zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, MassConcentration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassConcentration", typeof(MassConcentration).Assembly))
+            public MassConcentrationInfo(string name, MassConcentrationUnit baseUnit, MassConcentrationUnit siBaseUnit, IEnumerable<IUnitDefinition<MassConcentrationUnit>> unitMappings, MassConcentration zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, MassConcentration.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.MassConcentration", typeof(MassConcentration).Assembly))
             {
             }
 
@@ -91,7 +91,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="MassConcentrationInfo"/> class with the default settings.</returns>
             public static MassConcentrationInfo CreateDefault()
-                => new(nameof(MassConcentration), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassConcentration), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="MassConcentrationInfo"/> class with the default settings for the MassConcentration quantity and a callback for customizing the default unit mappings.
@@ -103,7 +103,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="MassConcentrationInfo"/> class with the default settings.
             /// </returns>
             public static MassConcentrationInfo CreateDefault(Func<IEnumerable<UnitDefinition<MassConcentrationUnit>>, IEnumerable<IUnitDefinition<MassConcentrationUnit>>> customizeUnits)
-                => new(nameof(MassConcentration), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(MassConcentration), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="MassConcentration"/> is L^-3M.
@@ -118,6 +118,15 @@ namespace UnitsNet
             ///     The default base unit of MassConcentration is KilogramPerCubicMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static MassConcentrationUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = MassConcentrationUnit.KilogramPerCubicMeter;
+
+            /// <summary>
+            ///     The default base unit of MassConcentration is KilogramPerCubicMeter.
+            /// </summary>
+            public static MassConcentrationUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -341,6 +350,15 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     The SI base unit of MassConcentration, which is KilogramPerCubicMeter.
+        /// </summary>
+        public static MassConcentrationUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => MassConcentrationUnit.KilogramPerCubicMeter;
+        }
+
+        /// <summary>
         ///     All units of measurement for the MassConcentration quantity.
         /// </summary>
         public static IReadOnlyCollection<MassConcentrationUnit> Units
@@ -436,9 +454,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{MassConcentration,MassConcentrationUnit}.AsBaseValue"/>
         /// <returns><see cref="MassConcentrationUnit.KilogramPerCubicMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassConcentration,MassConcentrationUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="MassConcentrationUnit.KilogramPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MassConcentration AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{MassConcentration,MassConcentrationUnit}.AsBaseValue"/>
+        /// <returns><see cref="MassConcentrationUnit.KilogramPerCubicMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="MassConcentrationUnit.CentigramPerDeciliter"/>
@@ -911,8 +942,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
-        public MassConcentration KilogramsPerCubicMeterToMassConcentration()
+        public MassConcentration KilogramsPerCubicMeterToBaseMassConcentration()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KilogramPerCubicMeter.
+        /// </summary>
+        public MassConcentration KilogramsPerCubicMeterToSiBaseMassConcentration()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="MassConcentration"/> from <see cref="MassConcentrationUnit.CentigramPerDeciliter"/>.

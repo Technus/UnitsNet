@@ -67,15 +67,15 @@ namespace UnitsNet
         public sealed class TemperatureGradientInfo : QuantityInfo<TemperatureGradient, TemperatureGradientUnit>
         {
             /// <inheritdoc />
-            public TemperatureGradientInfo(string name, TemperatureGradientUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureGradientUnit>> unitMappings, TemperatureGradient zero, BaseDimensions baseDimensions,
+            public TemperatureGradientInfo(string name, TemperatureGradientUnit baseUnit, TemperatureGradientUnit siBaseUnit, IEnumerable<IUnitDefinition<TemperatureGradientUnit>> unitMappings, TemperatureGradient zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<TemperatureGradient, TemperatureGradientUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public TemperatureGradientInfo(string name, TemperatureGradientUnit baseUnit, IEnumerable<IUnitDefinition<TemperatureGradientUnit>> unitMappings, TemperatureGradient zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, TemperatureGradient.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.TemperatureGradient", typeof(TemperatureGradient).Assembly))
+            public TemperatureGradientInfo(string name, TemperatureGradientUnit baseUnit, TemperatureGradientUnit siBaseUnit, IEnumerable<IUnitDefinition<TemperatureGradientUnit>> unitMappings, TemperatureGradient zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, TemperatureGradient.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.TemperatureGradient", typeof(TemperatureGradient).Assembly))
             {
             }
 
@@ -84,7 +84,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="TemperatureGradientInfo"/> class with the default settings.</returns>
             public static TemperatureGradientInfo CreateDefault()
-                => new(nameof(TemperatureGradient), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(TemperatureGradient), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="TemperatureGradientInfo"/> class with the default settings for the TemperatureGradient quantity and a callback for customizing the default unit mappings.
@@ -96,7 +96,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="TemperatureGradientInfo"/> class with the default settings.
             /// </returns>
             public static TemperatureGradientInfo CreateDefault(Func<IEnumerable<UnitDefinition<TemperatureGradientUnit>>, IEnumerable<IUnitDefinition<TemperatureGradientUnit>>> customizeUnits)
-                => new(nameof(TemperatureGradient), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(TemperatureGradient), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="TemperatureGradient"/> is L^-1Θ.
@@ -111,6 +111,15 @@ namespace UnitsNet
             ///     The default base unit of TemperatureGradient is KelvinPerMeter. All conversions, as defined in the <see cref="GetDefaultMappings"/>, go via this value.
             /// </summary>
             public static TemperatureGradientUnit DefaultBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = TemperatureGradientUnit.KelvinPerMeter;
+
+            /// <summary>
+            ///     The default base unit of TemperatureGradient is KelvinPerMeter.
+            /// </summary>
+            public static TemperatureGradientUnit DefaultSiBaseUnit
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get;
@@ -196,6 +205,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of TemperatureGradient, which is KelvinPerMeter.
+        /// </summary>
+        public static TemperatureGradientUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => TemperatureGradientUnit.KelvinPerMeter;
         }
 
         /// <summary>
@@ -294,9 +312,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{TemperatureGradient,TemperatureGradientUnit}.AsBaseValue"/>
         /// <returns><see cref="TemperatureGradientUnit.KelvinPerMeter"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{TemperatureGradient,TemperatureGradientUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="TemperatureGradientUnit.KelvinPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TemperatureGradient AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{TemperatureGradient,TemperatureGradientUnit}.AsBaseValue"/>
+        /// <returns><see cref="TemperatureGradientUnit.KelvinPerMeter"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="TemperatureGradientUnit.DegreeCelsiusPerKilometer"/>
@@ -364,8 +395,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerMeter.
         /// </summary>
-        public TemperatureGradient KelvinsPerMeterToTemperatureGradient()
+        public TemperatureGradient KelvinsPerMeterToBaseTemperatureGradient()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of KelvinPerMeter.
+        /// </summary>
+        public TemperatureGradient KelvinsPerMeterToSiBaseTemperatureGradient()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="TemperatureGradient"/> from <see cref="TemperatureGradientUnit.DegreeCelsiusPerKilometer"/>.

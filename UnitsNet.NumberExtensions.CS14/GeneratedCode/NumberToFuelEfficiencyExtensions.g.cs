@@ -58,6 +58,14 @@ namespace UnitsNet.NumberExtensions.NumberToFuelEfficiency
                 => FuelEfficiency.FromLitersPer100Kilometers(value.ToQuantityValue());
 #endif
 
+            /// <inheritdoc cref="FuelEfficiency.FromMetersPerCubicMeter(QuantityValue)" />
+            public FuelEfficiency MetersPerCubicMeter
+#if NET7_0_OR_GREATER
+                => FuelEfficiency.FromMetersPerCubicMeter(QuantityValue.CreateChecked(value));
+#else
+                => FuelEfficiency.FromMetersPerCubicMeter(value.ToQuantityValue());
+#endif
+
             /// <inheritdoc cref="FuelEfficiency.FromMilesPerUkGallon(QuantityValue)" />
             public FuelEfficiency MilesPerUkGallon
 #if NET7_0_OR_GREATER

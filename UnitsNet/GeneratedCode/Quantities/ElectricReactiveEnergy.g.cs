@@ -68,15 +68,15 @@ namespace UnitsNet
         public sealed class ElectricReactiveEnergyInfo : QuantityInfo<ElectricReactiveEnergy, ElectricReactiveEnergyUnit>
         {
             /// <inheritdoc />
-            public ElectricReactiveEnergyInfo(string name, ElectricReactiveEnergyUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactiveEnergyUnit>> unitMappings, ElectricReactiveEnergy zero, BaseDimensions baseDimensions,
+            public ElectricReactiveEnergyInfo(string name, ElectricReactiveEnergyUnit baseUnit, ElectricReactiveEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricReactiveEnergyUnit>> unitMappings, ElectricReactiveEnergy zero, BaseDimensions baseDimensions,
                 QuantityFromDelegate<ElectricReactiveEnergy, ElectricReactiveEnergyUnit> fromDelegate, ResourceManager? unitAbbreviations)
-                : base(name, baseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
+                : base(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, fromDelegate, unitAbbreviations)
             {
             }
 
             /// <inheritdoc />
-            public ElectricReactiveEnergyInfo(string name, ElectricReactiveEnergyUnit baseUnit, IEnumerable<IUnitDefinition<ElectricReactiveEnergyUnit>> unitMappings, ElectricReactiveEnergy zero, BaseDimensions baseDimensions)
-                : this(name, baseUnit, unitMappings, zero, baseDimensions, ElectricReactiveEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricReactiveEnergy", typeof(ElectricReactiveEnergy).Assembly))
+            public ElectricReactiveEnergyInfo(string name, ElectricReactiveEnergyUnit baseUnit, ElectricReactiveEnergyUnit siBaseUnit, IEnumerable<IUnitDefinition<ElectricReactiveEnergyUnit>> unitMappings, ElectricReactiveEnergy zero, BaseDimensions baseDimensions)
+                : this(name, baseUnit, siBaseUnit, unitMappings, zero, baseDimensions, ElectricReactiveEnergy.From, new ResourceManager("UnitsNet.GeneratedCode.Resources.ElectricReactiveEnergy", typeof(ElectricReactiveEnergy).Assembly))
             {
             }
 
@@ -85,7 +85,7 @@ namespace UnitsNet
             /// </summary>
             /// <returns>A new instance of the <see cref="ElectricReactiveEnergyInfo"/> class with the default settings.</returns>
             public static ElectricReactiveEnergyInfo CreateDefault()
-                => new(nameof(ElectricReactiveEnergy), DefaultBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricReactiveEnergy), DefaultBaseUnit, DefaultSiBaseUnit, GetDefaultMappings(), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     Creates a new instance of the <see cref="ElectricReactiveEnergyInfo"/> class with the default settings for the ElectricReactiveEnergy quantity and a callback for customizing the default unit mappings.
@@ -97,7 +97,7 @@ namespace UnitsNet
             ///     A new instance of the <see cref="ElectricReactiveEnergyInfo"/> class with the default settings.
             /// </returns>
             public static ElectricReactiveEnergyInfo CreateDefault(Func<IEnumerable<UnitDefinition<ElectricReactiveEnergyUnit>>, IEnumerable<IUnitDefinition<ElectricReactiveEnergyUnit>>> customizeUnits)
-                => new(nameof(ElectricReactiveEnergy), DefaultBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
+                => new(nameof(ElectricReactiveEnergy), DefaultBaseUnit, DefaultSiBaseUnit, customizeUnits(GetDefaultMappings()), new(0, DefaultBaseUnit), DefaultBaseDimensions);
 
             /// <summary>
             ///     The <see cref="BaseDimensions" /> for <see cref="ElectricReactiveEnergy"/> is T^-2L^2M.
@@ -118,6 +118,15 @@ namespace UnitsNet
             } = ElectricReactiveEnergyUnit.VoltampereReactiveHour;
 
             /// <summary>
+            ///     The default base unit of ElectricReactiveEnergy is VoltampereReactiveSecond.
+            /// </summary>
+            public static ElectricReactiveEnergyUnit DefaultSiBaseUnit
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get;
+            } = ElectricReactiveEnergyUnit.VoltampereReactiveSecond;
+
+            /// <summary>
             ///     Retrieves the default mappings for <see cref="ElectricReactiveEnergyUnit"/>.
             /// </summary>
             /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="UnitDefinition{ElectricReactiveEnergyUnit}"/> representing the default unit mappings for ElectricReactiveEnergy.</returns>
@@ -126,10 +135,19 @@ namespace UnitsNet
                 yield return new (ElectricReactiveEnergyUnit.KilovoltampereReactiveHour, "KilovoltampereReactiveHour", "KilovoltampereReactiveHours", BaseUnits.Undefined,
                      new QuantityValue(1, 1000)
                 );
+                yield return new (ElectricReactiveEnergyUnit.KilovoltampereReactiveSecond, "KilovoltampereReactiveSecond", "KilovoltampereReactiveSeconds", BaseUnits.Undefined,
+                     new QuantityValue(18, 5)
+                );
                 yield return new (ElectricReactiveEnergyUnit.MegavoltampereReactiveHour, "MegavoltampereReactiveHour", "MegavoltampereReactiveHours", BaseUnits.Undefined,
                      new QuantityValue(1, 1000000)
                 );
+                yield return new (ElectricReactiveEnergyUnit.MegavoltampereReactiveSecond, "MegavoltampereReactiveSecond", "MegavoltampereReactiveSeconds", new BaseUnits(length: LengthUnit.Kilometer, mass: MassUnit.Kilogram, time: DurationUnit.Second),
+                     new QuantityValue(9, 2500)
+                );
                 yield return new (ElectricReactiveEnergyUnit.VoltampereReactiveHour, "VoltampereReactiveHour", "VoltampereReactiveHours", BaseUnits.Undefined);
+                yield return new (ElectricReactiveEnergyUnit.VoltampereReactiveSecond, "VoltampereReactiveSecond", "VoltampereReactiveSeconds", new BaseUnits(length: LengthUnit.Meter, mass: MassUnit.Kilogram, time: DurationUnit.Second),
+                     3600
+                );
             }
         }
 
@@ -194,6 +212,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Info.BaseUnitInfo.Value;
+        }
+
+        /// <summary>
+        ///     The SI base unit of ElectricReactiveEnergy, which is VoltampereReactiveSecond.
+        /// </summary>
+        public static ElectricReactiveEnergyUnit SiBaseUnit
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => ElectricReactiveEnergyUnit.VoltampereReactiveSecond;
         }
 
         /// <summary>
@@ -292,9 +319,22 @@ namespace UnitsNet
 
         /// <inheritdoc cref="IQuantity{ElectricReactiveEnergy,ElectricReactiveEnergyUnit}.AsBaseValue"/>
         /// <returns><see cref="ElectricReactiveEnergyUnit.VoltampereReactiveHour"/></returns>
+        [Obsolete("Yields unpredictable results with non bare SI based units")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public QuantityValue AsBaseValue()
             => this.As(BaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricReactiveEnergy,ElectricReactiveEnergyUnit}.AsBaseQuantity"/>
+        /// <returns><see cref="ElectricReactiveEnergyUnit.VoltampereReactiveSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ElectricReactiveEnergy AsSiBaseQuantity()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
+
+        /// <inheritdoc cref="IQuantity{ElectricReactiveEnergy,ElectricReactiveEnergyUnit}.AsBaseValue"/>
+        /// <returns><see cref="ElectricReactiveEnergyUnit.VoltampereReactiveSecond"/></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public QuantityValue AsSiBaseValue()
+            => this.As(SiBaseUnit);
 
         /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactiveEnergyUnit.KilovoltampereReactiveHour"/>
@@ -303,6 +343,15 @@ namespace UnitsNet
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => this.As(ElectricReactiveEnergyUnit.KilovoltampereReactiveHour);
+        }
+
+        /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactiveEnergyUnit.KilovoltampereReactiveSecond"/>
+        /// </summary>
+        public QuantityValue KilovoltampereReactiveSeconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactiveEnergyUnit.KilovoltampereReactiveSecond);
         }
 
         /// <summary>
@@ -315,12 +364,30 @@ namespace UnitsNet
         }
 
         /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactiveEnergyUnit.MegavoltampereReactiveSecond"/>
+        /// </summary>
+        public QuantityValue MegavoltampereReactiveSeconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactiveEnergyUnit.MegavoltampereReactiveSecond);
+        }
+
+        /// <summary>
         ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactiveEnergyUnit.VoltampereReactiveHour"/>
         /// </summary>
         public QuantityValue VoltampereReactiveHours
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => this.As(ElectricReactiveEnergyUnit.VoltampereReactiveHour);
+        }
+
+        /// <summary>
+        ///     Gets a <see cref="QuantityValue"/> value of this quantity converted into <see cref="ElectricReactiveEnergyUnit.VoltampereReactiveSecond"/>
+        /// </summary>
+        public QuantityValue VoltampereReactiveSeconds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => this.As(ElectricReactiveEnergyUnit.VoltampereReactiveSecond);
         }
 
         #endregion
@@ -353,8 +420,14 @@ namespace UnitsNet
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactiveHour.
         /// </summary>
-        public ElectricReactiveEnergy VoltampereReactiveHoursToElectricReactiveEnergy()
+        public ElectricReactiveEnergy VoltampereReactiveHoursToBaseElectricReactiveEnergy()
             => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
+        ///     Convert to base unit quantity of VoltampereReactiveSecond.
+        /// </summary>
+        public ElectricReactiveEnergy VoltampereReactiveSecondsToSiBaseElectricReactiveEnergy()
+            => new(this.As(SiBaseUnit), SiBaseUnit);
 
         /// <summary>
         ///     Creates a <see cref="ElectricReactiveEnergy"/> from <see cref="ElectricReactiveEnergyUnit.KilovoltampereReactiveHour"/>.
@@ -364,6 +437,13 @@ namespace UnitsNet
             => new(value, ElectricReactiveEnergyUnit.KilovoltampereReactiveHour);
 
         /// <summary>
+        ///     Creates a <see cref="ElectricReactiveEnergy"/> from <see cref="ElectricReactiveEnergyUnit.KilovoltampereReactiveSecond"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ElectricReactiveEnergy FromKilovoltampereReactiveSeconds(QuantityValue value)
+            => new(value, ElectricReactiveEnergyUnit.KilovoltampereReactiveSecond);
+
+        /// <summary>
         ///     Creates a <see cref="ElectricReactiveEnergy"/> from <see cref="ElectricReactiveEnergyUnit.MegavoltampereReactiveHour"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -371,11 +451,25 @@ namespace UnitsNet
             => new(value, ElectricReactiveEnergyUnit.MegavoltampereReactiveHour);
 
         /// <summary>
+        ///     Creates a <see cref="ElectricReactiveEnergy"/> from <see cref="ElectricReactiveEnergyUnit.MegavoltampereReactiveSecond"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ElectricReactiveEnergy FromMegavoltampereReactiveSeconds(QuantityValue value)
+            => new(value, ElectricReactiveEnergyUnit.MegavoltampereReactiveSecond);
+
+        /// <summary>
         ///     Creates a <see cref="ElectricReactiveEnergy"/> from <see cref="ElectricReactiveEnergyUnit.VoltampereReactiveHour"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ElectricReactiveEnergy FromVoltampereReactiveHours(QuantityValue value)
             => new(value, ElectricReactiveEnergyUnit.VoltampereReactiveHour);
+
+        /// <summary>
+        ///     Creates a <see cref="ElectricReactiveEnergy"/> from <see cref="ElectricReactiveEnergyUnit.VoltampereReactiveSecond"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ElectricReactiveEnergy FromVoltampereReactiveSeconds(QuantityValue value)
+            => new(value, ElectricReactiveEnergyUnit.VoltampereReactiveSecond);
 
         /// <summary>
         ///     Dynamically convert from value and unit enum <see cref="ElectricReactiveEnergyUnit" /> to <see cref="ElectricReactiveEnergy" />.
