@@ -41,6 +41,7 @@ namespace CodeGen.Generators
             var extensionsOutputDir = $"{rootDir}/UnitsNet.NumberExtensions/GeneratedCode";
             var extensionsTestOutputDir = $"{rootDir}/UnitsNet.NumberExtensions.Tests/GeneratedCode";
             var extensionsCs14OutputDir = $"{rootDir}/UnitsNet.NumberExtensions.CS14/GeneratedCode";
+            var extensionsBaseUnits = $"{rootDir}/UnitsNet.NumberExtensions.BaseUnits/GeneratedCode";
             var extensionsCs14TestOutputDir = $"{rootDir}/UnitsNet.NumberExtensions.CS14.Tests/GeneratedCode";
             var testProjectDir = $"{rootDir}/UnitsNet.Tests";
 
@@ -51,6 +52,7 @@ namespace CodeGen.Generators
             Directory.CreateDirectory($"{extensionsTestOutputDir}");
             Directory.CreateDirectory($"{extensionsCs14OutputDir}");
             Directory.CreateDirectory($"{extensionsCs14TestOutputDir}");
+            Directory.CreateDirectory($"{extensionsBaseUnits}");
             Directory.CreateDirectory($"{testProjectDir}/GeneratedCode");
             Directory.CreateDirectory($"{testProjectDir}/GeneratedCode/TestsBase");
             Directory.CreateDirectory($"{testProjectDir}/GeneratedCode/QuantityTests");
@@ -80,6 +82,7 @@ namespace CodeGen.Generators
             GenerateIQuantityTests(quantities, $"{testProjectDir}/GeneratedCode/IQuantityTests.g.cs");
             GenerateStaticQuantity(quantities, $"{outputDir}/Quantity.g.cs");
             GenerateResourceFiles(quantities, $"{outputDir}/Resources");
+            GenerateStaticBaseUnits(quantities, $"{extensionsBaseUnits}/BaseUnits.g.cs");
 
             var unitCount = quantities.SelectMany(q => q.Units).Count();
             Log.Information("");
@@ -150,6 +153,13 @@ namespace CodeGen.Generators
             var content = new StaticQuantityGenerator(quantities).Generate();
             CodeGenFile.WriteAllText(filePath, content);
             Log.Information("✅ Quantity.g.cs");
+        }
+
+        private static void GenerateStaticBaseUnits(Quantity[] quantities, string filePath)
+        {
+            var content = new NumberExtensionsBaseUnitsGenerator(quantities).Generate();
+            CodeGenFile.WriteAllText(filePath, content);
+            Log.Information("✅ BaseUnits.g.cs");
         }
 
         private static void GenerateResourceFiles(Quantity[] quantities, string resourcesDirectory)

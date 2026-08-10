@@ -1,0 +1,50 @@
+<Project>
+  <PropertyGroup Label="UserInput, keep empty in remotes">
+    <UseUnits></UseUnits>
+    <RefUnits></RefUnits>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Compute Properties">
+    <UseUnits Condition="'$(UseUnits)' == '' and '$(Configuration)' == 'Debug'">true</UseUnits>
+    <RefUnits Condition="('$(RefUnits)' == '' or '$(UseUnits)' == 'true') and '$(Configuration)' == 'Debug'">true</RefUnits>
+
+    <DefineConstants Condition="'$(UseUnits)' == 'true'">$(DefineConstants);USE_UNITSNET;</DefineConstants>
+    <DefineConstants Condition="'$(RefUnits)' == 'true'">$(DefineConstants);REF_UNITSNET;</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(RefUnits)' == 'true'">
+    <ProjectReference Include="..\..\UnitsNet.NumberExtensions.CS14\UnitsNet.NumberExtensions.CS14.csproj" />
+    <ProjectReference Include="..\..\UnitsNet.NumberExtensions\UnitsNet.NumberExtensions.csproj" />
+    <ProjectReference Include="..\..\UnitsNet\UnitsNet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RefUnits)' != 'true'">
+    <ProjectReference Include="..\..\UnitsNet.NumberExtensions.BaseUnits\UnitsNet.NumberExtensions.BaseUnits.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="UnitsExtensions.cs"/>
+    <Using Include="UnitConverter.Console"/>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(RefUnits)' == 'true'">
+    <Using Include="UnitsNet.Angle" Alias="_Angle"/>
+    <Using Include="UnitsNet.Area" Alias="_Area"/>
+    <Using Include="UnitsNet.Length" Alias="_Length"/>
+    <Using Include="UnitsNet.QuantityValue" Alias="_Quantity"/>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseUnits)' == 'true'">
+    <Using Include="UnitsNet.Angle" Alias="Angle"/>
+    <Using Include="UnitsNet.Area" Alias="Area"/>
+    <Using Include="UnitsNet.Length" Alias="Length"/>
+    <Using Include="UnitsNet.QuantityValue" Alias="Quantity"/>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseUnits)' != 'true'">
+    <Using Include="double" Alias="Angle"/>
+    <Using Include="double" Alias="Area"/>
+    <Using Include="double" Alias="Length"/>
+    <Using Include="double" Alias="Quantity"/>
+  </ItemGroup>
+</Project>

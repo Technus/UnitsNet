@@ -374,6 +374,12 @@ namespace UnitsNet
         #region Static Factory Methods
 
         /// <summary>
+        ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
+        /// </summary>
+        public RotationalStiffnessPerLength NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
         ///     Creates a <see cref="RotationalStiffnessPerLength"/> from <see cref="RotationalStiffnessPerLengthUnit.KilonewtonMeterPerRadianPerMeter"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -547,6 +553,38 @@ namespace UnitsNet
             => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator QuantityValue(RotationalStiffnessPerLength d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator RotationalStiffnessPerLength(QuantityValue d) => new(d, BaseUnit);
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator double(RotationalStiffnessPerLength d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator RotationalStiffnessPerLength(double d) => new(d, BaseUnit);
 
         #region Arithmetic Operators
 

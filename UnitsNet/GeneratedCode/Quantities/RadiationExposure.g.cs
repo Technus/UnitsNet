@@ -409,6 +409,12 @@ namespace UnitsNet
         #region Static Factory Methods
 
         /// <summary>
+        ///     Convert to base unit quantity of CoulombPerKilogram.
+        /// </summary>
+        public RadiationExposure CoulombsPerKilogramToRadiationExposure()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
         ///     Creates a <see cref="RadiationExposure"/> from <see cref="RadiationExposureUnit.CoulombPerKilogram"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -603,6 +609,38 @@ namespace UnitsNet
             => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator QuantityValue(RadiationExposure d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator RadiationExposure(QuantityValue d) => new(d, BaseUnit);
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator double(RadiationExposure d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator RadiationExposure(double d) => new(d, BaseUnit);
 
         #region Arithmetic Operators
 

@@ -413,6 +413,12 @@ namespace UnitsNet
         #region Static Factory Methods
 
         /// <summary>
+        ///     Convert to base unit quantity of Ohm.
+        /// </summary>
+        public ElectricImpedance OhmsToElectricImpedance()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
         ///     Creates a <see cref="ElectricImpedance"/> from <see cref="ElectricImpedanceUnit.Gigaohm"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -607,6 +613,38 @@ namespace UnitsNet
             => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator QuantityValue(ElectricImpedance d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator ElectricImpedance(QuantityValue d) => new(d, BaseUnit);
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator double(ElectricImpedance d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator ElectricImpedance(double d) => new(d, BaseUnit);
 
         #region Arithmetic Operators
 

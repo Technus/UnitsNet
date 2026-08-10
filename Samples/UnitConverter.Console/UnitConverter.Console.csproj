@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="UnitsGlobalUsings.props" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,11 +9,5 @@
     <Configurations>Debug;Release;Official</Configurations>
     <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\UnitsNet.NumberExtensions.CS14\UnitsNet.NumberExtensions.CS14.csproj" />
-    <ProjectReference Include="..\..\UnitsNet.NumberExtensions\UnitsNet.NumberExtensions.csproj" />
-    <ProjectReference Include="..\..\UnitsNet\UnitsNet.csproj" />
-  </ItemGroup>
-
+  
 </Project>

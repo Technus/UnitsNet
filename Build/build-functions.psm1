@@ -103,6 +103,7 @@ function Start-PackNugets {
     "UnitsNet.Serialization.JsonNet/UnitsNet.Serialization.JsonNet.csproj",
     "UnitsNet.Serialization.SystemTextJson/UnitsNet.Serialization.SystemTextJson.csproj",
     "UnitsNet.NumberExtensions/UnitsNet.NumberExtensions.csproj",
+    "UnitsNet.NumberExtensions.BaseUnits/UnitsNet.NumberExtensions.BaseUnits.csproj",
     "UnitsNet.NumberExtensions.CS14/UnitsNet.NumberExtensions.CS14.csproj"
     )
 

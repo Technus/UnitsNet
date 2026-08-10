@@ -46,8 +46,9 @@
   <Project Path="UnitsNet.Benchmark/UnitsNet.Benchmark.csproj" />
   <Project Path="UnitsNet.GlobalSetup.DefaultFirst.Tests/UnitsNet.GlobalSetup.DefaultFirst.Tests.csproj" />
   <Project Path="UnitsNet.GlobalSetup.Tests/UnitsNet.GlobalSetup.Tests.csproj" />
-  <Project Path="UnitsNet.NumberExtensions.CS14.Tests\UnitsNet.NumberExtensions.CS14.Tests.csproj" Type="Classic C#" />
-  <Project Path="UnitsNet.NumberExtensions.CS14\UnitsNet.NumberExtensions.CS14.csproj" Type="Classic C#" />
+  <Project Path="UnitsNet.NumberExtensions.BaseUnits/UnitsNet.NumberExtensions.BaseUnits.csproj" Id="94d992cd-96e9-45a2-a953-0111a1d79bdc" />
+  <Project Path="UnitsNet.NumberExtensions.CS14.Tests\UnitsNet.NumberExtensions.CS14.Tests.csproj" />
+  <Project Path="UnitsNet.NumberExtensions.CS14\UnitsNet.NumberExtensions.CS14.csproj" />
   <Project Path="UnitsNet.NumberExtensions.Tests/UnitsNet.NumberExtensions.Tests.csproj" />
   <Project Path="UnitsNet.NumberExtensions/UnitsNet.NumberExtensions.csproj" />
   <Project Path="UnitsNet.Serialization.JsonNet.Tests/UnitsNet.Serialization.JsonNet.Tests.csproj" />

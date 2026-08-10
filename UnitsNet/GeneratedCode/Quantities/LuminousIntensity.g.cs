@@ -331,6 +331,12 @@ namespace UnitsNet
         #region Static Factory Methods
 
         /// <summary>
+        ///     Convert to base unit quantity of Candela.
+        /// </summary>
+        public LuminousIntensity CandelaToLuminousIntensity()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
         ///     Creates a <see cref="LuminousIntensity"/> from <see cref="LuminousIntensityUnit.Candela"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -476,6 +482,38 @@ namespace UnitsNet
             => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator QuantityValue(LuminousIntensity d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator LuminousIntensity(QuantityValue d) => new(d, BaseUnit);
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator double(LuminousIntensity d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator LuminousIntensity(double d) => new(d, BaseUnit);
 
         #region Arithmetic Operators
 

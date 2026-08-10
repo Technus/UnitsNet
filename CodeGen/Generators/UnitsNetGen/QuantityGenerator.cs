@@ -91,6 +91,7 @@ namespace UnitsNet
             GenerateStaticMethods();
             GenerateStaticFactoryMethods();
             GenerateStaticParseMethods();
+            GenerateCastOperators();
             GenerateArithmeticOperators();
             GenerateRelationalOperators();
             GenerateEqualityAndComparison();
@@ -573,6 +574,14 @@ namespace UnitsNet
             Writer.WL(@"
         #region Static Factory Methods
 ");
+            Writer.WL($@"
+        /// <summary>
+        ///     Convert to base unit quantity of {_quantity.BaseUnit}.
+        /// </summary>
+        public {_quantity.Name} {_quantity.Units.First(u => u.SingularName == _quantity.BaseUnit).PluralName}To{_quantity.Name}()
+            => new(this.As(BaseUnit), BaseUnit);
+");
+
             foreach (Unit unit in _quantity.Units)
             {
                 if (unit.SkipConversionGeneration) continue;
@@ -734,6 +743,43 @@ namespace UnitsNet
             => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
+");
+        }
+
+        private void GenerateCastOperators()
+        {
+            Writer.WL($@"
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name=""d""></param>
+        [Obsolete(""Gets value of base unit. Use factory methods instead to specify unit conversion."")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator QuantityValue({_quantity.Name} d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name=""d""></param>
+        [Obsolete(""Gets value of base unit. Use factory methods instead to specify unit conversion."")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator {_quantity.Name}(QuantityValue d) => new(d, BaseUnit);
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name=""d""></param>
+        [Obsolete(""Gets value of base unit. Use factory methods instead to specify unit conversion."")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator double({_quantity.Name} d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name=""d""></param>
+        [Obsolete(""Gets value of base unit. Use factory methods instead to specify unit conversion."")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator {_quantity.Name}(double d) => new(d, BaseUnit);
 ");
         }
 

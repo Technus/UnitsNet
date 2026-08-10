@@ -341,6 +341,12 @@ namespace UnitsNet
         #region Static Factory Methods
 
         /// <summary>
+        ///     Convert to base unit quantity of KelvinPerWatt.
+        /// </summary>
+        public ThermalResistance KelvinsPerWattToThermalResistance()
+            => new(this.As(BaseUnit), BaseUnit);
+
+        /// <summary>
         ///     Creates a <see cref="ThermalResistance"/> from <see cref="ThermalResistanceUnit.DegreeCelsiusPerWatt"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -493,6 +499,38 @@ namespace UnitsNet
             => UnitParser.Default.TryParse(str, Info, provider, out unit);
 
         #endregion
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator QuantityValue(ThermalResistance d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator ThermalResistance(QuantityValue d) => new(d, BaseUnit);
+
+        /// <summary>
+        /// Gets value of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator double(ThermalResistance d) => d.As(BaseUnit);
+
+        /// <summary>
+        /// Gets quantity of base unit.
+        /// </summary>
+        /// <param name="d"></param>
+        [Obsolete("Gets value of base unit. Use factory methods instead to specify unit conversion.")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator ThermalResistance(double d) => new(d, BaseUnit);
 
         #region Arithmetic Operators
 

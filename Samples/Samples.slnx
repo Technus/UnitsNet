@@ -9,6 +9,9 @@
     <File Path="Directory.Packages.props" />
     <File Path="msbuild.cmd" />
   </Folder>
+  <Project Path="../UnitsNet.NumberExtensions.BaseUnits/UnitsNet.NumberExtensions.BaseUnits.csproj">
+    <BuildType Solution="Official|*" Project="Release" />
+  </Project>
   <Project Path="../UnitsNet.NumberExtensions.CS14/UnitsNet.NumberExtensions.CS14.csproj">
     <BuildType Solution="Official|*" Project="Release" />
   </Project>

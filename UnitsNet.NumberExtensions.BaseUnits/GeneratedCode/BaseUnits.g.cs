@@ -26,7 +26,7 @@ namespace UnitsNet;
 /// <summary>
 ///     Dynamically parse or construct quantities when types are only known at runtime.
 /// </summary>
-public partial class Quantity
+public static class BaseUnitsExtensions
 {
 #if NET
     extension(double d)
@@ -36,925 +36,925 @@ public partial class Quantity
         ///     Convert to base unit quantity of Gray.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AbsorbedDoseOfIonizingRadiation GraysToAbsorbedDoseOfIonizingRadiation()
-            => new(d, AbsorbedDoseOfIonizingRadiationUnit.Gray);
+        public double GraysToAbsorbedDoseOfIonizingRadiation()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Acceleration MetersPerSecondSquaredToAcceleration()
-            => new(d, AccelerationUnit.MeterPerSecondSquared);
+        public double MetersPerSecondSquaredToAcceleration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Mole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AmountOfSubstance MolesToAmountOfSubstance()
-            => new(d, AmountOfSubstanceUnit.Mole);
+        public double MolesToAmountOfSubstance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelVolt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AmplitudeRatio DecibelVoltsToAmplitudeRatio()
-            => new(d, AmplitudeRatioUnit.DecibelVolt);
+        public double DecibelVoltsToAmplitudeRatio()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Radian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Angle RadiansToAngle()
-            => new(d, AngleUnit.Radian);
+        public double RadiansToAngle()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Area SquareMetersToArea()
-            => new(d, AreaUnit.SquareMeter);
+        public double SquareMetersToArea()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AreaDensity KilogramsPerSquareMeterToAreaDensity()
-            => new(d, AreaDensityUnit.KilogramPerSquareMeter);
+        public double KilogramsPerSquareMeterToAreaDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheFourth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AreaMomentOfInertia MetersToTheFourthToAreaMomentOfInertia()
-            => new(d, AreaMomentOfInertiaUnit.MeterToTheFourth);
+        public double MetersToTheFourthToAreaMomentOfInertia()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AreaPerLength SquareMetersPerMeterToAreaPerLength()
-            => new(d, AreaPerLengthUnit.SquareMeterPerMeter);
+        public double SquareMetersPerMeterToAreaPerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of BitPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BitRate BitsPerSecondToBitRate()
-            => new(d, BitRateUnit.BitPerSecond);
+        public double BitsPerSecondToBitRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerJoule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BrakeSpecificFuelConsumption KilogramsPerJouleToBrakeSpecificFuelConsumption()
-            => new(d, BrakeSpecificFuelConsumptionUnit.KilogramPerJoule);
+        public double KilogramsPerJouleToBrakeSpecificFuelConsumption()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public CoefficientOfThermalExpansion PerKelvinToCoefficientOfThermalExpansion()
-            => new(d, CoefficientOfThermalExpansionUnit.PerKelvin);
+        public double PerKelvinToCoefficientOfThermalExpansion()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InversePascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Compressibility InversePascalsToCompressibility()
-            => new(d, CompressibilityUnit.InversePascal);
+        public double InversePascalsToCompressibility()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Density KilogramsPerCubicMeterToDensity()
-            => new(d, DensityUnit.KilogramPerCubicMeter);
+        public double KilogramsPerCubicMeterToDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GraySquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public DoseAreaProduct GraySquareMetersToDoseAreaProduct()
-            => new(d, DoseAreaProductUnit.GraySquareMeter);
+        public double GraySquareMetersToDoseAreaProduct()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Second.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Duration SecondsToDuration()
-            => new(d, DurationUnit.Second);
+        public double SecondsToDuration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecondPerMeterSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public DynamicViscosity NewtonSecondsPerMeterSquaredToDynamicViscosity()
-            => new(d, DynamicViscosityUnit.NewtonSecondPerMeterSquared);
+        public double NewtonSecondsPerMeterSquaredToDynamicViscosity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricAdmittance SiemensToElectricAdmittance()
-            => new(d, ElectricAdmittanceUnit.Siemens);
+        public double SiemensToElectricAdmittance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereHour.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricApparentEnergy VoltampereHoursToElectricApparentEnergy()
-            => new(d, ElectricApparentEnergyUnit.VoltampereHour);
+        public double VoltampereHoursToElectricApparentEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Voltampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricApparentPower VoltamperesToElectricApparentPower()
-            => new(d, ElectricApparentPowerUnit.Voltampere);
+        public double VoltamperesToElectricApparentPower()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Farad.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCapacitance FaradsToElectricCapacitance()
-            => new(d, ElectricCapacitanceUnit.Farad);
+        public double FaradsToElectricCapacitance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Coulomb.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCharge CoulombsToElectricCharge()
-            => new(d, ElectricChargeUnit.Coulomb);
+        public double CoulombsToElectricCharge()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricChargeDensity CoulombsPerCubicMeterToElectricChargeDensity()
-            => new(d, ElectricChargeDensityUnit.CoulombPerCubicMeter);
+        public double CoulombsPerCubicMeterToElectricChargeDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricConductance SiemensToElectricConductance()
-            => new(d, ElectricConductanceUnit.Siemens);
+        public double SiemensToElectricConductance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SiemensPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricConductivity SiemensPerMeterToElectricConductivity()
-            => new(d, ElectricConductivityUnit.SiemensPerMeter);
+        public double SiemensPerMeterToElectricConductivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCurrent AmperesToElectricCurrent()
-            => new(d, ElectricCurrentUnit.Ampere);
+        public double AmperesToElectricCurrent()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCurrentDensity AmperesPerSquareMeterToElectricCurrentDensity()
-            => new(d, ElectricCurrentDensityUnit.AmperePerSquareMeter);
+        public double AmperesPerSquareMeterToElectricCurrentDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCurrentGradient AmperesPerSecondToElectricCurrentGradient()
-            => new(d, ElectricCurrentGradientUnit.AmperePerSecond);
+        public double AmperesPerSecondToElectricCurrentGradient()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricField VoltsPerMeterToElectricField()
-            => new(d, ElectricFieldUnit.VoltPerMeter);
+        public double VoltsPerMeterToElectricField()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricImpedance OhmsToElectricImpedance()
-            => new(d, ElectricImpedanceUnit.Ohm);
+        public double OhmsToElectricImpedance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Henry.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricInductance HenriesToElectricInductance()
-            => new(d, ElectricInductanceUnit.Henry);
+        public double HenriesToElectricInductance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Volt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricPotential VoltsToElectricPotential()
-            => new(d, ElectricPotentialUnit.Volt);
+        public double VoltsToElectricPotential()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricPotentialChangeRate VoltsPerSecondToElectricPotentialChangeRate()
-            => new(d, ElectricPotentialChangeRateUnit.VoltPerSecond);
+        public double VoltsPerSecondToElectricPotentialChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricReactance OhmsToElectricReactance()
-            => new(d, ElectricReactanceUnit.Ohm);
+        public double OhmsToElectricReactance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactiveHour.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricReactiveEnergy VoltampereReactiveHoursToElectricReactiveEnergy()
-            => new(d, ElectricReactiveEnergyUnit.VoltampereReactiveHour);
+        public double VoltampereReactiveHoursToElectricReactiveEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactive.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricReactivePower VoltamperesReactiveToElectricReactivePower()
-            => new(d, ElectricReactivePowerUnit.VoltampereReactive);
+        public double VoltamperesReactiveToElectricReactivePower()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricResistance OhmsToElectricResistance()
-            => new(d, ElectricResistanceUnit.Ohm);
+        public double OhmsToElectricResistance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of OhmMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricResistivity OhmMetersToElectricResistivity()
-            => new(d, ElectricResistivityUnit.OhmMeter);
+        public double OhmMetersToElectricResistivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricSurfaceChargeDensity CoulombsPerSquareMeterToElectricSurfaceChargeDensity()
-            => new(d, ElectricSurfaceChargeDensityUnit.CoulombPerSquareMeter);
+        public double CoulombsPerSquareMeterToElectricSurfaceChargeDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricSusceptance SiemensToElectricSusceptance()
-            => new(d, ElectricSusceptanceUnit.Siemens);
+        public double SiemensToElectricSusceptance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Joule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Energy JoulesToEnergy()
-            => new(d, EnergyUnit.Joule);
+        public double JoulesToEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public EnergyDensity JoulesPerCubicMeterToEnergyDensity()
-            => new(d, EnergyDensityUnit.JoulePerCubicMeter);
+        public double JoulesPerCubicMeterToEnergyDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Entropy JoulesPerKelvinToEntropy()
-            => new(d, EntropyUnit.JoulePerKelvin);
+        public double JoulesPerKelvinToEntropy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FluidResistance PascalSecondsPerCubicMeterToFluidResistance()
-            => new(d, FluidResistanceUnit.PascalSecondPerCubicMeter);
+        public double PascalSecondsPerCubicMeterToFluidResistance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Newton.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Force NewtonsToForce()
-            => new(d, ForceUnit.Newton);
+        public double NewtonsToForce()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ForceChangeRate NewtonsPerSecondToForceChangeRate()
-            => new(d, ForceChangeRateUnit.NewtonPerSecond);
+        public double NewtonsPerSecondToForceChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ForcePerLength NewtonsPerMeterToForcePerLength()
-            => new(d, ForcePerLengthUnit.NewtonPerMeter);
+        public double NewtonsPerMeterToForcePerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Hertz.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Frequency HertzToFrequency()
-            => new(d, FrequencyUnit.Hertz);
+        public double HertzToFrequency()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilometerPerLiter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FuelEfficiency KilometersPerLiterToFuelEfficiency()
-            => new(d, FuelEfficiencyUnit.KilometerPerLiter);
+        public double KilometersPerLiterToFuelEfficiency()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public HeatFlux WattsPerSquareMeterToHeatFlux()
-            => new(d, HeatFluxUnit.WattPerSquareMeter);
+        public double WattsPerSquareMeterToHeatFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public HeatTransferCoefficient WattsPerSquareMeterKelvinToHeatTransferCoefficient()
-            => new(d, HeatTransferCoefficientUnit.WattPerSquareMeterKelvin);
+        public double WattsPerSquareMeterKelvinToHeatTransferCoefficient()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lux.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Illuminance LuxToIlluminance()
-            => new(d, IlluminanceUnit.Lux);
+        public double LuxToIlluminance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Impulse NewtonSecondsToImpulse()
-            => new(d, ImpulseUnit.NewtonSecond);
+        public double NewtonSecondsToImpulse()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Bit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Information BitsToInformation()
-            => new(d, InformationUnit.Bit);
+        public double BitsToInformation()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Irradiance WattsPerSquareMeterToIrradiance()
-            => new(d, IrradianceUnit.WattPerSquareMeter);
+        public double WattsPerSquareMeterToIrradiance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Irradiation JoulesPerSquareMeterToIrradiation()
-            => new(d, IrradiationUnit.JoulePerSquareMeter);
+        public double JoulesPerSquareMeterToIrradiation()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondCubed.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Jerk MetersPerSecondCubedToJerk()
-            => new(d, JerkUnit.MeterPerSecondCubed);
+        public double MetersPerSecondCubedToJerk()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public KinematicViscosity SquareMetersPerSecondToKinematicViscosity()
-            => new(d, KinematicViscosityUnit.SquareMeterPerSecond);
+        public double SquareMetersPerSecondToKinematicViscosity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LeakRate PascalCubicMetersPerSecondToLeakRate()
-            => new(d, LeakRateUnit.PascalCubicMeterPerSecond);
+        public double PascalCubicMetersPerSecondToLeakRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Meter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Length MetersToLength()
-            => new(d, LengthUnit.Meter);
+        public double MetersToLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Decibel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Level DecibelsToLevel()
-            => new(d, LevelUnit.Decibel);
+        public double DecibelsToLevel()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LinearDensity KilogramsPerMeterToLinearDensity()
-            => new(d, LinearDensityUnit.KilogramPerMeter);
+        public double KilogramsPerMeterToLinearDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LinearPowerDensity WattsPerMeterToLinearPowerDensity()
-            => new(d, LinearPowerDensityUnit.WattPerMeter);
+        public double WattsPerMeterToLinearPowerDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CandelaPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Luminance CandelasPerSquareMeterToLuminance()
-            => new(d, LuminanceUnit.CandelaPerSquareMeter);
+        public double CandelasPerSquareMeterToLuminance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Luminosity WattsToLuminosity()
-            => new(d, LuminosityUnit.Watt);
+        public double WattsToLuminosity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lumen.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LuminousFlux LumensToLuminousFlux()
-            => new(d, LuminousFluxUnit.Lumen);
+        public double LumensToLuminousFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Candela.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LuminousIntensity CandelaToLuminousIntensity()
-            => new(d, LuminousIntensityUnit.Candela);
+        public double CandelaToLuminousIntensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Tesla.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MagneticField TeslasToMagneticField()
-            => new(d, MagneticFieldUnit.Tesla);
+        public double TeslasToMagneticField()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Weber.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MagneticFlux WebersToMagneticFlux()
-            => new(d, MagneticFluxUnit.Weber);
+        public double WebersToMagneticFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Magnetization AmperesPerMeterToMagnetization()
-            => new(d, MagnetizationUnit.AmperePerMeter);
+        public double AmperesPerMeterToMagnetization()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Mass KilogramsToMass()
-            => new(d, MassUnit.Kilogram);
+        public double KilogramsToMass()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassConcentration KilogramsPerCubicMeterToMassConcentration()
-            => new(d, MassConcentrationUnit.KilogramPerCubicMeter);
+        public double KilogramsPerCubicMeterToMassConcentration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassFlow GramsPerSecondToMassFlow()
-            => new(d, MassFlowUnit.GramPerSecond);
+        public double GramsPerSecondToMassFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassFlux KilogramsPerSecondPerSquareMeterToMassFlux()
-            => new(d, MassFluxUnit.KilogramPerSecondPerSquareMeter);
+        public double KilogramsPerSecondPerSquareMeterToMassFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassFraction DecimalFractionsToMassFraction()
-            => new(d, MassFractionUnit.DecimalFraction);
+        public double DecimalFractionsToMassFraction()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassMomentOfInertia KilogramSquareMetersToMassMomentOfInertia()
-            => new(d, MassMomentOfInertiaUnit.KilogramSquareMeter);
+        public double KilogramSquareMetersToMassMomentOfInertia()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Molality MolesPerKilogramToMolality()
-            => new(d, MolalityUnit.MolePerKilogram);
+        public double MolesPerKilogramToMolality()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarEnergy JoulesPerMoleToMolarEnergy()
-            => new(d, MolarEnergyUnit.JoulePerMole);
+        public double JoulesPerMoleToMolarEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMoleKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarEntropy JoulesPerMoleKelvinToMolarEntropy()
-            => new(d, MolarEntropyUnit.JoulePerMoleKelvin);
+        public double JoulesPerMoleKelvinToMolarEntropy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarFlow MolesPerSecondToMolarFlow()
-            => new(d, MolarFlowUnit.MolePerSecond);
+        public double MolesPerSecondToMolarFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Molarity MolesPerCubicMeterToMolarity()
-            => new(d, MolarityUnit.MolePerCubicMeter);
+        public double MolesPerCubicMeterToMolarity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarMass KilogramsPerMoleToMolarMass()
-            => new(d, MolarMassUnit.KilogramPerMole);
+        public double KilogramsPerMoleToMolarMass()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of HenryPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Permeability HenriesPerMeterToPermeability()
-            => new(d, PermeabilityUnit.HenryPerMeter);
+        public double HenriesPerMeterToPermeability()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of FaradPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Permittivity FaradsPerMeterToPermittivity()
-            => new(d, PermittivityUnit.FaradPerMeter);
+        public double FaradsPerMeterToPermittivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PorousMediumPermeability SquareMetersToPorousMediumPermeability()
-            => new(d, PorousMediumPermeabilityUnit.SquareMeter);
+        public double SquareMetersToPorousMediumPermeability()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Power WattsToPower()
-            => new(d, PowerUnit.Watt);
+        public double WattsToPower()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PowerDensity WattsPerCubicMeterToPowerDensity()
-            => new(d, PowerDensityUnit.WattPerCubicMeter);
+        public double WattsPerCubicMeterToPowerDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PowerRatio DecibelWattsToPowerRatio()
-            => new(d, PowerRatioUnit.DecibelWatt);
+        public double DecibelWattsToPowerRatio()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Pascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Pressure PascalsToPressure()
-            => new(d, PressureUnit.Pascal);
+        public double PascalsToPressure()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PressureChangeRate PascalsPerSecondToPressureChangeRate()
-            => new(d, PressureChangeRateUnit.PascalPerSecond);
+        public double PascalsPerSecondToPressureChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Sievert.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RadiationEquivalentDose SievertsToRadiationEquivalentDose()
-            => new(d, RadiationEquivalentDoseUnit.Sievert);
+        public double SievertsToRadiationEquivalentDose()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SievertPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RadiationEquivalentDoseRate SievertsPerSecondToRadiationEquivalentDoseRate()
-            => new(d, RadiationEquivalentDoseRateUnit.SievertPerSecond);
+        public double SievertsPerSecondToRadiationEquivalentDoseRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RadiationExposure CoulombsPerKilogramToRadiationExposure()
-            => new(d, RadiationExposureUnit.CoulombPerKilogram);
+        public double CoulombsPerKilogramToRadiationExposure()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Becquerel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Radioactivity BecquerelsToRadioactivity()
-            => new(d, RadioactivityUnit.Becquerel);
+        public double BecquerelsToRadioactivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Ratio DecimalFractionsToRatio()
-            => new(d, RatioUnit.DecimalFraction);
+        public double DecimalFractionsToRatio()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFractionPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RatioChangeRate DecimalFractionsPerSecondToRatioChangeRate()
-            => new(d, RatioChangeRateUnit.DecimalFractionPerSecond);
+        public double DecimalFractionsPerSecondToRatioChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ReciprocalArea InverseSquareMetersToReciprocalArea()
-            => new(d, ReciprocalAreaUnit.InverseSquareMeter);
+        public double InverseSquareMetersToReciprocalArea()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ReciprocalLength InverseMetersToReciprocalLength()
-            => new(d, ReciprocalLengthUnit.InverseMeter);
+        public double InverseMetersToReciprocalLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Percent.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RelativeHumidity PercentToRelativeHumidity()
-            => new(d, RelativeHumidityUnit.Percent);
+        public double PercentToRelativeHumidity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalAcceleration RadiansPerSecondSquaredToRotationalAcceleration()
-            => new(d, RotationalAccelerationUnit.RadianPerSecondSquared);
+        public double RadiansPerSecondSquaredToRotationalAcceleration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalSpeed RadiansPerSecondToRotationalSpeed()
-            => new(d, RotationalSpeedUnit.RadianPerSecond);
+        public double RadiansPerSecondToRotationalSpeed()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalStiffness NewtonMetersPerRadianToRotationalStiffness()
-            => new(d, RotationalStiffnessUnit.NewtonMeterPerRadian);
+        public double NewtonMetersPerRadianToRotationalStiffness()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalStiffnessPerLength NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
-            => new(d, RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter);
+        public double NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Scalar AmountToScalar()
-            => new(d, ScalarUnit.Amount);
+        public double AmountToScalar()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Steradian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SolidAngle SteradiansToSolidAngle()
-            => new(d, SolidAngleUnit.Steradian);
+        public double SteradiansToSolidAngle()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificEnergy JoulesPerKilogramToSpecificEnergy()
-            => new(d, SpecificEnergyUnit.JoulePerKilogram);
+        public double JoulesPerKilogramToSpecificEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogramKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificEntropy JoulesPerKilogramKelvinToSpecificEntropy()
-            => new(d, SpecificEntropyUnit.JoulePerKilogramKelvin);
+        public double JoulesPerKilogramKelvinToSpecificEntropy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerKilonewtonSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificFuelConsumption GramsPerKilonewtonSecondToSpecificFuelConsumption()
-            => new(d, SpecificFuelConsumptionUnit.GramPerKilonewtonSecond);
+        public double GramsPerKilonewtonSecondToSpecificFuelConsumption()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificVolume CubicMetersPerKilogramToSpecificVolume()
-            => new(d, SpecificVolumeUnit.CubicMeterPerKilogram);
+        public double CubicMetersPerKilogramToSpecificVolume()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificWeight NewtonsPerCubicMeterToSpecificWeight()
-            => new(d, SpecificWeightUnit.NewtonPerCubicMeter);
+        public double NewtonsPerCubicMeterToSpecificWeight()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Speed MetersPerSecondToSpeed()
-            => new(d, SpeedUnit.MeterPerSecond);
+        public double MetersPerSecondToSpeed()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public StandardVolumeFlow StandardCubicMetersPerSecondToStandardVolumeFlow()
-            => new(d, StandardVolumeFlowUnit.StandardCubicMeterPerSecond);
+        public double StandardCubicMetersPerSecondToStandardVolumeFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Temperature KelvinsToTemperature()
-            => new(d, TemperatureUnit.Kelvin);
+        public double KelvinsToTemperature()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DegreeCelsiusPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TemperatureChangeRate DegreesCelsiusPerSecondToTemperatureChangeRate()
-            => new(d, TemperatureChangeRateUnit.DegreeCelsiusPerSecond);
+        public double DegreesCelsiusPerSecondToTemperatureChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TemperatureDelta KelvinsToTemperatureDelta()
-            => new(d, TemperatureDeltaUnit.Kelvin);
+        public double KelvinsToTemperatureDelta()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TemperatureGradient KelvinsPerMeterToTemperatureGradient()
-            => new(d, TemperatureGradientUnit.KelvinPerMeter);
+        public double KelvinsPerMeterToTemperatureGradient()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalConductance WattsPerKelvinToThermalConductance()
-            => new(d, ThermalConductanceUnit.WattPerKelvin);
+        public double WattsPerKelvinToThermalConductance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalConductivity WattsPerMeterKelvinToThermalConductivity()
-            => new(d, ThermalConductivityUnit.WattPerMeterKelvin);
+        public double WattsPerMeterKelvinToThermalConductivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterKelvinPerKilowatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalInsulance SquareMeterKelvinsPerKilowattToThermalInsulance()
-            => new(d, ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt);
+        public double SquareMeterKelvinsPerKilowattToThermalInsulance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalResistance KelvinsPerWattToThermalResistance()
-            => new(d, ThermalResistanceUnit.KelvinPerWatt);
+        public double KelvinsPerWattToThermalResistance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinMeterPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalResistivity KelvinMetersPerWattToThermalResistivity()
-            => new(d, ThermalResistivityUnit.KelvinMeterPerWatt);
+        public double KelvinMetersPerWattToThermalResistivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilowattPerSquareMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalTransmittance KilowattsPerSquareMeterKelvinToThermalTransmittance()
-            => new(d, ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin);
+        public double KilowattsPerSquareMeterKelvinToThermalTransmittance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Torque NewtonMetersToTorque()
-            => new(d, TorqueUnit.NewtonMeter);
+        public double NewtonMetersToTorque()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NTU.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Turbidity NTUToTurbidity()
-            => new(d, TurbidityUnit.NTU);
+        public double NTUToTurbidity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InternationalUnit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VitaminA InternationalUnitsToVitaminA()
-            => new(d, VitaminAUnit.InternationalUnit);
+        public double InternationalUnitsToVitaminA()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Volume CubicMetersToVolume()
-            => new(d, VolumeUnit.CubicMeter);
+        public double CubicMetersToVolume()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumeConcentration DecimalFractionsToVolumeConcentration()
-            => new(d, VolumeConcentrationUnit.DecimalFraction);
+        public double DecimalFractionsToVolumeConcentration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumeFlow CubicMetersPerSecondToVolumeFlow()
-            => new(d, VolumeFlowUnit.CubicMeterPerSecond);
+        public double CubicMetersPerSecondToVolumeFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumeFlowPerArea CubicMetersPerSecondPerSquareMeterToVolumeFlowPerArea()
-            => new(d, VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter);
+        public double CubicMetersPerSecondPerSquareMeterToVolumeFlowPerArea()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumePerLength CubicMetersPerMeterToVolumePerLength()
-            => new(d, VolumePerLengthUnit.CubicMeterPerMeter);
+        public double CubicMetersPerMeterToVolumePerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumetricHeatCapacity JoulesPerCubicMeterKelvinToVolumetricHeatCapacity()
-            => new(d, VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin);
+        public double JoulesPerCubicMeterKelvinToVolumetricHeatCapacity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheSixth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public WarpingMomentOfInertia MetersToTheSixthToWarpingMomentOfInertia()
-            => new(d, WarpingMomentOfInertiaUnit.MeterToTheSixth);
+        public double MetersToTheSixthToWarpingMomentOfInertia()
+            => d;
     }
 
     extension(int d)
@@ -964,1088 +964,925 @@ public partial class Quantity
         ///     Convert to base unit quantity of Gray.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AbsorbedDoseOfIonizingRadiation GraysToAbsorbedDoseOfIonizingRadiation()
-            => new(d, AbsorbedDoseOfIonizingRadiationUnit.Gray);
+        public int GraysToAbsorbedDoseOfIonizingRadiation()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Acceleration MetersPerSecondSquaredToAcceleration()
-            => new(d, AccelerationUnit.MeterPerSecondSquared);
+        public int MetersPerSecondSquaredToAcceleration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Mole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AmountOfSubstance MolesToAmountOfSubstance()
-            => new(d, AmountOfSubstanceUnit.Mole);
+        public int MolesToAmountOfSubstance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelVolt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AmplitudeRatio DecibelVoltsToAmplitudeRatio()
-            => new(d, AmplitudeRatioUnit.DecibelVolt);
+        public int DecibelVoltsToAmplitudeRatio()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Radian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Angle RadiansToAngle()
-            => new(d, AngleUnit.Radian);
+        public int RadiansToAngle()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Area SquareMetersToArea()
-            => new(d, AreaUnit.SquareMeter);
+        public int SquareMetersToArea()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AreaDensity KilogramsPerSquareMeterToAreaDensity()
-            => new(d, AreaDensityUnit.KilogramPerSquareMeter);
+        public int KilogramsPerSquareMeterToAreaDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheFourth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AreaMomentOfInertia MetersToTheFourthToAreaMomentOfInertia()
-            => new(d, AreaMomentOfInertiaUnit.MeterToTheFourth);
+        public int MetersToTheFourthToAreaMomentOfInertia()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AreaPerLength SquareMetersPerMeterToAreaPerLength()
-            => new(d, AreaPerLengthUnit.SquareMeterPerMeter);
+        public int SquareMetersPerMeterToAreaPerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of BitPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BitRate BitsPerSecondToBitRate()
-            => new(d, BitRateUnit.BitPerSecond);
+        public int BitsPerSecondToBitRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerJoule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BrakeSpecificFuelConsumption KilogramsPerJouleToBrakeSpecificFuelConsumption()
-            => new(d, BrakeSpecificFuelConsumptionUnit.KilogramPerJoule);
+        public int KilogramsPerJouleToBrakeSpecificFuelConsumption()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public CoefficientOfThermalExpansion PerKelvinToCoefficientOfThermalExpansion()
-            => new(d, CoefficientOfThermalExpansionUnit.PerKelvin);
+        public int PerKelvinToCoefficientOfThermalExpansion()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InversePascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Compressibility InversePascalsToCompressibility()
-            => new(d, CompressibilityUnit.InversePascal);
+        public int InversePascalsToCompressibility()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Density KilogramsPerCubicMeterToDensity()
-            => new(d, DensityUnit.KilogramPerCubicMeter);
+        public int KilogramsPerCubicMeterToDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GraySquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public DoseAreaProduct GraySquareMetersToDoseAreaProduct()
-            => new(d, DoseAreaProductUnit.GraySquareMeter);
+        public int GraySquareMetersToDoseAreaProduct()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Second.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Duration SecondsToDuration()
-            => new(d, DurationUnit.Second);
+        public int SecondsToDuration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecondPerMeterSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public DynamicViscosity NewtonSecondsPerMeterSquaredToDynamicViscosity()
-            => new(d, DynamicViscosityUnit.NewtonSecondPerMeterSquared);
+        public int NewtonSecondsPerMeterSquaredToDynamicViscosity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricAdmittance SiemensToElectricAdmittance()
-            => new(d, ElectricAdmittanceUnit.Siemens);
+        public int SiemensToElectricAdmittance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereHour.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricApparentEnergy VoltampereHoursToElectricApparentEnergy()
-            => new(d, ElectricApparentEnergyUnit.VoltampereHour);
+        public int VoltampereHoursToElectricApparentEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Voltampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricApparentPower VoltamperesToElectricApparentPower()
-            => new(d, ElectricApparentPowerUnit.Voltampere);
+        public int VoltamperesToElectricApparentPower()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Farad.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCapacitance FaradsToElectricCapacitance()
-            => new(d, ElectricCapacitanceUnit.Farad);
+        public int FaradsToElectricCapacitance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Coulomb.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCharge CoulombsToElectricCharge()
-            => new(d, ElectricChargeUnit.Coulomb);
+        public int CoulombsToElectricCharge()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricChargeDensity CoulombsPerCubicMeterToElectricChargeDensity()
-            => new(d, ElectricChargeDensityUnit.CoulombPerCubicMeter);
+        public int CoulombsPerCubicMeterToElectricChargeDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricConductance SiemensToElectricConductance()
-            => new(d, ElectricConductanceUnit.Siemens);
+        public int SiemensToElectricConductance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SiemensPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricConductivity SiemensPerMeterToElectricConductivity()
-            => new(d, ElectricConductivityUnit.SiemensPerMeter);
+        public int SiemensPerMeterToElectricConductivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ampere.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCurrent AmperesToElectricCurrent()
-            => new(d, ElectricCurrentUnit.Ampere);
+        public int AmperesToElectricCurrent()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCurrentDensity AmperesPerSquareMeterToElectricCurrentDensity()
-            => new(d, ElectricCurrentDensityUnit.AmperePerSquareMeter);
+        public int AmperesPerSquareMeterToElectricCurrentDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricCurrentGradient AmperesPerSecondToElectricCurrentGradient()
-            => new(d, ElectricCurrentGradientUnit.AmperePerSecond);
+        public int AmperesPerSecondToElectricCurrentGradient()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricField VoltsPerMeterToElectricField()
-            => new(d, ElectricFieldUnit.VoltPerMeter);
+        public int VoltsPerMeterToElectricField()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricImpedance OhmsToElectricImpedance()
-            => new(d, ElectricImpedanceUnit.Ohm);
+        public int OhmsToElectricImpedance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Henry.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricInductance HenriesToElectricInductance()
-            => new(d, ElectricInductanceUnit.Henry);
+        public int HenriesToElectricInductance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Volt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricPotential VoltsToElectricPotential()
-            => new(d, ElectricPotentialUnit.Volt);
+        public int VoltsToElectricPotential()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricPotentialChangeRate VoltsPerSecondToElectricPotentialChangeRate()
-            => new(d, ElectricPotentialChangeRateUnit.VoltPerSecond);
+        public int VoltsPerSecondToElectricPotentialChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricReactance OhmsToElectricReactance()
-            => new(d, ElectricReactanceUnit.Ohm);
+        public int OhmsToElectricReactance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactiveHour.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricReactiveEnergy VoltampereReactiveHoursToElectricReactiveEnergy()
-            => new(d, ElectricReactiveEnergyUnit.VoltampereReactiveHour);
+        public int VoltampereReactiveHoursToElectricReactiveEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of VoltampereReactive.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricReactivePower VoltamperesReactiveToElectricReactivePower()
-            => new(d, ElectricReactivePowerUnit.VoltampereReactive);
+        public int VoltamperesReactiveToElectricReactivePower()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Ohm.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricResistance OhmsToElectricResistance()
-            => new(d, ElectricResistanceUnit.Ohm);
+        public int OhmsToElectricResistance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of OhmMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricResistivity OhmMetersToElectricResistivity()
-            => new(d, ElectricResistivityUnit.OhmMeter);
+        public int OhmMetersToElectricResistivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricSurfaceChargeDensity CoulombsPerSquareMeterToElectricSurfaceChargeDensity()
-            => new(d, ElectricSurfaceChargeDensityUnit.CoulombPerSquareMeter);
+        public int CoulombsPerSquareMeterToElectricSurfaceChargeDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Siemens.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ElectricSusceptance SiemensToElectricSusceptance()
-            => new(d, ElectricSusceptanceUnit.Siemens);
+        public int SiemensToElectricSusceptance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Joule.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Energy JoulesToEnergy()
-            => new(d, EnergyUnit.Joule);
+        public int JoulesToEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public EnergyDensity JoulesPerCubicMeterToEnergyDensity()
-            => new(d, EnergyDensityUnit.JoulePerCubicMeter);
+        public int JoulesPerCubicMeterToEnergyDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Entropy JoulesPerKelvinToEntropy()
-            => new(d, EntropyUnit.JoulePerKelvin);
+        public int JoulesPerKelvinToEntropy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalSecondPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FluidResistance PascalSecondsPerCubicMeterToFluidResistance()
-            => new(d, FluidResistanceUnit.PascalSecondPerCubicMeter);
+        public int PascalSecondsPerCubicMeterToFluidResistance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Newton.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Force NewtonsToForce()
-            => new(d, ForceUnit.Newton);
+        public int NewtonsToForce()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ForceChangeRate NewtonsPerSecondToForceChangeRate()
-            => new(d, ForceChangeRateUnit.NewtonPerSecond);
+        public int NewtonsPerSecondToForceChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ForcePerLength NewtonsPerMeterToForcePerLength()
-            => new(d, ForcePerLengthUnit.NewtonPerMeter);
+        public int NewtonsPerMeterToForcePerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Hertz.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Frequency HertzToFrequency()
-            => new(d, FrequencyUnit.Hertz);
+        public int HertzToFrequency()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilometerPerLiter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public FuelEfficiency KilometersPerLiterToFuelEfficiency()
-            => new(d, FuelEfficiencyUnit.KilometerPerLiter);
+        public int KilometersPerLiterToFuelEfficiency()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public HeatFlux WattsPerSquareMeterToHeatFlux()
-            => new(d, HeatFluxUnit.WattPerSquareMeter);
+        public int WattsPerSquareMeterToHeatFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public HeatTransferCoefficient WattsPerSquareMeterKelvinToHeatTransferCoefficient()
-            => new(d, HeatTransferCoefficientUnit.WattPerSquareMeterKelvin);
+        public int WattsPerSquareMeterKelvinToHeatTransferCoefficient()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lux.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Illuminance LuxToIlluminance()
-            => new(d, IlluminanceUnit.Lux);
+        public int LuxToIlluminance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Impulse NewtonSecondsToImpulse()
-            => new(d, ImpulseUnit.NewtonSecond);
+        public int NewtonSecondsToImpulse()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Bit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Information BitsToInformation()
-            => new(d, InformationUnit.Bit);
+        public int BitsToInformation()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Irradiance WattsPerSquareMeterToIrradiance()
-            => new(d, IrradianceUnit.WattPerSquareMeter);
+        public int WattsPerSquareMeterToIrradiance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Irradiation JoulesPerSquareMeterToIrradiation()
-            => new(d, IrradiationUnit.JoulePerSquareMeter);
+        public int JoulesPerSquareMeterToIrradiation()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecondCubed.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Jerk MetersPerSecondCubedToJerk()
-            => new(d, JerkUnit.MeterPerSecondCubed);
+        public int MetersPerSecondCubedToJerk()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public KinematicViscosity SquareMetersPerSecondToKinematicViscosity()
-            => new(d, KinematicViscosityUnit.SquareMeterPerSecond);
+        public int SquareMetersPerSecondToKinematicViscosity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LeakRate PascalCubicMetersPerSecondToLeakRate()
-            => new(d, LeakRateUnit.PascalCubicMeterPerSecond);
+        public int PascalCubicMetersPerSecondToLeakRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Meter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Length MetersToLength()
-            => new(d, LengthUnit.Meter);
+        public int MetersToLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Decibel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Level DecibelsToLevel()
-            => new(d, LevelUnit.Decibel);
+        public int DecibelsToLevel()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LinearDensity KilogramsPerMeterToLinearDensity()
-            => new(d, LinearDensityUnit.KilogramPerMeter);
+        public int KilogramsPerMeterToLinearDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LinearPowerDensity WattsPerMeterToLinearPowerDensity()
-            => new(d, LinearPowerDensityUnit.WattPerMeter);
+        public int WattsPerMeterToLinearPowerDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CandelaPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Luminance CandelasPerSquareMeterToLuminance()
-            => new(d, LuminanceUnit.CandelaPerSquareMeter);
+        public int CandelasPerSquareMeterToLuminance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Luminosity WattsToLuminosity()
-            => new(d, LuminosityUnit.Watt);
+        public int WattsToLuminosity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Lumen.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LuminousFlux LumensToLuminousFlux()
-            => new(d, LuminousFluxUnit.Lumen);
+        public int LumensToLuminousFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Candela.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public LuminousIntensity CandelaToLuminousIntensity()
-            => new(d, LuminousIntensityUnit.Candela);
+        public int CandelaToLuminousIntensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Tesla.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MagneticField TeslasToMagneticField()
-            => new(d, MagneticFieldUnit.Tesla);
+        public int TeslasToMagneticField()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Weber.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MagneticFlux WebersToMagneticFlux()
-            => new(d, MagneticFluxUnit.Weber);
+        public int WebersToMagneticFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of AmperePerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Magnetization AmperesPerMeterToMagnetization()
-            => new(d, MagnetizationUnit.AmperePerMeter);
+        public int AmperesPerMeterToMagnetization()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Mass KilogramsToMass()
-            => new(d, MassUnit.Kilogram);
+        public int KilogramsToMass()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassConcentration KilogramsPerCubicMeterToMassConcentration()
-            => new(d, MassConcentrationUnit.KilogramPerCubicMeter);
+        public int KilogramsPerCubicMeterToMassConcentration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassFlow GramsPerSecondToMassFlow()
-            => new(d, MassFlowUnit.GramPerSecond);
+        public int GramsPerSecondToMassFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassFlux KilogramsPerSecondPerSquareMeterToMassFlux()
-            => new(d, MassFluxUnit.KilogramPerSecondPerSquareMeter);
+        public int KilogramsPerSecondPerSquareMeterToMassFlux()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassFraction DecimalFractionsToMassFraction()
-            => new(d, MassFractionUnit.DecimalFraction);
+        public int DecimalFractionsToMassFraction()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MassMomentOfInertia KilogramSquareMetersToMassMomentOfInertia()
-            => new(d, MassMomentOfInertiaUnit.KilogramSquareMeter);
+        public int KilogramSquareMetersToMassMomentOfInertia()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Molality MolesPerKilogramToMolality()
-            => new(d, MolalityUnit.MolePerKilogram);
+        public int MolesPerKilogramToMolality()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarEnergy JoulesPerMoleToMolarEnergy()
-            => new(d, MolarEnergyUnit.JoulePerMole);
+        public int JoulesPerMoleToMolarEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerMoleKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarEntropy JoulesPerMoleKelvinToMolarEntropy()
-            => new(d, MolarEntropyUnit.JoulePerMoleKelvin);
+        public int JoulesPerMoleKelvinToMolarEntropy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarFlow MolesPerSecondToMolarFlow()
-            => new(d, MolarFlowUnit.MolePerSecond);
+        public int MolesPerSecondToMolarFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MolePerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Molarity MolesPerCubicMeterToMolarity()
-            => new(d, MolarityUnit.MolePerCubicMeter);
+        public int MolesPerCubicMeterToMolarity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilogramPerMole.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MolarMass KilogramsPerMoleToMolarMass()
-            => new(d, MolarMassUnit.KilogramPerMole);
+        public int KilogramsPerMoleToMolarMass()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of HenryPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Permeability HenriesPerMeterToPermeability()
-            => new(d, PermeabilityUnit.HenryPerMeter);
+        public int HenriesPerMeterToPermeability()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of FaradPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Permittivity FaradsPerMeterToPermittivity()
-            => new(d, PermittivityUnit.FaradPerMeter);
+        public int FaradsPerMeterToPermittivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PorousMediumPermeability SquareMetersToPorousMediumPermeability()
-            => new(d, PorousMediumPermeabilityUnit.SquareMeter);
+        public int SquareMetersToPorousMediumPermeability()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Watt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Power WattsToPower()
-            => new(d, PowerUnit.Watt);
+        public int WattsToPower()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PowerDensity WattsPerCubicMeterToPowerDensity()
-            => new(d, PowerDensityUnit.WattPerCubicMeter);
+        public int WattsPerCubicMeterToPowerDensity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecibelWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PowerRatio DecibelWattsToPowerRatio()
-            => new(d, PowerRatioUnit.DecibelWatt);
+        public int DecibelWattsToPowerRatio()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Pascal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Pressure PascalsToPressure()
-            => new(d, PressureUnit.Pascal);
+        public int PascalsToPressure()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of PascalPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PressureChangeRate PascalsPerSecondToPressureChangeRate()
-            => new(d, PressureChangeRateUnit.PascalPerSecond);
+        public int PascalsPerSecondToPressureChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Sievert.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RadiationEquivalentDose SievertsToRadiationEquivalentDose()
-            => new(d, RadiationEquivalentDoseUnit.Sievert);
+        public int SievertsToRadiationEquivalentDose()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SievertPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RadiationEquivalentDoseRate SievertsPerSecondToRadiationEquivalentDoseRate()
-            => new(d, RadiationEquivalentDoseRateUnit.SievertPerSecond);
+        public int SievertsPerSecondToRadiationEquivalentDoseRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CoulombPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RadiationExposure CoulombsPerKilogramToRadiationExposure()
-            => new(d, RadiationExposureUnit.CoulombPerKilogram);
+        public int CoulombsPerKilogramToRadiationExposure()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Becquerel.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Radioactivity BecquerelsToRadioactivity()
-            => new(d, RadioactivityUnit.Becquerel);
+        public int BecquerelsToRadioactivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Ratio DecimalFractionsToRatio()
-            => new(d, RatioUnit.DecimalFraction);
+        public int DecimalFractionsToRatio()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFractionPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RatioChangeRate DecimalFractionsPerSecondToRatioChangeRate()
-            => new(d, RatioChangeRateUnit.DecimalFractionPerSecond);
+        public int DecimalFractionsPerSecondToRatioChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ReciprocalArea InverseSquareMetersToReciprocalArea()
-            => new(d, ReciprocalAreaUnit.InverseSquareMeter);
+        public int InverseSquareMetersToReciprocalArea()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InverseMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ReciprocalLength InverseMetersToReciprocalLength()
-            => new(d, ReciprocalLengthUnit.InverseMeter);
+        public int InverseMetersToReciprocalLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Percent.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RelativeHumidity PercentToRelativeHumidity()
-            => new(d, RelativeHumidityUnit.Percent);
+        public int PercentToRelativeHumidity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecondSquared.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalAcceleration RadiansPerSecondSquaredToRotationalAcceleration()
-            => new(d, RotationalAccelerationUnit.RadianPerSecondSquared);
+        public int RadiansPerSecondSquaredToRotationalAcceleration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of RadianPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalSpeed RadiansPerSecondToRotationalSpeed()
-            => new(d, RotationalSpeedUnit.RadianPerSecond);
+        public int RadiansPerSecondToRotationalSpeed()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalStiffness NewtonMetersPerRadianToRotationalStiffness()
-            => new(d, RotationalStiffnessUnit.NewtonMeterPerRadian);
+        public int NewtonMetersPerRadianToRotationalStiffness()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeterPerRadianPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RotationalStiffnessPerLength NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
-            => new(d, RotationalStiffnessPerLengthUnit.NewtonMeterPerRadianPerMeter);
+        public int NewtonMetersPerRadianPerMeterToRotationalStiffnessPerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Scalar AmountToScalar()
-            => new(d, ScalarUnit.Amount);
+        public int AmountToScalar()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Steradian.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SolidAngle SteradiansToSolidAngle()
-            => new(d, SolidAngleUnit.Steradian);
+        public int SteradiansToSolidAngle()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificEnergy JoulesPerKilogramToSpecificEnergy()
-            => new(d, SpecificEnergyUnit.JoulePerKilogram);
+        public int JoulesPerKilogramToSpecificEnergy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerKilogramKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificEntropy JoulesPerKilogramKelvinToSpecificEntropy()
-            => new(d, SpecificEntropyUnit.JoulePerKilogramKelvin);
+        public int JoulesPerKilogramKelvinToSpecificEntropy()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of GramPerKilonewtonSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificFuelConsumption GramsPerKilonewtonSecondToSpecificFuelConsumption()
-            => new(d, SpecificFuelConsumptionUnit.GramPerKilonewtonSecond);
+        public int GramsPerKilonewtonSecondToSpecificFuelConsumption()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerKilogram.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificVolume CubicMetersPerKilogramToSpecificVolume()
-            => new(d, SpecificVolumeUnit.CubicMeterPerKilogram);
+        public int CubicMetersPerKilogramToSpecificVolume()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonPerCubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SpecificWeight NewtonsPerCubicMeterToSpecificWeight()
-            => new(d, SpecificWeightUnit.NewtonPerCubicMeter);
+        public int NewtonsPerCubicMeterToSpecificWeight()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Speed MetersPerSecondToSpeed()
-            => new(d, SpeedUnit.MeterPerSecond);
+        public int MetersPerSecondToSpeed()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of StandardCubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public StandardVolumeFlow StandardCubicMetersPerSecondToStandardVolumeFlow()
-            => new(d, StandardVolumeFlowUnit.StandardCubicMeterPerSecond);
+        public int StandardCubicMetersPerSecondToStandardVolumeFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Temperature KelvinsToTemperature()
-            => new(d, TemperatureUnit.Kelvin);
+        public int KelvinsToTemperature()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DegreeCelsiusPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TemperatureChangeRate DegreesCelsiusPerSecondToTemperatureChangeRate()
-            => new(d, TemperatureChangeRateUnit.DegreeCelsiusPerSecond);
+        public int DegreesCelsiusPerSecondToTemperatureChangeRate()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of Kelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TemperatureDelta KelvinsToTemperatureDelta()
-            => new(d, TemperatureDeltaUnit.Kelvin);
+        public int KelvinsToTemperatureDelta()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TemperatureGradient KelvinsPerMeterToTemperatureGradient()
-            => new(d, TemperatureGradientUnit.KelvinPerMeter);
+        public int KelvinsPerMeterToTemperatureGradient()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalConductance WattsPerKelvinToThermalConductance()
-            => new(d, ThermalConductanceUnit.WattPerKelvin);
+        public int WattsPerKelvinToThermalConductance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of WattPerMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalConductivity WattsPerMeterKelvinToThermalConductivity()
-            => new(d, ThermalConductivityUnit.WattPerMeterKelvin);
+        public int WattsPerMeterKelvinToThermalConductivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of SquareMeterKelvinPerKilowatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalInsulance SquareMeterKelvinsPerKilowattToThermalInsulance()
-            => new(d, ThermalInsulanceUnit.SquareMeterKelvinPerKilowatt);
+        public int SquareMeterKelvinsPerKilowattToThermalInsulance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalResistance KelvinsPerWattToThermalResistance()
-            => new(d, ThermalResistanceUnit.KelvinPerWatt);
+        public int KelvinsPerWattToThermalResistance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KelvinMeterPerWatt.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalResistivity KelvinMetersPerWattToThermalResistivity()
-            => new(d, ThermalResistivityUnit.KelvinMeterPerWatt);
+        public int KelvinMetersPerWattToThermalResistivity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of KilowattPerSquareMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ThermalTransmittance KilowattsPerSquareMeterKelvinToThermalTransmittance()
-            => new(d, ThermalTransmittanceUnit.KilowattPerSquareMeterKelvin);
+        public int KilowattsPerSquareMeterKelvinToThermalTransmittance()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NewtonMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Torque NewtonMetersToTorque()
-            => new(d, TorqueUnit.NewtonMeter);
+        public int NewtonMetersToTorque()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of NTU.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Turbidity NTUToTurbidity()
-            => new(d, TurbidityUnit.NTU);
+        public int NTUToTurbidity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of InternationalUnit.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VitaminA InternationalUnitsToVitaminA()
-            => new(d, VitaminAUnit.InternationalUnit);
+        public int InternationalUnitsToVitaminA()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Volume CubicMetersToVolume()
-            => new(d, VolumeUnit.CubicMeter);
+        public int CubicMetersToVolume()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of DecimalFraction.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumeConcentration DecimalFractionsToVolumeConcentration()
-            => new(d, VolumeConcentrationUnit.DecimalFraction);
+        public int DecimalFractionsToVolumeConcentration()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecond.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumeFlow CubicMetersPerSecondToVolumeFlow()
-            => new(d, VolumeFlowUnit.CubicMeterPerSecond);
+        public int CubicMetersPerSecondToVolumeFlow()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerSecondPerSquareMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumeFlowPerArea CubicMetersPerSecondPerSquareMeterToVolumeFlowPerArea()
-            => new(d, VolumeFlowPerAreaUnit.CubicMeterPerSecondPerSquareMeter);
+        public int CubicMetersPerSecondPerSquareMeterToVolumeFlowPerArea()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of CubicMeterPerMeter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumePerLength CubicMetersPerMeterToVolumePerLength()
-            => new(d, VolumePerLengthUnit.CubicMeterPerMeter);
+        public int CubicMetersPerMeterToVolumePerLength()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of JoulePerCubicMeterKelvin.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VolumetricHeatCapacity JoulesPerCubicMeterKelvinToVolumetricHeatCapacity()
-            => new(d, VolumetricHeatCapacityUnit.JoulePerCubicMeterKelvin);
+        public int JoulesPerCubicMeterKelvinToVolumetricHeatCapacity()
+            => d;
 
         /// <summary>
         ///     Convert to base unit quantity of MeterToTheSixth.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public WarpingMomentOfInertia MetersToTheSixthToWarpingMomentOfInertia()
-            => new(d, WarpingMomentOfInertiaUnit.MeterToTheSixth);
+        public int MetersToTheSixthToWarpingMomentOfInertia()
+            => d;
     }
 #endif
-
-    /// <summary>
-    ///     Serves as a repository for predefined quantity conversion mappings, facilitating the automatic generation and retrieval of unit conversions in the UnitsNet library.
-    /// </summary>
-    internal static class DefaultProvider
-    {
-        /// <summary>
-        ///     All QuantityInfo instances that are present in UnitsNet by default.
-        /// </summary>
-        internal static readonly IReadOnlyList<QuantityInfo> Quantities = new QuantityInfo[]
-        {
-            AbsorbedDoseOfIonizingRadiation.Info,
-            Acceleration.Info,
-            AmountOfSubstance.Info,
-            AmplitudeRatio.Info,
-            Angle.Info,
-            Area.Info,
-            AreaDensity.Info,
-            AreaMomentOfInertia.Info,
-            AreaPerLength.Info,
-            BitRate.Info,
-            BrakeSpecificFuelConsumption.Info,
-            CoefficientOfThermalExpansion.Info,
-            Compressibility.Info,
-            Density.Info,
-            DoseAreaProduct.Info,
-            Duration.Info,
-            DynamicViscosity.Info,
-            ElectricAdmittance.Info,
-            ElectricApparentEnergy.Info,
-            ElectricApparentPower.Info,
-            ElectricCapacitance.Info,
-            ElectricCharge.Info,
-            ElectricChargeDensity.Info,
-            ElectricConductance.Info,
-            ElectricConductivity.Info,
-            ElectricCurrent.Info,
-            ElectricCurrentDensity.Info,
-            ElectricCurrentGradient.Info,
-            ElectricField.Info,
-            ElectricImpedance.Info,
-            ElectricInductance.Info,
-            ElectricPotential.Info,
-            ElectricPotentialChangeRate.Info,
-            ElectricReactance.Info,
-            ElectricReactiveEnergy.Info,
-            ElectricReactivePower.Info,
-            ElectricResistance.Info,
-            ElectricResistivity.Info,
-            ElectricSurfaceChargeDensity.Info,
-            ElectricSusceptance.Info,
-            Energy.Info,
-            EnergyDensity.Info,
-            Entropy.Info,
-            FluidResistance.Info,
-            Force.Info,
-            ForceChangeRate.Info,
-            ForcePerLength.Info,
-            Frequency.Info,
-            FuelEfficiency.Info,
-            HeatFlux.Info,
-            HeatTransferCoefficient.Info,
-            Illuminance.Info,
-            Impulse.Info,
-            Information.Info,
-            Irradiance.Info,
-            Irradiation.Info,
-            Jerk.Info,
-            KinematicViscosity.Info,
-            LeakRate.Info,
-            Length.Info,
-            Level.Info,
-            LinearDensity.Info,
-            LinearPowerDensity.Info,
-            Luminance.Info,
-            Luminosity.Info,
-            LuminousFlux.Info,
-            LuminousIntensity.Info,
-            MagneticField.Info,
-            MagneticFlux.Info,
-            Magnetization.Info,
-            Mass.Info,
-            MassConcentration.Info,
-            MassFlow.Info,
-            MassFlux.Info,
-            MassFraction.Info,
-            MassMomentOfInertia.Info,
-            Molality.Info,
-            MolarEnergy.Info,
-            MolarEntropy.Info,
-            MolarFlow.Info,
-            Molarity.Info,
-            MolarMass.Info,
-            Permeability.Info,
-            Permittivity.Info,
-            PorousMediumPermeability.Info,
-            Power.Info,
-            PowerDensity.Info,
-            PowerRatio.Info,
-            Pressure.Info,
-            PressureChangeRate.Info,
-            RadiationEquivalentDose.Info,
-            RadiationEquivalentDoseRate.Info,
-            RadiationExposure.Info,
-            Radioactivity.Info,
-            Ratio.Info,
-            RatioChangeRate.Info,
-            ReciprocalArea.Info,
-            ReciprocalLength.Info,
-            RelativeHumidity.Info,
-            RotationalAcceleration.Info,
-            RotationalSpeed.Info,
-            RotationalStiffness.Info,
-            RotationalStiffnessPerLength.Info,
-            Scalar.Info,
-            SolidAngle.Info,
-            SpecificEnergy.Info,
-            SpecificEntropy.Info,
-            SpecificFuelConsumption.Info,
-            SpecificVolume.Info,
-            SpecificWeight.Info,
-            Speed.Info,
-            StandardVolumeFlow.Info,
-            Temperature.Info,
-            TemperatureChangeRate.Info,
-            TemperatureDelta.Info,
-            TemperatureGradient.Info,
-            ThermalConductance.Info,
-            ThermalConductivity.Info,
-            ThermalInsulance.Info,
-            ThermalResistance.Info,
-            ThermalResistivity.Info,
-            ThermalTransmittance.Info,
-            Torque.Info,
-            Turbidity.Info,
-            VitaminA.Info,
-            Volume.Info,
-            VolumeConcentration.Info,
-            VolumeFlow.Info,
-            VolumeFlowPerArea.Info,
-            VolumePerLength.Info,
-            VolumetricHeatCapacity.Info,
-            WarpingMomentOfInertia.Info,
-        };
-
-        /// <summary>
-        ///     All implicit quantity conversions that exist by default.
-        /// </summary>
-        internal static readonly IReadOnlyList<QuantityConversionMapping> Conversions = new QuantityConversionMapping[]
-        {
-            new (typeof(Area), typeof(ReciprocalArea)),
-            new (typeof(Density), typeof(SpecificVolume)),
-            new (typeof(Duration), typeof(Frequency)),
-            new (typeof(ElectricAdmittance), typeof(ElectricImpedance)),
-            new (typeof(ElectricConductance), typeof(ElectricResistance)),
-            new (typeof(ElectricConductivity), typeof(ElectricResistivity)),
-            new (typeof(ElectricReactance), typeof(ElectricSusceptance)),
-            new (typeof(Length), typeof(ReciprocalLength)),
-            new (typeof(ThermalConductance), typeof(ThermalResistance)),
-            new (typeof(ThermalConductivity), typeof(ThermalResistivity)),
-            new (typeof(ThermalInsulance), typeof(ThermalTransmittance)),
-        };
-    }
 }
